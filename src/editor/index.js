@@ -2,8 +2,11 @@ import { Value } from 'slate'
 import Slate from 'slate-react'
 import React, { Component } from 'react'
 
+import Paragraph from '../paragraph'
+
 
 const plugins = [
+    Paragraph({}),
 ]
 
 
