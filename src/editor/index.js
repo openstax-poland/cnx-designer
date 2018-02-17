@@ -3,12 +3,17 @@ import Slate from 'slate-react'
 import React, { Component } from 'react'
 
 import Admonition from '../admonition'
+import List from '../list'
 import Paragraph from '../paragraph'
+
+
+const list = List({})
 
 
 const plugins = [
     Paragraph({}),
     Admonition({}),
+    ...list.plugins,
 ]
 
 
