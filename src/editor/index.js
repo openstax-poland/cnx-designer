@@ -3,6 +3,7 @@ import Slate from 'slate-react'
 import React, { Component } from 'react'
 
 import Admonition from '../admonition'
+import Header from '../header'
 import List from '../list'
 import Marks from '../marks'
 import Paragraph from '../paragraph'
@@ -16,6 +17,7 @@ const marks = Marks({})
 const plugins = [
     ...marks.plugins,
     Paragraph({}),
+    Header({}),
     Title({}),
     Admonition({}),
     ...list.plugins,
