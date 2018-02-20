@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import Admonition from '../admonition'
 import List from '../list'
 import Paragraph from '../paragraph'
+import Title from '../title'
 
 
 const list = List({})
@@ -12,6 +13,7 @@ const list = List({})
 
 const plugins = [
     Paragraph({}),
+    Title({}),
     Admonition({}),
     ...list.plugins,
 ]
