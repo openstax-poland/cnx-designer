@@ -5,6 +5,10 @@ div.editor
 
     text-align: justify
 
+    // For elements down the stack to adjust themselves
+    --margin-inline-start: 24px
+    --margin-inline-end: 24px
+
     // Add padding around page contents
     margin: 32px 0 32px 0
     > *
@@ -12,4 +16,5 @@ div.editor
         margin-right: 24px
 
     // Element styles
+    @require '../admonition'
     @require '../paragraph'

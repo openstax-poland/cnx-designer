@@ -1,0 +1,16 @@
+div.admonition
+    border-inline-start: 4px solid var(--color)
+    margin-inline-start: calc(var(--margin-inline-start) - 12px)
+    padding-inline-start: 8px
+
+    > :first-child:not(h2.title)::before
+        content: var(--title) ': '
+        display: inline
+
+    &[data-type="note"]
+        --title: "Note"
+        --color: gray
+
+    &[data-type="warning"]
+        --title: "Warning"
+        --color: yellow
