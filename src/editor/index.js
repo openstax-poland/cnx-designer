@@ -4,14 +4,17 @@ import React, { Component } from 'react'
 
 import Admonition from '../admonition'
 import List from '../list'
+import Marks from '../marks'
 import Paragraph from '../paragraph'
 import Title from '../title'
 
 
 const list = List({})
+const marks = Marks({})
 
 
 const plugins = [
+    ...marks.plugins,
     Paragraph({}),
     Title({}),
     Admonition({}),
