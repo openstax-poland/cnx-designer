@@ -1,5 +1,5 @@
 import renderMark from './render'
-import toolbar from './toolbar'
+import actions from './actions'
 
 import { Shortcut } from '../util'
 
@@ -7,7 +7,7 @@ import * as changes from './changes'
 
 
 function core(options) {
-    return { renderMark, toolbar }
+    return { renderMark, actions }
 }
 
 
