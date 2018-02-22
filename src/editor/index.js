@@ -8,6 +8,7 @@ import List from '../list'
 import Marks from '../marks'
 import Paragraph from '../paragraph'
 import Title from '../title'
+import Toolbar from '../toolbar'
 
 
 const list = List({})
@@ -21,6 +22,7 @@ const plugins = [
     Title({}),
     Admonition({}),
     ...list.plugins,
+    Toolbar({}),
 ]
 
 
