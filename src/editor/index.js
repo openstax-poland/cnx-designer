@@ -9,6 +9,7 @@ import Marks from '../marks'
 import Paragraph from '../paragraph'
 import Title from '../title'
 import Toolbar from '../toolbar'
+import Storage from '../storage/plugin'
 
 
 const list = List({})
@@ -31,6 +32,8 @@ export default class Editor extends Component {
         value: Value.create(),
     }
 
+    plugins = [...plugins, Storage({ storage: this.props.storage })]
+
     onChange = ({ value }) => {
         this.setState({ value })
     }
@@ -40,7 +43,7 @@ export default class Editor extends Component {
             <Slate.Editor
                 className="editor"
                 value={this.state.value}
-                plugins={plugins}
+                plugins={this.plugins}
                 onChange={this.onChange}
                 />
         </React.Fragment>
