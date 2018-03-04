@@ -10,12 +10,16 @@ export default () => ({
         const actions = deriveActions(plugins)
 
         return <React.Fragment>
-            <ToolBar
-                actions={actions}
-                value={value}
-                onChange={editor.onChange}
-                />
-            {children}
+            <div className="system-panels">
+                <ToolBar
+                    actions={actions}
+                    value={value}
+                    onChange={editor.onChange}
+                    />
+            </div>
+            <div className="document">
+                {children}
+            </div>
         </React.Fragment>
     }
 })
