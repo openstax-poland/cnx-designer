@@ -75,7 +75,7 @@ class Action extends React.Component {
             onMouseUp={this.onMouseUp}
             {...attrs}
             >
-            <i className="material-icons">{action.attrs.icon}</i>
+            <i className="material-icons">{action.icon}</i>
         </button>
     }
 }

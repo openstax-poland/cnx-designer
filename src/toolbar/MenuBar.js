@@ -135,11 +135,10 @@ class Action extends React.Component {
     }
 
     render() {
-        const { value } = this.props
-        const { title, enabled, attrs } = this.props.action
+        const { action, value } = this.props
 
-        const key = attrs.key ? this.renderKey(attrs.key) : null
-        const disabled = enabled && !enabled(value)
+        const key = action.key ? this.renderKey(action.key) : null
+        const disabled = action.enabled && !action.enabled(value)
 
         /*if (attrs.toggle) {
             const active = action.active ? action.active(value) : false
@@ -152,7 +151,7 @@ class Action extends React.Component {
             onMouseDown={this.onMouseDown}
             onMouseUp={this.onMouseUp}
             >
-            <span className="title">{title}</span>
+            <span className="title">{action.title}</span>
             {key}
         </div>
     }

@@ -29,10 +29,11 @@ export function group(title, category, items) {
 /**
  * Create a new action.
  */
-export function action(title, { action, active, enabled, ...attrs }) {
+export function action(title, attributes) {
+    const { action, active, enabled, key, icon, ...attrs } = attributes
     return {
         $$typeof: ACTION,
-        title, action, active, enabled, attrs
+        title, action, active, enabled, key, icon, attrs
     }
 }
 
