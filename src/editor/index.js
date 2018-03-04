@@ -1,4 +1,4 @@
-import { Value } from 'slate'
+import { Value, setKeyGenerator } from 'slate'
 import Slate from 'slate-react'
 import React, { Component } from 'react'
 
@@ -10,6 +10,9 @@ import Paragraph from '../paragraph'
 import Title from '../title'
 import Toolbar from '../toolbar'
 import Storage from '../storage/plugin'
+
+import * as uuid from '../uuid'
+setKeyGenerator(uuid.v4)
 
 
 const list = List({})
