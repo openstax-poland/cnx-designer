@@ -9,6 +9,7 @@
     "react-scripts": "1.1.1",
     "slate": "^0.32.4",
     "slate-edit-list": "^0.11.2",
+    "slate-html-serializer": "^0.5.6",
     "slate-react": "^0.11.4"
    },
    "scripts": {
