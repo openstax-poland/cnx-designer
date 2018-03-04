@@ -1,7 +1,7 @@
 import { GROUP, ACTION, WIDGET, group } from './model'
 
 
-export function consolidate(actions, mapCategory=(x) => x) {
+export function consolidate(actions, flatten=false) {
     const categories = {
         [null]: {
             map: {},
@@ -35,17 +35,17 @@ export function consolidate(actions, mapCategory=(x) => x) {
     }
 
     for (const item of actions) {
-        const title = mapCategory(item.category)
+        const cat = item.category
 
         switch (item.$$typeof) {
         case GROUP:
             if (!(item.category in categories)) {
                 const items = []
-                categories[title] = { map: {}, items }
-                result.push(group(title, '__ignore', items))
+                categories[cat] = { map: {}, items }
+                result.push(group(cat, '__ignore', items))
             }
-            const category = categories[title]
-            if (item.title) {
+            const category = categories[cat]
+            if (item.title || !flatten) {
                 insertInto(category, item)
             } else {
                 mergeGroups(category, item)
@@ -63,5 +63,20 @@ export function consolidate(actions, mapCategory=(x) => x) {
         result.push(group(null, '__ignore', categories[null].items))
     }
 
-    return result
+    return normalize(result)
+}
+
+
+function normalize(v) {
+    if (v.$$typeof === WIDGET || v.$$typeof === ACTION) return v
+
+    if (v instanceof Array) {
+        return v.map(normalize).filter(Boolean)
+    }
+
+    v.items = normalize(v.items)
+
+    if (v.items.length === 0) return null
+
+    return v
 }

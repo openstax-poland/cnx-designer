@@ -6,7 +6,7 @@ import { consolidate } from '../actions/util'
 
 export default class ToolBar extends React.Component {
     state = {
-        actions: consolidate(this.props.actions),
+        actions: consolidate(this.props.actions, true),
     }
 
     render() {
