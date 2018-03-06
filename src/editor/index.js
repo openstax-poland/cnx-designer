@@ -40,7 +40,7 @@ const plugins = [
 
 export default class Editor extends Component {
     state = {
-        value: Value.create(),
+        value: this.props.value,
     }
 
     plugins = [...plugins, Storage({ storage: this.props.storage })]
