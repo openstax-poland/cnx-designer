@@ -130,14 +130,4 @@ class Root extends React.Component {
 }
 
 
-// ReactDOM.render(<Editor/>, document.getElementById('root'))
-// window.root = ReactDOM.render(<App/>, document.getElementById('root'))
-
-// window.root = ReactDOM.render(<Router>
-//     <React.Fragment>
-//         <Route exact path="/" component={Root} />
-//         <Route exact path="/:id" component={App} />
-//     </React.Fragment>
-// </Router>, document.getElementById('root'))
-
 ReactDOM.render(<Root/>, document.getElementById('root'))
