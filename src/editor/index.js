@@ -7,6 +7,7 @@ import Header from '../header'
 import List from '../list'
 import Marks from '../marks'
 import Paragraph from '../paragraph'
+import Section from '../section'
 import Title from '../title'
 import Toolbar from '../toolbar'
 import Storage from '../storage/plugin'
@@ -24,6 +25,7 @@ const plugins = [
     Paragraph({}),
     Header({}),
     Title({}),
+    Section({}),
     Admonition({}),
     ...list.plugins,
     Toolbar({}),
