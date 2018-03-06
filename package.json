@@ -11,11 +11,15 @@
     "slate-edit-list": "^0.11.2",
     "slate-html-serializer": "^0.5.6",
     "slate-react": "^0.11.4"
-   },
-   "scripts": {
-     "start": "BROWSER=none react-scripts start",
-     "build": "react-scripts build",
-     "test": "react-scripts test --env=jsdom",
-     "eject": "react-scripts eject"
-   }
+  },
+  "devDependencies": {
+    "stylus": "^0.54.5"
+  },
+  "scripts": {
+    "start": "BROWSER=none react-scripts start",
+    "build": "react-scripts build",
+    "build:style": "stylus -o build/index.css -d -m src/index.styl",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
 }
