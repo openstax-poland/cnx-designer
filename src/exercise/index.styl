@@ -1,0 +1,17 @@
+div.exercise
+    border-inline-start: 4px solid gray
+    margin-inline-start: calc(var(--margin-inline-start) - 12px)
+    padding-inline-start: 8px
+
+    > * > :first-child::before
+        display block
+        color gray
+
+    > div.exercise-problem > :first-child::before
+        content 'Problem: '
+
+    > div.exercise-solution > :first-child::before
+        content 'Solution: '
+
+    > div.exercise-commentary > :first-child::before
+        content 'Commentary: '
