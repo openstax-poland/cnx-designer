@@ -11,7 +11,21 @@ export default class Storage {
      * @return {Storage}
      */
     static async load(id) {
-        // TODO: implement
+        const self = new Storage()
+
+        self.id = id
+        self.url = '/user/contents/' + id
+        self.value = null
+
+        const [data, files] = await Promise.all([
+            self._request('/'),
+            self._request('/files'),
+        ])
+
+        self.title = data.name
+        self.files = files
+
+        return self
     }
 
     /**
@@ -20,27 +34,43 @@ export default class Storage {
      * @return {Value}
      */
     async read() {
-        // TODO: implement
+        const text = await this._request('/files/index.cnxml', 'text')
+        return this.value = CNXML.deserialize(text)
     }
 
     /**
      * Write the document
      */
     async write(value) {
-        // TODO: implement
+        const text = CNXML.serialize(value, this.title)
+
+        const req = await fetch(this.url + '/files/index.cnxml', {
+            method: 'PUT',
+            credentials: 'same-origin',
+            body: text,
+        })
+
+        this.value = value
     }
 
     /**
      * Check if a {@link Value} is current.
      */
     current(value) {
-        // TODO: implement
+        return this.value !== null && this.value.document.equals(value.document)
     }
 
     /**
      * Return an URL for a given media file.
      */
     mediaUrl(name) {
-        // TODO: implement
+        return this.url + '/files/' + name
+    }
+
+    async _request(path, data='json') {
+        const req = await fetch(this.url + path, {
+            credentials: 'same-origin',
+        })
+        return await req[data]()
     }
 }

@@ -26,7 +26,7 @@ const serializer = new Html({
 export default {
     deserialize: (...args) => serializer.deserialize(...args),
 
-    serialize(value) {
+    serialize(value, title) {
         const r = <document
             xmlns="http://cnx.rice.edu/cnxml"
             cnxml-version="0.7"
@@ -34,7 +34,7 @@ export default {
             module-id="new"
             xmlLang="en"
             >
-            <title>TODO: load and preserve titles</title>
+            <title>{title}</title>
             <content>
                 {serializer.serialize(value, { render: false })}
             </content>
