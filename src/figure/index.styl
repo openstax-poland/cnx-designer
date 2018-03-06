@@ -1,0 +1,31 @@
+figure
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    align-items: center
+
+    padding-left: 48q
+    padding-right: 48q
+
+    text-align: center
+
+    counter-increment: figure
+
+    > :not(figcaption)
+        // Override minimal width of <img>s so that they will shrink. It must be
+        // larger than zero to prevent images from collapsing into nothingness.
+        min-width: 1px
+        // Adjust width to fit in one row.
+        flex: 1
+
+        padding: 4px
+
+    > figcaption
+        text-align: start
+        min-width: 100%
+
+        &::before
+            content: 'Figure ' counter(figure) ': '
+
+    > figure
+        margin: 0
