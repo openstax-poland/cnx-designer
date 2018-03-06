@@ -6,6 +6,7 @@ import Admonition from '../admonition'
 import Header from '../header'
 import List from '../list'
 import Marks from '../marks'
+import Media from '../media'
 import Paragraph from '../paragraph'
 import Section from '../section'
 import Title from '../title'
@@ -28,6 +29,7 @@ const plugins = [
     Section({}),
     Admonition({}),
     ...list.plugins,
+    Media({}),
     Toolbar({}),
 ]
 
