@@ -255,14 +255,30 @@ class Root extends React.Component {
         user: null,
     }
 
+    componentDidMount() {
+        this.authorize()
+    }
+
     render() {
-        return <Router>
+        return this.state.user === null ? <span>Logging in</span> : <Router>
             <Switch>
                 <Route exact path="/" component={Modules} />
                 <Route exact path="/new" component={New} />
                 <Route exact path="/:id" component={App} />
             </Switch>
         </Router>
+    }
+
+    async authorize() {
+        const req = await fetch('/user', { credentials: 'same-origin' })
+        if (req.status === 401) {
+            window.location = '/login'
+            return
+        }
+
+        const user = await req.json()
+
+        this.setState({ user })
     }
 }
 
