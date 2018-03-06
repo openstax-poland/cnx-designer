@@ -85,10 +85,9 @@ class Modules extends React.Component {
     }
 
     async load() {
-        const headers = new Headers()
-        headers.set('X-Api-Key', localStorage.getItem('api-key'))
-
-        const rsp = await fetch('/user/contents', { headers })
+        const rsp = await fetch('/user/contents', {
+            credentials: 'same-origin',
+        })
         const modules = await rsp.json()
 
         this.setState({ modules })
@@ -118,46 +117,15 @@ class Modules extends React.Component {
 class Root extends React.Component {
     state = {
         user: null,
-        key: localStorage.getItem('api-key'),
-    }
-
-    componentDidMount() {
-        this.authenticate()
     }
 
     render() {
-        if (this.state.key === null) {
-            return <div>Connecting</div>
-        }
-
         return <Router>
             <React.Fragment>
                 <Route exact path="/" component={Modules} />
                 <Route exact path="/:id" component={App} />
             </React.Fragment>
         </Router>
-    }
-
-    async authenticate() {
-        const headers = new Headers()
-        let { key } = this.state
-
-        if (window.location.search.startsWith('?token=')) {
-            const [, token] = window.location.search.split('=')
-            key = token
-            localStorage.setItem('api-key', token)
-            this.setState({ key: token })
-        }
-
-        if (key !== null) {
-            headers.set('X-Api-Key', key)
-            const req = await fetch('/user', { headers })
-            const user = await req.json()
-            this.setState({ user })
-            return
-        }
-
-        window.location = '/application/3/token?callback=/'
     }
 }
 
