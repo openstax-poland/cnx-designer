@@ -1,0 +1,69 @@
+div.new
+    font-family: Noto sans, sans
+
+    max-width: 8 * 64px
+    width: 100%
+
+    margin-left: auto
+    margin-right: auto
+
+    padding: 24px 16px
+
+    > form
+        display: flex
+        flex-direction: column
+
+    label
+        margin-top: 12px
+
+        > :first-child
+            display: block
+            font-size: 13px
+            color: rgba(#000, 0.54)
+
+        > input
+            margin-top: 4px
+
+    input
+        font-family: unset
+        border: none
+        outline: none
+        padding: 0
+        width: 100%
+
+        &[type="text"]
+        &[type="url"]
+        &[type="number"]
+            margin-top: 12px
+            margin-bottom: 5px
+            padding-bottom: 4px
+            border-bottom: 1px solid rgba(#000, 0.12)
+
+    button
+    input[type="submit"]
+        text-align: center
+        background-color: #fafafa
+
+        &:hover:not(:disabled)
+            background-color alpha(#999, 0.4)
+
+        height: 24px
+        margin: 8px 8px 8px 8px
+        padding: 0 8px 0 8px
+        border: none
+        outline: none
+
+        text-transform: uppercase
+
+        font-size: 14px
+
+    div.file
+        height: 48px
+        display: grid
+
+        ~ div.file
+            border-top: 1px solid rgba(#000, 0.12)
+
+        > :nth-child(2)
+            color: rgba(#000, 0.54)
+            font-style: italic
