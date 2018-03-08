@@ -10,19 +10,25 @@ export function consolidate(actions, flatten=false) {
     }
     const result = []
 
-    function insertInto(group, item) {
+    function insertInto(into, item) {
         if (!item.title) {
-            group.items.push(item)
+            into.items.push(item)
             return
         }
-        if (!(item.title in group.map)) {
+        if (!(item.title in into.map)) {
             if (item.$$typeof === GROUP) {
+                if (flatten) {
+                    mergeGroups(into, item)
+                    return
+                }
+
                 const items = []
-                group.map[item.title] = { map: {}, items }
-                group.item.push(group(group.title, null, items))
+                into.map[item.title] = { map: {}, items }
+                into.items.push(group(item.title, null, items))
+                mergeGroups(into.map[item.title], item)
             } else {
-                group.map[item.title] = item
-                group.items.push(item)
+                into.map[item.title] = item
+                into.items.push(item)
             }
             return
         }
