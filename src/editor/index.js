@@ -11,9 +11,9 @@ import Marks from '../marks'
 import Media from '../media'
 import Paragraph from '../paragraph'
 import Section from '../section'
+import Storage from '../storage/plugin'
 import Title from '../title'
 import Toolbar from '../toolbar'
-import Storage from '../storage/plugin'
 
 import * as uuid from '../uuid'
 setKeyGenerator(uuid.v4)
@@ -43,7 +43,7 @@ export default class Editor extends Component {
         value: Value.create(),
     }
 
-    plugins = [...plugins, Storage({ storage: this.props.storage })]
+    plugins = [Storage({ storage: this.props.storage }), ...plugins]
 
     onChange = ({ value }) => {
         this.setState({ value })
