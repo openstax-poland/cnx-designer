@@ -15,11 +15,13 @@ export default () => ({
                 <MenuBar
                     actions={actions}
                     value={value}
+                    editor={editor}
                     onChange={editor.onChange}
                     />
                 <ToolBar
                     actions={actions}
                     value={value}
+                    editor={editor}
                     onChange={editor.onChange}
                     />
             </div>

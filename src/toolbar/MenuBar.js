@@ -3,8 +3,23 @@ import React from 'react'
 import * as model from '../actions/model'
 import { consolidate } from '../actions/util'
 
+import Action from './Action'
+
 
 const MAC = window.navigator.platform.match(/Mac/) !== null
+
+
+const MenuAction = Action(({ action, ...props }) => {
+    const key = action.key ? renderKey(action.key) : null
+
+    return <div
+        className="item"
+        {...props}
+        >
+        <span className="title">{action.title}</span>
+        {key}
+    </div>
+})
 
 
 export default class MenuBar extends React.Component {
@@ -96,79 +111,57 @@ class Menu extends React.Component {
     [model.ACTION](action) {
         const { value, onChange, dismiss } = this.props
 
-        return <Action
+        return <MenuAction
             key={action.title}
             action={action}
             value={value}
             onChange={onChange}
-            dismiss={dismiss}
+            onClick={dismiss}
             />
     }
 }
 
 
 class SubMenu extends React.Component {
+    state = {
+        open: false,
+    }
+
     render() {
         const { menu, value, onChange } = this.props
 
         return <div>
-            <span>{menu.title}</span>
-            <Menu menu={menu} value={value} onChange={onChange} />
+            <div className="item" onClick={this.openMenu}>
+                <span className="title">{menu.title}</span>
+                <i className="material-icons">arrow_right</i>
+            </div>
+            <Menu
+                menu={menu}
+                value={value}
+                open={this.state.open}
+                onChange={onChange}
+                />
         </div>
+    }
+
+    onOpenMenu = ev => {
+        this.setState({ open: true })
     }
 }
 
 
-class Action extends React.Component {
-    onMouseDown = ev => {
-        ev.preventDefault()
-    }
+function renderKey(key) {
+    const parts = key.replace(/\b\w/g, x => x.toUpperCase()).split('+')
 
-    onMouseUp = ev => {
-        ev.preventDefault()
-
-        const { action, value } = this.props
-        const change = value.change().call(action.action)
-
-        this.props.onChange(change)
-        this.props.dismiss()
-    }
-
-    render() {
-        const { action, value } = this.props
-
-        const key = action.key ? this.renderKey(action.key) : null
-        const disabled = action.enabled && !action.enabled(value)
-
-        /*if (attrs.toggle) {
-            const active = action.active ? action.active(value) : false
-            attrs['data-active'] = active
-        }*/
-
-        return <div
-            className="item"
-            data-disabled={disabled}
-            onMouseDown={this.onMouseDown}
-            onMouseUp={this.onMouseUp}
-            >
-            <span className="title">{action.title}</span>
-            {key}
-        </div>
-    }
-
-    renderKey(key) {
-        const parts = key.replace(/\b\w/g, x => x.toUpperCase()).split('+')
-
-        if (parts[0] === 'Mod') {
-            if (MAC) {
-                const i = parts.length - 2
-                parts.shift()
-                parts[i] = '\u2318' + parts[i]
-            } else {
-                parts[0] = 'Ctrl'
-            }
+    if (parts[0] === 'Mod') {
+        if (MAC) {
+            const i = parts.length - 2
+            parts.shift()
+            parts[i] = '\u2318' + parts[i]
+        } else {
+            parts[0] = 'Ctrl'
         }
-
-        return <span className="key">{parts.join('+')}</span>
     }
+
+    return <span className="key">{parts.join('+')}</span>
 }

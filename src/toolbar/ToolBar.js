@@ -3,21 +3,28 @@ import React from 'react'
 import * as model from '../actions/model'
 import { consolidate } from '../actions/util'
 
+import Action from './Action'
+
+
+const ActionButton = Action(({ action, ...props }) =>
+    <button {...props}>
+        <i className="material-icons">{action.icon}</i>
+    </button>
+)
+
 
 export default class ToolBar extends React.Component {
-    state = {
-        actions: consolidate(this.props.actions, true),
-    }
+    actions = consolidate(this.props.actions, true)
 
     render() {
-        const { actions } = this.state
-
         return <div className="toolbar">
-            {actions.map(action => this.renderAction(action))}
+            {this.actions.map(action => this.renderAction(action))}
         </div>
     }
 
     renderAction(action) {
+        const { value, editor, onChange } = this.props
+
         switch (action.$$typeof) {
         case model.GROUP:
             return <div key={action.id} className="group">
@@ -25,11 +32,12 @@ export default class ToolBar extends React.Component {
             </div>
 
         case model.ACTION:
-            return <Action
+            return <ActionButton
                 key={action.title}
                 action={action}
-                value={this.props.value}
-                onChange={this.props.onChange}
+                value={value}
+                editor={editor}
+                onChange={onChange}
                 />
 
         case model.WIDGET:
@@ -40,42 +48,5 @@ export default class ToolBar extends React.Component {
         default:
             throw new Error("Invalid value")
         }
-    }
-}
-
-
-class Action extends React.Component {
-    onMouseDown = ev => {
-        ev.preventDefault()
-    }
-
-    onMouseUp = ev => {
-        ev.preventDefault()
-
-        const { action, value } = this.props
-        const change = value.change().call(action.action)
-        this.props.onChange(change)
-    }
-
-    render() {
-        const { action, value } = this.props
-
-        const attrs = {
-            disabled: action.enabled ? !action.enabled(value) : false,
-            title: action.title,
-        }
-
-        if (action.attrs.toggle) {
-            const active = action.active ? action.active(value) : false
-            attrs['data-active'] = active
-        }
-
-        return <button
-            onMouseDown={this.onMouseDown}
-            onMouseUp={this.onMouseUp}
-            {...attrs}
-            >
-            <i className="material-icons">{action.icon}</i>
-        </button>
     }
 }
