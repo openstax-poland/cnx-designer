@@ -253,6 +253,7 @@ class New extends React.Component {
 class Root extends React.Component {
     state = {
         user: null,
+        error: null,
     }
 
     componentDidMount() {
@@ -260,6 +261,10 @@ class Root extends React.Component {
     }
 
     render() {
+        if (this.state.error !== null) {
+            return <div>{this.state.error}</div>
+        }
+
         return this.state.user === null ? <span>Logging in</span> : <Router>
             <Switch>
                 <Route exact path="/" component={Modules} />
@@ -273,6 +278,9 @@ class Root extends React.Component {
         const req = await fetch('/user', { credentials: 'same-origin' })
         if (req.status === 401) {
             window.location = '/login'
+            return
+        } else if (!req.ok) {
+            this.setState({ error: `${req.status} — ${req.statusText}` })
             return
         }
 
