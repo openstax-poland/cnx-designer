@@ -114,12 +114,20 @@ class Modules extends React.Component {
 }
 
 
+const EMPTY = title => `<?xml version="1.0" encoding="utf-8"?>
+<document xmlns="http://cnx.rice.edu/cnxml" cnxml-version="0.7" id="new" module-id="new" xml:lang="en">
+    <title>${title}</title>
+    <content><para/></content>
+</document>`
+
+
 class New extends React.Component {
     state = {
         license: undefined,
         stage: 'license',
         title: "",
         files: [],
+        hasIndexCnxml: false,
     }
 
     componentDidMount() {
@@ -137,10 +145,13 @@ class New extends React.Component {
     }
 
     renderForm() {
+        const { hasIndexCnxml, title } = this.state
+        const disabled = title.length === 0
+
         return <form onSubmit={this.submit}>
             <input
                 type="text"
-                value={this.state.value}
+                value={title}
                 placeholder="Title"
                 onChange={ev =>
                     this.setState({ title: ev.target.value })
@@ -168,10 +179,14 @@ class New extends React.Component {
                     onChange={this.onFiles}
                     />
                 <button onClick={this.addFiles}>Add files</button>
+                {hasIndexCnxml ? null : <div>
+                    A file named index.cnxml is required.
+                </div>}
                 {this.state.files.map(file => this.renderFile(file))}
             </div>
 
-            <input type="submit" value="Create" />
+            <input type="submit" value="Upload and create" disabled={disabled || !hasIndexCnxml} />
+            <input type="submit" value="Create empty" disabled={disabled} onClick={this.onCreateEmpty} />
         </form>
     }
 
@@ -180,6 +195,17 @@ class New extends React.Component {
             <span>{file.name}</span>
             <span>{type}</span>
         </div>
+    }
+
+    onCreateEmpty = ev => {
+        ev.preventDefault()
+        this.setState(({ title }) => ({
+            stage: 'create',
+            files: [{
+                file: new File([EMPTY(title)], 'index.cnxml', { type: 'application/vnd.openstax.cnx+xml'} ),
+                type: 'application/vnd.openstax.cnx+xml',
+            }]
+        }), this.create)
     }
 
     submit = ev => {
@@ -195,18 +221,20 @@ class New extends React.Component {
 
     onFiles = ev => {
         const files = []
+        let hasIndexCnxml = false
 
         for (const file of ev.target.files) {
             let type = file.type
 
             if (type === '' && file.name === 'index.cnxml') {
                 type = 'application/vnd.openstax.cnx+xml'
+                hasIndexCnxml = true
             }
 
             files.push({ file, type })
         }
 
-        this.setState({ files })
+        this.setState({ files, hasIndexCnxml })
     }
 
     async loadLicenses() {
