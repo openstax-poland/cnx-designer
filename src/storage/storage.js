@@ -1,6 +1,18 @@
 import CNXML from '../cnxml'
 
 
+class RequestError extends Error {
+    constructor(response) {
+        super(`${response.status} ${response.statusText}`)
+        this.response = response
+    }
+
+    get status() {
+        return this.response.status
+    }
+}
+
+
 export default class Storage {
     /**
      * Load a document by ID.
@@ -57,7 +69,17 @@ export default class Storage {
      * Write a file.
      */
     async writeFile(file) {
-        // TODO: implement
+        const req = await fetch(this.url + '/files/' + file.name, {
+            method: 'PUT',
+            credentials: 'same-origin',
+            body: file,
+        })
+
+        if (!req.ok) {
+            throw new RequestError(req)
+        }
+
+        this.files.push({ name: file.name, mime: file.type })
     }
 
     /**
@@ -78,6 +100,7 @@ export default class Storage {
         const req = await fetch(this.url + path, {
             credentials: 'same-origin',
         })
+
         return await req[data]()
     }
 }
