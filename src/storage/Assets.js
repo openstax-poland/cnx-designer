@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Modal from '../components/Modal'
 
 import Storage from './storage'
+import Upload from './Upload'
 
 
 const KNOWN_MIME = ['image']
@@ -13,9 +14,18 @@ const MEDIA_MIME = ['audio', 'image', 'video']
 export default class Assets extends React.Component {
     render() {
         return <div className="assets">
+            <div className="toolbar">
+                <button onClick={this.onAddMedia}>
+                    <i class="material-icons">add</i>
+                </button>
+            </div>
             <div className="content">
                 {this.renderAssets()}
             </div>
+
+            <Modal ref={upload => this.upload = upload}>
+                <Upload onUploaded={this.onUploaded} />
+            </Modal>
         </div>
     }
 
@@ -63,6 +73,19 @@ export default class Assets extends React.Component {
 
     onClick = asset => ev => {
         this.props.onSelect(asset)
+    }
+
+    onAddMedia = () => {
+        this.upload.open()
+    }
+
+    onUploaded = succeess => {
+        if (succeess) {
+            this.upload.close()
+        }
+        // XXX: Since Storage is mutable there's nothing we can update in state
+        // to cause rerender, and thus we have to force it.
+        this.forceUpdate()
     }
 
     static contextTypes = {

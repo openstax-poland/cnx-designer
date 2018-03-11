@@ -9,6 +9,44 @@ div.assets
 
     background-color: #fafafa
 
+    > div.toolbar
+        z-index: 3
+        position: relative
+
+        display: flex
+        align-items: center
+        flex-direction: row-reverse
+
+        height: 36px
+        padding-left: 16px
+        padding-right: 16px
+
+        background-color #fafafa
+        box-shadow: 0 2px 4px 2px alpha(#333, 0.4)
+
+        button
+            width: 32px
+            height: 32px
+            padding: 6px
+            margin: 0
+
+            border-radius 50%
+            background-color: #fafafa
+            border: none
+
+            text-align: center
+
+            &:hover:not(:disabled)
+                cursor: pointer
+                background-color alpha(#999, 0.4)
+
+            &:disabled
+            &[data-active="false"]
+                color: rgba(#000, 0.38)
+
+            i.material-icons
+                font-size: 20px
+
     > div.content
         // Prevent container from overflowing screen
         max-height: 100%
