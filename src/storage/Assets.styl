@@ -1,9 +1,13 @@
 div.assets
+    display: flex
+    flex-direction: column
+
     height: 100%
     width: 100%
-    max-width: 320px
+    min-width: 360px
+    max-width: 50%
 
-    float: right
+    margin-left: auto
 
     box-shadow: 0 8px 16px 8px alpha(#333, 0.4)
 
@@ -48,13 +52,18 @@ div.assets
                 font-size: 20px
 
     > div.content
-        // Prevent container from overflowing screen
-        max-height: 100%
+        display: flex
+        flex-wrap: wrap
+
         overflow-y: auto
+        flex: 1
 
     div.asset
         margin: 8px
+        min-width: 180px
+        max-width: 360px
         max-height: 160px
+        flex: 1
 
         &:hover
             cursor: pointer
