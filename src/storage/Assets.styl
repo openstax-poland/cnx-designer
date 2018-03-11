@@ -1,0 +1,101 @@
+div.assets
+    display: flex
+    flex-direction: column
+
+    height: 100%
+    width: 100%
+    min-width: 360px
+    max-width: 50%
+
+    margin-left: auto
+
+    box-shadow: 0 8px 16px 8px alpha(#333, 0.4)
+
+    background-color: #fafafa
+
+    > div.toolbar
+        z-index: 3
+        position: relative
+
+        display: flex
+        align-items: center
+        flex-direction: row-reverse
+
+        height: 36px
+        padding-left: 16px
+        padding-right: 16px
+
+        background-color #fafafa
+        box-shadow: 0 2px 4px 2px alpha(#333, 0.4)
+
+        button
+            width: 32px
+            height: 32px
+            padding: 6px
+            margin: 0
+
+            border-radius 50%
+            background-color: #fafafa
+            border: none
+
+            text-align: center
+
+            &:hover:not(:disabled)
+                cursor: pointer
+                background-color alpha(#999, 0.4)
+
+            &:disabled
+            &[data-active="false"]
+                color: rgba(#000, 0.38)
+
+            i.material-icons
+                font-size: 20px
+
+    > div.content
+        display: flex
+        flex-wrap: wrap
+
+        overflow-y: auto
+        flex: 1
+
+    div.asset
+        margin: 8px
+        min-width: 180px
+        max-width: 360px
+        max-height: 160px
+        flex: 1
+
+        &:hover
+            cursor: pointer
+            box-shadow: 0 2px 4px 2px alpha(#333, 0.4)
+
+        span.name
+            display: block
+
+    div.image
+        position: relative
+
+        img
+            display: block
+            max-width: 100%
+            min-width: 100%
+            max-height: 100%
+            min-height: 100%
+            height: -webkit-fill-available
+            height: -moz-available
+            object-fit: cover
+
+        span
+            position: absolute
+            left: 0
+            right: 0
+            bottom: 0
+
+            padding: 8px 16px
+            background-color: alpha(#fff, 0.8)
+
+    div.unknown
+        padding: 8px 16px
+
+        span.mime
+            color: rgba(#000, 0.54)

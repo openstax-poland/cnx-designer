@@ -54,6 +54,13 @@ export default class Storage {
     }
 
     /**
+     * Write a file.
+     */
+    async writeFile(file) {
+        // TODO: implement
+    }
+
+    /**
      * Check if a {@link Value} is current.
      */
     current(value) {
