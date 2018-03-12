@@ -112,6 +112,31 @@ function insertSubfigure(change, media) {
 }
 
 
+function insertCaption(change) {
+    const document = change.value.document
+
+    let node = change.value.blocks.first()
+    for (; node ; node = document.getParent(node.key)) {
+        if (node.type !== 'figure') continue
+        if (node.nodes.last().type === 'figure_caption') continue
+
+        // We can't rely on normalization to add this text block, as it will run
+        // after our call to collapseToStartOf.
+        const caption_text = Text.create()
+        const caption = Block.create({
+            type: 'figure_caption',
+            nodes: [caption_text],
+        })
+
+        const index = node.nodes.size
+        change.insertNodeByKey(node.key, index, caption)
+        change.collapseToStartOf(caption)
+
+        break
+    }
+}
+
+
 export default <group category="Insert" title="Figure">
     <action
         title="Figure"
@@ -124,5 +149,10 @@ export default <group category="Insert" title="Figure">
         enabled={value => findFigure(value) !== null}
         action={insertSubfigure}
         handler={AssetSelector}
+        />
+    <action
+        title="Add caption"
+        enabled={value => findFigure(value) !== null}
+        action={insertCaption}
         />
 </group>
