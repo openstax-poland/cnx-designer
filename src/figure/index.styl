@@ -29,3 +29,7 @@ figure
 
     > figure
         margin: 0
+        counter-increment: subfigure
+
+        > figcaption::before
+            content '(' counter(subfigure, lower-latin) ') '
