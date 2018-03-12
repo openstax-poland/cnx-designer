@@ -17,9 +17,6 @@ div.menubar
                 cursor: pointer
                 background-color: rgba(#000, 0.1)
 
-        > div.menu
-            position: absolute
-
     > div.overlay
         z-index: -1
         position: fixed
@@ -33,6 +30,7 @@ div.menubar
 
 div.menu
     z-index: 8
+    position: absolute
 
     width: 5 * 64px
     padding: 8px 0 8px 0
@@ -54,10 +52,10 @@ div.menu
 
         user-select: none
 
-        &[data-disabled="true"]
+        &[disabled]
             color: rgba(#000, 0.38)
 
-        &:not([data-disabled="true"]):hover
+        &:not([disabled]):hover
             cursor: pointer
             background-color: rgba(#000, 0.1)
 
@@ -70,3 +68,10 @@ div.menu
         margin-top: 11px
         padding-top: 12px
         border-top: 1px solid rgba(#000, 0.12)
+
+    div.sub-menu
+        position: relative
+
+        > div.menu
+            top: 0
+            right: calc(-100% + 24px)
