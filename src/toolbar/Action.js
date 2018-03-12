@@ -15,6 +15,12 @@ export default Widget => class Action extends React.Component {
     onMouseUp = ev => {
         ev.preventDefault()
 
+        // TODO: move this to props?
+        const { action, value } = this.props
+        if (action.enabled && !action.enabled(value)) {
+            return
+        }
+
         // Notify about click. Menu uses this to close itself.
         const { onClick } = this.props
         if (onClick) onClick()
