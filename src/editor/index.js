@@ -15,6 +15,8 @@ import Storage from '../storage/plugin'
 import Title from '../title'
 import Toolbar from '../toolbar'
 
+import SnackBar from '../components/SnackBar'
+
 import * as uuid from '../uuid'
 setKeyGenerator(uuid.v4)
 
@@ -50,13 +52,13 @@ export default class Editor extends Component {
     }
 
     render() {
-        return <React.Fragment>
+        return <SnackBar>
             <Slate.Editor
                 className="editor"
                 value={this.state.value}
                 plugins={this.plugins}
                 onChange={this.onChange}
                 />
-        </React.Fragment>
+        </SnackBar>
     }
 }
