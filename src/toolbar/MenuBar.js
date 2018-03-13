@@ -130,8 +130,11 @@ class SubMenu extends React.Component {
     render() {
         const { menu, value, onChange } = this.props
 
-        return <div>
-            <div className="item" onClick={this.openMenu}>
+        return <div className="sub-menu">
+            <div className="item"
+                onMouseDown={this.onMouseDown}
+                onMouseUp={this.onMouseUp}
+                >
                 <span className="title">{menu.title}</span>
                 <i className="material-icons">arrow_right</i>
             </div>
@@ -144,7 +147,10 @@ class SubMenu extends React.Component {
         </div>
     }
 
-    onOpenMenu = ev => {
+    // Prevent focus from moving
+    onMouseDown = ev => ev.preventDefault()
+
+    onMouseUp = () => {
         this.setState({ open: true })
     }
 }

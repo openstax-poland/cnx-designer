@@ -16,7 +16,7 @@ export default class Assets extends React.Component {
         return <div className="assets">
             <div className="toolbar">
                 <button onClick={this.onAddMedia}>
-                    <i class="material-icons">add</i>
+                    <i className="material-icons">add</i>
                 </button>
             </div>
             <div className="content">
