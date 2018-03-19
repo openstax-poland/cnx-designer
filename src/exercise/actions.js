@@ -7,6 +7,14 @@ import createMenu from '../actions'
 import * as utils from './utils'
 
 
+function insertExercise(change) {
+    change.withoutNormalization(change => {
+        change.wrapBlock('exercise')
+        change.wrapBlock('exercise_problem')
+    })
+}
+
+
 function insertSolution(change) {
     const exercise = utils.getCurrentExercise(change.value)
 
@@ -47,6 +55,10 @@ function insertCommentary(change) {
 
 
 export default <group category="Insert" title="Exercise">
+    <action
+        title="Exercise"
+        action={insertExercise}
+        />
     <action
         title="Solution"
         action={insertSolution}
