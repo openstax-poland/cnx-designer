@@ -128,7 +128,7 @@ class SubMenu extends React.Component {
     }
 
     render() {
-        const { menu, value, onChange } = this.props
+        const { menu, value, onChange, dismiss } = this.props
 
         return <div className="sub-menu">
             <div className="item"
@@ -143,6 +143,7 @@ class SubMenu extends React.Component {
                 value={value}
                 open={this.state.open}
                 onChange={onChange}
+                dismiss={dismiss}
                 />
         </div>
     }
