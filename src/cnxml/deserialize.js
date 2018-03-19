@@ -107,6 +107,8 @@ const BLOCK_TAGS = {
     exercise: 'exercise',
     figure: 'figure',
     image: image,
+    item: 'list_item',
+    list: list,
     media: media,
     note: admonition,
     para: text('paragraph'),
@@ -160,6 +162,17 @@ function emphasis(el) {
 
     return {
         type: EFFECTS[el.getAttribute('effect') || 'bold'] || 'strong',
+    }
+}
+
+
+/**
+ * Process data for list nodes.
+ */
+function list(el, next) {
+    return {
+        type: el.getAttribute('type') === 'enumerated' ? 'ol_list' : 'ul_list',
+        nodes: next(Array.from(el.children)),
     }
 }
 
