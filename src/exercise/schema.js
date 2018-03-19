@@ -47,19 +47,26 @@ function normalizeExercise(change, violation, context) {
             return
         }
         break
+
+    default:
+        console.warn('Unhandled exercise violation:', violation)
+        break
     }
 }
 
 
 function normalizeContent(change, violation, context) {
     const { node } = context
-    console.log('normalize content', violation, context)
 
     switch (violation) {
     // Problems, solutions, and commentaries make no sense outside an exercise.
     // Should it happen however, just replace it with its contents.
     case PARENT_TYPE_INVALID:
         change.unwrapBlockByKey(node.key)
+        break
+
+    default:
+        console.warn('Unhandled exercise content violation:', violation)
         break
     }
 }
