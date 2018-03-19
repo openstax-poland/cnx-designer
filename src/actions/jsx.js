@@ -33,7 +33,11 @@ export function createBuilder(native) {
         case 'action':  return createAction(attributes, children)
         }
 
-        if (typeof type === 'function' && type.name.match(/^\w/)) {
+        // In React all class components must extend React.Component, in which
+        // case their prototype will be React.Component.prototype. For all
+        // functions and root classes it will be Function.prototype.
+        const isClass = Reflect.getPrototypeOf(type) !== Function.prototype
+        if (typeof type === 'function' && !isClass) {
             return createWidget(type, { children, ...attributes })
         }
 
