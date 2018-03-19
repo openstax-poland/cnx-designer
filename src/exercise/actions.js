@@ -28,10 +28,36 @@ function insertSolution(change) {
 }
 
 
+function insertCommentary(change) {
+    const exercise = utils.getCurrentExercise(change.value)
+
+    const text = Text.create()
+    const block = Block.create({
+        type: 'paragraph',
+        nodes: [text],
+    })
+    const commentary = Block.create({
+        type: 'exercise_commentary',
+        nodes: [block],
+    })
+
+    change.insertNodeByKey(exercise.key, exercise.nodes.size, commentary)
+    change.collapseToStartOf(block)
+}
+
+
 export default <group category="Insert" title="Exercise">
     <action
         title="Solution"
         action={insertSolution}
         enabled={value => utils.getCurrentExercise(value) !== null}
+        />
+    <action
+        title="Commentary"
+        action={insertCommentary}
+        enabled={value => {
+            const exercise = utils.getCurrentExercise(value)
+            return exercise && exercise.nodes.last().type !== 'exercise_commentary'
+        }}
         />
 </group>
