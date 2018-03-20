@@ -61,10 +61,13 @@ const BLOCK_TAGS = {
     figure: figure,
     figure_caption: 'caption',
     image: 'image',
+    list_item: 'item',
     media: 'media',
+    ol_list: list,
     paragraph: 'para',
     section: 'section',
     title: 'title',
+    ul_list: list,
 }
 
 
@@ -106,6 +109,18 @@ function figure(obj, children) {
             type: 'subfigure',
         })}
     </figure>
+}
+
+
+/**
+ * Serializer for lists.
+ */
+function list(obj, children) {
+    const type = obj.type === 'ul_list' ? 'enumerated' : 'bulleted'
+
+    return <list list-type={type}>
+        {children}
+    </list>
 }
 
 

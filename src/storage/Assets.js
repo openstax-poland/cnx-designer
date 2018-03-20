@@ -5,12 +5,15 @@ import Modal from '../components/Modal'
 
 import Storage from './storage'
 import Upload from './Upload'
+import * as utils from './utils'
 
 
 const KNOWN_MIME = ['image']
-const MEDIA_MIME = ['audio', 'image', 'video']
 
 
+/**
+ * @prop filter string MIME pattern
+ */
 export default class Assets extends React.Component {
     render() {
         return <div className="assets">
@@ -24,13 +27,14 @@ export default class Assets extends React.Component {
             </div>
 
             <Modal ref={upload => this.upload = upload}>
-                <Upload onUploaded={this.onUploaded} />
+                <Upload accept={this.props.filter} onUploaded={this.onUploaded} />
             </Modal>
         </div>
     }
 
     renderAssets() {
-        const filter = this.props.filter || (() => true)
+        const pattern = utils.mimeToRegExp(this.props.filter || '*/*')
+        const filter = ({ mime }) => mime.match(filter) !== null
 
         return this.context.storage.files.filter(filter).map(file =>
             <React.Fragment key={file.name}>
@@ -92,5 +96,5 @@ export default class Assets extends React.Component {
         storage: PropTypes.instanceOf(Storage),
     }
 
-    static media = ({ mime }) => MEDIA_MIME.includes(mime.split('/', 1)[0])
+    static media = 'audio/*,image/*,video/*'
 }
