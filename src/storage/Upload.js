@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Map } from 'immutable'
 
 import Storage from './storage'
+import * as utils from './utils'
 
 
 const PREPARE = Symbol()
@@ -10,6 +11,9 @@ const UPLOADING = Symbol()
 const RESULT = Symbol()
 
 
+/**
+ * @prop accept string MIME pattern
+ */
 export default class Upload extends React.Component {
     state = {
         files: new Map(),
@@ -20,8 +24,13 @@ export default class Upload extends React.Component {
     }
 
     addFiles(newFiles) {
+        const pattern = utils.mimeToRegExp(this.props.accept)
+        const filter = ([_, file]) => file.type.match(pattern) !== null
+
         this.setState(({ files }) => ({
-            files: files.merge(Array.from(newFiles, file => [file.name, file])),
+            files: files.merge(
+                Array.from(newFiles, file => [file.name, file]).filter(filter),
+            ),
         }))
     }
 
@@ -72,6 +81,7 @@ export default class Upload extends React.Component {
             <input multiple
                 ref={input => this.input = input}
                 type="file"
+                accept={this.props.accept}
                 onChange={this.onFilesSelected}
                 />
             <button disabled={files.isEmpty() || uploading} onClick={this.onUpload}>
