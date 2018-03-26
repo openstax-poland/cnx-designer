@@ -23,7 +23,16 @@ export default {
                             ...context.node.data.toJS(),
                             depth: 0,
                         }})
+                        break
+
+                    default:
+                        return
                     }
+                    break
+
+                default:
+                    console.warn('Unhandled header violation:', violation)
+                    break
                 }
             },
         },

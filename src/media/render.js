@@ -12,6 +12,7 @@ class Image extends React.Component {
             className="image"
             data-selected={selected}
             src={this.context.storage.mediaUrl(src)}
+            alt=""
             {...attributes}
             />
     }
@@ -30,5 +31,8 @@ export default function renderNode({ node, attributes, isSelected }) {
             attributes={attributes}
             selected={isSelected}
             />
+
+    default:
+        return
     }
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 /**
  * @prop action
  * @prop value
@@ -34,8 +33,6 @@ export default Widget => class Action extends React.Component {
 
     render() {
         const { action, value, editor } = this.props
-
-        const className = "action"
 
         const attrs = {
             disabled: action.enabled ? !action.enabled(value) : false,

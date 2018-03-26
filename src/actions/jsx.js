@@ -31,6 +31,7 @@ export function createBuilder(native) {
         switch (type) {
         case 'group':   return createGroup(attributes, children)
         case 'action':  return createAction(attributes, children)
+        default:        break
         }
 
         // In React all class components must extend React.Component, in which
