@@ -1,5 +1,3 @@
-import { Block, Range } from 'slate'
-
 import * as utils from './utils'
 
 

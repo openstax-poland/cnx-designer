@@ -1,4 +1,3 @@
-import { Node } from 'slate'
 import {
     CHILD_UNKNOWN,
     PARENT_TYPE_INVALID,
@@ -6,7 +5,7 @@ import {
 
 
 function normalizeFigure(change, violation, context) {
-    const { node, index, child } = context
+    const { child } = context
 
     switch (violation) {
     // Unwrap invalid nodes outside a figure.

@@ -34,7 +34,7 @@ export default class Assets extends React.Component {
 
     renderAssets() {
         const pattern = utils.mimeToRegExp(this.props.filter || '*/*')
-        const filter = ({ mime }) => mime.match(filter) !== null
+        const filter = ({ mime }) => mime.match(pattern) !== null
 
         return this.context.storage.files.filter(filter).map(file =>
             <React.Fragment key={file.name}>
@@ -53,7 +53,7 @@ export default class Assets extends React.Component {
         switch (type) {
         case 'image':
             content = <React.Fragment>
-                <img src={this.context.storage.mediaUrl(asset.name)} />
+                <img src={this.context.storage.mediaUrl(asset.name)} alt="" />
                 <span className="name">{asset.name}</span>
             </React.Fragment>
             break

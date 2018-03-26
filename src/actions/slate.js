@@ -1,5 +1,3 @@
-import { consolidate } from './util'
-
 /**
  * Derive set of all actions from a Slate plugin stack.
  */
@@ -13,5 +11,4 @@ export function deriveActions(plugins) {
     }
 
     return actions
-    // return consolidate(actions)
 }

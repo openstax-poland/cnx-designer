@@ -85,21 +85,21 @@ export default {
         exercise_problem: {
             parent: { types: ['exercise'] },
             nodes: [
-                { types: ['paragraph'], min: 1 },
+                { types: ['paragraph', 'ul_list', 'ol_list'], min: 1 },
             ],
             normalize: normalizeContent,
         },
         exercise_solution: {
             parent: { types: ['exercise'] },
             nodes: [
-                { types: ['paragraph'], min: 1 },
+                { types: ['paragraph', 'ul_list', 'ol_list'], min: 1 },
             ],
             normalize: normalizeContent,
         },
         exercise_commentary: {
             parent: { types: ['exercise'] },
             nodes: [
-                { types: ['paragraph'], min: 1 },
+                { types: ['paragraph', 'ul_list', 'ol_list'], min: 1 },
             ],
             normalize: normalizeContent,
         },

@@ -62,6 +62,9 @@ export function consolidate(actions, flatten=false) {
         case WIDGET:
             insertInto(categories[null], item)
             break
+
+        default:
+            throw new Error('unreachable')
         }
     }
 

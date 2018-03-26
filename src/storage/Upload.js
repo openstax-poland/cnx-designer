@@ -228,7 +228,7 @@ class Preview extends React.Component {
 
     render() {
         if (this.url) {
-            return <img src={this.url} />
+            return <img src={this.url} alt="" />
         } else {
             return <div className="placeholder" />
         }
