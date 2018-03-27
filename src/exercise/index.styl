@@ -3,15 +3,18 @@ div.exercise
     margin-inline-start: calc(var(--margin-inline-start) - 12px)
     padding-inline-start: 8px
 
-    > * > :first-child::before
-        display block
-        color gray
+    > ::before
+        display: block
+        color: gray
 
-    > div.exercise-problem > :first-child::before
-        content 'Problem: '
+    > * > :first-child
+        margin-top: 0
 
-    > div.exercise-solution > :first-child::before
-        content 'Solution: '
+    > div.exercise-problem::before
+        content: 'Problem: '
 
-    > div.exercise-commentary > :first-child::before
-        content 'Commentary: '
+    > div.exercise-solution::before
+        content: 'Solution: '
+
+    > div.exercise-commentary::before
+        content: 'Commentary: '
