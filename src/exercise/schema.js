@@ -48,6 +48,11 @@ function normalizeExercise(change, violation, context) {
         }
         break
 
+    // Exercise was inserted into an invalid parent.
+    case PARENT_TYPE_INVALID:
+        change.unwrapNodeByKey(node.key)
+        break
+
     default:
         console.warn('Unhandled exercise violation:', violation)
         break
@@ -75,6 +80,7 @@ function normalizeContent(change, violation, context) {
 export default {
     blocks: {
         exercise: {
+            parent: { types: ['document', 'section'] },
             nodes: [
                 { types: ['exercise_problem'], min: 1, max: 1},
                 { types: ['exercise_solution'], min: 0 },
