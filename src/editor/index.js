@@ -15,6 +15,7 @@ import Storage from '../storage/plugin'
 import Title from '../title'
 import Toolbar from '../toolbar'
 
+import ErrorBoundary from './ErrorBoundary'
 import SnackBar from '../components/SnackBar'
 
 import * as uuid from '../uuid'
@@ -52,13 +53,15 @@ export default class Editor extends Component {
     }
 
     render() {
-        return <SnackBar>
-            <Slate.Editor
-                className="editor"
-                value={this.state.value}
-                plugins={this.plugins}
-                onChange={this.onChange}
-                />
-        </SnackBar>
+        return <ErrorBoundary>
+            <SnackBar>
+                <Slate.Editor
+                    className="editor"
+                    value={this.state.value}
+                    plugins={this.plugins}
+                    onChange={this.onChange}
+                    />
+            </SnackBar>
+        </ErrorBoundary>
     }
 }
