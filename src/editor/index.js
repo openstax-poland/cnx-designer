@@ -15,6 +15,7 @@ import Storage from '../storage/plugin'
 import Title from '../title'
 import Toolbar from '../toolbar'
 
+import * as A from '../actions/model'
 import ErrorBoundary from './ErrorBoundary'
 import SnackBar from '../components/SnackBar'
 
@@ -44,9 +45,20 @@ const plugins = [
 export default class Editor extends Component {
     state = {
         value: this.props.value,
+        crash: false,
     }
 
-    plugins = [Storage({ storage: this.props.storage }), ...plugins]
+    plugins = [
+        Storage({ storage: this.props.storage }),
+        ...plugins,
+        {
+            actions: A.group(null, 'Document', [
+                A.action('Crash', {
+                    action: () => this.setState({ crash: true }),
+                }),
+            ]),
+        },
+    ]
 
     onChange = ({ value }) => {
         this.setState({ value })
@@ -54,6 +66,7 @@ export default class Editor extends Component {
 
     render() {
         return <ErrorBoundary>
+            <Crash crash={this.state.crash}/>
             <SnackBar>
                 <Slate.Editor
                     className="editor"
@@ -64,4 +77,11 @@ export default class Editor extends Component {
             </SnackBar>
         </ErrorBoundary>
     }
+}
+
+function Crash({ crash }) {
+    if (crash) {
+        throw new Error("Hello, I'm an error!")
+    }
+    return null
 }
