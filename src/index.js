@@ -1,6 +1,7 @@
 // Keep this import first
 import './config'
 
+import Raven from 'raven-js'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
@@ -316,6 +317,7 @@ class Root extends React.Component {
         }
 
         const user = await req.json()
+        Raven.setUserContext({ id: user.id })
 
         this.setState({ user })
     }
