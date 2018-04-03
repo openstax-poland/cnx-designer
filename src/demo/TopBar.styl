@@ -1,0 +1,36 @@
+div.top-bar
+    @extend div.system-panels
+    @extend div.system-panels div.toolbar
+
+    display: flex
+    padding: 0 calc(50% - 24em)
+
+    > div.space
+        flex: 1
+
+    > div.profile
+        position: relative
+
+        width: 24px
+        height: 24px
+        margin: 6px
+        padding: 2px
+
+        text-align: center
+
+        border: 1px solid black
+        border-radius: 50%
+
+        cursor: pointer
+
+    div.profile-menu
+        position: absolute
+        right: 0
+
+        padding: 6px 12px
+
+        box-shadow: 0 8px 16px 8px alpha(#333, 0.4)
+        border-radius: 2px
+        background-color: #fafafa
+
+        white-space: nowrap
