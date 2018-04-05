@@ -10,6 +10,7 @@ import List from '../list'
 import Marks from '../marks'
 import Media from '../media'
 import Paragraph from '../paragraph'
+import Persistence from '../persistence'
 import Section from '../section'
 import Storage from '../storage/plugin'
 import Title from '../title'
@@ -46,7 +47,11 @@ export default class Editor extends Component {
         value: Value.create(),
     }
 
-    plugins = [Storage({ storage: this.props.storage }), ...plugins]
+    plugins = [
+        Storage({ storage: this.props.storage }),
+        ...plugins,
+        Persistence({ db: this.props.persist }),
+    ]
 
     onChange = ({ value }) => {
         this.setState({ value })
