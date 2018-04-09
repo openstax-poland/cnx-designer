@@ -2,6 +2,8 @@ import Raven from 'raven-js'
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
+import Load from '../components/Load'
+
 import TopBar from './TopBar'
 import ModuleList from './ModuleList'
 import ModuleView from './ModuleView'
@@ -12,26 +14,24 @@ const WithTopBar = (user, Component) => props => <React.Fragment>
     <Component user={user} {...props}/>
 </React.Fragment>
 
-export default class App extends React.Component {
-    state = {
-        user: null,
-        error: null,
+async function login() {
+    const req = await fetch('/user', { credentials: 'same-origin' })
+    if (req.status === 401) {
+        window.location = '/login'
+        return
+    } else if (!req.ok) {
+        throw new Error(`${req.status} — ${req.statusText}`)
     }
 
-    componentDidMount() {
-        this.authorize()
-    }
+    const user = await req.json()
+    Raven.setUserContext({ id: user.id })
 
+    return { user }
+}
+
+class App extends React.Component {
     render() {
-        const { user, error } = this.state
-
-        if (error !== null) {
-            return <div>{this.state.error}</div>
-        }
-
-        if (user === null) {
-            return <div>Logging in</div>
-        }
+        const { user } = this.props
 
         return <Router>
             <Switch>
@@ -41,20 +41,5 @@ export default class App extends React.Component {
             </Switch>
         </Router>
     }
-
-    async authorize() {
-        const req = await fetch('/user', { credentials: 'same-origin' })
-        if (req.status === 401) {
-            window.location = '/login'
-            return
-        } else if (!req.ok) {
-            this.setState({ error: `${req.status} — ${req.statusText}` })
-            return
-        }
-
-        const user = await req.json()
-        Raven.setUserContext({ id: user.id })
-
-        this.setState({ user })
-    }
 }
+export default Load(login)(App)

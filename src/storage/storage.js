@@ -30,8 +30,8 @@ export default class Storage {
         self.value = null
 
         const [data, files] = await Promise.all([
-            self._request('/'),
-            self._request('/files'),
+            self._request('/', 'json'),
+            self._request('/files', 'json'),
         ])
 
         self.title = data.name
@@ -46,8 +46,10 @@ export default class Storage {
      * @return {Value}
      */
     async read() {
-        const text = await this._request('/files/index.cnxml', 'text')
-        return this.value = CNXML.deserialize(text)
+        const index = await this._request('/files/index.cnxml')
+        this.tag = index.headers.get('ETag')
+        this.value = CNXML.deserialize(await index.text())
+        return this.value
     }
 
     /**
@@ -55,13 +57,21 @@ export default class Storage {
      */
     async write(value) {
         const text = CNXML.serialize(value, this.title)
+        const headers = new Headers()
+        headers.set('If-Match', this.tag)
 
         const req = await fetch(this.url + '/files/index.cnxml', {
             method: 'PUT',
             credentials: 'same-origin',
             body: text,
+            headers,
         })
 
+        if (!req.ok) {
+            throw new RequestError(req)
+        }
+
+        this.tag = req.headers.get('ETag')
         this.value = value
     }
 
@@ -96,11 +106,15 @@ export default class Storage {
         return this.url + '/files/' + name
     }
 
-    async _request(path, data='json') {
+    async _request(path, data=null) {
         const req = await fetch(this.url + path, {
             credentials: 'same-origin',
         })
 
-        return await req[data]()
+        if (!req.ok) {
+            throw new RequestError(req)
+        }
+
+        return data ? await req[data]() : req
     }
 }

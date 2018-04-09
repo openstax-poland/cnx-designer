@@ -2,3 +2,17 @@ div.module-list
     max-width: 48em
     width: 100%
     margin: 0 auto
+
+    > a
+        display: flex
+        align-items: center
+
+        padding: 0 12px
+        border-radius: 1px
+
+        > .title
+            margin: 6px 0
+            flex: 1
+
+        &:hover
+            box-shadow: 0 2px 4px 2px alpha(#333, 0.4)
