@@ -1,17 +1,32 @@
 import CNXML from '../cnxml'
 
-
-class RequestError extends Error {
+/**
+ * Exception thrown by methods of {@link Storage} on API errors.
+ */
+export class APIError extends Error {
     constructor(response) {
         super(`${response.status} ${response.statusText}`)
         this.response = response
+
+        // Required to make extends Error work with babel
+        this.constructor = APIError
+        this.__proto__ = APIError.prototype
     }
 
+    /**
+     * Status code for the failed request.
+     */
     get status() {
         return this.response.status
     }
-}
 
+    /**
+     * Status text for the failed request.
+     */
+    get statusText() {
+        return this.response.statusText
+    }
+}
 
 export default class Storage {
     /**
@@ -68,7 +83,7 @@ export default class Storage {
         })
 
         if (!req.ok) {
-            throw new RequestError(req)
+            throw new APIError(req)
         }
 
         this.tag = req.headers.get('ETag')
@@ -86,7 +101,7 @@ export default class Storage {
         })
 
         if (!req.ok) {
-            throw new RequestError(req)
+            throw new APIError(req)
         }
 
         this.files.push({ name: file.name, mime: file.type })
@@ -112,7 +127,7 @@ export default class Storage {
         })
 
         if (!req.ok) {
-            throw new RequestError(req)
+            throw new APIError(req)
         }
 
         return data ? await req[data]() : req

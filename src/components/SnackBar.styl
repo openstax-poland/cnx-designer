@@ -1,25 +1,22 @@
 div.snack-bar
-    // position: absolute
     position: fixed
     left: 0
     right: 0
     bottom: 0
     z-index: 10000
-    height 48px + 2 * 24px
 
     pointer-events: none
 
 div.snack-bar > div.snack
     min-width: 288px
     max-width: 568px
-    height: 48px
+    min-height: 48px
     line-height: 20px
 
     border-radius: 2px
     padding: 14px 24px
     margin 24px
 
-    position: absolute
     display: inline-flex
     pointer-events: all
 
@@ -42,8 +39,8 @@ div.snack-bar > div.snack
 
     @keyframes snackbar-enter
         from
-            transform: translateY(48px + 24px)
+            transform: translateY(calc(100% + 24px))
 
     @keyframes snackbar-exit
         to
-            transform: translateY(48px + 24px)
+            transform: translateY(calc(100% + 24px))
