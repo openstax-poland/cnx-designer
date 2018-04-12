@@ -1,5 +1,23 @@
 import CNXML from '../cnxml'
 
+/**
+ * Exception thrown by methods of {@link Storage} on API errors.
+ */
+export class APIError extends Error {
+    /**
+     * Status code for the failed request.
+     */
+    get status() {
+        // TODO: implement
+    }
+
+    /**
+     * Status text for the failed request.
+     */
+    get statusText() {
+        // TODO: implement
+    }
+}
 
 export default class Storage {
     /**
