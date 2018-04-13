@@ -1,15 +1,27 @@
+import Raven from 'raven-js'
 import React from 'react'
 
-export default loader => Component => class Load extends React.Component {
+export default (loader, handler) => Component => class Load extends React.Component {
+    static displayName = `Load(${Component.displayName || Component.name})`
+
     state = {
         value: null,
         error: null,
     }
 
-    componentDidMount() {
-        loader(this.props)
-            .then(value => this.setState({ value }))
-            .catch(error => this.setState({ error }))
+    async componentDidMount() {
+        try {
+            const value = await loader(this.props)
+            this.setState({ value })
+        } catch (ex) {
+            const description = handler ? handler(ex) : null
+            if (description) {
+                this.setState({ error: description })
+            } else {
+                this.setState({ error: ex })
+                Raven.captureError(ex)
+            }
+        }
     }
 
     render() {
