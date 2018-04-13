@@ -216,16 +216,19 @@ export class DocumentDB {
      * Discard any saved changes to a document.
      */
     async discard() {
-        const tx = this.database.transaction(['states', 'changes'], 'readwrite')
+        const tx = this.database.transaction(['states', 'changes', 'contents'], 'readwrite')
         const states = tx.objectStore('states')
         const changes = tx.objectStore('changes').index('document')
+        const contents = tx.objectStore('contents')
 
-        await iterate(changes, this.id, async (cursor, value) => {
-            cursor.delete()
-            cursor.continue()
-        })
-
-        await promisify(states.delete(this.id))
+        await Promise.all([
+            iterate(changes, this.id, async (cursor, value) => {
+                cursor.delete()
+                cursor.continue()
+            }),
+            promisify(states.delete(this.id)),
+            promisify(contents.delete(this.id)),
+        ])
     }
 }
 
