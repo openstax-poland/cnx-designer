@@ -168,12 +168,12 @@ export class DocumentDB {
         })
 
         await Promise.all([
-            states.add({
+            states.put({
                 id: this.id,
                 version: version,
                 content: value.toJSON(),
             }),
-            contents.add({
+            contents.put({
                 id: this.id,
                 content: value.toJSON(),
             }),
