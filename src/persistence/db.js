@@ -175,7 +175,6 @@ export class DocumentDB {
             states.put({
                 id: this.id,
                 version: version,
-                content: content,
             }),
             contents.put({
                 id: this.id,
@@ -201,12 +200,12 @@ export class DocumentDB {
      * Restore document from its saved state.
      */
     async restore() {
-        const tx = this.database.transaction(['states', 'changes'])
-        const states = tx.objectStore('states')
+        const tx = this.database.transaction(['contents', 'changes'])
+        const contents = tx.objectStore('contents')
         const changes = tx.objectStore('changes').index('document')
 
         const [value, ops] = await Promise.all([
-            promisify(states.get(this.id)),
+            promisify(contents.get(this.id)),
             promisify(changes.getAll()),
         ])
 
