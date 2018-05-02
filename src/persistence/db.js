@@ -167,15 +167,19 @@ export class DocumentDB {
             cursor.continue()
         })
 
+        const content = value.toJS({
+            preserveKeys: true,
+        })
+
         await Promise.all([
             states.put({
                 id: this.id,
                 version: version,
-                content: value.toJSON(),
+                content: content,
             }),
             contents.put({
                 id: this.id,
-                content: value.toJSON(),
+                content: content,
             }),
         ].map(promisify))
     }
