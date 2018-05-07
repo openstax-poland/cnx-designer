@@ -1,6 +1,7 @@
 import { Value, setKeyGenerator } from 'slate'
 import Slate from 'slate-react'
 import React, { Component } from 'react'
+import Counters from 'slate-counters'
 
 import Admonition from '../admonition'
 import Exercise from '../exercise'
@@ -28,6 +29,7 @@ const marks = Marks({})
 
 
 const plugins = [
+    Counters(),
     ...marks.plugins,
     Paragraph({}),
     Header({}),
