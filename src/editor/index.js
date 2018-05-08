@@ -16,6 +16,7 @@ import Section from '../section'
 import Storage from '../storage/plugin'
 import Title from '../title'
 import Toolbar from '../toolbar'
+import XReference from '../xref'
 
 import ErrorBoundary from './ErrorBoundary'
 import SnackBar from '../components/SnackBar'
@@ -32,6 +33,7 @@ const plugins = [
     Counters(),
     ...marks.plugins,
     Paragraph({}),
+    XReference({}),
     Header({}),
     Title({}),
     Section({}),

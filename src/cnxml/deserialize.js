@@ -132,6 +132,7 @@ const MARK_TAGS = {
     emphasis: emphasis,
     sub: 'subscript',
     sup: 'superscript',
+    link: xref,
 }
 
 
@@ -162,6 +163,33 @@ function emphasis(el) {
 
     return {
         type: EFFECTS[el.getAttribute('effect') || 'bold'] || 'strong',
+    }
+}
+
+
+/**
+ * Process data for links and cross-references.
+ */
+function xref(el) {
+    const target = el.getAttribute('target-id') || null
+    const url = el.getAttribute('url') || null
+
+    if (target) {
+        return {
+            object: 'inline',
+            type: 'xref',
+            isVoid: true,
+            data: { target },
+        }
+    } else if (url) {
+        return {
+            object: 'inline',
+            type: 'link',
+            data: { url },
+        }
+    } else {
+        // TODO: notify user perhaps?
+        return null
     }
 }
 
