@@ -87,6 +87,10 @@ export default {
                 { types: ['exercise_commentary'], min: 0, max: 1 },
             ],
             normalize: normalizeExercise,
+            counters: {
+                exercise: 'enter',
+                exercise_solution: 'enclose',
+            },
         },
         exercise_problem: {
             parent: { types: ['exercise'] },
@@ -101,6 +105,9 @@ export default {
                 { types: ['paragraph', 'ul_list', 'ol_list'], min: 1 },
             ],
             normalize: normalizeContent,
+            counters: {
+                exercise_solution: 'enter',
+            }
         },
         exercise_commentary: {
             parent: { types: ['exercise'] },

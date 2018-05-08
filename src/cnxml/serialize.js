@@ -89,10 +89,12 @@ const emphasis = type => function(obj, children) {
  */
 const MARK_TAGS = {
     emphasis: emphasis('italics'),
+    link: 'link',
     strong: emphasis('bold'),
-    underline: emphasis('underline'),
     subscript: 'sub',
     superscript: 'sup',
+    underline: emphasis('underline'),
+    xref: xref,
 }
 
 
@@ -121,6 +123,16 @@ function list(obj, children) {
     return <list list-type={type}>
         {children}
     </list>
+}
+
+
+/**
+ * Serializer for cross-references.
+ */
+function xref(obj, children) {
+    return <link target-id={obj.data.get('target')}>
+        {children}
+    </link>
 }
 
 

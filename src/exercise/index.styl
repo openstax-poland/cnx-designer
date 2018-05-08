@@ -11,10 +11,10 @@ div.exercise
         margin-top: 0
 
     > div.exercise-problem::before
-        content: 'Problem: '
+        content: 'Problem ' counter(exercise) ':'
 
     > div.exercise-solution::before
-        content: 'Solution: '
+        content: 'Solution ' counter(exercise_solution) ':'
 
     > div.exercise-commentary::before
         content: 'Commentary: '

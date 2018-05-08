@@ -1,6 +1,7 @@
 import { Value, setKeyGenerator } from 'slate'
 import Slate from 'slate-react'
 import React, { Component } from 'react'
+import Counters from 'slate-counters'
 
 import Admonition from '../admonition'
 import Exercise from '../exercise'
@@ -15,6 +16,7 @@ import Section from '../section'
 import Storage from '../storage/plugin'
 import Title from '../title'
 import Toolbar from '../toolbar'
+import XReference from '../xref'
 
 import * as A from '../actions/model'
 import ErrorBoundary from './ErrorBoundary'
@@ -29,8 +31,10 @@ const marks = Marks({})
 
 
 const plugins = [
+    Counters(),
     ...marks.plugins,
     Paragraph({}),
+    XReference({}),
     Header({}),
     Title({}),
     Section({}),
