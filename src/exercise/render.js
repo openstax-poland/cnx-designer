@@ -1,4 +1,5 @@
 import React from 'react'
+import { WithCounters } from 'slate-counters'
 
 
 const TYPES = [
@@ -9,7 +10,15 @@ const TYPES = [
 ]
 
 
-export default function renderNode({ node, children, attributes }) {
+export default function renderNode(props) {
+    const { node, children, attributes } = props
+
+    switch (node.type) {
+    case 'exercise':
+    case 'exercise_solution':
+        return <Exercise {...props} />
+    }
+
     if (!TYPES.includes(node.type)) return null
 
     return (
@@ -21,3 +30,20 @@ export default function renderNode({ node, children, attributes }) {
     </div>
     )
 }
+
+
+const Exercise = WithCounters(({ node }) => node.key)(function Exercise({
+    node, children, attributes, counters,
+}) {
+    const style = {
+        counterReset: `${node.type} ${counters.get(node.type, 0)}`,
+    }
+
+    return <div
+        className={node.type.replace('_', '-')}
+        style={style}
+        {...attributes}
+        >
+        {children}
+    </div>
+})
