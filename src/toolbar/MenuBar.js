@@ -30,7 +30,7 @@ export default class MenuBar extends React.Component {
 
     render() {
         const { menus, open } = this.state
-        const { value, onChange } = this.props
+        const { value, editor, onChange } = this.props
 
         const className = open !== null ? 'menubar open' : 'menubar'
 
@@ -46,6 +46,7 @@ export default class MenuBar extends React.Component {
                         menu={menu}
                         open={menu === open}
                         value={value}
+                        editor={editor}
                         onChange={onChange}
                         dismiss={this.onCloseMenus}
                         />
@@ -93,11 +94,12 @@ class Menu extends React.Component {
 
     [model.GROUP](group) {
         if (group.title) {
-            const { value, onChange, dismiss } = this.props
+            const { value, editor, onChange, dismiss } = this.props
 
             return <SubMenu
                 menu={group}
                 value={value}
+                editor={editor}
                 onChange={onChange}
                 dismiss={dismiss}
                 />
@@ -109,12 +111,13 @@ class Menu extends React.Component {
     }
 
     [model.ACTION](action) {
-        const { value, onChange, dismiss } = this.props
+        const { value, editor, onChange, dismiss } = this.props
 
         return <MenuAction
             key={action.title}
             action={action}
             value={value}
+            editor={editor}
             onChange={onChange}
             onClick={dismiss}
             />
@@ -128,7 +131,7 @@ class SubMenu extends React.Component {
     }
 
     render() {
-        const { menu, value, onChange, dismiss } = this.props
+        const { menu, value, editor, onChange, dismiss } = this.props
 
         return <div className="sub-menu">
             <div className="item"
@@ -142,6 +145,7 @@ class SubMenu extends React.Component {
                 menu={menu}
                 value={value}
                 open={this.state.open}
+                editor={editor}
                 onChange={onChange}
                 dismiss={dismiss}
                 />
