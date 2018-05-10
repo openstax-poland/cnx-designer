@@ -37,6 +37,13 @@ function insertFigure(change, media) {
 
 
 function findFigure(value) {
+    const first = value.blocks.first()
+
+    if (!first) {
+        // No selection
+        return null
+    }
+
     const path = value.document.getPath(value.blocks.first().key)
 
     let node = value.document
