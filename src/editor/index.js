@@ -17,6 +17,7 @@ import Storage from '../storage/plugin'
 import Title from '../title'
 import Toolbar from '../toolbar'
 import XReference from '../xref'
+import Math from '../math'
 
 import * as A from '../actions/model'
 import ErrorBoundary from './ErrorBoundary'
@@ -44,6 +45,7 @@ const plugins = [
     Figure({}),
     Media({}),
     Toolbar({}),
+    Math(),
 ]
 
 

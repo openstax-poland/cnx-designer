@@ -68,6 +68,7 @@ const BLOCK_TAGS = {
     section: 'section',
     title: 'title',
     ul_list: list,
+    math: equation,
 }
 
 
@@ -133,6 +134,32 @@ function xref(obj, children) {
     return <link target-id={obj.data.get('target')}>
         {children}
     </link>
+}
+
+
+const ENTITIES = {
+    'alpha': 'α',
+    'ApplyFunction': '&#x2061;',
+    'InvisibleTimes': '&#x2062;',
+}
+
+
+function equation(obj) {
+    // Replace entities with
+    const mathml = obj.data.get('mathml')
+        .replace(/\s*&(\w+);\s*/, (match, entity) => ENTITIES[entity] || match)
+
+    console.log('PRE')
+    console.log(obj.data.get('mathml'))
+    console.log('POST')
+    console.log(mathml)
+
+    return <equation id={obj.key}>
+        <math
+            xmlns="http://www.w3.org/1998/Math/MathML"
+            dangerouslySetInnerHTML={{__html: mathml}}
+            />
+    </equation>
 }
 
 

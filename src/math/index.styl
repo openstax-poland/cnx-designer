@@ -1,0 +1,13 @@
+div.equation
+    position: relative
+    padding: 0 2em
+
+    &::after
+        content: '(' counter(equation) ')'
+        position: absolute
+        top: calc(50% - 0.5em)
+        right: 0
+        line-height: 1
+
+    span.ML__fieldcontainer
+        justify-content: center
