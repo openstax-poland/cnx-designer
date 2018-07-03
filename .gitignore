@@ -1,9 +1,5 @@
-/build
+/dist
 /node_modules
-
-# In order for `yarn start` to pick up changes to styles (and reload page),
-# we need to compile them to public/index.css for development.
-/public/index.css*
 
 # We're a library.
 /yarn.lock
