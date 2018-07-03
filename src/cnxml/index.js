@@ -1,8 +1,8 @@
 import Html from 'slate-html-serializer'
 import React from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
 
 import deserialize from './deserialize'
+import render from './xml'
 import serialize from './serialize'
 
 
@@ -40,7 +40,6 @@ export default {
             </content>
         </document>
 
-        const text = renderToStaticMarkup(r)
-        return '<?xml version="1.0" encoding="utf-8"?>\n' + text
+        return render(r)
     }
 }
