@@ -8,6 +8,10 @@
 export function findFigure(value) {
     const { document, blocks } = value
 
+    if (!blocks.first()) {
+        return null
+    }
+
     const path = document.getPath(blocks.first().key)
 
     let figure = null
