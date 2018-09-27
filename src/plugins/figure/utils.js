@@ -17,7 +17,7 @@ export function findFigure(value) {
     let figure = null
     let node = document
     for (const index of path) {
-        node = node.getNodeAtPath([index])
+        node = node.getNode([index])
 
         if (node.type === 'figure') {
             figure = node
