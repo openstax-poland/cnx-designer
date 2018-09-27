@@ -12,7 +12,7 @@
     "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
     "slate-edit-list": "^0.11.3",
     "slate-html-serializer": "^0.6.8",
-    "slate-react": "^0.12.11",
+    "slate-react": "^0.13.0",
     "slate-schema-violations": "^0.1.15"
   },
   "devDependencies": {
@@ -38,7 +38,7 @@
     "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
     "slate-edit-list": "^0.11.3",
     "slate-html-serializer": "^0.6.8",
-    "slate-react": "^0.12.11",
+    "slate-react": "^0.13.0",
     "slate-schema-violations": "^0.1.15"
   }
 }
