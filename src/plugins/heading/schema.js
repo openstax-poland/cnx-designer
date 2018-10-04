@@ -1,7 +1,7 @@
 import { NODE_DATA_INVALID } from 'slate-schema-violations'
 
-function normalizeHeading(change, violation, context) {
-    const { key } = context
+function normalizeHeading(change, error) {
+    const { code: violation, key } = error
 
     switch (violation) {
     case NODE_DATA_INVALID:

@@ -1,8 +1,10 @@
-function normalizeSection(change, violation, context) {
+function normalizeSection(change, error) {
+    const { code } = error
+
     // TODO: insert default title when missing
-    switch (violation) {
+    switch (code) {
     default:
-        console.warn('Unhandled violation in section:', violation)
+        console.warn('Unhandled violation in section:', code)
         break
     }
 }
@@ -12,7 +14,7 @@ export default {
         section: {
             // TODO:
             // nodes: [
-            //     { types: ['title'], min: 1, max: 1 },
+            //     { type: 'title', min: 1, max: 1 },
             // ]
             normalize: normalizeSection,
         }

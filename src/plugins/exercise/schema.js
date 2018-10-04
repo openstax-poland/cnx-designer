@@ -5,8 +5,8 @@ import {
     PARENT_TYPE_INVALID,
 } from 'slate-schema-violations'
 
-function normalizeExercise(change, violation, context) {
-    const { index, node, child } = context
+function normalizeExercise(change, error) {
+    const { code: violation, index, node, child } = error
 
     switch (violation) {
     // A child of different type was expected.
@@ -58,8 +58,8 @@ function normalizeExercise(change, violation, context) {
     }
 }
 
-function normalizeContent(change, violation, context) {
-    const { node } = context
+function normalizeContent(change, error) {
+    const { code: violation, node } = error
 
     switch (violation) {
     // Problems, solutions, and commentaries make no sense outside an exercise.
@@ -74,14 +74,25 @@ function normalizeContent(change, violation, context) {
     }
 }
 
+const CONTENT = {
+    match: [
+        { type: 'paragraph' },
+        { type: 'ul_list' },
+        { type: 'ol_list' },
+    ],
+    min: 1,
+}
+
+export const EXERCISE_PARENT = ['document', 'section']
+
 export default {
     blocks: {
         exercise: {
-            parent: { types: ['document', 'section'] },
+            parent: [{ type: 'document' }, { type: 'section' }],
             nodes: [
-                { types: ['exercise_problem'], min: 1, max: 1},
-                { types: ['exercise_solution'], min: 0 },
-                { types: ['exercise_commentary'], min: 0, max: 1 },
+                { match: { type: 'exercise_problem' }, min: 1, max: 1},
+                { match: { type: 'exercise_solution' }, min: 0 },
+                { match: { type: 'exercise_commentary' }, min: 0, max: 1 },
             ],
             normalize: normalizeExercise,
             counters: {
@@ -90,27 +101,21 @@ export default {
             },
         },
         exercise_problem: {
-            parent: { types: ['exercise'] },
-            nodes: [
-                { types: ['paragraph', 'ul_list', 'ol_list'], min: 1 },
-            ],
+            parent: { type: 'exercise' },
+            nodes: [CONTENT],
             normalize: normalizeContent,
         },
         exercise_solution: {
-            parent: { types: ['exercise'] },
-            nodes: [
-                { types: ['paragraph', 'ul_list', 'ol_list'], min: 1 },
-            ],
+            parent: { type: 'exercise' },
+            nodes: [CONTENT],
             normalize: normalizeContent,
             counters: {
                 exercise_solution: 'enter',
             }
         },
         exercise_commentary: {
-            parent: { types: ['exercise'] },
-            nodes: [
-                { types: ['paragraph', 'ul_list', 'ol_list'], min: 1 },
-            ],
+            parent: { type: 'exercise' },
+            nodes: [CONTENT],
             normalize: normalizeContent,
         },
     },

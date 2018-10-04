@@ -8,7 +8,7 @@
   "dependencies": {
     "immutable": "^3.8.2",
     "raven-js": "^3.26.3",
-    "slate": "^0.35.0",
+    "slate": "^0.36.0",
     "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
     "slate-edit-list": "^0.11.3",
     "slate-html-serializer": "^0.6.8",
@@ -34,7 +34,7 @@
     "immutable": "^3.8.2",
     "raven-js": "^3.26.3",
     "react": "^16.4.1",
-    "slate": "^0.35.0",
+    "slate": "^0.36.0",
     "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
     "slate-edit-list": "^0.11.3",
     "slate-html-serializer": "^0.6.8",

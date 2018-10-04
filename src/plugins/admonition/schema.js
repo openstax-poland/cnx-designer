@@ -9,8 +9,8 @@ export default {
                 type: v => TYPES.includes(v),
             },
             nodes: [
-                { types: ['title'], min: 0, max: 1 },
-                { types: ['paragraph'] },
+                { type: 'title', min: 0, max: 1 },
+                { type: 'paragraph' },
             ],
         }
     }

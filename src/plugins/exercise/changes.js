@@ -1,6 +1,7 @@
 import { Block, Text } from 'slate'
 
 import * as utils from './utils'
+import { EXERCISE_PARENT } from './schema'
 
 /**
  * Create a new exercise and wrap currently selected block in it.
@@ -9,8 +10,7 @@ import * as utils from './utils'
  */
 export function insertExercise(change) {
     const { value } = change
-    const { document, schema } = value
-    const rule = schema.blocks.exercise
+    const { document } = value
 
     let first = value.startBlock
     let last = value.endBlock
@@ -25,7 +25,7 @@ export function insertExercise(change) {
     // which may cause exercise to be created as a child of e.g. a list,
     // and then promptly removed by normalizations. To avoid this we only use
     // `change.wrapBlock` when we're sure output will be OK.
-    if (rule.parent.types.includes(parent.type)) {
+    if (EXERCISE_PARENT.includes(parent.type)) {
         return change.withoutNormalization(change => {
             change.wrapBlock('exercise')
             change.wrapBlock('exercise_problem')
@@ -70,7 +70,7 @@ export function insertExercise(change) {
     // At this point the selection begins and ends on direct children
     // of |parent|, which means we can start unwrapping nodes out if it.
 
-    while (!rule.parent.types.includes(parent.type)) {
+    while (!EXERCISE_PARENT.includes(parent.type)) {
         if (first === last) {
             // Simple case, Slate can handle it on its own.
             change.unwrapNodeByKey(first.key, { normalize: false })

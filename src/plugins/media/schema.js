@@ -1,7 +1,7 @@
 import { NODE_DATA_INVALID } from 'slate-schema-violations'
 
-function normalizeMedia(change, violation, context) {
-    const { key, node } = context
+function normalizeMedia(change, error) {
+    const { code: violation, key, node } = error
 
     switch (violation) {
     case NODE_DATA_INVALID:
@@ -23,7 +23,7 @@ export default {
         // TODO: do we actually want to keep multiple versions?
         media: {
             nodes: [
-                { types: ['image'] },
+                { type: 'image' },
             ],
             data: {
                 alt: Boolean,

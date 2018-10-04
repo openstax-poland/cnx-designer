@@ -3,8 +3,8 @@ import {
     PARENT_TYPE_INVALID,
 } from 'slate-schema-violations'
 
-function normalizeFigure(change, violation, context) {
-    const { child } = context
+function normalizeFigure(change, error) {
+    const { code: violation, child } = error
 
     switch (violation) {
     // Unwrap invalid nodes outside a figure.
@@ -18,8 +18,8 @@ function normalizeFigure(change, violation, context) {
     }
 }
 
-function normalizeCaption(change, violation, context) {
-    const { node } = context
+function normalizeCaption(change, error) {
+    const { code: violation, node } = error
 
     switch (violation) {
     // Replace any caption outside a figure with a simple paragraph.
@@ -39,8 +39,8 @@ export default {
             nodes: [
                 // HTMLBook also allows the opposite order, but for simplicity
                 // we limit ourselves just to this.
-                { types: ['figure', 'media'], min: 1 },
-                { types: ['figure_caption'], min: 0, max: 1 },
+                { match: [{ type: 'figure' }, { type: 'media' }], min: 1 },
+                { type: 'figure_caption', min: 0, max: 1 },
             ],
             normalize: normalizeFigure,
             counters: {
@@ -48,7 +48,7 @@ export default {
             },
         },
         figure_caption: {
-            parent: { types: ['figure'] },
+            parent: { type: 'figure' },
             normalize: normalizeCaption,
         },
     },
