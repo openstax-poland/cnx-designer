@@ -27,7 +27,7 @@ export function insertFigure(change, media) {
     })
 
     // We can't rely on normalization to add this text block, as it will run
-    // after our call to collapseToStartOf.
+    // after our call to moveToStart.
     const caption_text = Text.create()
     const caption = Block.create({
         type: 'figure_caption',
@@ -40,7 +40,7 @@ export function insertFigure(change, media) {
     })
 
     change.insertBlock(figure)
-    change.collapseToStartOf(caption)
+    change.moveToStart(caption)
 }
 
 /**
@@ -64,7 +64,7 @@ export function insertSubfigure(change, media) {
         // Figure has no sub-figures yet, convert its child into a sub-figure.
 
         // We can't rely on normalization to add this text block, as it will run
-        // after our call to collapseToStartOf.
+        // after our call to moveToStart.
         const caption_text = Text.create()
         const caption = Block.create({
             type: 'figure_caption',
@@ -91,7 +91,7 @@ export function insertSubfigure(change, media) {
     })
 
     // We can't rely on normalization to add this text block, as it will run
-    // after our call to collapseToStartOf.
+    // after our call to moveToStart.
     const caption_text = Text.create()
     const caption = Block.create({
         type: 'figure_caption',
@@ -121,7 +121,7 @@ export function insertCaption(change) {
         if (node.nodes.last().type === 'figure_caption') continue
 
         // We can't rely on normalization to add this text block, as it will run
-        // after our call to collapseToStartOf.
+        // after our call to moveToStart.
         const caption_text = Text.create()
         const caption = Block.create({
             type: 'figure_caption',
@@ -130,7 +130,7 @@ export function insertCaption(change) {
 
         const index = node.nodes.size
         change.insertNodeByKey(node.key, index, caption)
-        change.collapseToStartOf(caption)
+        change.moveToStart(caption)
 
         break
     }

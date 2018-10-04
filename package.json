@@ -8,11 +8,11 @@
   "dependencies": {
     "immutable": "^3.8.2",
     "raven-js": "^3.26.3",
-    "slate": "^0.36.0",
+    "slate": "^0.37.0",
     "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
     "slate-edit-list": "^0.11.3",
     "slate-html-serializer": "^0.6.8",
-    "slate-react": "^0.14.0",
+    "slate-react": "^0.15.0",
     "slate-schema-violations": "^0.1.15"
   },
   "devDependencies": {
@@ -34,11 +34,11 @@
     "immutable": "^3.8.2",
     "raven-js": "^3.26.3",
     "react": "^16.4.1",
-    "slate": "^0.36.0",
+    "slate": "^0.37.0",
     "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
     "slate-edit-list": "^0.11.3",
     "slate-html-serializer": "^0.6.8",
-    "slate-react": "^0.14.0",
+    "slate-react": "^0.15.0",
     "slate-schema-violations": "^0.1.15"
   }
 }

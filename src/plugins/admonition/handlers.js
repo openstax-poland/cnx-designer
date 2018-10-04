@@ -16,7 +16,8 @@ function onEnter(event, change) {
     // Only handle key if selection is in an empty block, or at a beginning
     // of a block, ...
     const { value } = change
-    if (!value.startBlock.isEmpty && value.startOffset > 0) return
+    if (!value.startBlock.isEmpty && value.selection.start.offset > 0)
+        return
 
     // ... in an admonition
     const admonition = utils.getCurrentAdmonition(value)

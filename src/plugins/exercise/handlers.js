@@ -17,7 +17,7 @@ function onEnter(event, change) {
     // of a block, ...
     const { value } = change
     const block = value.startBlock
-    if (!block.isEmpty && value.startOffset > 0) return
+    if (!block.isEmpty && value.selection.start.offset > 0) return
 
     // ... in an exercise.
     const exercise = utils.getCurrentExercise(value)

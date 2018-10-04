@@ -145,7 +145,7 @@ export function insertSolution(change) {
         + (exercise.nodes.last().type === 'exercise_commentary' ? -1 : 0)
 
     change.insertNodeByKey(exercise.key, index, solution)
-    change.collapseToStartOf(para)
+    change.moveToStart(para)
 }
 
 /**
@@ -175,5 +175,5 @@ export function insertCommentary(change) {
     })
 
     change.insertNodeByKey(exercise.key, exercise.nodes.size, commentary)
-    change.collapseToStartOf(para)
+    change.moveToStart(para)
 }
