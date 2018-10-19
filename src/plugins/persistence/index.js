@@ -7,6 +7,6 @@ export default function Persistence(options) {
     const { db } = options
 
     return {
-        onChange: change => onChange(db, change),
+        onChange: onChange(db),
     }
 }

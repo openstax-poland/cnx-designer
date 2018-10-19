@@ -27,8 +27,8 @@ class StorageContext extends React.Component {
     }
 }
 
-export default storage => function renderEditor({ children }, editor) {
+export default storage => function renderEditor(props, next) {
     return <StorageContext storage={storage}>
-        {children}
+        {next()}
     </StorageContext>
 }

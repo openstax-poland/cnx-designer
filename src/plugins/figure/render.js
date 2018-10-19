@@ -1,7 +1,7 @@
 import React from 'react'
 import { WithCounters } from 'slate-counters'
 
-export default function renderNode(props) {
+export default function renderNode(props, next) {
     const { node, children, attributes } = props
 
     switch (node.type) {
@@ -12,6 +12,9 @@ export default function renderNode(props) {
 
     case 'figure_caption':
         return <Caption {...props}/>
+
+    default:
+        return next()
     }
 }
 

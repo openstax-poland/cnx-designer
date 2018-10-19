@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function renderNode({ node, children, attributes }) {
-    if (node.type !== 'admonition') return null
+export default function renderNode({ node, children, attributes }, next) {
+    if (node.type !== 'admonition') return next()
 
     return <div
         className="admonition"

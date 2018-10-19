@@ -1,9 +1,12 @@
 import * as utils from './utils'
 
-export default function onKeyDown(event, change, editor) {
+export default function onKeyDown(event, change, next) {
     switch (event.key) {
     case 'Enter':
-        return onEnter(event, change)
+        return onEnter(event, change) || next()
+
+    default:
+        return next()
     }
 }
 

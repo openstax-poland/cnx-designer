@@ -3,15 +3,18 @@ import PropTypes from 'prop-types'
 import { Map } from 'immutable'
 import { WithCounters } from 'slate-counters'
 
-export default function renderNode(props) {
+export default function renderNode(props, next) {
     const { node, attributes, children } = props
 
-    // eslint-disable-next-line default-case
     switch (node.type) {
-    case 'xref': return <Reference {...props} />
+    case 'xref':
+        return <Reference {...props} />
 
     case 'link':
         <a href={node.data.get('url')} {...attributes}>{children}</a>
+
+    default:
+        return next()
     }
 }
 
@@ -23,7 +26,7 @@ function Reference({ node, editor, attributes, counters }) {
     let text
 
     if (target) {
-        text = editor.stack.find('renderXRef', target, counters) || `(${target.type})`
+        text = editor.run('renderXRef', target, counters) || `(${target.type})`
     } else {
         console.warn('Undefined target:', targetKey, 'in', node.key)
         text = "(undefined target)"

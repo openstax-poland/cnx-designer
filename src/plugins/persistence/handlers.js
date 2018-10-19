@@ -12,6 +12,7 @@ const IGNORED_OPERATIONS = [
  * Properties of {@link Slate~Value} changes to which can safely be ignored.
  */
 const IGNORED_VALUE_PROPS = [
+    'data',
     'decorations',
     'schema',
     'selection',
@@ -23,7 +24,9 @@ const IGNORED_VALUE_PROPS = [
  * @param {DocumentDB} db
  * @param {Slate~Change} change
  */
-export function onChange(db, change) {
+export const onChange = db => function onChange(change, next) {
+    next()
+
     const { value, operations } = change
     const document = value.document.key
 

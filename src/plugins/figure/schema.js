@@ -43,9 +43,6 @@ export default {
                 { type: 'figure_caption', min: 0, max: 1 },
             ],
             normalize: normalizeFigure,
-            counters: {
-                figure: 'enter',
-            },
         },
         figure_caption: {
             parent: { type: 'figure' },

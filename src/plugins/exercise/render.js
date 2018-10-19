@@ -8,7 +8,7 @@ const TYPES = [
     'exercise_commentary',
 ]
 
-export default function renderNode(props) {
+export default function renderNode(props, next) {
     const { node, children, attributes } = props
 
     switch (node.type) {
@@ -17,7 +17,7 @@ export default function renderNode(props) {
         return <Exercise {...props} />
     }
 
-    if (!TYPES.includes(node.type)) return null
+    if (!TYPES.includes(node.type)) return next()
 
     return <div
         className={node.type.replace('_', '-')}

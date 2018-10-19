@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Storage from '../../api/storage'
 
-export default function renderNode({ node, attributes, isFocused }) {
+export default function renderNode({ node, attributes, isFocused }, next) {
     switch (node.type) {
     case 'image':
         return <Image
@@ -13,6 +13,7 @@ export default function renderNode({ node, attributes, isFocused }) {
             />
 
     default:
+        return next()
     }
 }
 

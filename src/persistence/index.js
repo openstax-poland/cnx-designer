@@ -1,4 +1,5 @@
-import { Value, Operations } from 'slate'
+import { Value, Operation } from 'slate'
+import { Seq } from 'immutable'
 
 const DB_NAME = 'cnx:designer:persist'
 const DB_VERSION = 1
@@ -206,8 +207,9 @@ export class DocumentDB {
 
         console.log('restore from', value, 'and', ops)
 
-        return ops.map(op => op.change)
-            .reduce(Operations.apply, Value.fromJSON(value.content))
+        return new Seq(ops)
+            .map(op => Operation.fromJSON(op.change))
+            .reduce((value, op) => op.apply(value), Value.fromJSON(value.content))
     }
 
     /**

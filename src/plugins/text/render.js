@@ -12,18 +12,22 @@ const MARKS = {
     subscript: 'sub',
 }
 
-export function renderNode({ node, children, attributes }) {
+export function renderNode({ node, children, attributes }, next) {
     const Node = NODES[node.type]
 
     if (Node) {
         return <Node {...attributes}>{children}</Node>
     }
+
+    return next()
 }
 
-export function renderMark({ mark, children, attributes }) {
+export function renderMark({ mark, children, attributes }, next) {
     const Mark = MARKS[mark.type]
 
     if (Mark) {
         return <Mark {...attributes}>{children}</Mark>
     }
+
+    return next()
 }
