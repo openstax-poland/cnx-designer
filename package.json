@@ -8,9 +8,10 @@
   "dependencies": {
     "immutable": "^3.8.2",
     "raven-js": "^3.26.3",
+    "react": "^16.4.1",
     "slate": "^0.42.0",
     "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
-    "slate-edit-list": "https://github.com/katalysteducation/slate-edit-list.git",
+    "slate-edit-list": "https://github.com/katalysteducation/slate-edit-list.git#releases",
     "slate-html-serializer": "^0.7.0",
     "slate-react": "^0.19.0",
     "slate-schema-violations": "^0.1.15"
@@ -28,17 +29,6 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "build:style": "stylus -o build/index.css -d -m src/index.styl",
-  },
-  "peerDependencies": {
-    "immutable": "^3.8.2",
-    "raven-js": "^3.26.3",
-    "react": "^16.4.1",
-    "slate": "^0.42.0",
-    "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
-    "slate-edit-list": "https://github.com/katalysteducation/slate-edit-list.git",
-    "slate-html-serializer": "^0.7.0",
-    "slate-react": "^0.19.0",
-    "slate-schema-violations": "^0.1.15"
+    "build:style": "stylus -o build/index.css -d -m src/index.styl"
   }
 }
