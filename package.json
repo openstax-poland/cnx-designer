@@ -5,6 +5,7 @@
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "private": true,
+  "files": ["dist"],
   "dependencies": {
     "immutable": "^3.8.2",
     "raven-js": "^3.26.3",
