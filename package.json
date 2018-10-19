@@ -29,6 +29,7 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "build:style": "stylus -o build/index.css -d -m src/index.styl"
+    "build:style": "stylus -o dist/index.css -d -m src/index.styl",
+    "prepare": "rollup -c && stylus -o dist/index.css -d -m src/index.styl"
   }
 }
