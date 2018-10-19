@@ -17,4 +17,5 @@ export function changeListType(change, list, type) {
 
 export default ({ list }) => ({
     changeListType: (change, type) => changeListType(change, list, type),
+    ...list.changes,
 })

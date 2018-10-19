@@ -31,6 +31,7 @@ export const changes = {
     ...figure.changes,
     ...text.changes,
     ...xref.changes,
+    ...LIST.changes,
 }
 
 export const utils = {
