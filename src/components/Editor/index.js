@@ -10,12 +10,12 @@ import { uuid } from '../../util'
 KeyUtils.setGenerator(uuid.v4)
 
 export default class Editor extends React.Component {
-    props: {
+    /*props: {
         documentDb: DocumentDB,
         storage: Storage,
         value: SlateValue,
         plugins?: SlatePlugin[],
-    }
+    }*/
 
     state = {
         value: this.props.value,
