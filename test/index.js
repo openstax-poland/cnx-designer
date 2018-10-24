@@ -16,6 +16,7 @@ import Admonition from '../src/plugins/admonition'
 import Exercise from '../src/plugins/exercise'
 import Figure from '../src/plugins/figure'
 import List from '../src/plugins/list'
+import Text from '../src/plugins/text'
 
 const testPlugin = plugins => ({
     default: change,
@@ -43,4 +44,5 @@ describe('Plugins', () => {
     fixtures(__dirname, 'plugins/exercise', testPlugin([Exercise(), CorePlugin()]))
     fixtures(__dirname, 'plugins/figure', testPlugin([Figure()]))
     fixtures(__dirname, 'plugins/list', testPlugin([List()]))
+    fixtures(__dirname, 'plugins/text', testPlugin([Text()]))
 })
