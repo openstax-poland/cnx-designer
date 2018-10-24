@@ -22,9 +22,15 @@
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "chai": "^4.2.0",
+    "chai-immutable": "^1.6.0",
+    "cross-env": "^5.2.0",
+    "mocha": "^5.2.0",
     "rollup": "^0.66.0",
     "rollup-plugin-babel": "^4.0.1",
     "rollup-plugin-node-resolve": "^3.3.0",
+    "slate-hyperscript": "^0.11.2",
     "stylus": "^0.54.5"
   },
   "peerDependencies": {
@@ -38,8 +44,9 @@
     "slate-schema-violations": "^0.1.15"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "cross-env NODE_ENV=build rollup -c",
     "build:style": "stylus -o dist/index.css -d -m src/index.styl",
-    "prepare": "rollup -c && stylus -o dist/index.css -d -m src/index.styl"
+    "prepare": "cross-env NODE_ENV=build rollup -c && stylus -o dist/index.css -d -m src/index.styl",
+    "test": "mocha"
   }
 }

@@ -1,10 +1,23 @@
 {
     presets: [
-        ["@babel/preset-env", { modules: false }],
-        "@babel/preset-react"
+        "@babel/preset-env",
+        "@babel/preset-react",
     ],
     plugins: [
-        "@babel/plugin-transform-runtime",
         "@babel/plugin-proposal-class-properties",
     ],
+    env: {
+        build: {
+            // Disable handling of ES6 modules, as Rollup will take care
+            // of them.
+            presets: [
+                ["@babel/preset-env", { modules: false }],
+            ],
+            // Babel-runtime is not needed for tests, so we can save space and
+            // performance by only including it for building.
+            plugins: [
+                "@babel/plugin-transform-runtime",
+            ],
+        },
+    },
 }
