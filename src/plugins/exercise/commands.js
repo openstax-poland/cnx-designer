@@ -1,6 +1,5 @@
 import { Block, Text } from 'slate'
 
-import * as utils from './utils'
 import { EXERCISE_PARENT } from './schema'
 
 /**
@@ -26,7 +25,8 @@ export function insertExercise(change) {
         // which may cause exercise to be created as a child of e.g. a list,
         // and then promptly removed by normalizations. To avoid this we only use
         // `change.wrapBlock` when we're sure output will be OK.
-        if (EXERCISE_PARENT.includes(parent.type)) {
+        if (EXERCISE_PARENT.includes(parent.type)
+        || parent.object === 'document') {
             change.wrapBlock('exercise')
             change.wrapBlock('exercise_problem')
             return
@@ -120,7 +120,7 @@ export function insertExercise(change) {
  * @param {Slate~Change} change
  */
 export function insertSolution(change) {
-    const exercise = utils.getCurrentExercise(change.value)
+    const exercise = change.getActiveExercise(change.value)
 
     if (exercise === null) {
         return
@@ -140,7 +140,7 @@ export function insertSolution(change) {
         + (exercise.nodes.last().type === 'exercise_commentary' ? -1 : 0)
 
     change.insertNodeByKey(exercise.key, index, solution)
-    change.moveToStart(para)
+    change.moveToStartOfNode(para)
 }
 
 /**
@@ -153,7 +153,7 @@ export function insertSolution(change) {
  * @param {Slate~Change} change
  */
 export function insertCommentary(change) {
-    const exercise = utils.getCurrentExercise(change.value)
+    const exercise = change.getActiveExercise(change.value)
 
     if (exercise === null || exercise.nodes.last().type === 'exercise_commentary') {
         return
@@ -170,5 +170,5 @@ export function insertCommentary(change) {
     })
 
     change.insertNodeByKey(exercise.key, exercise.nodes.size, commentary)
-    change.moveToStart(para)
+    change.moveToStartOfNode(para)
 }

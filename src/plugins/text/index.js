@@ -1,9 +1,7 @@
 import schema from './schema'
-import * as changes from './changes'
+import * as commands from './commands'
 import { renderNode, renderMark } from './render'
 
-export { changes }
-
 export default function Text() {
-    return { changes, renderNode, renderMark, schema }
+    return { commands, renderNode, renderMark, schema }
 }

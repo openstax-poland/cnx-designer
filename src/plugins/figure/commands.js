@@ -1,6 +1,4 @@
-import { Block, Text } from 'slate'
-
-import * as utils from './utils'
+import { Block, Text, Range } from 'slate'
 
 /**
  * @name MediaDescription
@@ -27,7 +25,7 @@ export function insertFigure(change, media) {
     })
 
     // We can't rely on normalization to add this text block, as it will run
-    // after our call to moveToStart.
+    // after our call to moveToStartOfNode.
     const caption_text = Text.create()
     const caption = Block.create({
         type: 'figure_caption',
@@ -40,7 +38,7 @@ export function insertFigure(change, media) {
     })
 
     change.insertBlock(figure)
-    change.moveToStart(caption)
+    change.moveToStartOfNode(caption)
 }
 
 /**
@@ -53,7 +51,7 @@ export function insertFigure(change, media) {
  */
 export function insertSubfigure(change, media) {
     const { value } = change
-    let node = utils.findFigure(value)
+    let node = change.getActiveFigure(value)
 
     if (node === null) {
         // No figure is selected.
@@ -62,22 +60,10 @@ export function insertSubfigure(change, media) {
 
     if (node.nodes.first().type !== 'figure') {
         // Figure has no sub-figures yet, convert its child into a sub-figure.
-
-        // We can't rely on normalization to add this text block, as it will run
-        // after our call to moveToStart.
-        const caption_text = Text.create()
-        const caption = Block.create({
-            type: 'figure_caption',
-            nodes: [caption_text],
-        })
-
-        const new_ = Block.create({
-            type: 'figure',
-            nodes: [node, caption],
-        })
-
-        change.replaceNodeByKey(node.key, new_)
-        node = new_
+        change.wrapBlockAtRange(
+            Range.create().moveToRangeOfNode(node),
+            'figure',
+        )
     }
 
     const image = Block.create({
@@ -90,17 +76,9 @@ export function insertSubfigure(change, media) {
         nodes: [image],
     })
 
-    // We can't rely on normalization to add this text block, as it will run
-    // after our call to moveToStart.
-    const caption_text = Text.create()
-    const caption = Block.create({
-        type: 'figure_caption',
-        nodes: [caption_text],
-    })
-
     const subfigure = Block.create({
         type: 'figure',
-        nodes: [media_node, caption],
+        nodes: [media_node],
     })
 
     const index = node.nodes.size - 1
@@ -121,7 +99,7 @@ export function insertCaption(change) {
         if (node.nodes.last().type === 'figure_caption') continue
 
         // We can't rely on normalization to add this text block, as it will run
-        // after our call to moveToStart.
+        // after our call to moveToStartOfNode.
         const caption_text = Text.create()
         const caption = Block.create({
             type: 'figure_caption',
@@ -130,7 +108,7 @@ export function insertCaption(change) {
 
         const index = node.nodes.size
         change.insertNodeByKey(node.key, index, caption)
-        change.moveToStart(caption)
+        change.moveToStartOfNode(caption)
 
         break
     }

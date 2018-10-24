@@ -1,10 +1,9 @@
 import onKeyDown from './handlers'
 import renderNode from './render'
 import schema from './schema'
-import * as changes from './changes'
-
-export { changes }
+import * as commands from './commands'
+import * as queries from './queries'
 
 export default function Admonition() {
-    return { changes, schema, onKeyDown, renderNode }
+    return { commands, queries, schema, onKeyDown, renderNode }
 }

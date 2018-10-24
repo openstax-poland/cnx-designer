@@ -1,4 +1,4 @@
-export function getCurrentAdmonition(value) {
+export function getActiveAdmonition(editor, value) {
     const { document } = value
 
     const block = value.startBlock

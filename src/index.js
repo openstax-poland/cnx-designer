@@ -1,5 +1,5 @@
 export { default } from './components/Editor'
 export { default as CNXML } from './cnxml'
-export { changes, utils } from './plugins'
+export { changes } from './plugins'
 export * from './api'
 export * from './persistence'

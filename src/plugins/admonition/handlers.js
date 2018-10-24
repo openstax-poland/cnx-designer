@@ -1,5 +1,3 @@
-import * as utils from './utils'
-
 export default function onKeyDown(event, change, next) {
     switch (event.key) {
     case 'Enter':
@@ -23,7 +21,7 @@ function onEnter(event, change) {
         return
 
     // ... in an admonition
-    const admonition = utils.getCurrentAdmonition(value)
+    const admonition = change.getActiveAdmonition(value)
     if (!admonition) return
 
     return change.unwrapBlock('admonition')

@@ -1,7 +1,5 @@
-import * as utils from './utils'
-
 export function insertAdmonition(change, type) {
-    const admonition = utils.getCurrentAdmonition(change.value)
+    const admonition = change.getActiveAdmonition(change.value)
 
     if (admonition) {
         // We don't want nested admonitions, so we just change type of current

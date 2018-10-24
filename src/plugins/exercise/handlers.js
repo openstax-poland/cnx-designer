@@ -1,5 +1,3 @@
-import * as utils from './utils'
-
 export default function onKeyDown(event, change, next) {
     switch (event.key) {
     case 'Enter':
@@ -23,8 +21,8 @@ function onEnter(event, change) {
     if (!block.isEmpty && value.selection.start.offset > 0) return
 
     // ... in an exercise.
-    const exercise = utils.getCurrentExercise(value)
-    if (!exercise) return
+    const exercise = change.getActiveExercise(change.value)
+    if (!exercise) return false
 
     const item = exercise.getParent(block.key)
     const next = item.getNextBlock(block.key)

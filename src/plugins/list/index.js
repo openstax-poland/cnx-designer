@@ -1,20 +1,10 @@
 import EditList from 'slate-edit-list'
 
-import changes from './changes'
+import * as commands from './commands'
 import renderNode from './render'
 
 export default function List(options) {
     const list = EditList(options)
-
-    const core = {
-        renderNode,
-    }
-
-    return {
-        plugins: [
-            list,
-            core,
-        ],
-        changes: changes({ list }),
-    }
+    const plugin = { commands, renderNode }
+    return [plugin, list]
 }

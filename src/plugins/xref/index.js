@@ -1,9 +1,7 @@
 import schema from './schema'
 import renderNode from './render'
-import * as changes from './changes'
-
-export { changes }
+import * as commands from './commands'
 
 export default function XReference(options={}) {
-    return { changes, schema, renderNode }
+    return { commands, schema, renderNode }
 }
