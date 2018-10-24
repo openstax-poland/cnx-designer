@@ -13,6 +13,7 @@ import fixtures from './util/fixtures'
 import CorePlugin from './util/core-plugin'
 
 import Admonition from '../src/plugins/admonition'
+import Exercise from '../src/plugins/exercise'
 
 const testPlugin = plugins => ({
     default: change,
@@ -37,4 +38,5 @@ const testPlugin = plugins => ({
 
 describe('Plugins', () => {
     fixtures(__dirname, 'plugins/admonition', testPlugin([Admonition(), CorePlugin()]))
+    fixtures(__dirname, 'plugins/exercise', testPlugin([Exercise(), CorePlugin()]))
 })
