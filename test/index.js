@@ -10,6 +10,9 @@ chai.use(require('chai-immutable'))
 import './util/h'
 import dropKeys from './util/dropKeys'
 import fixtures from './util/fixtures'
+import CorePlugin from './util/core-plugin'
+
+import Admonition from '../src/plugins/admonition'
 
 const testPlugin = plugins => ({
     default: change,
@@ -33,4 +36,5 @@ const testPlugin = plugins => ({
 }
 
 describe('Plugins', () => {
+    fixtures(__dirname, 'plugins/admonition', testPlugin([Admonition(), CorePlugin()]))
 })
