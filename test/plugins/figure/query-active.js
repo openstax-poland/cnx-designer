@@ -1,20 +1,24 @@
 /** @jsx h */
 
-export const skip = true
-
 export default change => {
-    let node = change.getActiveFigure(change.value)
-    should.not.exist(node)
+    should.not.exist(change.getActiveFigure(change.value))
+    should.not.exist(change.getActiveSubfigure(change.value))
 
     change.moveToStartOfNode(change.value.document.getNode('first'))
-    node = change.getActiveFigure(change.value)
-    should.exist(node)
-    node.should.equal(change.value.document.getNode('figure-1'))
+    const first = change.getActiveFigure(change.value)
+    should.equal(first, change.value.document.getNode('figure-1'))
+    should.equal(change.getActiveSubfigure(change.value), first)
 
     change.moveToStartOfNode(change.value.document.getNode('second'))
-    node = change.getActiveFigure(change.value)
-    should.exist(node)
-    node.should.equal(change.value.document.getNode('figure-2'))
+    const second = change.getActiveFigure(change.value)
+    should.equal(second, change.value.document.getNode('figure-2'))
+    const second_sub = change.getActiveSubfigure(change.value)
+    should.equal(second_sub, change.value.document.getNode('figure-3'))
+
+    change.moveToStartOfNode(change.value.document.getNode('third'))
+    const third = change.getActiveFigure(change.value)
+    should.equal(third, change.value.document.getNode('figure-2'))
+    should.equal(change.getActiveSubfigure(change.value), third)
 }
 
 export const input = <value>
@@ -24,20 +28,21 @@ export const input = <value>
             <media>
                 <img src="first.png"><text/></img>
             </media>
-            <figcaption key="first">First figure</figcaption>
+            <figcaption key="first">Simple figure</figcaption>
         </figure>
         <figure key="figure-2">
-            <figure>
+            <figure key="figure-3">
                 <media>
                     <img src="second.png"><text/></img>
                 </media>
-                <figcaption key="second">Second figure</figcaption>
+                <figcaption key="second">Nested figure</figcaption>
             </figure>
             <figure>
                 <media>
-                    <img src="second.png"><text/></img>
+                    <img src="third.png"><text/></img>
                 </media>
             </figure>
+            <figcaption key="third">Compound figure</figcaption>
         </figure>
     </document>
 </value>
