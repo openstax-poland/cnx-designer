@@ -73,7 +73,9 @@ export function insertSubfigure(change, media) {
         nodes: [media_node],
     })
 
-    const index = node.nodes.size - 1
+    const index = node.nodes.last().type === 'figure_caption'
+        ? node.nodes.size - 1
+        : node.nodes.size
     change.insertNodeByKey(node.key, index, subfigure)
 }
 
