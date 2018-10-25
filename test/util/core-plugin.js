@@ -17,4 +17,12 @@ function onKeyDown(event, change, next) {
         ? change.moveToStartOfNextText()
         : change.splitBlock()
     }
+
+    if (Hotkeys.isDeleteBackward(event)) {
+        return change.deleteCharBackward()
+    }
+  
+    if (Hotkeys.isDeleteForward(event)) {
+        return change.deleteCharForward()
+    }
 }
