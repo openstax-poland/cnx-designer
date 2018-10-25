@@ -24,21 +24,13 @@ export function insertFigure(change, media) {
         nodes: [image],
     })
 
-    // We can't rely on normalization to add this text block, as it will run
-    // after our call to moveToStartOfNode.
-    const caption_text = Text.create()
-    const caption = Block.create({
-        type: 'figure_caption',
-        nodes: [caption_text],
-    })
-
     const figure = Block.create({
         type: 'figure',
-        nodes: [media_node, caption],
+        nodes: [media_node],
     })
 
     change.insertBlock(figure)
-    change.moveToStartOfNode(caption)
+    change.moveToStartOfNode(change.value.document.getNode(figure.key))
 }
 
 /**
