@@ -14,11 +14,16 @@ function onEnter(event, change) {
         return
     }
 
+    const { value } = change
+    const { selection } = value
+    const block = value.startBlock
+
     // Only handle key if selection is in an empty block, or at a beginning
     // of a block, ...
-    const { value } = change
-    const block = value.startBlock
-    if (!block.isEmpty && value.selection.start.offset > 0) return
+    const isEmpty = selection.isCollapsed
+        && selection.start.isAtStartOfNode(block)
+        && selection.end.isAtEndOfNode(block)
+    if (!isEmpty && selection.start.offset > 0) return
 
     // ... in an exercise.
     const exercise = change.getActiveExercise(change.value)

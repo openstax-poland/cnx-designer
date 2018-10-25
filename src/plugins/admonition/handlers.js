@@ -14,11 +14,17 @@ function onEnter(event, change) {
         return
     }
 
+    const { value } = change
+    const { selection, startBlock } = value
+
     // Only handle key if selection is in an empty block, or at a beginning
     // of a block, ...
-    const { value } = change
-    if (!value.startBlock.isEmpty && value.selection.start.offset > 0)
+    const isEmpty = selection.isCollapsed
+        && selection.start.isAtStartOfNode(startBlock)
+        && selection.end.isAtStartOfNode(startBlock)
+    if (!isEmpty && selection.start.offset > 0) {
         return
+    }
 
     // ... in an admonition
     const admonition = change.getActiveAdmonition(value)
