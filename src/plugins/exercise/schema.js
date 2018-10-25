@@ -2,6 +2,7 @@ import { Block, Text } from 'slate'
 import {
     CHILD_TYPE_INVALID,
     CHILD_UNKNOWN,
+    PARENT_OBJECT_INVALID,
     PARENT_TYPE_INVALID,
 } from 'slate-schema-violations'
 
@@ -48,8 +49,9 @@ function normalizeExercise(change, error) {
         break
 
     // Exercise was inserted into an invalid parent.
+    case PARENT_OBJECT_INVALID:
     case PARENT_TYPE_INVALID:
-        change.unwrapNodeByKey(node.key)
+        change.unwrapBlockByKey(node.key)
         break
 
     default:
@@ -88,7 +90,7 @@ export const EXERCISE_PARENT = ['document', 'section']
 export default {
     blocks: {
         exercise: {
-            parent: [{ type: 'document' }, { type: 'section' }],
+            parent: [{ object: 'document' }, { type: 'section' }],
             nodes: [
                 { match: { type: 'exercise_problem' }, min: 1, max: 1},
                 { match: { type: 'exercise_solution' }, min: 0 },
