@@ -97,10 +97,6 @@ export default {
                 { match: { type: 'exercise_commentary' }, min: 0, max: 1 },
             ],
             normalize: normalizeExercise,
-            counters: {
-                exercise: 'enter',
-                exercise_solution: 'enclose',
-            },
         },
         exercise_problem: {
             parent: { type: 'exercise' },
@@ -111,9 +107,6 @@ export default {
             parent: { type: 'exercise' },
             nodes: [CONTENT],
             normalize: normalizeContent,
-            counters: {
-                exercise_solution: 'enter',
-            }
         },
         exercise_commentary: {
             parent: { type: 'exercise' },
