@@ -1,3 +1,5 @@
+import { Range } from 'slate'
+
 export default function onKeyDown(event, change, next) {
     switch (event.key) {
     case 'Enter':
@@ -30,19 +32,38 @@ function onEnter(event, change) {
     if (!exercise) return false
 
     const item = exercise.getParent(block.key)
-    const next = item.getNextBlock(block.key)
-    const nextItem = exercise.getNextBlock(item.key)
+    const isItemLast = exercise.getNextBlock(item.key) === null
+    const atStartOfItem = item.getPreviousBlock(block.key) === null
 
-    // If we're at the very end of an exercise just exit it.
-    if (next === null && nextItem === null) {
-        const parent = value.document.getParent(exercise.key)
-        const index = parent.nodes.indexOf(exercise)
-        change.moveNodeByKey(block.key, parent.key, index + 1)
-        return change
+    // Splitting here would create an empty item, ...
+    if (atStartOfItem) {
+        // ... but since this is the last item we can just unwrap it.
+        if (isItemLast) {
+            const parent = value.document.getParent(exercise.key)
+            change.unwrapNodeByKey(item.key)
+            return true
+        }
+
+        // Otherwise we do nothing.
+        return true
     }
 
-    // Otherwise split current block (schema normalisation will ensure that the
-    // new block gets correct type).
-    change.splitNodeByKey(item.key, item.nodes.indexOf(block))
-    return change
+    // Otherwise split current block, and ...
+
+    if (item.type === 'exercise_commentary') {
+        // .. since its exercise_commentary then schema normalizations would
+        // put it back together, so we need to unwrap it manually.
+        const index = exercise.nodes.indexOf(item)
+        change.withoutNormalizing(change => {
+            change.splitNodeByKey(item.key, item.nodes.indexOf(block))
+            const node = change.value.document.getNode(exercise.key)
+            const newItem = node.nodes.get(index + 1)
+            change.unwrapNodeByKey(newItem.key)
+        })
+    } else {
+        // ... let schema normalizations do the rest.
+        change.splitNodeByKey(item.key, item.nodes.indexOf(block))
+    }
+
+    return true
 }
