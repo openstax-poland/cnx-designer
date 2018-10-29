@@ -3,12 +3,13 @@
 export default change => change.insertSubfigure({
     mime: 'image/png',
     name: 'second.png',
+    alt: 'Second picture',
 })
 
 export const input = <value>
     <document>
         <figure>
-            <media>
+            <media alt="First picture">
                 <img src="first.png"><text/></img>
             </media>
             <figcaption><cursor/>Caption</figcaption>
@@ -20,13 +21,13 @@ export const output = <value>
     <document>
         <figure>
             <figure>
-                <media>
+                <media alt="First picture">
                     <img src="first.png"><text/></img>
                 </media>
                 <figcaption><cursor/>Caption</figcaption>
             </figure>
             <figure>
-                <media>
+                <media alt="Second picture">
                     <img src="second.png"><text/></img>
                 </media>
             </figure>

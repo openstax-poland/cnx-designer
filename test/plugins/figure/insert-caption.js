@@ -5,7 +5,7 @@ export default change => change.insertCaption()
 export const input = <value>
     <document>
         <figure>
-            <media>
+            <media alt="First picture">
                 <img src="first.png"><text><cursor/></text></img>
             </media>
         </figure>
@@ -15,7 +15,7 @@ export const input = <value>
 export const output = <value>
     <document>
         <figure>
-            <media>
+            <media alt="First picture">
                 <img src="first.png"><text/></img>
             </media>
             <figcaption><text><cursor/></text></figcaption>

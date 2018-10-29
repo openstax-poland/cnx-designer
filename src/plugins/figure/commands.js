@@ -6,6 +6,7 @@ import { Block, Text, Range } from 'slate'
  *
  * @property {string} mime
  * @property {string} name
+ * @property {string} alt
  */
 
 /**
@@ -22,6 +23,7 @@ export function insertFigure(change, media) {
     const media_node = Block.create({
         type: 'media',
         nodes: [image],
+        data: { alt: media.alt },
     })
 
     const figure = Block.create({
@@ -66,6 +68,7 @@ export function insertSubfigure(change, media) {
     const media_node = Block.create({
         type: 'media',
         nodes: [image],
+        data: { alt: media.alt },
     })
 
     const subfigure = Block.create({
