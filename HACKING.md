@@ -2,13 +2,14 @@
 
 ```
 ├── public/
-└── src/
-    ├── api/
-    ├── cnxml/
-    ├── components/
-    ├── persistence/
-    ├── plugins/
-    └── util/
+├── src/
+│   ├── api/
+│   ├── cnxml/
+│   ├── components/
+│   ├── persistence/
+│   ├── plugins/
+│   └── util/
+└── test/
 ```
 
 Where
@@ -28,6 +29,7 @@ Where
   
 - `plugins/` contains all [Slate](slate) plugins used by the editor.
 - `util/` is a place for utilities which don't neatly fit anywhere else.
+- `test/` contains all tests, see [test/README.md].
 
 [React]: https://reactjs.org/
 [Slate]: https://www.slatejs.org
