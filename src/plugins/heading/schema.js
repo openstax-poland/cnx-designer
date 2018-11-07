@@ -1,3 +1,7 @@
+// Copyright 2018 OpenStax Poland
+// Licensed under the MIT license. See LICENSE file in the project root for
+// full license text.
+
 import { NODE_DATA_INVALID } from 'slate-schema-violations'
 
 function normalizeHeading(change, error) {

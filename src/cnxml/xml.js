@@ -1,3 +1,7 @@
+// Copyright 2018 OpenStax Poland
+// Licensed under the MIT license. See LICENSE file in the project root for
+// full license text.
+
 /**
  * XML serializer, because `react-dom` enforces HTML constraints. For example,
  * React required that `<link>` tags have no children, contrary to what
