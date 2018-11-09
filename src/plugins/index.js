@@ -24,7 +24,3 @@ export default [
     XReference(),
     ...LIST.plugins,
 ]
-
-export const changes = {
-    ...LIST.changes,
-}
