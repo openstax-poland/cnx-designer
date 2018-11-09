@@ -10,8 +10,6 @@ import Text from './text'
 import Title from './title'
 import XReference from './xref'
 
-const LIST = List()
-
 export default [
     Admonition(),
     Exercise(),
@@ -22,5 +20,5 @@ export default [
     Title(),
     Counters(),
     XReference(),
-    ...LIST.plugins,
+    List(),
 ]
