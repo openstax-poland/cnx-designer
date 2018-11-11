@@ -28,7 +28,7 @@ const testPlugin = plugins => ({
         value: input,
         plugins,
     })
-    editor.change(change, editor)
+    editor.command(change, editor)
 
     if (output) {
         dropKeys(editor.value.document).should.equal(dropKeys(output.document))

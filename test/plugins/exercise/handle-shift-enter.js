@@ -1,8 +1,8 @@
 /** @jsx h */
 
 export default (change, editor) => {
-    editor.event('onKeyDown', { key: 'Enter', shiftKey: true })
-    editor.event('onKeyDown', { key: 'Enter', shiftKey: true })
+    editor.run('onKeyDown', { key: 'Enter', shiftKey: true })
+    editor.run('onKeyDown', { key: 'Enter', shiftKey: true })
 }
 
 export const input = <value>

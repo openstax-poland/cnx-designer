@@ -11,11 +11,11 @@
     "@babel/runtime": "^7.1.5",
     "immutable": "^3.8.2",
     "react": "^16.4.1",
-    "slate": "^0.42.0",
+    "slate": "^0.43.0",
     "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
     "slate-edit-list": "https://github.com/katalysteducation/slate-edit-list.git#releases",
     "slate-html-serializer": "^0.7.0",
-    "slate-react": "^0.19.0",
+    "slate-react": "^0.20.0",
     "slate-schema-violations": "^0.1.15"
   },
   "devDependencies": {
@@ -38,11 +38,11 @@
   "peerDependencies": {
     "immutable": "^3.8.2",
     "react": "^16.4.1",
-    "slate": "^0.42.0",
+    "slate": "^0.43.0",
     "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
     "slate-edit-list": "https://github.com/katalysteducation/slate-edit-list.git#releases",
     "slate-html-serializer": "^0.7.0",
-    "slate-react": "^0.19.0",
+    "slate-react": "^0.20.0",
     "slate-schema-violations": "^0.1.15"
   },
   "scripts": {

@@ -5,7 +5,7 @@
 import React from 'react'
 import { WithCounters } from 'slate-counters'
 
-export default function renderNode(props, next) {
+export default function renderNode(props, editor, next) {
     const { node, children, attributes } = props
 
     switch (node.type) {

@@ -7,22 +7,22 @@ export default function CorePlugin() {
     return { onKeyDown }
 }
 
-function onKeyDown(event, change, next) {
-    const { editor, value } = change
+function onKeyDown(event, editor, next) {
+    const { value } = editor
     const { document, selection } = value
     const hasVoidParent = document.hasVoidParent(selection.start.path, editor)
 
     if (Hotkeys.isSplitBlock(event)) {
       return hasVoidParent
-        ? change.moveToStartOfNextText()
-        : change.splitBlock()
+        ? editor.moveToStartOfNextText()
+        : editor.splitBlock()
     }
 
     if (Hotkeys.isDeleteBackward(event)) {
-        return change.deleteCharBackward()
+        return editor.deleteCharBackward()
     }
-  
+
     if (Hotkeys.isDeleteForward(event)) {
-        return change.deleteCharForward()
+        return editor.deleteCharForward()
     }
 }

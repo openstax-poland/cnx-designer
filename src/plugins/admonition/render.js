@@ -4,7 +4,7 @@
 
 import React from 'react'
 
-export default function renderNode({ node, children, attributes }, next) {
+export default function renderNode({ node, children, attributes }, editor, next) {
     if (node.type !== 'admonition') return next()
 
     return <div

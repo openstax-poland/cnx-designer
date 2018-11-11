@@ -1,11 +1,11 @@
 /** @jsx h */
 
 export default (change, editor) => {
-    editor.event('onKeyDown', { key: 'Enter' })
+    editor.run('onKeyDown', { key: 'Enter' })
     change.moveToStartOfNode(change.value.document.getNode('solution'))
-    editor.event('onKeyDown', { key: 'Enter' })
+    editor.run('onKeyDown', { key: 'Enter' })
     change.moveToStartOfNode(change.value.document.getNode('problem'))
-    editor.event('onKeyDown', { key: 'Enter' })
+    editor.run('onKeyDown', { key: 'Enter' })
 }
 
 export const input = <value>

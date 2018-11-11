@@ -4,7 +4,7 @@
 
 import React from 'react'
 
-export default function renderNode({ node, children, attributes }, next) {
+export default function renderNode({ node, children, attributes }, editor, next) {
     if (node.type === 'heading') {
         const Tag = ['h2', 'h3', 'h4', 'h5'][node.data.get('depth')] || 'h6'
 

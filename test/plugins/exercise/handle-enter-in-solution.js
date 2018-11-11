@@ -1,12 +1,12 @@
 /** @jsx h */
 
 export default (change, editor) => {
-    editor.event('onKeyDown', { key: 'Enter' })
-    editor.event('onKeyDown', { key: 'Enter' })
+    editor.run('onKeyDown', { key: 'Enter' })
+    editor.run('onKeyDown', { key: 'Enter' })
     change.moveToEndOfBlock()
-    editor.event('onKeyDown', { key: 'Enter' })
-    editor.event('onKeyDown', { key: 'Enter' })
-    editor.event('onKeyDown', { key: 'Enter' })
+    editor.run('onKeyDown', { key: 'Enter' })
+    editor.run('onKeyDown', { key: 'Enter' })
+    editor.run('onKeyDown', { key: 'Enter' })
 }
 
 export const input = <value>
