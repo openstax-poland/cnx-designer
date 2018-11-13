@@ -4,6 +4,9 @@ export default change => {
     change.normalize()
 }
 
+// See comment at the end of src/plugins/figure/schema.js
+export const skip = true
+
 export const input = <value>
     <document>
         <figure key="f1">
