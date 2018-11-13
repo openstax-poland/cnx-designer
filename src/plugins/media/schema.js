@@ -25,7 +25,7 @@ export default {
         // TODO: do we actually want to keep multiple versions?
         media: {
             nodes: [
-                { type: 'image' },
+                { match: [{ type: 'image' }], min: 1 },
             ],
             data: {
                 alt: Boolean,

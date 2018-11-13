@@ -30,8 +30,8 @@ export default {
                 type: v => TYPES.includes(v),
             },
             nodes: [
-                { type: 'title', min: 0, max: 1 },
-                { type: 'paragraph' },
+                { match: { type: 'title' }, min: 0, max: 1 },
+                { match: { type: 'paragraph' } },
             ],
             normalize: normalizeAdmonition,
         }

@@ -39,7 +39,7 @@ export default {
                 // HTMLBook also allows the opposite order, but for simplicity
                 // we limit ourselves just to this.
                 { match: [{ type: 'figure' }, { type: 'media' }], min: 1 },
-                { type: 'figure_caption', min: 0, max: 1 },
+                { match: [{ type: 'figure_caption' }], min: 0, max: 1 },
             ],
             normalize: normalizeFigure,
         },
