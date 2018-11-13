@@ -3,19 +3,13 @@
 // full license text.
 
 import { Block, Text } from 'slate'
-import {
-    CHILD_TYPE_INVALID,
-    CHILD_UNKNOWN,
-    PARENT_OBJECT_INVALID,
-    PARENT_TYPE_INVALID,
-} from 'slate-schema-violations'
 
 function normalizeExercise(change, error) {
     const { code: violation, index, node, child } = error
 
     switch (violation) {
     // A child of different type was expected.
-    case CHILD_TYPE_INVALID:
+    case 'child_type_invalid':
         // A text child could only have been added to an exercise by Slate in
         // event that all other children were removed. In such case we just want
         // to drop the exercise.
@@ -42,7 +36,7 @@ function normalizeExercise(change, error) {
         break
 
     // No child was expected.
-    case CHILD_UNKNOWN:
+    case 'child_unknown':
         // An invalid node following the commentary should be folded into the
         // commentary.
         if (node.nodes.get(-2).type === 'exercise_commentary') {
@@ -53,8 +47,8 @@ function normalizeExercise(change, error) {
         break
 
     // Exercise was inserted into an invalid parent.
-    case PARENT_OBJECT_INVALID:
-    case PARENT_TYPE_INVALID:
+    case 'parent_object_invalid':
+    case 'parent_type_invalid':
         change.unwrapBlockByKey(node.key)
         break
 
@@ -70,7 +64,7 @@ function normalizeContent(change, error) {
     switch (violation) {
     // Problems, solutions, and commentaries make no sense outside an exercise.
     // Should it happen however, just replace it with its contents.
-    case PARENT_TYPE_INVALID:
+    case 'parent_type_invalid':
         change.unwrapBlockByKey(node.key)
         break
 

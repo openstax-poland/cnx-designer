@@ -2,13 +2,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { NODE_DATA_INVALID } from 'slate-schema-violations'
-
 function normalizeMedia(change, error) {
     const { code: violation, key, node } = error
 
     switch (violation) {
-    case NODE_DATA_INVALID:
+    case 'node_data_invalid':
         if (key === 'alt') {
             change.setNodeByKey(node.key, {
                 data: { alt: 'Cannot be empty' },

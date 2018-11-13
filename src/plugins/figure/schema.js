@@ -2,17 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import {
-    CHILD_UNKNOWN,
-    PARENT_TYPE_INVALID,
-} from 'slate-schema-violations'
-
 function normalizeFigure(change, error) {
     const { code: violation, child } = error
 
     switch (violation) {
     // Unwrap invalid nodes outside a figure.
-    case CHILD_UNKNOWN:
+    case 'child_unknown':
         change.unwrapNodeByKey(child.key)
         break
 
@@ -27,7 +22,7 @@ function normalizeCaption(change, error) {
 
     switch (violation) {
     // Replace any caption outside a figure with a simple paragraph.
-    case PARENT_TYPE_INVALID:
+    case 'parent_type_invalid':
         change.setNodeByKey(node.key, 'paragraph')
         break
 

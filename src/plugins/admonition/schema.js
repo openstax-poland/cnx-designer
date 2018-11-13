@@ -2,8 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { NODE_DATA_INVALID } from 'slate-schema-violations'
-
 // Admonition types supported by both CNXML's <note> and HTMLBook. Missing are
 // `aside` from CNXML and `caution` from HTMLBook.
 const TYPES = ["note", "warning", "tip", "important"]
@@ -13,7 +11,7 @@ function normalizeAdmonition(change, error) {
 
     switch (code) {
     // Admonition type is not valid.
-    case NODE_DATA_INVALID:
+    case 'node_data_invalid':
         // By default slate removes all nodes that failed validation, but we
         // only want the admonition gone, not its contents.
         change.unwrapBlockByKey(node.key)

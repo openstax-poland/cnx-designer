@@ -46,6 +46,5 @@ export default {
         'slate-edit-list',
         'slate-html-serializer',
         'slate-react',
-        'slate-schema-violations',
     ],
 }
