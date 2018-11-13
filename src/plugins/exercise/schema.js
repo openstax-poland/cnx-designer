@@ -35,6 +35,33 @@ function normalizeExercise(change, error) {
         change.wrapBlockByKey(child.key, 'exercise_solution')
         break
 
+    case 'child_min_invalid':
+        // A non-empty exercise without a problem should get an empty problem.
+        if (index === 0) {
+            const problem = Block.create({
+                type: 'exercise_problem',
+                nodes: [
+                    // An empty leaf will be added by slate in a subsequent
+                    // normalization.
+                    Block.create({ type: 'paragraph' })
+                ],
+            })
+            change.insertNodeByKey(node.key, 0, problem)
+            return
+        }
+        console.warn('Unhandled exercise violation:', violation)
+        break
+
+    case 'child_max_invalid':
+        // More than one problem, for example as a result of the problem being
+        // split.
+        if (child.type === 'exercise_problem') {
+            change.setNodeByKey(child.key, 'exercise_solution')
+            return
+        }
+        console.warn('Unhandled exercise violation:', violation)
+        break
+
     // No child was expected.
     case 'child_unknown':
         // An invalid node following the commentary should be folded into the

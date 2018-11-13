@@ -7,7 +7,7 @@
 const TYPES = ["note", "warning", "tip", "important"]
 
 function normalizeAdmonition(change, error) {
-    const { code, node } = error
+    const { code, node, child } = error
 
     switch (code) {
     // Admonition type is not valid.
@@ -15,6 +15,14 @@ function normalizeAdmonition(change, error) {
         // By default slate removes all nodes that failed validation, but we
         // only want the admonition gone, not its contents.
         change.unwrapBlockByKey(node.key)
+        break
+
+    case 'child_max_invalid':
+        if (child.type === 'title') {
+            change.mergeNodeByKey(child.key)
+            return
+        }
+        console.warn('Unhandled admonition violation:', code)
         break
 
     default:
