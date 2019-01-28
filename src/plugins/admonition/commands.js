@@ -15,4 +15,6 @@ export function insertAdmonition(change, type) {
             data: { type },
         })
     }
+
+    change.focus()
 }

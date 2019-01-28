@@ -113,6 +113,8 @@ export function insertExercise(change) {
             change.moveNodeByKey(node.key, problem.key, inx)
         })
     })
+
+    change.focus()
 }
 
 /**

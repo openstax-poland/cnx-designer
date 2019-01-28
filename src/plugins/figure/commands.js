@@ -113,4 +113,6 @@ export function insertCaption(change) {
 
         break
     }
+
+    change.focus()
 }

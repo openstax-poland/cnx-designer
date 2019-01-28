@@ -16,4 +16,6 @@ export function changeListType(change, type) {
     } else {
         change.setNodeByKey(node.key, type)
     }
+
+    change.focus()
 }
