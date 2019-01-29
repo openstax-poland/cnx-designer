@@ -10,6 +10,10 @@ function normalizeFigure(change, error) {
     case 'child_unknown':
         change.unwrapNodeByKey(child.key)
         break
+    // Merge multiple figure_captions
+    case 'child_max_invalid':
+        change.mergeNodeByKey(child.key)
+        break
 
     default:
         console.warn("Unhandled figure violation", violation)
