@@ -208,10 +208,13 @@ function list(el, next) {
     }
 }
 
+/**
+ * Process data for item nodes.
+ */
 function item(el, next) {
     return {
         type: 'list_item',
-        nodes:  mixedContent(el, next),
+        nodes: mixedContent(el, next),
     }
 }
 
