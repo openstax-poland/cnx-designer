@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-export default function renderXRef(target, counters) {
+export default function renderXRef(target, counters, editor, next) {
     switch (target.type) {
     case 'exercise':
     case 'exercise_problem':
@@ -13,5 +13,8 @@ export default function renderXRef(target, counters) {
 
     case 'exercise_commentary':
         return `Commentary ${counters.get('exercise')}`
+
+    default:
+        return next()
     }
 }
