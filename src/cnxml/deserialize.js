@@ -111,7 +111,7 @@ const BLOCK_TAGS = {
     exercise: 'exercise',
     figure: 'figure',
     image: image,
-    item: 'list_item',
+    item: item,
     list: list,
     media: media,
     note: admonition,
@@ -205,6 +205,13 @@ function list(el, next) {
     return {
         type: el.getAttribute('type') === 'enumerated' ? 'ol_list' : 'ul_list',
         nodes: next(Array.from(el.children)),
+    }
+}
+
+function item(el, next) {
+    return {
+        type: 'list_item',
+        nodes:  mixedContent(el, next),
     }
 }
 
