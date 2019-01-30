@@ -2,12 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-function normalizeXRef(change, violation, context) {
-    console.warn('Unhandled xref violation:', violation, context)
+function normalizeXRef(change, error) {
+    console.warn('Unhandled xref violation:', error.code)
 }
 
-function normalizeLink(change, violation, context) {
-    console.warn('Unhandled link violation:', violation, context)
+function normalizeLink(change, error) {
+    console.warn('Unhandled link violation:', error.code)
 }
 
 export default {
@@ -16,6 +16,7 @@ export default {
             isVoid: true,
             // TODO: better data validation
             data: {
+                document: value => value == null || typeof value === 'string',
                 target: Boolean,
             },
             normalize: normalizeXRef,

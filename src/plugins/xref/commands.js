@@ -9,11 +9,13 @@ import { Inline } from 'slate'
  *
  * @param {Slate~Change} change
  * @param {string}       target ID of the target node
+ * @param {string?}      document ID of the document in which target node
+ *                                is located
  */
-export function insertXref(change, target) {
+export function insertXref(change, target, document) {
     const ref = Inline.create({
         type: 'xref',
-        data: { target },
+        data: { target, document },
     })
 
     change.insertInline(ref)
