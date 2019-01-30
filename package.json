@@ -11,7 +11,7 @@
     "@babel/runtime": "^7.1.5",
     "immutable": "^3.8.2",
     "react": "^16.4.1",
-    "slate": "^0.44.0",
+    "slate": "https://github.com/katalysteducation/slate#slate-v0.44.9-gitpkg",
     "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
     "slate-edit-list": "https://github.com/katalysteducation/slate-edit-list.git#releases",
     "slate-html-serializer": "^0.7.0",
