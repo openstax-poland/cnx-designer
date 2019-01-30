@@ -106,8 +106,6 @@ const MARK_TAGS = {
  * Serializer for figures.
  */
 function figure(obj, children) {
-    console.log('figure', children)
-
     return <figure id={obj.key}>
         {/* We need to turn nested figures from <figure>s to <subfigure>s */}
         {children.map(el => el.type !== 'figure' ? el : {

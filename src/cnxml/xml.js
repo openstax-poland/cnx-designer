@@ -35,7 +35,6 @@ class Renderer {
         const root = this.renderComponent(tree)
 
         const xml = new XMLSerializer().serializeToString(root)
-        console.log(xml)
         return '<?xml version="1.0" encoding="utf-8"?>\n' + xml
     }
 
@@ -53,7 +52,6 @@ class Renderer {
                 return Array.from(component, c => this.renderComponent(c))
             }
 
-            console.log(component)
             throw new Error("Bad component")
         }
     }

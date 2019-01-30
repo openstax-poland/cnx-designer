@@ -189,7 +189,6 @@ export class DocumentDB {
         const tx = this.database.transaction('changes', 'readwrite')
         const store = tx.objectStore('changes')
 
-        console.log('MARK', op, op.toJS())
         await promisify(store.add({
             document: this.id,
             change: op.toJS(),
@@ -208,8 +207,6 @@ export class DocumentDB {
             promisify(contents.get(this.id)),
             promisify(changes.getAll()),
         ])
-
-        console.log('restore from', value, 'and', ops)
 
         return new Seq(ops)
             .map(op => Operation.fromJSON(op.change))
