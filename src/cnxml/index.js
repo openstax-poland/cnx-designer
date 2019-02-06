@@ -8,11 +8,12 @@ import React from 'react'
 import deserialize from './deserialize'
 import render from './xml'
 import serialize from './serialize'
+import fixCNXML from './fixCNXML'
 
 
 function parseHtml(html) {
-    const parsed = new DOMParser().parseFromString(html, 'application/xml');
-    const content = parsed.querySelector(':root > content')
+    const parsed = new DOMParser().parseFromString(html, 'application/xml')
+    const content = fixCNXML(parsed.querySelector(':root > content'))
 
     return {
         childNodes: content.children,
