@@ -28,15 +28,6 @@
 </para>
  */
 
-const INLINE_TAGS = [
-  'emphasis',
-  'footnote',
-  'foreign',
-  'link',
-  'sub',
-  'sup',
-]
-
 const BLOCK_TAGS = [
   'caption',
   'commentary',
@@ -92,7 +83,7 @@ const fixCNXML = (tree) => {
             // Wrap paragraphNodes with para and postition it before handling child node
             createPara()
             nodes.push(child)
-          } else if (INLINE_TAGS.includes(childName) || childName === '#text') {
+          } else {
             // Push node to paragraphNodes
             paragraphNodes.push(child)
           }
