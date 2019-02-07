@@ -19,7 +19,7 @@ export const input = cnxml`
 
 export const output = <value>
     <document>
-        <exercise>
+        <exercise key="e1">
             <exproblem>
                 <p>This is a problem</p>
             </exproblem>

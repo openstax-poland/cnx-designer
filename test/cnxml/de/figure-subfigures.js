@@ -19,14 +19,14 @@ export const input = cnxml`
 
 export const output = <value>
     <document>
-        <figure>
-            <figure>
+        <figure key="f1">
+            <figure key="f1-1">
                 <media alt="First subfigure's content">
                     <img src="f1.png"><text/></img>
                 </media>
                 <figcaption>First subfigure</figcaption>
             </figure>
-            <figure>
+            <figure key="f1-2">
                 <media alt="Second subfigure's content">
                     <img src="f2.png"><text/></img>
                 </media>

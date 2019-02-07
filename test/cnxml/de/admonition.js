@@ -13,14 +13,14 @@ export const input = cnxml`
 
 export const output = <value>
     <document>
-        <note type="note">
+        <note key="n1" type="note">
             <p>Notes' default type is ‘note’.</p>
         </note>
-        <note type="warning">
+        <note key="n2" type="warning">
             <title>This is a title</title>
             <p>And this is a paragraph</p>
         </note>
-        <note type="tip">
+        <note key="n3" type="tip">
             <p>Notes can also have text content.</p>
         </note>
     </document>
