@@ -2,6 +2,7 @@ export default function dropKeys(object) {
     switch (object.object) {
     case 'document':
     case 'block':
+    case 'inline':
         return object.withMutations(node => {
             node.delete('key')
                 .update('nodes', nodes => nodes ? nodes.map(dropKeys) : nodes)
