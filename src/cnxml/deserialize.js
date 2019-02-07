@@ -14,7 +14,7 @@ const BLOCK = {
 
         const props = block instanceof Function ? block(el, next) : {
             type: block,
-            nodes: next(Array.from(el.children)),
+            nodes: normalize(next(Array.from(el.children)), 'block', 'paragraph'),
         }
 
         return {
@@ -43,8 +43,29 @@ const MARK = {
         return {
             object: 'mark',
             key: el.getAttribute('id') || undefined,
-            nodes: next(el.childNodes),
+            nodes: normalize(next(el.childNodes), 'transparent'),
             ...props,
+        }
+    }
+}
+
+
+/**
+ * Default handler.
+ *
+ * This handler will handle all elements and convert them into Slate-JSON-like
+ * objects with `object: 'invalid'` and `nodes` equal to what
+ * `slate-html-serializer` would normally generate for an unknown element.
+ */
+const DEFAULT = {
+    deserialize(el, next) {
+        if (el.nodeType !== el.ELEMENT_NODE) {
+            return
+        }
+
+        return {
+            object: 'invalid',
+            nodes: next(el.childNodes),
         }
     }
 }
@@ -73,7 +94,7 @@ const INLINE_TAGS = [
  */
 const text = type => (el, next) => ({
     type: type,
-    nodes: next(el.childNodes),
+    nodes: normalize(next(el.childNodes), 'transparent'),
 })
 
 
@@ -83,7 +104,7 @@ const text = type => (el, next) => ({
  */
 const mixed = type => (el, next) => ({
     type: type,
-    nodes: mixedContent(el, next),
+    nodes: normalize(mixedContent(el, next), 'block', 'paragraph'),
 })
 
 
@@ -150,7 +171,7 @@ function admonition(el, next) {
         data: {
             type: el.getAttribute('type') || 'note',
         },
-        nodes: mixedContent(el, next),
+        nodes: normalize(mixedContent(el, next), 'block', 'paragraph'),
     }
 }
 
@@ -215,7 +236,7 @@ function list(el, next) {
 function item(el, next) {
     return {
         type: 'list_item',
-        nodes: mixedContent(el, next),
+        nodes: normalize(mixedContent(el, next), 'block', 'paragraph'),
     }
 }
 
@@ -257,10 +278,12 @@ function mixedContent(el, next, type='paragraph') {
     const text = cl.nodeType === cl.TEXT_NODE && cl.textContent.match(/[^\s]/)
 
     if (text || INLINE_TAGS.includes(cl.tagName)) {
+        const nodes = next(el.childNodes)
+
         return [{
             object: 'block',
             type: type,
-            nodes: next(el.childNodes),
+            nodes: nodes,
         }]
     } else {
         return next(Array.from(el.children))
@@ -268,7 +291,71 @@ function mixedContent(el, next, type='paragraph') {
 }
 
 
+/**
+ * Process a list of Slate-JSON nodes which may contain an `object: 'invalid'`
+ * node into an one which doesn't.
+ *
+ * What is done with an `object: 'invalid'` node depends on value of `action`:
+ *
+ * - `block` will turn all _invalid_ nodes into blocks with type equal
+ *   to `param`, and normalize nested node lists with `action = 'transparent'`;
+ *
+ * - `inline` will turn all _invalid_ nodes into inlines with type equal
+ *   to `param`, and normalize nested node lists with `action = 'inline'`;
+ *
+ * - `transparent` will replace any _invalid_ node with normalized contents
+ *   of its nested node list. In this mode `param` is ignored;
+ *
+ * - `skip` will completely ignore any _invalid_ node. In this mode `param`
+ *   is ignored.
+ */
+function normalize(nodes, action='transparent', param) {
+    if (nodes.every(node => node.object !== 'invalid')) {
+        return nodes
+    }
+
+    let res = []
+
+    for (const node of nodes) {
+        if (node.object === 'invalid') {
+            switch (action) {
+            case 'block':
+                res.push({
+                    object: 'block',
+                    type: param,
+                    nodes: normalize(node.nodes, 'transparent')
+                })
+                break
+
+            case 'inline':
+                res.push({
+                    object: 'inline',
+                    type: param,
+                    nodes: normalize(node.nodes, 'inline', param),
+                })
+                break
+
+            case 'transparent':
+                res = res.concat(normalize(node.nodes, 'transparent'))
+                break
+
+            case 'skip':
+                break
+
+            default:
+                throw new Error('Invalid normalize action: ' + action)
+            }
+        } else {
+            res.push(node)
+        }
+    }
+
+    return res
+}
+
+
 export default [
     BLOCK,
     MARK,
+    DEFAULT,
 ]
