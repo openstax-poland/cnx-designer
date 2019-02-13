@@ -26,11 +26,11 @@ export default class Editor extends React.Component {
     }
 
     plugins = [
-        Persistence({ db: this.props.documentDb }),
         Storage({ storage: this.props.storage }),
         ...this.props.prePlugins || [],
         ...plugins,
         ...this.props.postPlugins || [],
+        Persistence({ db: this.props.documentDb }),
     ]
 
     onChange = ({ value }) => {
