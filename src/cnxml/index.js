@@ -31,13 +31,17 @@ export default {
     deserialize: (...args) => serializer.deserialize(...args),
 
     serialize(value) {
+        const attrs = {
+            'xmlns:cmlnle': 'http://katalysteducation.org/cmlnle/1.0'
+        }
+        
         const r = <document
             xmlns="http://cnx.rice.edu/cnxml"
-            xmlnsCmlnle="http://katalysteducation.org/cmlnle/1.0"
             cnxml-version="0.7"
             id="new"
             module-id="new"
             xmlLang="en"
+            {...attrs}
             >
             <title>TODO: load and preserve titles</title>
             <content>

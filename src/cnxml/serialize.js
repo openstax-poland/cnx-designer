@@ -152,7 +152,7 @@ function xref(obj, children) {
         : null
 
     if (cmlnleCase) {
-        attrs['cmlnle-case'] = cmlnleCase
+        attrs['cmlnle:case'] = cmlnleCase
     }
 
     return <link {...attrs}>
