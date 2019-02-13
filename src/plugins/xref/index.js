@@ -5,7 +5,8 @@
 import schema from './schema'
 import renderNode from './render'
 import * as commands from './commands'
+import * as queries from './queries'
 
 export default function XReference(options={}) {
-    return { commands, schema, renderNode }
+    return { commands, queries, schema, renderNode }
 }

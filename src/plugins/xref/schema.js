@@ -17,7 +17,8 @@ export default {
             // TODO: better data validation
             data: {
                 document: value => value == null || typeof value === 'string',
-                target: Boolean,
+                target: t => t === null || typeof t === 'string',
+                declension: d => d === null || d === undefined || typeof d === 'string',
             },
             normalize: normalizeXRef,
         },

@@ -177,13 +177,14 @@ function emphasis(el) {
 function xref(el) {
     const target = el.getAttribute('target-id') || null
     const url = el.getAttribute('url') || null
+    const declension = el.getAttribute('cmlnle-case') || null
 
     if (target) {
         return {
             object: 'inline',
             type: 'xref',
             isVoid: true,
-            data: { target },
+            data: { target, declension },
         }
     } else if (url) {
         return {
