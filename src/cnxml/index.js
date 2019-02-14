@@ -32,9 +32,9 @@ export default {
 
     serialize(value) {
         const attrs = {
-            'xmlns:cmlnle': 'http://katalysteducation.org/cmlnle/1.0'
+            'xmlns:cmlnle': 'http://katalysteducation.org/cmlnle/1.0',
         }
-        
+
         const r = <document
             xmlns="http://cnx.rice.edu/cnxml"
             cnxml-version="0.7"

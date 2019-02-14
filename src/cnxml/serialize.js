@@ -133,7 +133,7 @@ function list(obj, children) {
  */
 function xref(obj, children) {
     let attrs = {
-        'target-id': obj.data.get('target')
+        'target-id': obj.data.get('target'),
     }
 
     const cmlnleCase = obj.data.get('case')
