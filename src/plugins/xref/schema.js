@@ -3,11 +3,11 @@
 // full license text.
 
 /**
- * List of valid declensions for xrefs.
+ * List of valid cases for xrefs.
  * 
  * @see xref
  */
-const DECLENSIONS = ["abessive","ablative","ablative","absolutive","accusative","accusative","adessive","adverbial","agentive","allative","antessive","apudessive","aversive","benefactive","causal","causal-final","comitative","comparative","dative","delative","distributive","egressive","elative","equative","ergative","ergative-genitive","essive","essive","essive-formal","essive-modal","exessive","formal","genitive","identical","illative","inessive","initiative","instructive","instrumental","instrumental-comitative","intransitive","intrative","lative","locative","nominative","objective","oblique","orientative","ornative","partitive","pegative","perlative","pertingent","possessed","possessive","postessive","prepositional","privative","prolative","revertive","semblative","sociative","subessive","sublative","superssive","temporal","terminative","translative","vocative"]
+const CASES = ["abessive","ablative","ablative","absolutive","accusative","accusative","adessive","adverbial","agentive","allative","antessive","apudessive","aversive","benefactive","causal","causal-final","comitative","comparative","dative","delative","distributive","egressive","elative","equative","ergative","ergative-genitive","essive","essive","essive-formal","essive-modal","exessive","formal","genitive","identical","illative","inessive","initiative","instructive","instrumental","instrumental-comitative","intransitive","intrative","lative","locative","nominative","objective","oblique","orientative","ornative","partitive","pegative","perlative","pertingent","possessed","possessive","postessive","prepositional","privative","prolative","revertive","semblative","sociative","subessive","sublative","superssive","temporal","terminative","translative","vocative"]
 
 
 function normalizeXRef(change, error) {
@@ -26,7 +26,7 @@ export default {
             data: {
                 document: value => value == null || typeof value === 'string',
                 target: Boolean,
-                case: c => c == null || DECLENSIONS.some(d => d === c),
+                case: c => c == null || CASES.includes(c),
             },
             normalize: normalizeXRef,
         },
