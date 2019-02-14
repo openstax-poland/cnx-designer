@@ -76,14 +76,6 @@ const BLOCK_TAGS = {
 
 
 /**
- * List of valid declensions for xrefs.
- * 
- * @see xref
- */
-const DECLENSIONS = ['genitive', 'dative', 'accusative', 'instrumental', 'locative', 'vocative']
-
-
-/**
  * Serializer for CNXML emphasis tag.
  */
 const emphasis = type => function(obj, children) {
@@ -144,12 +136,7 @@ function xref(obj, children) {
         'target-id': obj.data.get('target')
     }
 
-    const declension = obj.data.get('declension')
-    const cmlnleCase = declension ?
-        DECLENSIONS.some(dec => dec === declension) ?
-            declension
-            : 'INVALID'
-        : null
+    const cmlnleCase = obj.data.get('case')
 
     if (cmlnleCase) {
         attrs['cmlnle:case'] = cmlnleCase
