@@ -13,6 +13,7 @@ import Section from './section'
 import Text from './text'
 import Title from './title'
 import XReference from './xref'
+import Table from './table'
 
 export default [
     Admonition(),
@@ -25,4 +26,5 @@ export default [
     Counters(),
     XReference(),
     List(),
+    Table(),
 ]

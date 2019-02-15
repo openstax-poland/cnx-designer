@@ -72,6 +72,15 @@ const BLOCK_TAGS = {
     section: 'section',
     title: 'title',
     ul_list: list,
+    table: 'table',
+    tgroup: 'tgroup',
+    colspec: 'colspec',
+    thead: 'thead',
+    tbody: 'tbody',
+    tfoot: 'tfoot',
+    row: 'row',
+    entry: 'entry',
+    caption: 'caption',
 }
 
 

@@ -121,6 +121,15 @@ const BLOCK_TAGS = {
     solution: 'exercise_solution',
     subfigure: 'figure',
     title: text('title'),
+    table: table,
+    tgroup: 'tgroup',
+    colspec: 'colspec',
+    thead: 'thead',
+    tbody: 'tbody',
+    tfoot: 'tfoot',
+    row: 'row',
+    entry: entry,
+    caption: caption,
 }
 
 
@@ -245,6 +254,43 @@ function image(el) {
         data: {
             src: el.getAttribute('src'),
         },
+    }
+}
+
+
+/**
+ * Process data for tables.
+ */
+function table(el, next) {
+    return {
+        type: 'table',
+        //isVoid: true,
+        data: {
+            summary: el.getAttribute('summary'),
+        },
+        nodes: next(Array.from(el.children)),
+    }
+}
+
+
+/**
+ * Process data for entries.
+ */
+function entry(el, next) {
+    return {
+        type: 'entry',
+        nodes: mixedContent(el, next),
+    }
+}
+
+
+/**
+ * Process data for caption.
+ */
+function caption(el, next) {
+    return {
+        type: 'caption',
+        nodes: mixedContent(el, next),
     }
 }
 
