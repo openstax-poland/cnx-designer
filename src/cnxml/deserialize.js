@@ -177,7 +177,7 @@ function emphasis(el) {
 function xref(el) {
     const target = el.getAttribute('target-id') || null
     const url = el.getAttribute('url') || null
-    const cmlnleCase = el.getAttribute('cmlnle:case') || null
+    const cmlnleCase = el.getAttributeNS('http://katalysteducation.org/cmlnle/1.0', 'case') || null
 
     if (target) {
         return {

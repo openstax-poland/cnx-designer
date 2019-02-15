@@ -139,7 +139,7 @@ function xref(obj, children) {
     const cmlnleCase = obj.data.get('case')
 
     if (cmlnleCase) {
-        attrs['cmlnle:case'] = cmlnleCase
+        attrs['cmlnleCase'] = cmlnleCase
     }
 
     return <link {...attrs}>
