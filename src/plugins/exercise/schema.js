@@ -2,12 +2,24 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
+import { List } from 'immutable'
 import { Block, Text } from 'slate'
 
 function normalizeExercise(change, error) {
-    const { code: violation, index, node, child } = error
+    const { code: violation, key, index, node, child } = error
 
     switch (violation) {
+    case 'node_data_invalid':
+        if (key === 'class') {
+            const newClasses = List(node.data.get('class').join(' ').trim().split(/\s+/))
+            const newData = node.data.set('class', newClasses)
+            change.setNodeByKey(node.key, { data: newData })
+            break
+        }
+
+        console.warn('Unhandled exercise violation:', violation)
+        break
+
     // A child of different type was expected.
     case 'child_type_invalid':
         // A text child could only have been added to an exercise by Slate in
@@ -116,6 +128,9 @@ export default {
     blocks: {
         exercise: {
             parent: [{ object: 'document' }, { type: 'section' }],
+            data: {
+                class: c => c == null || (List.isList(c) && c.every(x => x.match(/\s/) == null)),
+            },
             nodes: [
                 { match: { type: 'exercise_problem' }, min: 1, max: 1},
                 { match: { type: 'exercise_solution' }, min: 0 },

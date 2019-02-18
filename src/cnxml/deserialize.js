@@ -2,6 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
+import { List } from 'immutable'
+
 /**
  * Load a block element.
  *
@@ -14,6 +16,9 @@ const BLOCK = {
 
         const props = block instanceof Function ? block(el, next) : {
             type: block,
+            data: {
+                class: loadClasses(el),
+            },
             nodes: next(Array.from(el.children)),
         }
 
@@ -83,6 +88,9 @@ const text = type => (el, next) => ({
  */
 const mixed = type => (el, next) => ({
     type: type,
+    data: {
+        class: loadClasses(el),
+    },
     nodes: mixedContent(el, next),
 })
 
@@ -149,6 +157,7 @@ function admonition(el, next) {
         key: el.getAttribute('id') || undefined,
         data: {
             type: el.getAttribute('type') || 'note',
+            class: loadClasses(el),
         },
         nodes: mixedContent(el, next),
     }
@@ -204,6 +213,9 @@ function xref(el) {
 function list(el, next) {
     return {
         type: el.getAttribute('type') === 'enumerated' ? 'ol_list' : 'ul_list',
+        data: {
+            class: loadClasses(el),
+        },
         nodes: next(Array.from(el.children)),
     }
 }
@@ -265,6 +277,18 @@ function mixedContent(el, next, type='paragraph') {
     } else {
         return next(Array.from(el.children))
     }
+}
+
+
+/**
+ * Return element's classes as an array.
+ */
+const loadClasses = (el) => {
+    const classes = el.getAttribute('class')
+
+    if (!classes) return List([])
+
+    return List(classes.trim().split(/\s+/))
 }
 
 
