@@ -2,6 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
+function normalizeTitle(change, error) {
+    console.warn('Unhandled title violation:', error.code)
+}
+
 export default {
     blocks: {
         title: {
@@ -12,6 +16,7 @@ export default {
                 { type: 'superscript' },
                 { type: 'subscript' },
             ],
+            normalize: normalizeTitle,
         },
     },
 }
