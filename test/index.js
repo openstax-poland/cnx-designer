@@ -11,12 +11,8 @@ import './util/h'
 import dropKeys from './util/dropKeys'
 import fixtures from './util/fixtures'
 import CorePlugin from './util/core-plugin'
+import PLUGINS from './util/plugins'
 
-import Admonition from '../src/plugins/admonition'
-import Exercise from '../src/plugins/exercise'
-import Figure from '../src/plugins/figure'
-import List from '../src/plugins/list'
-import Text from '../src/plugins/text'
 
 const testPlugin = plugins => ({
     default: change,
@@ -40,9 +36,9 @@ const testPlugin = plugins => ({
 }
 
 describe('Plugins', () => {
-    fixtures(__dirname, 'plugins/admonition', testPlugin([Admonition(), CorePlugin()]))
-    fixtures(__dirname, 'plugins/exercise', testPlugin([Exercise(), CorePlugin()]))
-    fixtures(__dirname, 'plugins/figure', testPlugin([Figure()]))
-    fixtures(__dirname, 'plugins/list', testPlugin([List()]))
-    fixtures(__dirname, 'plugins/text', testPlugin([Text()]))
+    fixtures(__dirname, 'plugins/admonition', testPlugin(PLUGINS))
+    fixtures(__dirname, 'plugins/exercise', testPlugin(PLUGINS))
+    fixtures(__dirname, 'plugins/figure', testPlugin(PLUGINS))
+    fixtures(__dirname, 'plugins/list', testPlugin(PLUGINS))
+    fixtures(__dirname, 'plugins/text', testPlugin(PLUGINS))
 })

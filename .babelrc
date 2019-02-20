@@ -5,6 +5,7 @@
     ],
     plugins: [
         "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-transform-runtime",
     ],
     env: {
         build: {
@@ -12,11 +13,6 @@
             // of them.
             presets: [
                 ["@babel/preset-env", { modules: false }],
-            ],
-            // Babel-runtime is not needed for tests, so we can save space and
-            // performance by only including it for building.
-            plugins: [
-                "@babel/plugin-transform-runtime",
             ],
         },
     },
