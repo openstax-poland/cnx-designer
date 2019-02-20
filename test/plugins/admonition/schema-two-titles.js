@@ -5,8 +5,8 @@ export default change => change.normalize()
 export const input = <value>
     <document>
         <note>
-            <block type="title">Note</block>
-            <block type="title">More titles</block>
+            <title>Note</title>
+            <title>More titles</title>
             <p>Note</p>
         </note>
     </document>
@@ -15,7 +15,7 @@ export const input = <value>
 export const output = <value>
     <document>
         <note>
-            <block type="title">NoteMore titles</block>
+            <title>NoteMore titles</title>
             <p>Note</p>
         </note>
     </document>

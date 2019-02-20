@@ -27,6 +27,7 @@ export default global.h = createHyperscript({
             type: 'admonition',
             data: { type: 'tip' },
         },
+        title: 'title',
         ul: 'ul_list',
         warning: {
             type: 'admonition',
