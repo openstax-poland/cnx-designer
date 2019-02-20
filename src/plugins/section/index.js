@@ -4,7 +4,8 @@
 
 import renderNode from './render'
 import schema from './schema'
+import * as queries from './queries'
 
 export default function Section(options) {
-    return { renderNode, schema }
+    return { queries, renderNode, schema }
 }
