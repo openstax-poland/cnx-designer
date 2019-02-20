@@ -1,14 +1,11 @@
 /** @jsx h */
 
-export default (change, editor) =>  {
-    editor.run('onKeyDown', { key: 'Enter' })
-}
+export default change => change.normalize()
 
 export const input = <value>
     <document>
         <section>
-            <title>Te<cursor/>st</title>
-            <p><text/></p>
+            <title>Section</title>
         </section>
     </document>
 </value>
@@ -16,8 +13,7 @@ export const input = <value>
 export const output = <value>
     <document>
         <section>
-            <title>Te</title>
-            <p><cursor/>st</p>
+            <title>Section</title>
             <p><text/></p>
         </section>
     </document>
