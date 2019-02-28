@@ -132,7 +132,17 @@ function list(obj, children) {
  * Serializer for cross-references.
  */
 function xref(obj, children) {
-    return <link target-id={obj.data.get('target')}>
+    let attrs = {
+        'target-id': obj.data.get('target'),
+    }
+
+    const cmlnleCase = obj.data.get('case')
+
+    if (cmlnleCase) {
+        attrs['cmlnleCase'] = cmlnleCase
+    }
+
+    return <link {...attrs}>
         {children}
     </link>
 }
