@@ -43,4 +43,5 @@ describe('Plugins', () => {
     fixtures(__dirname, 'plugins/text', testPlugin(PLUGINS))
     fixtures(__dirname, 'plugins/section', testPlugin(PLUGINS))
     fixtures(__dirname, 'plugins/title', testPlugin(PLUGINS))
+    fixtures(__dirname, 'plugins/code', testPlugin(PLUGINS))
 })

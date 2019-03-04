@@ -58,6 +58,7 @@ const MARK = {
  */
 const BLOCK_TAGS = {
     admonition: 'note',
+    code: code,
     exercise: 'exercise',
     exercise_commentary: 'commentary',
     exercise_problem: 'problem',
@@ -145,6 +146,22 @@ function xref(obj, children) {
     return <link {...attrs}>
         {children}
     </link>
+}
+
+
+/**
+ * Serializer for code.
+ */
+function code(obj, children) {
+    let attrs = {}
+
+    if (obj.object === 'block') {
+        attrs.display = 'block'
+    }
+
+    return <code {...attrs}>
+        {obj.getTexts().map(t => t.text)}
+    </code>
 }
 
 

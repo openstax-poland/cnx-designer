@@ -2,14 +2,15 @@ export default function dropKeys(object) {
     switch (object.object) {
     case 'document':
     case 'block':
+    case 'inline':
         return object.withMutations(node => {
-            node.delete('key')
+            ;(node.get('key').match(/^\d+$/) ? node.delete('key') : node)
                 .update('nodes', nodes => nodes ? nodes.map(dropKeys) : nodes)
         })
 
     case 'text':
         return object.withMutations(node => {
-            node.delete('key')
+            ;(node.get('key').match(/^\d+$/) ? node.delete('key') : node)
                 .update('leaves', leaves => leaves ? leaves.map(dropKeys) : leaves)
         })
 
@@ -27,7 +28,10 @@ export default function dropKeys(object) {
         })
 
     case 'point':
-        return object.delete('key')
+        return object.get('key').match(/^\d+$/) ? object.delete('key') : object
+
+    case 'value':
+        return object.update('document', document => dropKeys(document))
 
     default:
         throw new Error(object.object)

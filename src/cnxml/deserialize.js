@@ -107,6 +107,7 @@ const mixed = type => (el, next) => ({
  */
 const BLOCK_TAGS = {
     caption: text('figure_caption'),
+    code: code,
     commentary: mixed('exercise_commentary'),
     exercise: 'exercise',
     figure: 'figure',
@@ -151,6 +152,20 @@ function admonition(el, next) {
             type: el.getAttribute('type') || 'note',
         },
         nodes: mixedContent(el, next),
+    }
+}
+
+
+/**
+ * Process data for code tags.
+ */
+function code(el, next) {
+    const display = el.getAttribute('display') || 'inline'
+
+    return {
+        object: display === 'block' ? 'block' : 'inline',
+        type: 'code',
+        nodes: next(el.childNodes),
     }
 }
 

@@ -73,6 +73,7 @@ function normalizeSection(change, error) {
  */
 const DOCUMENT_NODES = [
     { type: 'admonition' },
+    { type: 'code', },
     { type: 'exercise' },
     { type: 'figure' },
     { type: 'ol_list' },
