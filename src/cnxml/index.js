@@ -30,7 +30,7 @@ const serializer = new Html({
 export default {
     deserialize: (...args) => serializer.deserialize(...args),
 
-    serialize(value) {
+    serialize(value, options={}) {
         const r = <document
             xmlns="http://cnx.rice.edu/cnxml"
             cnxml-version="0.7"
@@ -44,6 +44,6 @@ export default {
             </content>
         </document>
 
-        return render(r)
+        return render(r, options)
     }
 }
