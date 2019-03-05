@@ -14,6 +14,11 @@ function parseHtml(html) {
     const parsed = new DOMParser().parseFromString(html, 'application/xml');
     const content = parsed.querySelector(':root > content')
 
+    if (content == null) {
+        const error = parsed.getElementsByTagName('parsererror')
+        throw new Error('Invalid XML:' + error[0].textContent)
+    }
+
     return {
         childNodes: content.children,
     }
