@@ -75,6 +75,10 @@ class Renderer {
         for (const [key, value] of Object.entries(element.props)) {
             if (SPECIAL_PROPS.includes(key)) continue;
 
+            if (value == null) {
+                continue
+            }
+
             const r = key.match(/([a-z]+)([A-Z][a-z]*)/)
             if (r) {
                 const [, prefix, attr] = r

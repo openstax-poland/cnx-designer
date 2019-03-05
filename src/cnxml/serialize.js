@@ -120,7 +120,7 @@ function figure(obj, children) {
  * Serializer for lists.
  */
 function list(obj, children) {
-    const type = obj.type === 'ul_list' ? 'enumerated' : 'bulleted'
+    const type = obj.type === 'ul_list' ? 'bulleted' : 'enumerated'
 
     return <list list-type={type}>
         {children}
