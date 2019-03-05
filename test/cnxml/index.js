@@ -2,6 +2,7 @@ import { Editor } from 'slate'
 import { JSDOM } from 'jsdom'
 
 import '../util/cnxml'
+import compareHtml from '../util/compareHtml'
 import dropKeys from '../util/dropKeys'
 import fixtures from '../util/fixtures'
 
@@ -21,8 +22,10 @@ const dom = new JSDOM(null, {
     url: 'https://example.test/',
     referrer: 'https://example.test/',
 })
+global.document = dom.window.document
 global.DOMParser = dom.window.DOMParser
 global.XMLSerializer = dom.window.XMLSerializer
+global.Node = dom.window.Node
 
 const plugins = [
     Admonition(),
@@ -46,7 +49,23 @@ function testDeserialization({ input, output }) {
     }
 }
 
+function testSerialization({ input, output }) {
+    const result = CNXML.serialize(dropKeys(input), { toString: false })
+        .getElementsByTagName('content')[0]
+
+    const referenceXml = new DOMParser().parseFromString(output, 'application/xml')
+    const reference = referenceXml.querySelector(':root > content')
+
+    if (reference == null) {
+        const error = referenceXml.getElementsByTagName('parsererror')
+        throw new Error('Invalid XML:' + error[0].textContent)
+    }
+
+    compareHtml(dom, result, reference)
+}
+
 describe('CNXML', () => {
     fixtures(__dirname, 'de', testDeserialization)
+    fixtures(__dirname, 'se', testSerialization)
 })
 

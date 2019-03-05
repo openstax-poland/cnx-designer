@@ -3,7 +3,7 @@ export default global.cnxml = function cnxml(fragments) {
         throw new Error('cnxml`` does not support interpolation')
     }
 
-    return `<document>
+    return `<document xmlns="http://cnx.rice.edu/cnxml">
         <content>
             ${fragments[0]}
         </content>
