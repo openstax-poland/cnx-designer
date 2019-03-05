@@ -17,6 +17,18 @@ const BLOCK = {
             nodes: normalize(next(Array.from(el.children)), 'block', 'paragraph'),
         }
 
+        if (props instanceof Array) {
+            props[0].key = props[0].key || el.getAttribute('id') || undefined
+
+            for (const node of props) {
+                if (!node.object) {
+                    node.object = 'block'
+                }
+            }
+
+            return props
+        }
+
         return {
             object: 'block',
             key: el.getAttribute('id') || undefined,
@@ -92,7 +104,7 @@ const INLINE_TAGS = [
 /**
  * Create transformer function for nodes containing just text.
  */
-const text = type => (el, next) => ({
+const text = type => (el, next) => splitBlocks({
     type: type,
     nodes: normalize(next(el.childNodes), 'transparent'),
 })
@@ -348,6 +360,44 @@ function normalize(nodes, action='transparent', param) {
         } else {
             res.push(node)
         }
+    }
+
+    return res
+}
+
+
+/**
+ * One of CNXML's quirks is that it allows certain block elements inside runs
+ * of text, which is both silly and not supported by Slate. This function
+ * normalizes such cases by moving those nested blocks out, splitting the text
+ * block when necessary.
+ */
+function splitBlocks(node) {
+    if (node.nodes.every(node => node.object !== 'block')) {
+        return node
+    }
+
+    const res = []
+
+    let nodes = []
+    let start = 0
+
+    for (const child of node.nodes) {
+        if (child.object !== 'block') {
+            nodes.push(child)
+            continue
+        }
+
+        if (nodes.length > 0) {
+            res.push({ ...node, nodes })
+            nodes = []
+        }
+
+        res.push(child)
+    }
+
+    if (nodes.length > 0) {
+        res.push({ ...node, nodes })
     }
 
     return res
