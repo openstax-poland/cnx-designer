@@ -14,7 +14,7 @@ const BLOCK = {
 
         const props = block instanceof Function ? block(el, next) : {
             type: block,
-            nodes: normalize(next(Array.from(el.children)), 'block', 'paragraph'),
+            nodes: next(Array.from(el.children)),
         }
 
         if (props instanceof Array) {
@@ -55,7 +55,7 @@ const MARK = {
         return {
             object: 'mark',
             key: el.getAttribute('id') || undefined,
-            nodes: normalize(next(el.childNodes), 'transparent'),
+            nodes: next(el.childNodes),
             ...props,
         }
     }
@@ -65,22 +65,31 @@ const MARK = {
 /**
  * Default handler.
  *
- * This handler will handle all elements and convert them into Slate-JSON-like
- * objects with `object: 'invalid'` and `nodes` equal to what
- * `slate-html-serializer` would normally generate for an unknown element.
+ * When Slate can't find handler for a particular element it will skip it and
+ * deserialize its children, as if “unwrapping” them. This works fine for
+ * unknown inline nodes, but not for unknown blocks. Instead this handler will
+ * first try to determine whether given unknown element is used as a block or
+ * an inline, and replace blocks in paragraphs.
  */
 const DEFAULT = {
     deserialize(el, next) {
-        if (el.nodeType !== el.ELEMENT_NODE) {
+        if (el.nodeType !== Node.ELEMENT_NODE) {
             return
         }
 
-        return {
-            object: 'invalid',
-            nodes: next(el.childNodes),
+        const ref = el.previousSibling
+            ? el.parentNode.childNodes[0]
+            : el.parentNode.childNodes[el.parentNode.childNodes.length - 1]
+        const text = ref.nodeType === ref.TEXT_NODE && ref.textContent.match(/[^\s]/)
+
+        if (text || INLINE_TAGS.includes(ref.tagName)) {
+            return next(el.childNodes)
+        } else {
+            return mixedContent(el, next)
         }
     }
 }
+
 
 
 /**
@@ -106,7 +115,7 @@ const INLINE_TAGS = [
  */
 const text = type => (el, next) => splitBlocks({
     type: type,
-    nodes: normalize(next(el.childNodes), 'transparent'),
+    nodes: next(el.childNodes),
 })
 
 
@@ -116,7 +125,7 @@ const text = type => (el, next) => splitBlocks({
  */
 const mixed = type => (el, next) => ({
     type: type,
-    nodes: normalize(mixedContent(el, next), 'block', 'paragraph'),
+    nodes: mixedContent(el, next),
 })
 
 
@@ -183,7 +192,7 @@ function admonition(el, next) {
         data: {
             type: el.getAttribute('type') || 'note',
         },
-        nodes: normalize(mixedContent(el, next), 'block', 'paragraph'),
+        nodes: mixedContent(el, next),
     }
 }
 
@@ -248,7 +257,7 @@ function list(el, next) {
 function item(el, next) {
     return {
         type: 'list_item',
-        nodes: normalize(mixedContent(el, next), 'block', 'paragraph'),
+        nodes: mixedContent(el, next),
     }
 }
 
@@ -286,6 +295,10 @@ function image(el) {
  * node.
  */
 function mixedContent(el, next, type='paragraph') {
+    if (el.childNodes.length === 0) {
+        return []
+    }
+
     const cl = el.childNodes[0]
     const text = cl.nodeType === cl.TEXT_NODE && cl.textContent.match(/[^\s]/)
 
@@ -300,69 +313,6 @@ function mixedContent(el, next, type='paragraph') {
     } else {
         return next(Array.from(el.children))
     }
-}
-
-
-/**
- * Process a list of Slate-JSON nodes which may contain an `object: 'invalid'`
- * node into an one which doesn't.
- *
- * What is done with an `object: 'invalid'` node depends on value of `action`:
- *
- * - `block` will turn all _invalid_ nodes into blocks with type equal
- *   to `param`, and normalize nested node lists with `action = 'transparent'`;
- *
- * - `inline` will turn all _invalid_ nodes into inlines with type equal
- *   to `param`, and normalize nested node lists with `action = 'inline'`;
- *
- * - `transparent` will replace any _invalid_ node with normalized contents
- *   of its nested node list. In this mode `param` is ignored;
- *
- * - `skip` will completely ignore any _invalid_ node. In this mode `param`
- *   is ignored.
- */
-function normalize(nodes, action='transparent', param) {
-    if (nodes.every(node => node.object !== 'invalid')) {
-        return nodes
-    }
-
-    let res = []
-
-    for (const node of nodes) {
-        if (node.object === 'invalid') {
-            switch (action) {
-            case 'block':
-                res.push({
-                    object: 'block',
-                    type: param,
-                    nodes: normalize(node.nodes, 'transparent')
-                })
-                break
-
-            case 'inline':
-                res.push({
-                    object: 'inline',
-                    type: param,
-                    nodes: normalize(node.nodes, 'inline', param),
-                })
-                break
-
-            case 'transparent':
-                res = res.concat(normalize(node.nodes, 'transparent'))
-                break
-
-            case 'skip':
-                break
-
-            default:
-                throw new Error('Invalid normalize action: ' + action)
-            }
-        } else {
-            res.push(node)
-        }
-    }
-
-    return res
 }
 
 
