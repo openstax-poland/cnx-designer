@@ -25,7 +25,7 @@ export const output = <value>
             {", "}
             <sub>subscript</sub>
             , links to other elements (
-            <xref target="f1"><text/></xref>
+            <xref target="f1" case={null}><text/></xref>
             {"), and "}
             <link url="https://example.test">external links</link>
             .
