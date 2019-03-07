@@ -22,6 +22,7 @@ export default global.h = createHyperscript({
         },
         ol: 'ol_list',
         p: 'paragraph',
+        quote: 'quotation',
         section: 'section',
         tip: {
             type: 'admonition',

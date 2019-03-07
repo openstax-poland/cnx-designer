@@ -42,6 +42,7 @@ function normalizeAdmonition(change, error) {
 
 const CONTENT = [
     { type: 'paragraph' },
+    { type: 'quotation' },
     { type: 'table' },
     { type: 'ul_list' },
     { type: 'ol_list' },

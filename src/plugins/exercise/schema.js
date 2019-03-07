@@ -116,6 +116,7 @@ function normalizeContent(change, error) {
 const CONTENT = {
     match: [
         { type: 'paragraph' },
+        { type: 'quotation' },
         { type: 'ul_list' },
         { type: 'ol_list' },
         { type: 'table' },

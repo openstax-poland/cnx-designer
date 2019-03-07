@@ -114,6 +114,7 @@ const BLOCK_NODES = [
 const MIXED_NODES = [
     'item',
     'note',
+    'quote',
 ]
 
 const INLINE_NODES = [

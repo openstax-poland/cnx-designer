@@ -90,6 +90,7 @@ const DOCUMENT_NODES = [
     { type: 'figure' },
     { type: 'ol_list' },
     { type: 'paragraph' },
+    { type: 'quotation' },
     { type: 'section' },
     { type: 'table' },
     { type: 'ul_list' },

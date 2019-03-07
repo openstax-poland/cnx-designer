@@ -9,6 +9,7 @@ import Exercise from './exercise'
 import Figure from './figure'
 import List from './list'
 import Media from './media'
+import Quotation from './quotation'
 import Section from './section'
 import Text from './text'
 import Title from './title'
@@ -25,4 +26,5 @@ export default [
     Counters(),
     XReference(),
     List(),
+    Quotation(),
 ]

@@ -167,6 +167,7 @@ const BLOCK_TAGS = {
     note: admonition,
     para: text('paragraph'),
     problem: 'exercise_problem',
+    quote: mixed('quotation'),
     section: 'section',
     solution: 'exercise_solution',
     subfigure: 'figure',

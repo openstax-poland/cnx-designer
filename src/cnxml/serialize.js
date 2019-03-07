@@ -78,6 +78,7 @@ const BLOCK_TAGS = {
     media: 'media',
     ol_list: list,
     paragraph: 'para',
+    quotation: 'quote',
     section: 'section',
     title: 'title',
     ul_list: list,
