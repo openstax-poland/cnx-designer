@@ -65,6 +65,7 @@ const INLINE_TAGS = [
     'link',
     'sub',
     'sup',
+    'suggestion',
 ]
 
 
@@ -137,6 +138,7 @@ const MARK_TAGS = {
     sub: 'subscript',
     sup: 'superscript',
     link: xref,
+    suggestion: suggestion,
 }
 
 
@@ -195,6 +197,19 @@ function xref(el) {
     } else {
         // TODO: notify user perhaps?
         return null
+    }
+}
+
+
+/**
+ * Process data for suggestion marks.
+ */
+function suggestion(el) {
+    return {
+        type: 'suggestion',
+        data: {
+            type: el.getAttribute('type') || 'unknown'
+        }
     }
 }
 

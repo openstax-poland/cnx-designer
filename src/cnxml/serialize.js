@@ -99,6 +99,7 @@ const MARK_TAGS = {
     superscript: 'sup',
     underline: emphasis('underline'),
     xref: xref,
+    suggestion: suggestion,
 }
 
 
@@ -145,6 +146,16 @@ function xref(obj, children) {
     return <link {...attrs}>
         {children}
     </link>
+}
+
+
+/**
+ * Serializer for suggestions.
+ */
+function suggestion(obj, children) {
+    return <suggestion {...obj.data.toJS()}>
+        {children}
+    </suggestion>
 }
 
 
