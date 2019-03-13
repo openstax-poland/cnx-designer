@@ -19,12 +19,16 @@ const SPECIAL_PROPS = [
 
 const REACT_ELEMENT_TYPE = Symbol.for('react.element')
 
-export default function render(tree) {
-    return new Renderer().render(tree)
+export default function render(tree, options) {
+    return new Renderer().render(tree, options)
 }
 
 class Renderer {
-    render(tree) {
+    render(tree, options={}) {
+        const {
+            toString = true,
+        } = options
+
         if (tree.$$typeof !== REACT_ELEMENT_TYPE) {
             throw new Error("Root of the document must be an element.")
         }
@@ -34,6 +38,10 @@ class Renderer {
 
         this.doc = document.implementation.createDocument(this.ns, tag)
         const root = this.renderComponent(tree)
+
+        if (!toString) {
+            return root
+        }
 
         const xml = new XMLSerializer().serializeToString(root)
         return '<?xml version="1.0" encoding="utf-8"?>\n' + xml
@@ -67,6 +75,10 @@ class Renderer {
 
         for (const [key, value] of Object.entries(element.props)) {
             if (SPECIAL_PROPS.includes(key)) continue;
+
+            if (value == null) {
+                continue
+            }
 
             const r = key.match(/([a-z]+)([A-Z][a-z]*)/)
             if (r) {
