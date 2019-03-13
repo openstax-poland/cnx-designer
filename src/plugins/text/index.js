@@ -4,8 +4,9 @@
 
 import schema from './schema'
 import * as commands from './commands'
+import * as queries from './queries'
 import { renderNode, renderMark } from './render'
 
 export default function Text() {
-    return { commands, renderNode, renderMark, schema }
+    return { commands, queries, renderNode, renderMark, schema }
 }

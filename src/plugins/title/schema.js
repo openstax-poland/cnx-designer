@@ -15,6 +15,7 @@ export default {
                 { type: 'underline' },
                 { type: 'superscript' },
                 { type: 'subscript' },
+                { type: 'suggestion' },
             ],
             normalize: normalizeTitle,
         },
