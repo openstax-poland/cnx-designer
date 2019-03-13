@@ -25,9 +25,7 @@ export function getActiveSuggestion(editor, value) {
     if (!focusLeaf.leaf.marks) return null
     focusLeaf.leaf.marks.some(m => {
         if (m && m.type === 'suggestion') {
-            Object.keys(JSON.parse(JSON.stringify(m.data))).forEach(key => {
-                suggestionType = key
-            })
+            suggestionType = m.data.get('type')
             return true
         }
         return false
@@ -86,9 +84,7 @@ function getSuggestionsFromText(text, block) {
             if (!m) return false
             if (m.type === 'suggestion') {
                 let suggestionType = null
-                Object.keys(JSON.parse(JSON.stringify(m.data))).forEach(key => {
-                    suggestionType = key
-                })
+                suggestionType = m.data.get('type')
                 if (!suggestionType) return false
                 suggestions.push({
                     type: suggestionType,
@@ -201,6 +197,6 @@ export function hasSuggestionType(_, leaf, type) {
     if (!marks) return false
     return marks.some(m => {
         if (!m) return false
-        return m.data.has(type)
+        return m.data.get('type') === type
     })
 }

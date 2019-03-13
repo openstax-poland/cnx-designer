@@ -33,12 +33,13 @@ export function renderMark({ mark, children, attributes }, editor, next) {
         return <Mark {...attributes}>{children}</Mark>
     }
 
-    let data = {}
-    Object.entries(mark.data.toJS()).forEach(([key, val]) => {
-        data[`data-${key}`] = val.toString()
-    })
-
     if (mark.type === 'suggestion') {
+        let data = {}
+
+        if (mark.data.has('type')) {
+            data['data-type'] = mark.data.get('type')
+        }
+
         return <span
             className={mark.type}
             {...data}

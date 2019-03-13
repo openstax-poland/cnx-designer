@@ -25,7 +25,7 @@ export function removeMarks(change) {
  */
 export function addSuggestion(change, type) {
     change.clearSuggestions()
-    change.addMark({ type: 'suggestion', data: { [type]: true } })
+    change.addMark({ type: 'suggestion', data: { type } })
 }
 
 /**
@@ -34,8 +34,8 @@ export function addSuggestion(change, type) {
  * @param {Slate~Change} change
  */
 export function clearSuggestions(change) {
-    change.removeMark({ type: 'suggestion', data: { add: true } })
-    change.removeMark({ type: 'suggestion', data: { remove: true } })
+    change.removeMark({ type: 'suggestion', data: { type: 'add' } })
+    change.removeMark({ type: 'suggestion', data: { type: 'remove' } })
 }
 
 /**
@@ -129,7 +129,7 @@ export function acceptSuggestion(change, suggestion) {
         case 'add':
             change.moveAnchorTo(suggestion.block.key, suggestion.offsetStart)
             change.moveFocusTo(suggestion.block.key, suggestion.offsetEnd)
-            change.removeMark({ type: 'suggestion', data: { add: true } })
+            change.removeMark({ type: 'suggestion', data: { type: 'add' } })
             change.moveTo(suggestion.offsetStart)
             break
 
@@ -163,7 +163,7 @@ export function declineSuggestion(change, suggestion) {
         case 'remove':
             change.moveAnchorTo(suggestion.block.key, suggestion.offsetStart)
             change.moveFocusTo(suggestion.block.key, suggestion.offsetEnd)
-            change.removeMark({ type: 'suggestion', data: { remove: true } })
+            change.removeMark({ type: 'suggestion', data: { type: 'remove' } })
             change.moveTo(suggestion.offsetStart)
             break
         
