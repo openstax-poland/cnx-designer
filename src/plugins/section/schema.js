@@ -78,6 +78,7 @@ const DOCUMENT_NODES = [
     { type: 'ol_list' },
     { type: 'paragraph' },
     { type: 'section' },
+    { type: 'table' },
     { type: 'ul_list' },
 ]
 
