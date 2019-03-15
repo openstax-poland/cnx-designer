@@ -38,9 +38,11 @@ const plugins = [
     List(),
 ]
 
+const serializer = new CNXML()
+
 function testDeserialization({ input, output }) {
     const editor = new Editor({
-        value: CNXML.deserialize(input),
+        value: serializer.deserialize(input),
         plugins,
     })
 
@@ -50,7 +52,7 @@ function testDeserialization({ input, output }) {
 }
 
 function testSerialization({ input, output }) {
-    const result = CNXML.serialize(dropKeys(input), { toString: false })
+    const result = serializer.serialize(dropKeys(input), { toString: false })
         .getElementsByTagName('content')[0]
 
     const referenceXml = new DOMParser().parseFromString(output, 'application/xml')

@@ -25,15 +25,18 @@ function parseHtml(html) {
 }
 
 
-const serializer = new Html({
-    rules: [...deserialize, ...serialize],
-    defaultBlock: 'invalid',
-    parseHtml,
-})
+export default class CNXML {
+    constructor(rules = []) {
+        this.serializer = new Html({
+            rules: [...rules, ...deserialize, ...serialize],
+            defaultBlock: 'invalid',
+            parseHtml,
+        })
+    }
 
-
-export default {
-    deserialize: (...args) => serializer.deserialize(...args),
+    deserialize(...args) {
+        return this.serializer.deserialize(...args)
+    }
 
     serialize(value, options={}) {
         const r = <document
@@ -45,7 +48,7 @@ export default {
             >
             <title>TODO: load and preserve titles</title>
             <content>
-                {serializer.serialize(value, { render: false })}
+                {this.serializer.serialize(value, { render: false })}
             </content>
         </document>
 
