@@ -2,6 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
+import { List } from 'immutable'
+
 function normalizeDocument(change, error) {
     const { code, node, child } = error
 

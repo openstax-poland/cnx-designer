@@ -1,5 +1,7 @@
 /** @jsx h */
 
+import { List } from 'immutable'
+
 export const input = cnxml`
 <list>
     <item>List items can contain text</item>
@@ -16,7 +18,7 @@ export const input = cnxml`
 
 export const output = <value>
     <document>
-        <ul>
+        <ul class={List()}>
             <li>
                 <p>List items can contain text</p>
             </li>
@@ -24,7 +26,7 @@ export const output = <value>
                 <p>Items can also contain block nodes</p>
             </li>
             <li>
-                <ul>
+                <ul class={List()}>
                     <li>
                         <p>Or nested lists</p>
                     </li>

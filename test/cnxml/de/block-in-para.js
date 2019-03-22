@@ -1,5 +1,7 @@
 /** @jsx h */
 
+import { List } from 'immutable'
+
 export const input = cnxml`
 <para id="p1">Some text<list id="l1">
         <item>List item</item>
@@ -13,13 +15,13 @@ export const input = cnxml`
 export const output = <value>
     <document>
         <p key="p1">Some text</p>
-        <ul key="l1">
+        <ul key="l1" class={List()}>
             <li>
                 <p>List item</p>
             </li>
         </ul>
         <p>More text</p>
-        <figure key="f1">
+        <figure key="f1" class={List()}>
             <media alt="This should not be inline">
                 <img src="f1.png"><text/></img>
             </media>

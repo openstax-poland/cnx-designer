@@ -1,5 +1,7 @@
 /** @jsx h */
 
+import { List } from 'immutable'
+
 export const input = cnxml`
 <note>
     <invalid>No such element</invalid>
@@ -21,11 +23,11 @@ export const input = cnxml`
 
 export const output = <value>
     <document>
-        <note>
+        <note class={List()}>
             <p>No such element</p>
             <p>Valid element</p>
         </note>
-        <exercise>
+        <exercise class={List()}>
             <exproblem>
                 <p><text/></p>
             </exproblem>
@@ -34,7 +36,7 @@ export const output = <value>
                 <p>Valid element</p>
             </excomment>
         </exercise>
-        <ul>
+        <ul class={List()}>
             <li>
                 <p>No such element</p>
                 <p>Valid element</p>

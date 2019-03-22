@@ -1,5 +1,7 @@
 /** @jsx h */
 
+import { List } from 'immutable'
+
 export const input = cnxml`
 <note id="n1">
     <para>Notes' default type is ‘note’.</para>
@@ -13,14 +15,14 @@ export const input = cnxml`
 
 export const output = <value>
     <document>
-        <note key="n1" type="note">
+        <note key="n1" type="note" class={List()}>
             <p>Notes' default type is ‘note’.</p>
         </note>
-        <note key="n2" type="warning">
+        <note key="n2" type="warning" class={List()}>
             <title>This is a title</title>
             <p>And this is a paragraph</p>
         </note>
-        <note key="n3" type="tip">
+        <note key="n3" type="tip" class={List()}>
             <p>Notes can also have text content.</p>
         </note>
     </document>

@@ -1,5 +1,7 @@
 /** @jsx h */
 
+import { List } from 'immutable'
+
 export const input = cnxml`
 <figure id="f1">
     <media alt="Figure content">
@@ -11,7 +13,7 @@ export const input = cnxml`
 
 export const output = <value>
     <document>
-        <figure key="f1">
+        <figure key="f1" class={List()}>
             <media alt="Figure content">
                 <img src="f1.png"><text/></img>
             </media>

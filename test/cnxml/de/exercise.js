@@ -1,5 +1,7 @@
 /** @jsx h */
 
+import { List } from 'immutable'
+
 export const input = cnxml`
 <exercise id="e1">
     <problem>
@@ -19,7 +21,7 @@ export const input = cnxml`
 
 export const output = <value>
     <document>
-        <exercise key="e1">
+        <exercise key="e1" class={List()}>
             <exproblem>
                 <p>This is a problem</p>
             </exproblem>

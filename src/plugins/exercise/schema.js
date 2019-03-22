@@ -140,16 +140,25 @@ export default {
         },
         exercise_problem: {
             parent: { type: 'exercise' },
+            data: {
+                class: c => c == null,
+            },
             nodes: [CONTENT],
             normalize: normalizeContent,
         },
         exercise_solution: {
             parent: { type: 'exercise' },
+            data: {
+                class: c => c == null,
+            },
             nodes: [CONTENT],
             normalize: normalizeContent,
         },
         exercise_commentary: {
             parent: { type: 'exercise' },
+            data: {
+                class: c => c == null,
+            },
             nodes: [CONTENT],
             normalize: normalizeContent,
         },
