@@ -17,7 +17,16 @@ const BLOCK = {
 
         if (Block instanceof Function) return Block(obj, children)
 
-        return <Block id={obj.key} {...obj.data.toJS()}>
+        let data = obj.data.toJS()
+
+        if (!data.class) {
+            // Remove empty classes
+            delete data['class']
+        } else {
+            data.class = data.class.join(' ')
+        }
+
+        return <Block id={obj.key} {...data}>
             {children}
         </Block>
     },
@@ -106,7 +115,9 @@ const MARK_TAGS = {
  * Serializer for figures.
  */
 function figure(obj, children) {
-    return <figure id={obj.key}>
+    let attrs = obj.data.get('class') ? {class: obj.data.get('class').join(' ') } : {}
+
+    return <figure id={obj.key} {...attrs}>
         {/* We need to turn nested figures from <figure>s to <subfigure>s */}
         {children.map(el => el.type !== 'figure' ? el : {
             ...el,
@@ -122,7 +133,9 @@ function figure(obj, children) {
 function list(obj, children) {
     const type = obj.type === 'ul_list' ? 'bulleted' : 'enumerated'
 
-    return <list list-type={type}>
+    let attrs = obj.data.get('class') ? {class: obj.data.get('class').join(' ') } : {}
+
+    return <list list-type={type} {...attrs}>
         {children}
     </list>
 }

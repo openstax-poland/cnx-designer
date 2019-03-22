@@ -28,7 +28,7 @@ function normalizeDocument(change, error) {
 }
 
 function normalizeSection(change, error) {
-    const { code, node, child, next, index } = error
+    const { code, node, child, next, index, key } = error
 
     switch (code) {
     case 'child_min_invalid':
@@ -62,8 +62,19 @@ function normalizeSection(change, error) {
         change.moveNodeByKey(next.key, parent.key, parent.nodes.size)
         break
 
+    case 'node_data_invalid':
+        if (key === 'class') {
+            const newClasses = List(node.data.get('class').join(' ').trim().split(/\s+/))
+            const newData = node.data.set('class', newClasses)
+            change.setNodeByKey(node.key, { data: newData })
+            break
+        }
+
+        console.warn('Unhandled section violation:', code)
+        break
+
     default:
-        console.warn('Unhandled violation in section:', code)
+        console.warn('Unhandled section violation:', code)
         break
     }
 }
@@ -93,6 +104,9 @@ export default {
     },
     blocks: {
         section: {
+            data: {
+                class: c => c == null || (List.isList(c) && c.every(x => x.match(/\s/) == null)),
+            },
             nodes: [
                 { match: { type: 'title' }, min: 1, max: 1 },
                 {
