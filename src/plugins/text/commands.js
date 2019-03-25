@@ -127,15 +127,15 @@ export function normalizeAnchorFocus(change) {
 export function acceptSuggestion(change, suggestion) {
     switch (suggestion.type) {
         case 'add':
-            change.moveAnchorTo(suggestion.block.key, suggestion.offsetStart)
-            change.moveFocusTo(suggestion.block.key, suggestion.offsetEnd)
+            change.moveAnchorTo(suggestion.focusText.key, suggestion.offsetStart)
+            change.moveFocusTo(suggestion.focusText.key, suggestion.offsetEnd)
             change.removeMark({ type: 'suggestion', data: { type: 'add' } })
             change.moveTo(suggestion.offsetStart)
             break
 
         case 'remove':
-            change.moveAnchorTo(suggestion.block.key, suggestion.offsetStart)
-            change.moveFocusTo(suggestion.block.key, suggestion.offsetEnd)
+            change.moveAnchorTo(suggestion.focusText.key, suggestion.offsetStart)
+            change.moveFocusTo(suggestion.focusText.key, suggestion.offsetEnd)
             change.delete()
             break
         
@@ -155,14 +155,14 @@ export function acceptSuggestion(change, suggestion) {
 export function declineSuggestion(change, suggestion) {
     switch (suggestion.type) {
         case 'add':
-            change.moveAnchorTo(suggestion.block.key, suggestion.offsetStart)
-            change.moveFocusTo(suggestion.block.key, suggestion.offsetEnd)
+            change.moveAnchorTo(suggestion.focusText.key, suggestion.offsetStart)
+            change.moveFocusTo(suggestion.focusText.key, suggestion.offsetEnd)
             change.delete()
             break
 
         case 'remove':
-            change.moveAnchorTo(suggestion.block.key, suggestion.offsetStart)
-            change.moveFocusTo(suggestion.block.key, suggestion.offsetEnd)
+            change.moveAnchorTo(suggestion.focusText.key, suggestion.offsetStart)
+            change.moveFocusTo(suggestion.focusText.key, suggestion.offsetEnd)
             change.removeMark({ type: 'suggestion', data: { type: 'remove' } })
             change.moveTo(suggestion.offsetStart)
             break

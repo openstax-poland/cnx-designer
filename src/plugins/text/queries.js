@@ -10,6 +10,7 @@ import { Point, Range } from 'slate'
 //   type: SuggestionType,
 //   text: string,
 //   block: Block,
+//   focusText: Text,
 //   offsetStart: number,
 //   offsetEnd: number,
 // }
@@ -37,6 +38,7 @@ export function getActiveSuggestion(editor, value) {
         type: suggestionType,
         leaf: focusLeaf.leaf,
         block: node,
+        focusText: value.focusText,
         offsetStart: focusLeaf.startOffset,
         offsetEnd: focusLeaf.endOffset,
     }
@@ -90,6 +92,7 @@ function getSuggestionsFromText(text, block) {
                     type: suggestionType,
                     leaf: l,
                     block: block,
+                    focusText: text,
                     offsetStart: currentOffset,
                     offsetEnd: currentOffset + l.text.length,
                 })
