@@ -40,6 +40,12 @@ function normalizeAdmonition(change, error) {
     }
 }
 
+const CONTENT = [
+    { type: 'paragraph' },
+    { type: 'ul_list' },
+    { type: 'ol_list' },
+]
+
 export default {
     blocks: {
         admonition: {
@@ -49,7 +55,7 @@ export default {
             },
             nodes: [
                 { match: { type: 'title' }, min: 0, max: 1 },
-                { match: { type: 'paragraph' } },
+                { match: CONTENT },
             ],
             normalize: normalizeAdmonition,
         }
