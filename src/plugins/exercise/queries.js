@@ -15,24 +15,22 @@ export function getCounterDefinitions(editor, definitions) {
 }
 
 export function getActiveExercise(editor, value) {
-    const { document } = value
+    const { document, blocks } = value
+    const first = blocks.first()
 
-    const block = value.startBlock
-    if (!block) return null
+    // No selection
+    if (!first) return null
 
-    const parent = document.getParent(block.key)
-    if (!parent) return null
+    const path = document.getPath(first.key)
 
-    switch (parent.type) {
-    case 'exercise':
-        return parent
+    let node = document
+    for (const index of path) {
+        node = node.nodes.get(index)
 
-    case 'exercise_problem':
-    case 'exercise_solution':
-    case 'exercise_commentary':
-        return document.getParent(parent.key)
-
-    default:
-        return null
+        if (node.type === 'exercise') {
+            return node
+        }
     }
+
+    return null
 }

@@ -3,11 +3,22 @@
 // full license text.
 
 export function getActiveAdmonition(editor, value) {
-    const { document } = value
+    const { document, blocks } = value
+    const first = blocks.first()
 
-    const block = value.startBlock
-    if (!block) return null
+    // No selection
+    if (!first) return null
 
-    const parent = document.getParent(block.key)
-    return parent && parent.type === 'admonition' ? parent : null
+    const path = document.getPath(first.key)
+
+    let node = document
+    for (const index of path) {
+        node = node.nodes.get(index)
+
+        if (node.type === 'admonition') {
+            return node
+        }
+    }
+
+    return null
 }
