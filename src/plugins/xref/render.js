@@ -15,7 +15,7 @@ export default function renderNode(props, editor, next) {
         return <Reference {...props} />
 
     case 'link':
-        <a href={node.data.get('url')} {...attributes}>{children}</a>
+        return <a href={node.data.get('url')} {...attributes}>{children}</a>
 
     default:
         return next()

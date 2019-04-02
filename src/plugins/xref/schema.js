@@ -101,9 +101,8 @@ export default {
             normalize: normalizeXRef,
         },
         link: {
-            // TODO: better data validation
             data: {
-                url: Boolean,
+                url: url => typeof url === 'string',
             },
             normalize: normalizeLink,
         },
