@@ -118,6 +118,7 @@ const CONTENT = {
         { type: 'paragraph' },
         { type: 'ul_list' },
         { type: 'ol_list' },
+        { type: 'table' },
     ],
     min: 1,
 }

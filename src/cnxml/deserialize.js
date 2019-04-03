@@ -156,7 +156,7 @@ const mixed = type => (el, next) => ({
  * @see BLOCK
  */
 const BLOCK_TAGS = {
-    caption: text('figure_caption'),
+    caption: caption,
     commentary: mixed('exercise_commentary'),
     exercise: 'exercise',
     figure: 'figure',
@@ -187,6 +187,23 @@ const MARK_TAGS = {
     sub: 'subscript',
     sup: 'superscript',
     link: xref,
+}
+
+
+/**
+ * Process data for captions.
+ */
+function caption(el, next) {
+    const allowedParents = ['figure', 'subfigure']
+
+    if (!allowedParents.includes(el.parentElement.tagName)) {
+        return
+    }
+
+    return splitBlocks({
+        type: 'figure_caption',
+        nodes: next(el.childNodes),
+    })
 }
 
 
