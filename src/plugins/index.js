@@ -11,6 +11,7 @@ import List from './list'
 import Media from './media'
 import Section from './section'
 import Text from './text'
+import Term from './term'
 import Title from './title'
 import XReference from './xref'
 
@@ -21,6 +22,7 @@ export default [
     Media(),
     Section(),
     Text(),
+    Term(),
     Title(),
     Counters(),
     XReference(),

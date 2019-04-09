@@ -112,6 +112,7 @@ const INLINE_TAGS = [
     'link',
     'sub',
     'sup',
+    'term',
 ]
 
 
@@ -187,6 +188,7 @@ const MARK_TAGS = {
     sub: 'subscript',
     sup: 'superscript',
     link: xref,
+    term: term,
 }
 
 
@@ -263,6 +265,20 @@ function xref(el) {
     } else {
         // TODO: notify user perhaps?
         return null
+    }
+}
+
+
+/**
+ * Process data for terms.
+ */
+function term(el) {
+    const reference = el.getAttributeNS('http://katalysteducation.org/cmlnle/1.0', 'reference') || el.innerHTML
+
+    return {
+        object: 'mark',
+        type: 'term',
+        data: { reference },
     }
 }
 

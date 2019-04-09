@@ -108,6 +108,7 @@ const MARK_TAGS = {
     superscript: 'sup',
     underline: emphasis('underline'),
     xref: xref,
+    term: term,
 }
 
 
@@ -158,6 +159,20 @@ function xref(obj, children) {
     return <link {...attrs}>
         {children}
     </link>
+}
+
+
+/**
+ * Serializer for terms.
+ */
+function term(obj, children) {
+    let attrs = {
+        'cmlnleReference': obj.data.get('reference'),
+    }
+
+    return <term {...attrs}>
+        {children}
+    </term>
 }
 
 
