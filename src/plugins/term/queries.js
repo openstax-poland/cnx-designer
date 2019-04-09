@@ -27,11 +27,13 @@ export function getActiveTerm(change) {
   if (!focusLeaf.leaf.marks) return null
   focusLeaf.leaf.marks.some(m => {
     if (m && m.type === 'term') {
-      reference = m.data.get('reference') || ''
+      reference = m.data.get('reference')
       return true
     }
     return false
   })
+
+  if (!reference) return null
 
   return {
     reference,
