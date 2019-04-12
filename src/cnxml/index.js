@@ -4,19 +4,30 @@
 
 import Html from 'slate-html-serializer'
 import React from 'react'
+import Value from 'slate'
 
-import deserialize from './deserialize'
+import contentDeserialize from './content/deserialize'
+import contentSerialize from './content/serialize'
+import glossaryDeserialize from './glossary/deserialize'
+import glossarySerialize from './glossary/serialize'
 import render from './xml'
-import serialize from './serialize'
 
-
-function parseHtml(html) {
+function parseContentHtml(html) {
+    if (!html) {
+        throw new Error('No content has been provided for parseContentHtml()')
+    }
+    
     const parsed = new DOMParser().parseFromString(html, 'application/xml');
     const content = parsed.querySelector(':root > content')
 
     if (content == null) {
         const error = parsed.getElementsByTagName('parsererror')
-        throw new Error('Invalid XML:' + error[0].textContent)
+        if (error.length) {
+            throw new Error('Invalid XML:' + error[0].textContent)
+        }
+        return {
+            childNodes: [],
+        }
     }
 
     return {
@@ -24,21 +35,51 @@ function parseHtml(html) {
     }
 }
 
+function parseGlossaryHtml(html) {
+    if (!html) {
+        throw new Error('No content has been provided for parseGlossaryHtml()')
+    }
+
+    const parsed = new DOMParser().parseFromString(html, 'application/xml');
+    const content = parsed.querySelector(':root > glossary')
+
+    if (content == null) {
+        const error = parsed.getElementsByTagName('parsererror')
+        if (error.length) {
+            throw new Error('Invalid XML:' + error[0].textContent)
+        }
+        return {
+            childNodes: [],
+        }
+    }
+
+    return {
+        childNodes: content.children,
+    }
+}
 
 export default class CNXML {
-    constructor(rules = []) {
-        this.serializer = new Html({
-            rules: [...rules, ...deserialize, ...serialize],
+    constructor(args /* { contentRules: [], glossaryRules: [] } */) {
+        this.contentSerializer = new Html({
+            rules: [...args.contentRules, ...contentDeserialize, ...contentSerialize],
             defaultBlock: 'invalid',
-            parseHtml,
+            parseHtml: parseContentHtml,
+        })
+        this.glossarySerializer = new Html({
+            rules: [...args.glossaryRules, ...glossaryDeserialize, ...glossarySerialize],
+            defaultBlock: 'invalid',
+            parseHtml: parseGlossaryHtml,
         })
     }
 
     deserialize(...args) {
-        return this.serializer.deserialize(...args)
+        return {
+            content: this.contentSerializer.deserialize(...args),
+            glossary: this.glossarySerializer.deserialize(...args),
+        }
     }
 
-    serialize(value, options={}) {
+    serialize(content, glossary, options={}) {
         const r = <document
             xmlns="http://cnx.rice.edu/cnxml"
             cnxml-version="0.7"
@@ -48,8 +89,15 @@ export default class CNXML {
             >
             <title>TODO: load and preserve titles</title>
             <content>
-                {this.serializer.serialize(value, { render: false })}
+                {this.contentSerializer.serialize(content, { render: false })}
             </content>
+            {
+                glossary ?
+                    <glossary>
+                        {this.glossarySerializer.serialize(glossary, { render: false })}
+                    </glossary>
+                : ''
+            }
         </document>
 
         return render(r, options)

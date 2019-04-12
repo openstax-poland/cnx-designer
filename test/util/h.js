@@ -2,6 +2,8 @@ import { createHyperscript } from 'slate-hyperscript'
 
 export default global.h = createHyperscript({
     blocks: {
+        definition: 'definition',
+        example: 'definition_example',
         excomment: 'exercise_commentary',
         exercise: 'exercise',
         exproblem: 'exercise_problem',
@@ -16,6 +18,7 @@ export default global.h = createHyperscript({
         },
         li: 'list_item',
         media: 'media',
+        meaning: 'definition_meaning',
         note: {
             type: 'admonition',
             data: { type: 'note' },
@@ -23,6 +26,8 @@ export default global.h = createHyperscript({
         ol: 'ol_list',
         p: 'paragraph',
         section: 'section',
+        seealso: 'definition_seealso',
+        term: 'definition_term',
         tip: {
             type: 'admonition',
             data: { type: 'tip' },

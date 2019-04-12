@@ -1,4 +1,5 @@
 import Admonition from '../../src/plugins/admonition'
+import Definition from '../../src/plugins/definition'
 import Exercise from '../../src/plugins/exercise'
 import Figure from '../../src/plugins/figure'
 import List from '../../src/plugins/list'
@@ -12,6 +13,7 @@ import CorePlugin from './core-plugin'
 
 export default [
     Admonition(),
+    Definition(),
     Exercise(),
     Figure(),
     Media(),

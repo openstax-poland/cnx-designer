@@ -5,6 +5,7 @@
 import Counters from 'slate-counters'
 
 import Admonition from './admonition'
+import Definition from './definition'
 import Exercise from './exercise'
 import Figure from './figure'
 import List from './list'
@@ -16,6 +17,7 @@ import XReference from './xref'
 
 export default [
     Admonition(),
+    Definition(),
     Exercise(),
     Figure(),
     Media(),

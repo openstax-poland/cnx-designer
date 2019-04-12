@@ -17,7 +17,7 @@ function normalizeDocument(change, error) {
         break
 
     case 'child_type_invalid':
-        if (child.type === 'title') {
+        if (child.type === 'title' || child.type === 'definition_term') {
             change.setNodeByKey(child.key, { type: 'paragraph' })
             return
         }
@@ -86,6 +86,7 @@ function normalizeSection(change, error) {
  */
 const DOCUMENT_NODES = [
     { type: 'admonition' },
+    { type: 'definition' },
     { type: 'exercise' },
     { type: 'figure' },
     { type: 'ol_list' },

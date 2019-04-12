@@ -1,8 +1,6 @@
-// Copyright 2018 OpenStax Poland
+// Copyright 2019 OpenStax Poland
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
-
-import { List } from 'immutable'
 
 /**
  * Load a block element.
@@ -16,11 +14,10 @@ const BLOCK = {
 
         const props = block instanceof Function ? block(el, next) : {
             type: block,
-            data: {
-                class: loadClasses(el),
-            },
             nodes: next(Array.from(el.children)),
         }
+
+        if (props == null) return
 
         if (props instanceof Array) {
             props[0].key = props[0].key || el.getAttribute('id') || undefined
@@ -56,6 +53,8 @@ const MARK = {
         const props = inline instanceof Function ? inline(el, next) : {
             type: inline,
         }
+
+        if (props == null) return
 
         return {
             object: 'mark',
@@ -106,12 +105,7 @@ const DEFAULT = {
  * @see mixedContent
  */
 const INLINE_TAGS = [
-    'emphasis',
-    'footnote',
-    'foreign',
-    'link',
-    'sub',
-    'sup',
+    'term',
 ]
 
 
@@ -130,9 +124,6 @@ const text = type => (el, next) => splitBlocks({
  */
 const mixed = type => (el, next) => ({
     type: type,
-    data: {
-        class: loadClasses(el),
-    },
     nodes: mixedContent(el, next),
 })
 
@@ -156,21 +147,12 @@ const mixed = type => (el, next) => ({
  * @see BLOCK
  */
 const BLOCK_TAGS = {
-    caption: caption,
-    commentary: mixed('exercise_commentary'),
-    exercise: 'exercise',
-    figure: 'figure',
-    image: image,
-    item: item,
-    list: list,
-    media: media,
-    note: admonition,
+    definition: 'definition',
+    example: text('definition_example'),
+    meaning: text('definition_meaning'),
     para: text('paragraph'),
-    problem: 'exercise_problem',
-    section: 'section',
-    solution: 'exercise_solution',
-    subfigure: 'figure',
-    title: text('title'),
+    seealso: 'definition_seealso',
+    term: text('definition_term'),
 }
 
 
@@ -183,140 +165,18 @@ const BLOCK_TAGS = {
  * @see BLOCK_TAGS
  */
 const MARK_TAGS = {
-    emphasis: emphasis,
-    sub: 'subscript',
-    sup: 'superscript',
-    link: xref,
+    //term: term,
 }
 
 
 /**
- * Process data for captions.
+ * Process data for terms.
  */
-function caption(el, next) {
-    const allowedParents = ['figure', 'subfigure']
-
-    if (!allowedParents.includes(el.parentElement.tagName)) {
-        return
-    }
-
+function term(el, next) {
     return splitBlocks({
-        type: 'figure_caption',
+        type: 'term',
         nodes: next(el.childNodes),
     })
-}
-
-
-/**
- * Process data for admonitions.
- */
-function admonition(el, next) {
-    return {
-        type: 'admonition',
-        key: el.getAttribute('id') || undefined,
-        data: {
-            type: el.getAttribute('type') || 'note',
-            class: loadClasses(el),
-        },
-        nodes: mixedContent(el, next),
-    }
-}
-
-
-/**
- * Process data for emphasis marks.
- */
-function emphasis(el) {
-    const EFFECTS = {
-        bold: 'strong',
-        italics: 'emphasis',
-        underline: 'underline',
-    }
-
-    return {
-        type: EFFECTS[el.getAttribute('effect') || 'bold'] || 'strong',
-    }
-}
-
-
-/**
- * Process data for links and cross-references.
- */
-function xref(el) {
-    const target = el.getAttribute('target-id') || null
-    const url = el.getAttribute('url') || null
-    const cmlnleCase = el.getAttributeNS('http://katalysteducation.org/cmlnle/1.0', 'case') || null
-
-    if (target) {
-        return {
-            object: 'inline',
-            type: 'xref',
-            isVoid: true,
-            data: { target, case: cmlnleCase },
-        }
-    } else if (url) {
-        return {
-            object: 'inline',
-            type: 'link',
-            data: { url },
-        }
-    } else {
-        // TODO: notify user perhaps?
-        return null
-    }
-}
-
-
-/**
- * Process data for list nodes.
- */
-function list(el, next) {
-    return {
-        type: el.getAttribute('type') === 'enumerated' ? 'ol_list' : 'ul_list',
-        data: {
-            class: loadClasses(el),
-        },
-        nodes: next(Array.from(el.children)),
-    }
-}
-
-
-/**
- * Process data for item nodes.
- */
-function item(el, next) {
-    return {
-        type: 'list_item',
-        nodes: mixedContent(el, next),
-    }
-}
-
-
-/**
- * Process data for media nodes.
- */
-function media(el, next) {
-    return {
-        type: 'media',
-        data: {
-            alt: el.getAttribute('alt'),
-        },
-        nodes: next(Array.from(el.children)),
-    }
-}
-
-
-/**
- * Process data for images.
- */
-function image(el) {
-    return {
-        type: 'image',
-        isVoid: true,
-        data: {
-            src: el.getAttribute('src'),
-        },
-    }
 }
 
 
@@ -382,19 +242,6 @@ function splitBlocks(node) {
 
     return res
 }
-
-
-/**
- * Return element's classes as an array.
- */
-const loadClasses = (el) => {
-    const classes = el.getAttribute('class')
-
-    if (!classes) return List([])
-
-    return List(classes.trim().split(/\s+/))
-}
-
 
 export default [
     BLOCK,

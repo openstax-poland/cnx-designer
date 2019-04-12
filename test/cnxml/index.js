@@ -38,11 +38,11 @@ const plugins = [
     List(),
 ]
 
-const serializer = new CNXML()
+const serializer = new CNXML({contentRules: [], glossaryRules: []})
 
 function testDeserialization({ input, output }) {
     const editor = new Editor({
-        value: serializer.deserialize(input),
+        value: serializer.deserialize(input).content,
         plugins,
     })
 
@@ -52,7 +52,7 @@ function testDeserialization({ input, output }) {
 }
 
 function testSerialization({ input, output }) {
-    const result = serializer.serialize(dropKeys(input), { toString: false })
+    const result = serializer.serialize(dropKeys(input), '', { toString: false })
         .getElementsByTagName('content')[0]
 
     const referenceXml = new DOMParser().parseFromString(output, 'application/xml')

@@ -28,6 +28,7 @@ const testPlugin = plugins => ({
 
 describe('Plugins', () => {
     fixtures(__dirname, 'admonition', testPlugin(PLUGINS))
+    fixtures(__dirname, 'definition', testPlugin(PLUGINS))
     fixtures(__dirname, 'exercise', testPlugin(PLUGINS))
     fixtures(__dirname, 'figure', testPlugin(PLUGINS))
     fixtures(__dirname, 'list', testPlugin(PLUGINS))
