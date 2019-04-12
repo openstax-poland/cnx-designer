@@ -112,6 +112,7 @@ const INLINE_TAGS = [
     'link',
     'sub',
     'sup',
+    'term',
 ]
 
 
@@ -188,6 +189,7 @@ const MARK_TAGS = {
     sub: 'subscript',
     sup: 'superscript',
     link: xref,
+    term: term,
 }
 
 
@@ -382,6 +384,20 @@ function splitBlocks(node) {
     }
 
     return res
+}
+
+
+/**
+ * Process data for terms.
+ */
+function term(el) {
+    const reference = el.getAttributeNS('http://katalysteducation.org/cmlnle/1.0', 'reference')
+
+    return {
+        object: 'inline',
+        type: 'term',
+        data: { reference },
+    }
 }
 
 

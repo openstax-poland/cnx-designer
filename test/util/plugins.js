@@ -6,6 +6,7 @@ import Media from '../../src/plugins/media'
 import Quotation from '../../src/plugins/quotation'
 import Section from '../../src/plugins/section'
 import Text from '../../src/plugins/text'
+import Term from '../../src/plugins/term'
 import Title from '../../src/plugins/title'
 import XReference from '../../src/plugins/xref'
 
@@ -19,6 +20,7 @@ export default [
     Quotation(),
     Section(),
     Text(),
+    Term(),
     Title(),
     XReference(),
     List(),

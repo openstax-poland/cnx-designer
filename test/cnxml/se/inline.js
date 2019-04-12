@@ -4,6 +4,10 @@ export const input = <value>
     <document>
         <p>
             {"Paragraphs can contain: text, "}
+            <term reference={null}>terms</term>
+            {", "}
+            <term reference="other value">terms with references</term>
+            {", "}
             <b>strong text</b>
             {", "}
             <i>emphasized text</i>
@@ -24,6 +28,8 @@ export const input = <value>
 
 export const output = cnxml`
 <para>Paragraphs can contain: text,
+<term>terms</term>,
+<term xmlns:cmlnle="http://katalysteducation.org/cmlnle/1.0" cmlnle:reference="other value">terms with references</term>,
 <emphasis effect="bold">strong text</emphasis>,
 <emphasis effect="italics">emphasized text</emphasis>,
 <emphasis effect="underline">underlined text</emphasis>,

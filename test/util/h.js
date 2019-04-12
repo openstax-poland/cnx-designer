@@ -38,6 +38,7 @@ export default global.h = createHyperscript({
     inlines: {
         link: 'link',
         xref: 'xref',
+        term: 'term',
     },
     marks: {
         b: 'strong',

@@ -11,6 +11,8 @@ class HtmlError extends AssertionError {
     }
 }
 
+const XMLNS_NS = 'http://www.w3.org/2000/xmlns/'
+
 export default function compareHtml(dom, a, b, path='') {
     if (Object.getPrototypeOf(a) !== Object.getPrototypeOf(b)) {
         throw new HtmlError(path,
@@ -39,6 +41,8 @@ export default function compareHtml(dom, a, b, path='') {
 
         // Compare attributes
         for (const attrA of a.attributes) {
+            if (attrA.namespaceURI === XMLNS_NS) continue
+
             const attrB = b.attributes.getNamedItemNS(
                 attrA.namespaceURI, attrA.localName)
 
@@ -61,6 +65,8 @@ export default function compareHtml(dom, a, b, path='') {
 
         // Find missing attributes
         for (const attrB of b.attributes) {
+            if (attrB.namespaceURI === XMLNS_NS) continue
+
             const attrA = a.attributes.getNamedItemNS(
                 attrB.namespaceURI, attrB.localName)
 
@@ -124,6 +130,7 @@ const INLINE_NODES = [
     'link',
     'sub',
     'sup',
+    'term',
 ]
 
 /**

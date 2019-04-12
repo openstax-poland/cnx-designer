@@ -34,5 +34,6 @@ describe('Plugins', () => {
     fixtures(__dirname, 'quotation', testPlugin(PLUGINS))
     fixtures(__dirname, 'section', testPlugin(PLUGINS))
     fixtures(__dirname, 'text', testPlugin(PLUGINS))
+    fixtures(__dirname, 'term', testPlugin(PLUGINS))
     fixtures(__dirname, 'title', testPlugin(PLUGINS))
 })

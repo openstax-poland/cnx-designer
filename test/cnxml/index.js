@@ -12,6 +12,7 @@ import Exercise from '../../src/plugins/exercise'
 import Figure from '../../src/plugins/figure'
 import List from '../../src/plugins/list'
 import Section from '../../src/plugins/section'
+import Term from '../../src/plugins/term'
 import Text from '../../src/plugins/text'
 import Title from '../../src/plugins/title'
 import XReference from '../../src/plugins/xref'
@@ -32,6 +33,7 @@ const plugins = [
     Exercise(),
     Figure(),
     Section(),
+    Term(),
     Text(),
     Title(),
     XReference(),
