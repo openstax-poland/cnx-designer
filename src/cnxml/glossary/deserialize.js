@@ -41,32 +41,6 @@ const BLOCK = {
 
 
 /**
- * Load marks.
- *
- * @see MARK_TAGS
- */
-const MARK = {
-    deserialize(el, next) {
-        const inline = MARK_TAGS[el.tagName]
-        if (!inline) return
-
-        const props = inline instanceof Function ? inline(el, next) : {
-            type: inline,
-        }
-
-        if (props == null) return
-
-        return {
-            object: 'mark',
-            key: el.getAttribute('id') || undefined,
-            nodes: next(el.childNodes),
-            ...props,
-        }
-    }
-}
-
-
-/**
  * Default handler.
  *
  * When Slate can't find handler for a particular element it will skip it and
@@ -119,16 +93,6 @@ const text = type => (el, next) => splitBlocks({
 
 
 /**
- * Create transformer function for nodes containing either just text or block
- * content.
- */
-const mixed = type => (el, next) => ({
-    type: type,
-    nodes: mixedContent(el, next),
-})
-
-
-/**
  * Tags which can occur in block content.
  *
  * Keys are CNXML tag names, values are _transformer functions_. Transformer
@@ -154,31 +118,6 @@ const BLOCK_TAGS = {
     seealso: 'definition_seealso',
     term: text('definition_term'),
 }
-
-
-/**
- * Mark loading works similarly to loading block tags, except the transformer
- * function isn't given the children transformer, and children are instead
- * processed by {@link MARK}.
- *
- * @see MARK
- * @see BLOCK_TAGS
- */
-const MARK_TAGS = {
-    //term: term,
-}
-
-
-/**
- * Process data for terms.
- */
-function term(el, next) {
-    return splitBlocks({
-        type: 'term',
-        nodes: next(el.childNodes),
-    })
-}
-
 
 /**
  * Load content as either a sequence of block nodes, or text wrapped in a block
@@ -245,6 +184,5 @@ function splitBlocks(node) {
 
 export default [
     BLOCK,
-    MARK,
     DEFAULT,
 ]

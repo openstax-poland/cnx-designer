@@ -26,25 +26,6 @@ const BLOCK = {
 
 
 /**
- * Serialize a mark.
- *
- * @see MARK_TAGS
- */
-const MARK = {
-    serialize(obj, children) {
-        const Mark = MARK_TAGS[obj.type]
-        if (!Mark) return
-
-        if (Mark instanceof Function) return Mark(obj, children)
-
-        return <Mark {...obj.data.toJS()}>
-            {children}
-        </Mark>
-    },
-}
-
-
-/**
  * Tags which can occur in block content.
  *
  * Keys are Slate node types, values are _transformer functions_. Transformer
@@ -66,31 +47,6 @@ const BLOCK_TAGS = {
     paragraph: 'para',
 }
 
-
-/**
- * Mark serialisation works similarly to block serialisation, except the default
- * function (the one used when value is a string) doesn't produce the
- * `id` attribute.
- *
- * @see MARK
- * @see BLOCK_TAGS
- */
-const MARK_TAGS = {
-    //term: term,
-}
-
-
-/**
- * Serializer for terms.
- */
-function term(obj, children) {
-    return <term>
-        {children}
-    </term>
-}
-
-
 export default [
     BLOCK,
-    MARK,
 ]
