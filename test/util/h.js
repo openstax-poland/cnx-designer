@@ -24,6 +24,7 @@ export default global.h = createHyperscript({
         p: 'paragraph',
         quote: 'quotation',
         section: 'section',
+        source: 'source_element',
         tip: {
             type: 'admonition',
             data: { type: 'tip' },
@@ -37,6 +38,7 @@ export default global.h = createHyperscript({
     },
     inlines: {
         link: 'link',
+        sourceinline: 'source_element',
         xref: 'xref',
     },
     marks: {
