@@ -86,12 +86,14 @@ function normalizeSection(change, error) {
  */
 const DOCUMENT_NODES = [
     { type: 'admonition' },
+    { type: 'div' },
     { type: 'exercise' },
     { type: 'figure' },
     { type: 'ol_list' },
     { type: 'paragraph' },
     { type: 'quotation' },
     { type: 'section' },
+    { type: 'source_element' },
     { type: 'table' },
     { type: 'ul_list' },
 ]

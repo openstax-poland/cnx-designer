@@ -115,10 +115,12 @@ function normalizeContent(change, error) {
 
 const CONTENT = {
     match: [
+        { type: 'div' },
         { type: 'paragraph' },
         { type: 'quotation' },
         { type: 'ul_list' },
         { type: 'ol_list' },
+        { type: 'source_element' },
         { type: 'table' },
     ],
     min: 1,

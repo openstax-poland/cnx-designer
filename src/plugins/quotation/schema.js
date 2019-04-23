@@ -33,8 +33,10 @@ function normalizeQuotation(change, error) {
 }
 
 const QUOTE_CONTENT = [
+    { type: 'div' },
     { type: 'ol_list' },
     { type: 'paragraph' },
+    { type: 'source_element' },
     { type: 'quotation' },
     { type: 'ul_list' },
 ]

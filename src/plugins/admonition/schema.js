@@ -41,11 +41,13 @@ function normalizeAdmonition(change, error) {
 }
 
 const CONTENT = [
+    { type: 'div' },
     { type: 'paragraph' },
     { type: 'quotation' },
     { type: 'table' },
     { type: 'ul_list' },
     { type: 'ol_list' },
+    { type: 'source_element' },
 ]
 
 export default {
