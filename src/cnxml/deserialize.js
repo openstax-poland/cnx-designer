@@ -3,6 +3,7 @@
 // full license text.
 
 import { List } from 'immutable'
+import { Text } from 'slate'
 
 /**
  * Load a block element.
@@ -21,6 +22,8 @@ const BLOCK = {
             },
             nodes: next(Array.from(el.children)),
         }
+
+        if (props == null) return
 
         if (props instanceof Array) {
             props[0].key = props[0].key || el.getAttribute('id') || undefined
@@ -57,6 +60,8 @@ const MARK = {
             type: inline,
         }
 
+        if (props == null) return
+
         return {
             object: 'mark',
             key: el.getAttribute('id') || undefined,
@@ -78,6 +83,27 @@ const MARK = {
  */
 const DEFAULT = {
     deserialize(el, next) {
+        // We do not support fully those elements yet so for now they are 
+        // transformed into normal text so magicians can edit them in 
+        // source mode. 
+
+        const handleInSourceMode = [
+            'math', 'rule', 'statement', 'proof', 'equation', 'foreign'
+        ]
+
+        if (el.nodeName !== '#text' && handleInSourceMode.includes(el.localName.toLowerCase())) {
+            const parentsForInlines = ['para', 'caption']
+            let data = {
+                object: 'block',
+                type: 'source_element',
+                nodes: [Text.create(el.outerHTML)],
+            }
+            if (parentsForInlines.includes(el.parentElement.tagName)) {
+                data.object = 'inline'
+            }
+            return data
+        }
+
         if (el.nodeType !== Node.ELEMENT_NODE) {
             return
         }
@@ -158,6 +184,7 @@ const mixed = type => (el, next) => ({
 const BLOCK_TAGS = {
     caption: caption,
     commentary: mixed('exercise_commentary'),
+    div: mixed('div'),
     exercise: 'exercise',
     figure: 'figure',
     image: image,

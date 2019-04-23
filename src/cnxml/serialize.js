@@ -78,6 +78,7 @@ const BLOCK_TAGS = {
     media: 'media',
     ol_list: list,
     paragraph: 'para',
+    source_element: source,
     quotation: 'quote',
     section: 'section',
     title: 'title',
@@ -139,6 +140,30 @@ function list(obj, children) {
     return <list list-type={type} {...attrs}>
         {children}
     </list>
+}
+
+
+/**
+ * Serializer for source elements.
+ */
+function source(obj, children) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(obj.getText().trim(), 'text/xml')
+    let el = document.createElement('template')
+    el.innerHTML = xmlDoc.documentElement.outerHTML
+
+    const error = xmlDoc.getElementsByTagName('parsererror')
+    if (error.length) {
+        const attrs = {
+            class: 'invalid-xml',
+        }
+        return <div {...attrs}>
+            Error: {error[0].textContent}
+            Content: {obj.getText()}
+        </div>
+    }
+    
+    return <>{el.content.childNodes}</>
 }
 
 

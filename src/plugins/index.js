@@ -11,6 +11,7 @@ import List from './list'
 import Media from './media'
 import Quotation from './quotation'
 import Section from './section'
+import Source from './source'
 import Text from './text'
 import Title from './title'
 import XReference from './xref'
@@ -21,6 +22,7 @@ export default [
     Figure(),
     Media(),
     Section(),
+    Source(),
     Text(),
     Title(),
     Counters(),

@@ -61,6 +61,10 @@ class Renderer {
                 return Array.from(component, c => this.renderComponent(c))
             }
 
+            if (component instanceof Node) {
+                return component
+            }
+
             throw new Error("Bad component")
         }
     }
@@ -71,6 +75,9 @@ class Renderer {
 
     renderElement(element) {
         const ns = element.props.xmlns || this.ns
+        if (element.type.toString() == 'Symbol(react.fragment)') {
+            return Array.from(element.props.children).map(c => this.renderComponent(c))
+        }
         const node = this.doc.createElementNS(ns, element.type)
 
         for (const [key, value] of Object.entries(element.props)) {
