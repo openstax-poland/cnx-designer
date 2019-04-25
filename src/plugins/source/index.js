@@ -4,7 +4,8 @@
 
 import schema from './schema'
 import renderNode from './render'
+import onKeyDown from './handlers'
 
-export default function Text() {
-    return { renderNode, schema }
+export default function Source() {
+    return { renderNode, schema, onKeyDown }
 }
