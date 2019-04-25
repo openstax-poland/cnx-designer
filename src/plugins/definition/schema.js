@@ -133,11 +133,12 @@ function normalizeSeeAlso(change, error) {
     const { code, key, node, child } = error
 
     switch (code) {
+    case 'child_min_invalid':
+        change.removeNodeByKey(node.key)
+        break
+    
     case 'child_type_invalid':
-        if (Text.isText(child)) {
-            change.wrapNodeByKey(child.key, { type: 'definition_term' })
-            break
-        } else if (child.type === 'paragraph') {
+        if (child.type === 'paragraph') {
             change.setNodeByKey(child.key, { type: 'definition_term' })
             break
         }
@@ -190,7 +191,7 @@ export default {
             normalize: normalizeExample,
         },
         definition_seealso: {
-            nodes: [ { match: { type: 'definition_term' } } ],
+            nodes: [ { match: { type: 'definition_term' }, min: 1 } ],
             parent: { type: 'definition' },
             normalize: normalizeSeeAlso,
         }

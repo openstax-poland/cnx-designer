@@ -10,6 +10,9 @@ export default function onKeyDown(event, change, next) {
     case 'Tab':
         return onTab(event, change) || next()
 
+    case 'Backspace':
+        return onBackspace(event, change) || next()
+
     default:
         return next()
     }
@@ -54,4 +57,27 @@ function onTab(event, change) {
     event.preventDefault()
 
     return change.insertExample()
+}
+
+function onBackspace(event, change) {
+    // In a definition.
+    const definition = change.getActiveDefinition(change.value)
+    if (!definition) return
+
+    const { value } = change
+    const { startBlock, selection } = value
+
+    const parent = definition.getParent(startBlock.key)
+
+    // Remove empty meanings
+    if (parent && parent.type === 'definition_meaning') {
+        const isEmpty = selection.isCollapsed
+        && selection.start.isAtStartOfNode(startBlock)
+        && selection.end.isAtStartOfNode(startBlock)
+        && startBlock.getText().replace(/\s+/g, '') === ''
+
+        if (isEmpty) return change.removeNodeByKey(parent.key)
+    }
+
+    return
 }
