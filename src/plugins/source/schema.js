@@ -13,11 +13,17 @@ function normalizeSourceInline(change, error) {
 export default {
     blocks: {
         source_element: {
+            nodes: [{
+                match: { object: 'text' }
+            }],
             normalize: normalizeSourceBlock,
         },
     },
     inlines: {
         source_element: {
+            nodes: [{
+                match: { object: 'text' }
+            }],
             normalize: normalizeSourceInline,
         }
     }
