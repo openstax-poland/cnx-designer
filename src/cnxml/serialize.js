@@ -154,10 +154,7 @@ function source(obj, children) {
 
     const error = xmlDoc.getElementsByTagName('parsererror')
     if (error.length) {
-        const attrs = {
-            class: 'invalid-xml',
-        }
-        return <para {...attrs}>
+        return <para>
             Error: {error[0].textContent}
             Content: {obj.getText()}
         </para>
