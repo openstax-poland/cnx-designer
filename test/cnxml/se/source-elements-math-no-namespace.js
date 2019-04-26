@@ -4,7 +4,7 @@ export const input = <value>
     <document>
         <source>
 {`
-<math xmlns="https://www.w3.org/1998/Math/MathML">
+<math>
     <mrow>
         <mfrac>
             <mn>1</mn>
@@ -18,7 +18,7 @@ export const input = <value>
 </value>
 
 export const output = cnxml`
-<math xmlns="https://www.w3.org/1998/Math/MathML">
+<math xmlns="">
     <mrow>
         <mfrac>
             <mn>1</mn>
