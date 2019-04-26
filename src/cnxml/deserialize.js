@@ -184,7 +184,6 @@ const mixed = type => (el, next) => ({
 const BLOCK_TAGS = {
     caption: caption,
     commentary: mixed('exercise_commentary'),
-    div: mixed('div'),
     exercise: 'exercise',
     figure: 'figure',
     image: image,

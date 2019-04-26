@@ -157,10 +157,10 @@ function source(obj, children) {
         const attrs = {
             class: 'invalid-xml',
         }
-        return <div {...attrs}>
+        return <para {...attrs}>
             Error: {error[0].textContent}
             Content: {obj.getText()}
-        </div>
+        </para>
     }
     
     return <>{el.content.childNodes}</>
