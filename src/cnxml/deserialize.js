@@ -88,7 +88,7 @@ const DEFAULT = {
             let data = {
                 object: 'block',
                 type: 'source_element',
-                nodes: [Text.create(el.outerHTML)],
+                nodes: [Text.create(new XMLSerializer().serializeToString(el))],
             }
             if (parentsForInlines.includes(el.parentElement.tagName)) {
                 data.object = 'inline'
