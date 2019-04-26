@@ -154,10 +154,7 @@ function source(obj, children) {
 
     const error = xmlDoc.getElementsByTagName('parsererror')
     if (error.length) {
-        return <para>
-            Error: {error[0].textContent}
-            Content: {obj.getText()}
-        </para>
+        throw new Error(error[0].textContent, `Content: ${obj.getText()}`)
     }
     
     return <>{el.content.childNodes}</>
