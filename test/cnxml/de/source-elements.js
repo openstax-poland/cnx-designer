@@ -13,21 +13,17 @@ export const input = cnxml`
     <title>Pythagorean Theorem</title>
     <statement id="pythag-statement">
         <para id="pythag-para1">
-        On a right triangle, the sum of the squares of 
-        the sides equals the square of the hypotenuse.
+        Text
         </para>
     </statement>
     <proof id="pythag-proof">
         <para id="pythag-para2">
-        Your favorite proof goes here.
+        Text
         </para>
     </proof>
     <example id="pythag-example">
         <para id="pythag-para3">
-        Take a right triangle whose sides are of length 
-        3, 4, and 5. In this case the sum of the square 
-        of the two shorter sides is 9+16=25. The square 
-        of the hypotenuse is 25. So the theorem holds.
+        Text
         </para>
     </example>
 </rule> 
@@ -68,21 +64,17 @@ export const output = <value>
     <title>Pythagorean Theorem</title>
     <statement id="pythag-statement">
         <para id="pythag-para1">
-        On a right triangle, the sum of the squares of 
-        the sides equals the square of the hypotenuse.
+        Text
         </para>
     </statement>
     <proof id="pythag-proof">
         <para id="pythag-para2">
-        Your favorite proof goes here.
+        Text
         </para>
     </proof>
     <example id="pythag-example">
         <para id="pythag-para3">
-        Take a right triangle whose sides are of length 
-        3, 4, and 5. In this case the sum of the square 
-        of the two shorter sides is 9+16=25. The square 
-        of the hypotenuse is 25. So the theorem holds.
+        Text
         </para>
     </example>
 </rule>`
