@@ -18,6 +18,7 @@ const SPECIAL_PROPS = [
 ]
 
 const REACT_ELEMENT_TYPE = Symbol.for('react.element')
+const REACT_FRAGMENT_TYPE = Symbol.for('react.fragment')
 
 export default function render(tree, options) {
     return new Renderer().render(tree, options)
@@ -50,6 +51,9 @@ class Renderer {
     renderComponent(component) {
         switch (component.$$typeof) {
         case REACT_ELEMENT_TYPE:
+            if (component.type === REACT_FRAGMENT_TYPE) {
+                return this.renderFragment(component)
+            }
             return this.renderElement(component)
 
         default:
@@ -75,9 +79,6 @@ class Renderer {
 
     renderElement(element) {
         const ns = element.props.xmlns || this.ns
-        if (element.type.toString() == 'Symbol(react.fragment)') {
-            return Array.from(element.props.children).map(c => this.renderComponent(c))
-        }
         const node = this.doc.createElementNS(ns, element.type)
 
         for (const [key, value] of Object.entries(element.props)) {
@@ -107,6 +108,10 @@ class Renderer {
         }
 
         return node
+    }
+
+    renderFragment(fragment) {
+        return this.renderComponent(fragment.props.children)
     }
 
     appendChild(element, child) {

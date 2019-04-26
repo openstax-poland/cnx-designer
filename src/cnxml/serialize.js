@@ -148,16 +148,14 @@ function list(obj, children) {
  */
 function source(obj, children) {
     const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(obj.getText().trim(), 'text/xml')
-    let el = document.createElement('template')
-    el.innerHTML = xmlDoc.documentElement.outerHTML
+    const xmlDoc = parser.parseFromString(obj.getText().trim(), 'application/xml')
 
     const error = xmlDoc.getElementsByTagName('parsererror')
     if (error.length) {
         throw new Error(error[0].textContent, `Content: ${obj.getText()}`)
     }
-    
-    return <>{el.content.childNodes}</>
+
+    return <>{xmlDoc.documentElement}</>
 }
 
 
