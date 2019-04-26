@@ -83,15 +83,7 @@ const MARK = {
  */
 const DEFAULT = {
     deserialize(el, next) {
-        // We do not support fully those elements yet so for now they are 
-        // transformed into normal text so magicians can edit them in 
-        // source mode. 
-
-        const handleInSourceMode = [
-            'math', 'rule', 'statement', 'proof', 'equation', 'foreign'
-        ]
-
-        if (el.nodeName !== '#text' && handleInSourceMode.includes(el.localName.toLowerCase())) {
+        if (el.nodeName !== '#text' && SOURCE_TAGS.includes(el.localName.toLowerCase())) {
             const parentsForInlines = ['para', 'caption']
             let data = {
                 object: 'block',
@@ -138,6 +130,21 @@ const INLINE_TAGS = [
     'link',
     'sub',
     'sup',
+]
+
+/**
+ * We do not support fully those elements yet so for now they are 
+ * transformed into normal text so magicians can edit them in
+ * source mode.
+ */
+
+const SOURCE_TAGS = [
+    'equation',
+    'foreign',
+    'math',
+    'proof',
+    'statement',
+    'rule', 
 ]
 
 
