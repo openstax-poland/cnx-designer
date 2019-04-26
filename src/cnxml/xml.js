@@ -62,7 +62,7 @@ class Renderer {
             }
 
             if (component instanceof Node) {
-                return component
+                return this.doc.adoptNode(component)
             }
 
             throw new Error("Bad component")
