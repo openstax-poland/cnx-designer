@@ -2,6 +2,7 @@ import { createHyperscript } from 'slate-hyperscript'
 
 export default global.h = createHyperscript({
     blocks: {
+        code: 'code',
         excomment: 'exercise_commentary',
         exercise: 'exercise',
         exproblem: 'exercise_problem',
@@ -36,6 +37,7 @@ export default global.h = createHyperscript({
         },
     },
     inlines: {
+        codeinline: 'code',
         link: 'link',
         xref: 'xref',
         term: 'term',

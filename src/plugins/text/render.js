@@ -9,11 +9,11 @@ const NODES = {
 }
 
 const MARKS = {
-    strong: 'strong',
     emphasis: 'em',
     underline: 'u',
     superscript: 'sup',
     subscript: 'sub',
+    strong: 'strong',
 }
 
 export function renderNode({ node, children, attributes }, editor, next) {

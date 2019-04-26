@@ -9,6 +9,7 @@ import Text from '../../src/plugins/text'
 import Term from '../../src/plugins/term'
 import Title from '../../src/plugins/title'
 import XReference from '../../src/plugins/xref'
+import Code from '../../src/plugins/code'
 
 import CorePlugin from './core-plugin'
 
@@ -24,5 +25,6 @@ export default [
     Title(),
     XReference(),
     List(),
+    Code(),
     CorePlugin(),
 ]

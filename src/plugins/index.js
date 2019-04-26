@@ -15,6 +15,7 @@ import Term from './term'
 import Text from './text'
 import Title from './title'
 import XReference from './xref'
+import Code from './code'
 
 export default [
     Admonition(),
@@ -28,5 +29,6 @@ export default [
     Counters(),
     XReference(),
     List(),
+    Code(),
     Quotation(),
 ]
