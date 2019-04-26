@@ -6,7 +6,12 @@ import React from 'react'
 
 export default function renderNode({ node, children, attributes }, editor, next) {
     if (node.type === 'source_element') {
-        return <span className={`source source--${node.object}`} {...attributes}>
+        if (node.object === 'block') {
+            return <div className="source source--block" {...attributes}>
+                {children}
+            </div>
+        }
+        return <span className="source source--inline" {...attributes}>
             {children}
         </span>
     }
