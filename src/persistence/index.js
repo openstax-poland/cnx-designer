@@ -205,7 +205,7 @@ export class DocumentDB {
 
         const [value, ops] = await Promise.all([
             promisify(contents.get(this.id)),
-            promisify(changes.getAll()),
+            promisify(changes.getAll(this.id)),
         ])
 
         return new Seq(ops)
