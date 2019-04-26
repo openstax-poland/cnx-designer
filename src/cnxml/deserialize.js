@@ -83,7 +83,7 @@ const MARK = {
  */
 const DEFAULT = {
     deserialize(el, next) {
-        if (el.nodeName !== '#text' && SOURCE_TAGS.includes(el.localName.toLowerCase())) {
+        if (el.nodeType !== Node.TEXT_NODE && SOURCE_TAGS.includes(el.localName.toLowerCase())) {
             const parentsForInlines = ['para', 'caption']
             let data = {
                 object: 'block',
