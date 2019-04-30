@@ -65,14 +65,6 @@ const BLOCK_TAGS = {
 
 
 /**
- * Serializer for CNXML emphasis tag.
- */
-const emphasis = type => function(obj, children) {
-    return <emphasis effect={type}>{children}</emphasis>
-}
-
-
-/**
  * Serializer for figures.
  */
 function figure(obj, children) {
