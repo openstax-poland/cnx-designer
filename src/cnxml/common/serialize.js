@@ -34,6 +34,25 @@ const BLOCK = {
 
 
 /**
+ * Serialize a mark.
+ *
+ * @see MARK_TAGS
+ */
+const MARK = {
+    serialize(obj, children) {
+        const Mark = MARK_TAGS[obj.type]
+        if (!Mark) return
+
+        if (Mark instanceof Function) return Mark(obj, children)
+
+        return <Mark {...obj.data.toJS()}>
+            {children}
+        </Mark>
+    },
+}
+
+
+/**
  * Tags which can occur in block content.
  *
  * Keys are Slate node types, values are _transformer functions_. Transformer
@@ -47,20 +66,7 @@ const BLOCK = {
  * @see BLOCK
  */
 const BLOCK_TAGS = {
-    admonition: 'note',
-    exercise: 'exercise',
-    exercise_commentary: 'commentary',
-    exercise_problem: 'problem',
-    exercise_solution: 'solution',
-    figure: figure,
-    figure_caption: 'caption',
-    image: 'image',
-    list_item: 'item',
-    media: 'media',
-    ol_list: list,
-    section: 'section',
-    title: 'title',
-    ul_list: list,
+    paragraph: 'para',
 }
 
 
@@ -73,35 +79,60 @@ const emphasis = type => function(obj, children) {
 
 
 /**
- * Serializer for figures.
+ * Mark serialisation works similarly to block serialisation, except the default
+ * function (the one used when value is a string) doesn't produce the
+ * `id` attribute.
+ *
+ * @see MARK
+ * @see BLOCK_TAGS
  */
-function figure(obj, children) {
-    let attrs = obj.data.get('class') ? {class: obj.data.get('class').join(' ') } : {}
-
-    return <figure id={obj.key} {...attrs}>
-        {/* We need to turn nested figures from <figure>s to <subfigure>s */}
-        {children.map(el => el.type !== 'figure' ? el : {
-            ...el,
-            type: 'subfigure',
-        })}
-    </figure>
+const MARK_TAGS = {
+    emphasis: emphasis('italics'),
+    link: 'link',
+    strong: emphasis('bold'),
+    subscript: 'sub',
+    superscript: 'sup',
+    underline: emphasis('underline'),
+    xref: xref,
+    term: term,
 }
 
 
 /**
- * Serializer for lists.
+ * Serializer for cross-references.
  */
-function list(obj, children) {
-    const type = obj.type === 'ul_list' ? 'bulleted' : 'enumerated'
+function xref(obj, children) {
+    let attrs = {
+        'target-id': obj.data.get('target'),
+    }
 
-    let attrs = obj.data.get('class') ? {class: obj.data.get('class').join(' ') } : {}
+    const cmlnleCase = obj.data.get('case')
 
-    return <list list-type={type} {...attrs}>
+    if (cmlnleCase) {
+        attrs['cmlnleCase'] = cmlnleCase
+    }
+
+    return <link {...attrs}>
         {children}
-    </list>
+    </link>
+}
+
+
+/**
+ * Serializer for terms.
+ */
+function term(obj, children) {
+    let attrs = {
+        'cmlnleReference': obj.data.get('reference'),
+    }
+
+    return <term {...attrs}>
+        {children}
+    </term>
 }
 
 
 export default [
     BLOCK,
+    MARK,
 ]

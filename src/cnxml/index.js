@@ -4,12 +4,13 @@
 
 import Html from 'slate-html-serializer'
 import React from 'react'
-import Value from 'slate'
 
 import contentDeserialize from './content/deserialize'
 import contentSerialize from './content/serialize'
 import glossaryDeserialize from './glossary/deserialize'
 import glossarySerialize from './glossary/serialize'
+import commonDeserialize from './common/deserialize'
+import commonSerialize from './common/serialize'
 import render from './xml'
 
 function parseContentHtml(html) {
@@ -61,12 +62,22 @@ function parseGlossaryHtml(html) {
 export default class CNXML {
     constructor(args /* { contentRules: [], glossaryRules: [] } */) {
         this.contentSerializer = new Html({
-            rules: [...args.contentRules, ...contentDeserialize, ...contentSerialize],
+            rules: [
+                ...args.contentRules,
+                ...contentDeserialize,
+                ...contentSerialize,
+                ...commonDeserialize,
+            ],
             defaultBlock: 'invalid',
             parseHtml: parseContentHtml,
         })
         this.glossarySerializer = new Html({
-            rules: [...args.glossaryRules, ...glossaryDeserialize, ...glossarySerialize],
+            rules: [
+                ...args.glossaryRules,
+                ...glossaryDeserialize,
+                ...glossarySerialize,
+                ...commonSerialize,
+            ],
             defaultBlock: 'invalid',
             parseHtml: parseGlossaryHtml,
         })

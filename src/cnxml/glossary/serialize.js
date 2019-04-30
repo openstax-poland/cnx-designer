@@ -44,7 +44,6 @@ const BLOCK_TAGS = {
     definition_meaning: 'meaning',
     definition_seealso: 'seealso',
     definition_term: 'term',
-    paragraph: 'para',
 }
 
 export default [
