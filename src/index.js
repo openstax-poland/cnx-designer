@@ -4,5 +4,6 @@
 
 export { default as CNXML } from './cnxml'
 export { default as PLUGINS } from './plugins'
+export * from './util'
 export * from './api'
 export * from './persistence'
