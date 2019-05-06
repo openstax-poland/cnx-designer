@@ -55,8 +55,13 @@ const MARK = {
 /**
  * Serialize text.
  *
- * Do not use default slate-html-serializer function for replacing \n with <br>.
- * Some elements, like code uses \n.
+ * `slate-html-serializer` replaces newlines in text with `<br>` HTML elements,
+ * which are not supported in CNXML. Instead we just emit newlines, as they
+ * don't pose any problems in CNXML.
+ *
+ * As an additional benefit, this makes it simpler to write serializers for
+ * nodes, such as `code`, in which newlines have special meaning and must
+ * be preserved.
  */
 const TEXT = {
     serialize(obj, children) {
