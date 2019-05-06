@@ -53,6 +53,24 @@ const MARK = {
 
 
 /**
+ * Serialize text.
+ *
+ * `slate-html-serializer` replaces newlines in text with `<br>` HTML elements,
+ * which are not supported in CNXML. Instead we just emit newlines, as they
+ * don't pose any problems in CNXML.
+ *
+ * As an additional benefit, this makes it simpler to write serializers for
+ * nodes, such as `code`, in which newlines have special meaning and must
+ * be preserved.
+ */
+const TEXT = {
+    serialize(obj, children) {
+        if (obj.object === 'string') return [children]
+    }
+}
+
+
+/**
  * Tags which can occur in block content.
  *
  * Keys are Slate node types, values are _transformer functions_. Transformer
@@ -172,10 +190,11 @@ function code(obj, children) {
 
     if (obj.object === 'block') {
         attrs.display = 'block'
+        attrs.id = obj.key
     }
 
     return <code {...attrs}>
-        {obj.getTexts().map(t => t.text)}
+        {children}
     </code>
 }
 
@@ -200,4 +219,5 @@ function term(obj, children) {
 export default [
     BLOCK,
     MARK,
+    TEXT,
 ]
