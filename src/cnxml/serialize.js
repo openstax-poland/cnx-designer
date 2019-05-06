@@ -53,6 +53,19 @@ const MARK = {
 
 
 /**
+ * Serialize text.
+ *
+ * Do not use default slate-html-serializer function for replacing \n with <br>.
+ * Some elements, like code uses \n.
+ */
+const TEXT = {
+    serialize(obj, children) {
+        if (obj.object === 'string') return [children]
+    }
+}
+
+
+/**
  * Tags which can occur in block content.
  *
  * Keys are Slate node types, values are _transformer functions_. Transformer
@@ -172,10 +185,11 @@ function code(obj, children) {
 
     if (obj.object === 'block') {
         attrs.display = 'block'
+        attrs.id = obj.key
     }
 
     return <code {...attrs}>
-        {obj.getTexts().map(t => t.text)}
+        {children}
     </code>
 }
 
@@ -200,4 +214,5 @@ function term(obj, children) {
 export default [
     BLOCK,
     MARK,
+    TEXT,
 ]
