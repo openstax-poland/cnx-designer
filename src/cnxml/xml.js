@@ -95,9 +95,7 @@ class Renderer {
             }
         }
 
-        for (const child of element.props.children) {
-            this.appendChild(node, this.renderComponent(child))
-        }
+        this.appendChild(node, this.renderComponent(element.props.children))
 
         return node
     }
