@@ -28,7 +28,7 @@ function normalizeAdmonition(change, error) {
 
     case 'child_max_invalid':
         if (child.type === 'title') {
-            change.mergeNodeByKey(child.key)
+            change.setNodeByKey(child.key, 'paragraph')
             return
         }
         console.warn('Unhandled admonition violation:', code)
