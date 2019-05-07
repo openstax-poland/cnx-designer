@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { List } from 'immutable'
+import { text, splitBlocks, loadClasses } from '../utils'
 
 /**
  * Load a block element.
@@ -21,6 +21,8 @@ const BLOCK = {
             },
             nodes: next(Array.from(el.children)),
         }
+
+        if (props == null) return
 
         if (props instanceof Array) {
             props[0].key = props[0].key || el.getAttribute('id') || undefined
@@ -44,60 +46,6 @@ const BLOCK = {
 
 
 /**
- * Load marks.
- *
- * @see MARK_TAGS
- */
-const MARK = {
-    deserialize(el, next) {
-        const inline = MARK_TAGS[el.tagName]
-        if (!inline) return
-
-        const props = inline instanceof Function ? inline(el, next) : {
-            type: inline,
-        }
-
-        return {
-            object: 'mark',
-            key: el.getAttribute('id') || undefined,
-            nodes: next(el.childNodes),
-            ...props,
-        }
-    }
-}
-
-
-/**
- * Default handler.
- *
- * When Slate can't find handler for a particular element it will skip it and
- * deserialize its children, as if “unwrapping” them. This works fine for
- * unknown inline nodes, but not for unknown blocks. Instead this handler will
- * first try to determine whether given unknown element is used as a block or
- * an inline, and replace blocks in paragraphs.
- */
-const DEFAULT = {
-    deserialize(el, next) {
-        if (el.nodeType !== Node.ELEMENT_NODE) {
-            return
-        }
-
-        const ref = el.previousSibling
-            ? el.parentNode.childNodes[0]
-            : el.parentNode.childNodes[el.parentNode.childNodes.length - 1]
-        const text = ref.nodeType === ref.TEXT_NODE && ref.textContent.match(/[^\s]/)
-
-        if (text || INLINE_TAGS.includes(ref.tagName)) {
-            return next(el.childNodes)
-        } else {
-            return mixedContent(el, next)
-        }
-    }
-}
-
-
-
-/**
  * Tags which are only used in-line, mixed with text nodes.
  *
  * This array is used to differentiate between tags with only block tags, and
@@ -114,15 +62,6 @@ const INLINE_TAGS = [
     'sup',
     'term',
 ]
-
-
-/**
- * Create transformer function for nodes containing just text.
- */
-const text = type => (el, next) => splitBlocks({
-    type: type,
-    nodes: next(el.childNodes),
-})
 
 
 /**
@@ -167,30 +106,12 @@ const BLOCK_TAGS = {
     list: list,
     media: media,
     note: admonition,
-    para: text('paragraph'),
     problem: 'exercise_problem',
     quote: mixed('quotation'),
     section: 'section',
     solution: 'exercise_solution',
     subfigure: 'figure',
     title: text('title'),
-}
-
-
-/**
- * Mark loading works similarly to loading block tags, except the transformer
- * function isn't given the children transformer, and children are instead
- * processed by {@link MARK}.
- *
- * @see MARK
- * @see BLOCK_TAGS
- */
-const MARK_TAGS = {
-    emphasis: emphasis,
-    sub: 'subscript',
-    sup: 'superscript',
-    link: xref,
-    term: term,
 }
 
 
@@ -237,50 +158,6 @@ function code(el, next) {
         object: display === 'block' ? 'block' : 'inline',
         type: 'code',
         nodes: next(el.childNodes),
-    }
-}
-
-
-/**
- * Process data for emphasis marks.
- */
-function emphasis(el) {
-    const EFFECTS = {
-        bold: 'strong',
-        italics: 'emphasis',
-        underline: 'underline',
-    }
-
-    return {
-        type: EFFECTS[el.getAttribute('effect') || 'bold'] || 'strong',
-    }
-}
-
-
-/**
- * Process data for links and cross-references.
- */
-function xref(el) {
-    const target = el.getAttribute('target-id') || null
-    const url = el.getAttribute('url') || null
-    const cmlnleCase = el.getAttributeNS('http://katalysteducation.org/cmlnle/1.0', 'case') || null
-
-    if (target) {
-        return {
-            object: 'inline',
-            type: 'xref',
-            isVoid: true,
-            data: { target, case: cmlnleCase },
-        }
-    } else if (url) {
-        return {
-            object: 'inline',
-            type: 'link',
-            data: { url },
-        }
-    } else {
-        // TODO: notify user perhaps?
-        return null
     }
 }
 
@@ -364,72 +241,6 @@ function mixedContent(el, next, type='paragraph') {
 }
 
 
-/**
- * One of CNXML's quirks is that it allows certain block elements inside runs
- * of text, which is both silly and not supported by Slate. This function
- * normalizes such cases by moving those nested blocks out, splitting the text
- * block when necessary.
- */
-function splitBlocks(node) {
-    if (node.nodes.every(node => node.object !== 'block')) {
-        return node
-    }
-
-    const res = []
-
-    let nodes = []
-    let start = 0
-
-    for (const child of node.nodes) {
-        if (child.object !== 'block') {
-            nodes.push(child)
-            continue
-        }
-
-        if (nodes.length > 0) {
-            res.push({ ...node, nodes })
-            nodes = []
-        }
-
-        res.push(child)
-    }
-
-    if (nodes.length > 0) {
-        res.push({ ...node, nodes })
-    }
-
-    return res
-}
-
-
-/**
- * Process data for terms.
- */
-function term(el) {
-    const reference = el.getAttributeNS('http://katalysteducation.org/cmlnle/1.0', 'reference')
-
-    return {
-        object: 'inline',
-        type: 'term',
-        data: { reference },
-    }
-}
-
-
-/**
- * Return element's classes as an array.
- */
-const loadClasses = (el) => {
-    const classes = el.getAttribute('class')
-
-    if (!classes) return List([])
-
-    return List(classes.trim().split(/\s+/))
-}
-
-
 export default [
     BLOCK,
-    MARK,
-    DEFAULT,
 ]

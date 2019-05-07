@@ -5,18 +5,29 @@
 import Html from 'slate-html-serializer'
 import React from 'react'
 
-import deserialize from './deserialize'
+import commonDeserialize from './common/deserialize'
+import commonSerialize from './common/serialize'
+import contentDeserialize from './content/deserialize'
+import contentSerialize from './content/serialize'
 import render from './xml'
-import serialize from './serialize'
 
 
-function parseHtml(html) {
+function parseContentHtml(html) {
+    if (!html) {
+        throw new Error('No content has been provided for parseContentHtml()')
+    }
+
     const parsed = new DOMParser().parseFromString(html, 'application/xml');
     const content = parsed.querySelector(':root > content')
 
     if (content == null) {
         const error = parsed.getElementsByTagName('parsererror')
-        throw new Error('Invalid XML:' + error[0].textContent)
+        if (error.length) {
+            throw new Error('Invalid XML:' + error[0].textContent)
+        }
+        return {
+            childNodes: [],
+        }
     }
 
     return {
@@ -27,15 +38,21 @@ function parseHtml(html) {
 
 export default class CNXML {
     constructor(rules = []) {
-        this.serializer = new Html({
-            rules: [...rules, ...deserialize, ...serialize],
+        this.contentSerializer = new Html({
+            rules: [
+                ...rules,
+                ...contentDeserialize,
+                ...contentSerialize,
+                ...commonDeserialize,
+                ...commonSerialize,
+            ],
             defaultBlock: 'invalid',
-            parseHtml,
+            parseHtml: parseContentHtml,
         })
     }
 
     deserialize(...args) {
-        return this.serializer.deserialize(...args)
+        return this.contentSerializer.deserialize(...args)
     }
 
     serialize(value, options={}) {
@@ -48,7 +65,7 @@ export default class CNXML {
             >
             <title>TODO: load and preserve titles</title>
             <content>
-                {this.serializer.serialize(value, { render: false })}
+                {this.contentSerializer.serialize(value, { render: false })}
             </content>
         </document>
 
