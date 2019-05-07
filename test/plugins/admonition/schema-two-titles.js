@@ -15,7 +15,8 @@ export const input = <value>
 export const output = <value>
     <document>
         <note>
-            <title>NoteMore titles</title>
+            <title>Note</title>
+            <p>More titles</p>
             <p>Note</p>
         </note>
     </document>
