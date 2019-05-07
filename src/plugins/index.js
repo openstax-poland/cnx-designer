@@ -3,8 +3,11 @@
 // full license text.
 
 import Counters from 'slate-counters'
+import Persistence from './persistence'
+import Storage from './storage'
 
 import Admonition from './admonition'
+import Code from './code'
 import Exercise from './exercise'
 import Figure from './figure'
 import List from './list'
@@ -15,20 +18,25 @@ import Term from './term'
 import Text from './text'
 import Title from './title'
 import XReference from './xref'
-import Code from './code'
 
-export default [
-    Admonition(),
-    Exercise(),
-    Figure(),
-    Media(),
-    Section(),
-    Term(),
-    Text(),
-    Title(),
-    Counters(),
-    XReference(),
-    List(),
-    Code(),
-    Quotation(),
-]
+export default {
+    counters: Counters(),
+    persistence: Persistence,
+    storage: Storage,
+    common: [
+        Term(),
+        Text(),
+        XReference(),
+    ],
+    content: [
+        Admonition(),
+        Code(),
+        Exercise(),
+        Figure(),
+        Media(),
+        List(),
+        Quotation(),
+        Section(),
+        Title(),
+    ],
+}
