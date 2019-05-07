@@ -28,8 +28,10 @@ function normalizeFigure(change, error) {
     // and unwrap it
     case 'child_max_invalid':
         if (child.type === 'figure_caption') {
-            change.setNodeByKey(child.key, 'paragraph')
-            change.unwrapNodeByKey(child.key)
+            change.withoutNormalizing(() => {
+                change.setNodeByKey(child.key, 'paragraph')
+                change.unwrapNodeByKey(child.key)
+            })
         }
         break
 
