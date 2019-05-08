@@ -1,4 +1,4 @@
-// Copyright 2018 OpenStax Poland
+// Copyright 2019 OpenStax Poland
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
@@ -17,7 +17,7 @@ function normalizeExercise(change, error) {
             break
         }
 
-        console.warn('Unhandled exercise violation:', violation)
+        console.warn('Unhandled exercise violation: node_data_invalid:', key)
         break
 
     // A child of different type was expected.
@@ -98,13 +98,17 @@ function normalizeExercise(change, error) {
 }
 
 function normalizeContent(change, error) {
-    const { code: violation, node } = error
+    const { code: violation, node, key } = error
 
     switch (violation) {
     // Problems, solutions, and commentaries make no sense outside an exercise.
     // Should it happen however, just replace it with its contents.
     case 'parent_type_invalid':
         change.unwrapBlockByKey(node.key)
+        break
+
+    case 'node_data_invalid':
+        change.setNodeByKey(node.key, { data: node.data.delete(key) })
         break
 
     default:
