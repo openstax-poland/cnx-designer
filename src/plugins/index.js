@@ -18,6 +18,21 @@ import Code from './code'
 export { default as Persistence } from './persistence'
 export { default as Storage } from './storage'
 
+export {
+    Admonition,
+    Code,
+    Exercise,
+    Figure,
+    List,
+    Media,
+    Quotation,
+    Section,
+    Term,
+    Text,
+    Title,
+    XReference,
+}
+
 /**
  * Collection of plugins for working with text content of a CNX document.
  */
