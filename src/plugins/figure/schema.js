@@ -24,6 +24,17 @@ function normalizeFigure(change, error) {
         change.unwrapNodeByKey(child.key)
         break
 
+    // If there is more than 1 figure_caption then change second one to paragraph
+    // and unwrap it
+    case 'child_max_invalid':
+        if (child.type === 'figure_caption') {
+            change.withoutNormalizing(() => {
+                change.setNodeByKey(child.key, 'paragraph')
+                change.unwrapNodeByKey(child.key)
+            })
+        }
+        break
+
     default:
         console.warn("Unhandled figure violation", violation)
         break
