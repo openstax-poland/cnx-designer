@@ -36,7 +36,9 @@ function normalizeSection(change, error) {
     case 'child_min_invalid':
         if (index === 0) {
             // Section has no title.
-            change.unwrapBlockByKey(node.key)
+            // Unwrap content from section.
+            const path = change.value.document.getPath(node.key)
+            change.unwrapChildrenByPath(path)
             return
         }
         // Section has a title but doesn't have any content.

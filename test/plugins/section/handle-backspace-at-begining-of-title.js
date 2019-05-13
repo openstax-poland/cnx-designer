@@ -11,6 +11,10 @@ export const input = <value>
         <section>
             <title><cursor/>Second</title>
             <p>Inside second</p>
+            <note>
+                <title>Note title</title>
+                <p>Text</p>
+            </note>
         </section>
     </document>
 </value>
@@ -21,6 +25,10 @@ export const output = <value>
             <title>First</title>
             <p>Inside first<cursor/>Second</p>
             <p>Inside second</p>
+            <note>
+                <title>Note title</title>
+                <p>Text</p>
+            </note>
         </section>
     </document>
 </value>
