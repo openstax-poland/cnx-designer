@@ -2,21 +2,40 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
+import { Text } from 'slate'
+
 function normalizeQuotation(change, error) {
     const { code, node, child, index } = error
 
     switch (code) {
     case 'child_max_invalid':
         if (child.type === 'title') {
-            change.mergeNodeByKey(child.key)
+            change.setNodeByKey(child.key, 'paragraph')
             return
         }
         console.warn('Unhandled quotation violation:', code)
         break
 
     case 'child_min_invalid':
-        if (index === 1 && node.nodes.get(0).type === 'quotation') {
-            change.unwrapBlockByKey(node.nodes.get(0).key)
+        if (index === 1) {
+            switch (node.nodes.get(0).type) {
+            case 'quotation':
+                change.unwrapBlockByKey(node.nodes.get(0).key)
+                break
+
+            case 'title':
+                change.insertNodeByKey(node.key, 1, {
+                    object: 'block',
+                    type: 'paragraph',
+                    nodes: [Text.create('')],
+                })
+                break
+
+            default:
+                console.warn('Unhandled quotation violation:', code)
+                break
+            }
+            
             return
         }
         console.warn('Unhandled quotation violation:', code)
