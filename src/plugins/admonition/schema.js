@@ -34,6 +34,14 @@ function normalizeAdmonition(change, error) {
         console.warn('Unhandled admonition violation:', code)
         break
 
+    case 'child_type_invalid':
+        if (child.type === 'figure_caption') {
+            change.unwrapBlockByKey(node.key)
+            return
+        }
+        change.unwrapNodeByKey(child.key)
+        break
+
     default:
         console.warn('Unhandled admonition violation:', code)
         break

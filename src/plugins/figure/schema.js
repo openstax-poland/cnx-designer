@@ -35,6 +35,14 @@ function normalizeFigure(change, error) {
         }
         break
 
+    case 'child_type_invalid':
+        if (child.type === 'paragraph') {
+            change.setNodeByKey(child.key, 'figure_caption')
+            break
+        }
+        change.unwrapBlockByKey(child.key)
+        break
+
     default:
         console.warn("Unhandled figure violation", violation)
         break
