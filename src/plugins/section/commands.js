@@ -19,6 +19,9 @@ export function insertSection(change) {
         const parent = document.getParent(start.key)
         const index = parent.nodes.indexOf(start)
 
+        // Do not insert section in elements like exercise, admonition, etc.
+        if (parent.object !== 'document' && parent.type !== 'section') return
+
         // Create title for the new section, and put cursor in it
         const title = Block.create({
             type: 'title',

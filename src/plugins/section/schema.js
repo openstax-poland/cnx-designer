@@ -75,6 +75,12 @@ function normalizeSection(change, error) {
         console.warn('Unhandled section violation:', code)
         break
 
+    // Section was inserted into an invalid parent.
+    case 'parent_object_invalid':
+    case 'parent_type_invalid':
+        change.unwrapBlockByKey(node.key)
+        break
+
     default:
         console.warn('Unhandled section violation:', code)
         break
@@ -121,6 +127,7 @@ export default {
             ],
             next: { type: 'section' },
             normalize: normalizeSection,
+            parent: [{ object: 'document' }, { type: 'section' }],
         }
     },
 }

@@ -24,6 +24,9 @@ export function insertExercise(change) {
             return !!document.getClosest(last.key, p2 => p1 === p2)
         }) || document
 
+        // Do not insert section in elements like exercise, admonition, etc.
+        if (parent.object !== 'document' && parent.type !== 'section') return
+
         // When using `change.wrapBlock` slate will place blocks according to its
         // own rules, which don't take into account legal parent-child relations,
         // which may cause exercise to be created as a child of e.g. a list,
