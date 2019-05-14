@@ -6,6 +6,7 @@ import { Text } from 'slate'
 
 function normalizeQuotation(change, error) {
     const { code, node, child, index } = error
+    let first
 
     switch (code) {
     case 'child_max_invalid':
@@ -17,27 +18,22 @@ function normalizeQuotation(change, error) {
         break
 
     case 'child_min_invalid':
-        if (index === 1) {
-            switch (node.nodes.get(0).type) {
-            case 'quotation':
-                change.unwrapBlockByKey(node.nodes.get(0).key)
-                break
+        first = node.nodes.get(0)
 
-            case 'title':
-                change.insertNodeByKey(node.key, 1, {
-                    object: 'block',
-                    type: 'paragraph',
-                    nodes: [Text.create('')],
-                })
-                break
-
-            default:
-                console.warn('Unhandled quotation violation:', code)
-                break
-            }
-            
+        if (index === 1 && first.type === 'quotation') {
+            change.unwrapBlockByKey(first.key)
             return
         }
+
+        if (index === 1 && first.type === 'title') {
+            change.insertNodeByKey(node.key, 1, {
+                object: 'block',
+                type: 'paragraph',
+                nodes: [Text.create('')],
+            })
+            return
+        }
+
         console.warn('Unhandled quotation violation:', code)
         break
 
