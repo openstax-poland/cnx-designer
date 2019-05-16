@@ -36,6 +36,7 @@ export default {
         '@babel/runtime/helpers/possibleConstructorReturn',
         '@babel/runtime/helpers/slicedToArray',
         '@babel/runtime/helpers/toConsumableArray',
+        '@babel/runtime/helpers/typeof',
         '@babel/runtime/helpers/wrapNativeSuper',
         '@babel/runtime/regenerator',
         'immutable',

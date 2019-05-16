@@ -1,57 +1,74 @@
-// Copyright 2018 OpenStax Poland
+// Copyright 2019 OpenStax Poland
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
 import Html from 'slate-html-serializer'
 import React from 'react'
 
-import deserialize from './deserialize'
 import render from './xml'
-import serialize from './serialize'
+import { TEXT_CONTENT } from './text'
+import { DEFAULT } from './util'
+import { DOCUMENT } from './document'
 
+export function parseXml(xml) {
+    const parsed = new DOMParser().parseFromString(xml, 'application/xml');
+    const error = parsed.getElementsByTagName('parsererror')
 
-function parseHtml(html) {
-    const parsed = new DOMParser().parseFromString(html, 'application/xml');
-    const content = parsed.querySelector(':root > content')
-
-    if (content == null) {
-        const error = parsed.getElementsByTagName('parsererror')
+    if (error.length > 0) {
         throw new Error('Invalid XML:' + error[0].textContent)
     }
 
-    return {
-        childNodes: content.children,
-    }
+    return parsed.documentElement
+}
+
+
+export function writeXml(content, options={}) {
+    const r = <document
+        xmlns="http://cnx.rice.edu/cnxml"
+        cnxml-version="0.7"
+        id="new"
+        module-id="new"
+        xmlLang="en"
+        >
+        <title>TODO: load and preserve titles</title>
+        <content>
+            {content}
+        </content>
+    </document>
+
+    return render(r, options)
 }
 
 
 export default class CNXML {
     constructor(rules = []) {
-        this.serializer = new Html({
-            rules: [...rules, ...deserialize, ...serialize],
+        this.document = new Html({
+            rules: [...rules, ...DOCUMENT, ...TEXT_CONTENT, DEFAULT],
             defaultBlock: 'invalid',
-            parseHtml,
+            parseHtml: x => x,
         })
     }
 
-    deserialize(...args) {
-        return this.serializer.deserialize(...args)
+    deserialize(xml, options) {
+        if (typeof xml === 'string') {
+            xml = parseXml(xml)
+        }
+
+        return this.document.deserialize(find(xml.children, 'content'), options)
     }
 
     serialize(value, options={}) {
-        const r = <document
-            xmlns="http://cnx.rice.edu/cnxml"
-            cnxml-version="0.7"
-            id="new"
-            module-id="new"
-            xmlLang="en"
-            >
-            <title>TODO: load and preserve titles</title>
-            <content>
-                {this.serializer.serialize(value, { render: false })}
-            </content>
-        </document>
+        const content = this.document.serialize(value, { render: false })
 
-        return render(r, options)
+        return writeXml(content, options)
+    }
+}
+
+
+function find(children, name) {
+    for (const child of children) {
+        if (child.tagName === name) {
+            return child
+        }
     }
 }
