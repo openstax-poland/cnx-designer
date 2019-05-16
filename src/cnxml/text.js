@@ -140,7 +140,7 @@ function se_xref(obj, children) {
 
 export const XREF = inline('link', de_xref, 'xref', se_xref)
 
-export const CONTENT = [
+export const TEXT_CONTENT = [
     EMPHASIS,
     LINK,
     STRONG,

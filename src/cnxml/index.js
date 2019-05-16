@@ -6,7 +6,7 @@ import Html from 'slate-html-serializer'
 import React from 'react'
 
 import render from './xml'
-import { CONTENT } from './content'
+import { TEXT_CONTENT } from './text'
 import { DEFAULT } from './util'
 import { DOCUMENT } from './document'
 
@@ -43,7 +43,7 @@ export function writeXml(content, options={}) {
 export default class CNXML {
     constructor(rules = []) {
         this.document = new Html({
-            rules: [...rules, ...DOCUMENT, ...CONTENT, DEFAULT],
+            rules: [...rules, ...DOCUMENT, ...TEXT_CONTENT, DEFAULT],
             defaultBlock: 'invalid',
             parseHtml: x => x,
         })

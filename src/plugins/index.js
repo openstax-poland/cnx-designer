@@ -36,7 +36,7 @@ export {
 /**
  * Collection of plugins for working with text content of a CNX document.
  */
-export function Content(options={}) {
+export function TextContent(options={}) {
     return [
         Code(),
         Term(),
@@ -61,7 +61,7 @@ export function Document(options={}) {
 
     return [
         Admonition(),
-        Content(content),
+        TextContent(content),
         Exercise(),
         Figure(),
         List(list),
