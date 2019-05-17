@@ -83,46 +83,34 @@ function normalizeSection(change, error) {
     }
 }
 
-/**
- * Nodes which may appear in a section and in the document.
- */
-const DOCUMENT_NODES = [
-    { type: 'admonition' },
-    { type: 'code', },
-    { type: 'exercise' },
-    { type: 'figure' },
-    { type: 'ol_list' },
-    { type: 'paragraph' },
-    { type: 'quotation' },
-    { type: 'section' },
-    { type: 'table' },
-    { type: 'ul_list' },
-]
+export default function schema(options) {
+    const content = options.content.map(type => ({ type }))
 
-export default {
-    document: {
-        nodes: [
-            {
-                match: DOCUMENT_NODES,
-                min: 1,
-            },
-        ],
-        normalize: normalizeDocument,
-    },
-    blocks: {
-        section: {
-            data: {
-                class: c => c == null || (List.isList(c) && c.every(x => x.match(/\s/) == null)),
-            },
+    return {
+        document: {
             nodes: [
-                { match: { type: 'title' }, min: 1, max: 1 },
                 {
-                    match: DOCUMENT_NODES,
+                    match: content,
                     min: 1,
                 },
             ],
-            next: { type: 'section' },
-            normalize: normalizeSection,
-        }
-    },
+            normalize: normalizeDocument,
+        },
+        blocks: {
+            section: {
+                data: {
+                    class: c => c == null || (List.isList(c) && c.every(x => x.match(/\s/) == null)),
+                },
+                nodes: [
+                    { match: { type: 'title' }, min: 1, max: 1 },
+                    {
+                        match: content,
+                        min: 1,
+                    },
+                ],
+                next: { type: 'section' },
+                normalize: normalizeSection,
+            }
+        },
+    }
 }

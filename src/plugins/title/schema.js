@@ -6,17 +6,13 @@ function normalizeTitle(change, error) {
     console.warn('Unhandled title violation:', error.code)
 }
 
-export default {
-    blocks: {
-        title: {
-            marks: [
-                { type: 'strong' },
-                { type: 'emphasis' },
-                { type: 'underline' },
-                { type: 'superscript' },
-                { type: 'subscript' },
-            ],
-            normalize: normalizeTitle,
+export default function schema({ marks }) {
+    return {
+        blocks: {
+            title: {
+                marks: marks.map(type => ({ type })),
+                normalize: normalizeTitle,
+            },
         },
-    },
+    }
 }

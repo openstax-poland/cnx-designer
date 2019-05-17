@@ -18,24 +18,20 @@ function normalizeTerm(change, error) {
     }
 }
 
-export default {
-    inlines: {
-        term: {
-            nodes: [{
-                match: { object: 'text' },
-            }],
-            marks: [
-                { type: 'strong' },
-                { type: 'emphasis' },
-                { type: 'underline' },
-                { type: 'superscript' },
-                { type: 'subscript' },
-            ],
-            data: {
-                reference: ref => ref == null || typeof ref === 'string'
+export default function schema({ marks }) {
+    return {
+        inlines: {
+            term: {
+                nodes: [{
+                    match: { object: 'text' },
+                }],
+                marks: marks.map(type => ({ type })),
+                data: {
+                    reference: ref => ref == null || typeof ref === 'string'
+                },
+                text: s => s.length,
+                normalize: normalizeTerm,
             },
-            text: s => s.length,
-            normalize: normalizeTerm,
         },
-    },
+    }
 }

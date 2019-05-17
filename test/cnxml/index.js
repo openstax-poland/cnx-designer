@@ -5,6 +5,7 @@ import '../util/cnxml'
 import compareHtml from '../util/compareHtml'
 import dropKeys from '../util/dropKeys'
 import fixtures from '../util/fixtures'
+import PLUGINS from '../util/plugins'
 
 import CNXML from '../../src/cnxml'
 import Admonition from '../../src/plugins/admonition'
@@ -28,24 +29,12 @@ global.DOMParser = dom.window.DOMParser
 global.XMLSerializer = dom.window.XMLSerializer
 global.Node = dom.window.Node
 
-const plugins = [
-    Admonition(),
-    Exercise(),
-    Figure(),
-    Section(),
-    Term(),
-    Text(),
-    Title(),
-    XReference(),
-    List(),
-]
-
 const serializer = new CNXML()
 
 function testDeserialization({ input, output }) {
     const editor = new Editor({
         value: serializer.deserialize(input),
-        plugins,
+        plugins: PLUGINS,
     })
 
     if (output) {

@@ -117,56 +117,52 @@ function normalizeContent(change, error) {
     }
 }
 
-const CONTENT = {
-    match: [
-        { type: 'paragraph' },
-        { type: 'quotation' },
-        { type: 'ul_list' },
-        { type: 'ol_list' },
-        { type: 'table' },
-    ],
-    min: 1,
-}
-
 export const EXERCISE_PARENT = ['document', 'section']
 
-export default {
-    blocks: {
-        exercise: {
-            parent: [{ object: 'document' }, { type: 'section' }],
-            data: {
-                class: c => c == null || (List.isList(c) && c.every(x => x.match(/\s/) == null)),
+export default function schema(options) {
+    const content = {
+        match: options.content.map(type => ({ type })),
+        min: 1,
+    }
+
+    return {
+        blocks: {
+            exercise: {
+                parent: [{ object: 'document' }, { type: 'section' }],
+                data: {
+                    class: c => c == null || (List.isList(c) && c.every(x => x.match(/\s/) == null)),
+                },
+                nodes: [
+                    { match: { type: 'exercise_problem' }, min: 1, max: 1},
+                    { match: { type: 'exercise_solution' }, min: 0 },
+                    { match: { type: 'exercise_commentary' }, min: 0, max: 1 },
+                ],
+                normalize: normalizeExercise,
             },
-            nodes: [
-                { match: { type: 'exercise_problem' }, min: 1, max: 1},
-                { match: { type: 'exercise_solution' }, min: 0 },
-                { match: { type: 'exercise_commentary' }, min: 0, max: 1 },
-            ],
-            normalize: normalizeExercise,
-        },
-        exercise_problem: {
-            parent: { type: 'exercise' },
-            data: {
-                class: c => c == null,
+            exercise_problem: {
+                parent: { type: 'exercise' },
+                data: {
+                    class: c => c == null,
+                },
+                nodes: [content],
+                normalize: normalizeContent,
             },
-            nodes: [CONTENT],
-            normalize: normalizeContent,
-        },
-        exercise_solution: {
-            parent: { type: 'exercise' },
-            data: {
-                class: c => c == null,
+            exercise_solution: {
+                parent: { type: 'exercise' },
+                data: {
+                    class: c => c == null,
+                },
+                nodes: [content],
+                normalize: normalizeContent,
             },
-            nodes: [CONTENT],
-            normalize: normalizeContent,
-        },
-        exercise_commentary: {
-            parent: { type: 'exercise' },
-            data: {
-                class: c => c == null,
+            exercise_commentary: {
+                parent: { type: 'exercise' },
+                data: {
+                    class: c => c == null,
+                },
+                nodes: [content],
+                normalize: normalizeContent,
             },
-            nodes: [CONTENT],
-            normalize: normalizeContent,
         },
-    },
+    }
 }

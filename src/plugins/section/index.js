@@ -3,10 +3,16 @@
 // full license text.
 
 import renderNode from './render'
-import schema from './schema'
+import make_schema from './schema'
 import * as commands from './commands'
 import * as queries from './queries'
 
-export default function Section(options) {
+export default function Section(options={}) {
+    const {
+        content = ['paragraph', 'section'],
+    } = options
+
+    const schema = make_schema({ content })
+
     return { commands, queries, renderNode, schema }
 }

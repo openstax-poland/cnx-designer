@@ -2,16 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-export default {
-    blocks: {
-        paragraph: {
-            marks: [
-                { type: 'emphasis' },
-                { type: 'underline' },
-                { type: 'superscript' },
-                { type: 'subscript' },
-                { type: 'strong' },
-            ],
+export default function schema({ marks }) {
+    return {
+        blocks: {
+            paragraph: {
+                marks: marks.map(type => ({ type })),
+            },
         },
-    },
+    }
 }

@@ -40,26 +40,22 @@ function normalizeAdmonition(change, error) {
     }
 }
 
-const CONTENT = [
-    { type: 'paragraph' },
-    { type: 'quotation' },
-    { type: 'table' },
-    { type: 'ul_list' },
-    { type: 'ol_list' },
-]
+export default function schema({ title, content }) {
+    const content_types = content.map(type => ({ type }))
 
-export default {
-    blocks: {
-        admonition: {
-            data: {
-                type: v => TYPES.includes(v),
-                class: c => c == null || (List.isList(c) && c.every(x => x.match(/\s/) == null)),
-            },
-            nodes: [
-                { match: { type: 'title' }, min: 0, max: 1 },
-                { match: CONTENT },
-            ],
-            normalize: normalizeAdmonition,
+    return {
+        blocks: {
+            admonition: {
+                data: {
+                    type: v => TYPES.includes(v),
+                    class: c => c == null || (List.isList(c) && c.every(x => x.match(/\s/) == null)),
+                },
+                nodes: [
+                    { match: { type: 'title' }, min: 0, max: 1 },
+                    { match: content_types },
+                ],
+                normalize: normalizeAdmonition,
+            }
         }
     }
 }

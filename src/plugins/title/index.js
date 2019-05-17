@@ -3,8 +3,18 @@
 // full license text.
 
 import renderNode from './render'
-import schema from './schema'
+import make_schema from './schema'
 
-export default function Title(options) {
+/**
+ * @param {string[]} options.marks - List of mark types which may appear inside
+ *                                   a title.
+ */
+export default function Title(options={}) {
+    const {
+        marks = [],
+    } = options
+
+    const schema = make_schema({ marks })
+
     return { renderNode, schema }
 }

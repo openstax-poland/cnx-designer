@@ -47,34 +47,31 @@ function normalizeQuotation(change, error) {
     }
 }
 
-const QUOTE_CONTENT = [
-    { type: 'ol_list' },
-    { type: 'paragraph' },
-    { type: 'quotation' },
-    { type: 'ul_list' },
-]
+export default function schema(options) {
+    const content = options.content.map(type => ({ type }))
 
-export default {
-    blocks: {
-        quotation: {
-            nodes: [
-                { match: { type: 'title' }, min: 0, max: 1 },
-                { match: QUOTE_CONTENT, min: 1 },
-                // TODO: citation (source)
-            ],
-            normalize: normalizeQuotation,
-        },
-    },
-    rules: [
-        {
-            match: {
-                type: 'quotation',
-                first: { type: 'quotation' },
+    return {
+        blocks: {
+            quotation: {
+                nodes: [
+                    { match: { type: 'title' }, min: 0, max: 1 },
+                    { match: content, min: 1 },
+                    // TODO: citation (source)
+                ],
+                normalize: normalizeQuotation,
             },
-            nodes: [
-                { match: QUOTE_CONTENT, min: 2 },
-            ],
-            normalize: normalizeQuotation,
         },
-    ],
+        rules: [
+            {
+                match: {
+                    type: 'quotation',
+                    first: { type: 'quotation' },
+                },
+                nodes: [
+                    { match: content, min: 2 },
+                ],
+                normalize: normalizeQuotation,
+            },
+        ],
+    }
 }

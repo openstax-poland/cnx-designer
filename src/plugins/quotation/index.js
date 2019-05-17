@@ -4,9 +4,19 @@
 
 import onKeyDown from './handlers'
 import renderNode from './render'
-import schema from './schema'
+import make_schema from './schema'
 import * as queries from './queries'
 
-export default function Quotation() {
+/**
+ * @param {string[]} options.content - List of block node types allowed inside
+ *                                     a quotation.
+ */
+export default function Quotation(options={}) {
+    const {
+        content = ['paragraph'],
+    } = options
+
+    const schema = make_schema({ content })
+
     return { queries, schema, onKeyDown, renderNode }
 }

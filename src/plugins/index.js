@@ -35,12 +35,24 @@ export {
 
 /**
  * Collection of plugins for working with text content of a CNX document.
+ *
+ * @param {string[]|null} options.marks List of additional mark types allowed
+ *                                      in text content.
  */
 export function TextContent(options={}) {
+    const marks = [
+        ...(options.marks || []),
+        'strong',
+        'emphasis',
+        'underline',
+        'superscript',
+        'subscript',
+    ]
+
     return [
         Code(),
-        Term(),
-        Text(),
+        Term({ marks }),
+        Text({ marks }),
         XReference(),
     ]
 }
@@ -48,26 +60,64 @@ export function TextContent(options={}) {
 /**
  * Collection of plugins for working with CNX documents.
  *
- * This also includes {@link Content}
+ * This also includes {@link TextContent}
  *
- * @param {object} options.content options for the {@link Content} plugin
- * @param {object} options.list    options for `slate-edit-list`
+ * @param {string[]} options.content additional block node types allowed in
+ *                                   text-block content
+ * @param {string[]} options.document_content additional block node types
+ *                                            allowed as children of section
+ *                                            and document
+ * @param {string[]|null} options.marks List of additional mark types allowed
+ *                                      in text content.
+ * @param {object} options.list options for `slate-edit-list`
  */
 export function Document(options={}) {
     const {
-        content = {},
         list = {},
     } = options
 
+    const content = [
+        ...(options.content || []),
+        'paragraph',
+        'quotation',
+        'ul_list',
+        'ol_list',
+        'code',
+    ]
+
+    const document_content = [
+        ...(options.document_content || []),
+        ...content,
+        'admonition',
+        'exercise',
+        'figure',
+        'section',
+    ]
+
+    const marks = [
+        ...(options.marks || []),
+        'strong',
+        'emphasis',
+        'underline',
+        'superscript',
+        'subscript',
+    ]
+
     return [
-        Admonition(),
-        TextContent(content),
-        Exercise(),
+        Admonition({
+            title: 'title',
+            content,
+        }),
+        TextContent({
+            marks: options.marks,
+            ...(options.content_options || {}),
+        }),
+        Exercise({ content }),
         Figure(),
         List(list),
         Media(),
-        Quotation(),
-        Section(),
-        Title(),
+        Quotation({ content }),
+        Section({ content: document_content }),
+        Title({ marks }),
     ]
 }
