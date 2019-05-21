@@ -9,6 +9,7 @@ import render from './xml'
 import { TEXT_CONTENT } from './text'
 import { DEFAULT } from './util'
 import { DOCUMENT } from './document'
+import { GLOSSARY } from './glossary'
 
 export function parseXml(xml) {
     const parsed = new DOMParser().parseFromString(xml, 'application/xml');
@@ -22,7 +23,15 @@ export function parseXml(xml) {
 }
 
 
-export function writeXml(content, options={}) {
+export function writeXml({document, glossary}, options={}) {
+    let glossaryContent = null
+
+    if (glossary) {
+        glossaryContent = <glossary>
+            {glossary}
+        </glossary>
+    }
+
     const r = <document
         xmlns="http://cnx.rice.edu/cnxml"
         cnxml-version="0.7"
@@ -32,8 +41,9 @@ export function writeXml(content, options={}) {
         >
         <title>TODO: load and preserve titles</title>
         <content>
-            {content}
+            {document}
         </content>
+        {glossaryContent}
     </document>
 
     return render(r, options)
@@ -41,9 +51,18 @@ export function writeXml(content, options={}) {
 
 
 export default class CNXML {
-    constructor(rules = []) {
+    constructor(args /* { documentRules: [], glossaryRules: [] } */) {
+        const {
+            documentRules = [],
+            glossaryRules = [],
+        } = args
         this.document = new Html({
-            rules: [...rules, ...DOCUMENT, ...TEXT_CONTENT, DEFAULT],
+            rules: [...documentRules, ...DOCUMENT, ...TEXT_CONTENT, DEFAULT],
+            defaultBlock: 'invalid',
+            parseHtml: x => x,
+        })
+        this.glossary = new Html({
+            rules: [...glossaryRules, ...GLOSSARY, ...TEXT_CONTENT, DEFAULT],
             defaultBlock: 'invalid',
             parseHtml: x => x,
         })
@@ -54,13 +73,17 @@ export default class CNXML {
             xml = parseXml(xml)
         }
 
-        return this.document.deserialize(find(xml.children, 'content'), options)
+        return {
+            document: this.document.deserialize(find(xml.children, 'content'), options),
+            glossary: this.glossary.deserialize(find(xml.children, 'glossary'), options),
+        }
     }
 
-    serialize(value, options={}) {
-        const content = this.document.serialize(value, { render: false })
+    serialize(documentValue, glossaryValue,  options={}) {
+        const document = this.document.serialize(documentValue, { render: false })
+        const glossary = glossaryValue ? this.glossary.serialize(glossaryValue, { render: false }) : null
 
-        return writeXml(content, options)
+        return writeXml({document, glossary}, options)
     }
 }
 
@@ -70,5 +93,8 @@ function find(children, name) {
         if (child.tagName === name) {
             return child
         }
+    }
+    return {
+        childNodes: [],
     }
 }
