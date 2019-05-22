@@ -16,7 +16,7 @@ import XReference from './xref'
 import Code from './code'
 
 export { default as Persistence } from './persistence'
-export { default as Storage } from './storage'
+export { default as StoragePlugin } from './storage'
 
 export {
     Admonition,
