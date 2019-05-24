@@ -146,7 +146,7 @@ const INLINE_NODES = [
  */
 function normalizeChildren(element) {
     if (BLOCK_NODES.includes(element.localName)) {
-        return element.children
+        return Array.from(element.children)
     }
 
     const children = []
