@@ -2,6 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
+import React from 'react'
+
 /**
  * XML serializer, because `react-dom` enforces HTML constraints. For example,
  * React required that `<link>` tags have no children, contrary to what
@@ -50,6 +52,10 @@ class Renderer {
     renderComponent(component) {
         switch (component.$$typeof) {
         case REACT_ELEMENT_TYPE:
+            if (component.type === React.Fragment) {
+                return Array.from(component.props.children, c => this.renderComponent(c))
+            }
+
             return this.renderElement(component)
 
         default:
