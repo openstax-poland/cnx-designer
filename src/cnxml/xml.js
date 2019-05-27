@@ -50,6 +50,8 @@ class Renderer {
     }
 
     renderComponent(component) {
+        if (component == null) return null
+
         switch (component.$$typeof) {
         case REACT_ELEMENT_TYPE:
             if (component.type === React.Fragment) {
@@ -107,6 +109,7 @@ class Renderer {
     }
 
     appendChild(element, child) {
+        if (child == null) return
         if (child instanceof Node) {
             element.appendChild(child)
         } else if (child[Symbol.iterator]) {
