@@ -19,7 +19,7 @@ export const input = cnxml`
 </figure>
 `
 
-export const output = <value>
+export const outputContent = <value>
     <document>
         <figure key="f1" class={List()}>
             <figure key="f1-1" class={List()}>

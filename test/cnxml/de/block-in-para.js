@@ -12,7 +12,7 @@ export const input = cnxml`
     </figure>Even more text</para>
 `
 
-export const output = <value>
+export const outputContent = <value>
     <document>
         <p key="p1">Some text</p>
         <ul key="l1" class={List()}>

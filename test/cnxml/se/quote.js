@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export const input = <value>
+export const inputContent = <value>
     <document>
         <quote key="q1">
             <p>Quotes can contain text</p>
@@ -12,7 +12,7 @@ export const input = <value>
             <p>Quotes can also contain nested quotes</p>
             <quote>
                 <p>Like so</p>
-           </quote>
+        </quote>
         </quote>
     </document>
 </value>

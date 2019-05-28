@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export const input = <value>
+export const inputContent = <value>
     <document>
         <note key="n1" type="note">
             <p>Notes are serialized without the ‘type’ attribute</p>

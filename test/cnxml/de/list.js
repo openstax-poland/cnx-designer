@@ -16,7 +16,7 @@ export const input = cnxml`
 </list>
 `
 
-export const output = <value>
+export const outputContent = <value>
     <document>
         <ul class={List()}>
             <li>

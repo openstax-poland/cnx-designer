@@ -3,6 +3,11 @@ import { createHyperscript } from 'slate-hyperscript'
 export default global.h = createHyperscript({
     blocks: {
         code: 'code',
+        definition: 'definition',
+        defterm: 'definition_term',
+        defmeaning: 'definition_meaning',
+        defexample: 'definition_example',
+        defseealso: 'definition_seealso',
         excomment: 'exercise_commentary',
         exercise: 'exercise',
         exproblem: 'exercise_problem',

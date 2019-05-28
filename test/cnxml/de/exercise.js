@@ -19,7 +19,7 @@ export const input = cnxml`
 </exercise>
 `
 
-export const output = <value>
+export const outputContent = <value>
     <document>
         <exercise key="e1" class={List()}>
             <exproblem>

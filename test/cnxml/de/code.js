@@ -5,7 +5,7 @@ export const input = cnxml`
 <para>Some <code>code</code> text</para>
 `
 
-export const output = <value>
+export const outputContent = <value>
     <document>
         <code key="n1">
             Code

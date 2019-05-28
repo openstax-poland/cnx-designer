@@ -21,7 +21,7 @@ export const input = cnxml`
 </list>
 `
 
-export const output = <value>
+export const outputContent = <value>
     <document>
         <note class={List()}>
             <p>No such element</p>

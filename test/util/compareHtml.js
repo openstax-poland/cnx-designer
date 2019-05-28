@@ -107,12 +107,15 @@ export default function compareHtml(dom, a, b, path='') {
 const BLOCK_NODES = [
     'commentary',
     'content',
+    'definition',
+    'example',
     'exercise',
     'figure',
     'list',
     'media',
     'problem',
     'section',
+    'seealso',
     'solution',
     'subfigure',
 ]
@@ -120,6 +123,7 @@ const BLOCK_NODES = [
 const MIXED_NODES = [
     'item',
     'note',
+    'meaning',
     'quote',
 ]
 
