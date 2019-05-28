@@ -28,7 +28,8 @@ export default function dropKeys(object) {
         })
 
     case 'point':
-        return object.get('key').match(/^\d+$/) ? object.delete('key') : object
+        const key = object.get('key')
+        return key ? (key.match(/^\d+$/) ? object.delete('key') : object) : object
 
     case 'value':
         return object.update('document', document => dropKeys(document))
