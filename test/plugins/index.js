@@ -3,7 +3,7 @@ import { Editor } from 'slate'
 import '../util/h'
 import dropKeys from '../util/dropKeys'
 import fixtures from '../util/fixtures'
-import PLUGINS from '../util/plugins'
+import { CONTENT_PLUGINS, GLOSSARY_PLUGINS } from '../util/plugins'
 
 const testPlugin = plugins => ({
     default: change,
@@ -27,14 +27,15 @@ const testPlugin = plugins => ({
 }
 
 describe('Plugins', () => {
-    fixtures(__dirname, 'admonition', testPlugin(PLUGINS))
-    fixtures(__dirname, 'exercise', testPlugin(PLUGINS))
-    fixtures(__dirname, 'figure', testPlugin(PLUGINS))
-    fixtures(__dirname, 'list', testPlugin(PLUGINS))
-    fixtures(__dirname, 'code', testPlugin(PLUGINS))
-    fixtures(__dirname, 'quotation', testPlugin(PLUGINS))
-    fixtures(__dirname, 'section', testPlugin(PLUGINS))
-    fixtures(__dirname, 'text', testPlugin(PLUGINS))
-    fixtures(__dirname, 'term', testPlugin(PLUGINS))
-    fixtures(__dirname, 'title', testPlugin(PLUGINS))
+    fixtures(__dirname, 'admonition', testPlugin(CONTENT_PLUGINS))
+    fixtures(__dirname, 'exercise', testPlugin(CONTENT_PLUGINS))
+    fixtures(__dirname, 'figure', testPlugin(CONTENT_PLUGINS))
+    fixtures(__dirname, 'list', testPlugin(CONTENT_PLUGINS))
+    fixtures(__dirname, 'code', testPlugin(CONTENT_PLUGINS))
+    fixtures(__dirname, 'quotation', testPlugin(CONTENT_PLUGINS))
+    fixtures(__dirname, 'section', testPlugin(CONTENT_PLUGINS))
+    fixtures(__dirname, 'text', testPlugin(CONTENT_PLUGINS))
+    fixtures(__dirname, 'term', testPlugin(CONTENT_PLUGINS))
+    fixtures(__dirname, 'title', testPlugin(CONTENT_PLUGINS))
+    fixtures(__dirname, 'definition', testPlugin(GLOSSARY_PLUGINS))
 })

@@ -13,7 +13,7 @@ links to other elements (<link target-id="f1" />),
 and <link url="https://example.test">external links</link>.</para>
 `.replace(/\s+/g, ' ')
 
-export const output = <value>
+export const outputContent = <value>
     <document>
         <p>
             {"Paragraphs can contain: text, "}

@@ -13,7 +13,7 @@ export const input = cnxml`
 <note id="n3" type="tip">Notes can also have text content.</note>
 `
 
-export const output = <value>
+export const outputContent = <value>
     <document>
         <note key="n1" type="note" class={List()}>
             <p>Notes' default type is ‘note’.</p>

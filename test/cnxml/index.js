@@ -5,18 +5,9 @@ import '../util/cnxml'
 import compareHtml from '../util/compareHtml'
 import dropKeys from '../util/dropKeys'
 import fixtures from '../util/fixtures'
-import PLUGINS from '../util/plugins'
+import { CONTENT_PLUGINS, GLOSSARY_PLUGINS } from '../util/plugins'
 
 import CNXML from '../../src/cnxml'
-import Admonition from '../../src/plugins/admonition'
-import Exercise from '../../src/plugins/exercise'
-import Figure from '../../src/plugins/figure'
-import List from '../../src/plugins/list'
-import Section from '../../src/plugins/section'
-import Term from '../../src/plugins/term'
-import Text from '../../src/plugins/text'
-import Title from '../../src/plugins/title'
-import XReference from '../../src/plugins/xref'
 
 // While JSDOM recommends against doing this, we have no other way of passing
 // DOMParser and XMLSerializer.
@@ -29,32 +20,53 @@ global.DOMParser = dom.window.DOMParser
 global.XMLSerializer = dom.window.XMLSerializer
 global.Node = dom.window.Node
 
-const serializer = new CNXML()
+const serializer = new CNXML({documentRules: [], glossaryRules: []})
 
-function testDeserialization({ input, output }) {
-    const editor = new Editor({
-        value: serializer.deserialize(input),
-        plugins: PLUGINS,
+function testDeserialization({ input, outputContent, outputGlossary }) {
+    const { document, glossary } = serializer.deserialize(input)
+    const editorContent = new Editor({
+        value: document,
+        plugins: CONTENT_PLUGINS,
+    })
+    const editorGlossary = new Editor({
+        value: glossary,
+        plugins: GLOSSARY_PLUGINS,
     })
 
-    if (output) {
-        dropKeys(editor.value.document).should.equal(dropKeys(output.document))
+    if (outputContent) {
+        dropKeys(editorContent.value.document).should.equal(dropKeys(outputContent.document))
+    }
+
+    if (outputGlossary) {
+        dropKeys(editorGlossary.value.document).should.equal(dropKeys(outputGlossary.document))
     }
 }
 
-function testSerialization({ input, output }) {
-    const result = serializer.serialize(dropKeys(input), { toString: false })
-        .getElementsByTagName('content')[0]
+function testSerialization({ inputContent, inputGlossary, output }) {
+    const contentValue = inputContent ? dropKeys(inputContent) : null
+    const glossaryValue = inputGlossary ? dropKeys(inputGlossary) : null
 
+    const serialized = serializer.serialize(contentValue, glossaryValue, { toString: false })
     const referenceXml = new DOMParser().parseFromString(output, 'application/xml')
-    const reference = referenceXml.querySelector(':root > content')
 
-    if (reference == null) {
-        const error = referenceXml.getElementsByTagName('parsererror')
+    const error = referenceXml.getElementsByTagName('parsererror')
+    if (error[0]) {
         throw new Error('Invalid XML:' + error[0].textContent)
     }
 
-    compareHtml(dom, result, reference)
+    if (contentValue) {
+        const resultContent = serialized.getElementsByTagName('content')[0]
+        const referenceContent = referenceXml.querySelector(':root > content')
+
+        compareHtml(dom, resultContent, referenceContent)
+    }
+
+    if (glossaryValue) {
+        const resultGlossary = serialized.getElementsByTagName('glossary')[0]
+        const referenceGlossary = referenceXml.querySelector(':root > glossary')
+
+        compareHtml(dom, resultGlossary, referenceGlossary)
+    }
 }
 
 describe('CNXML', () => {

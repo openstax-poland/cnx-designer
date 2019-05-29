@@ -34,6 +34,16 @@ function normalizeAdmonition(change, error) {
         console.warn('Unhandled admonition violation:', code)
         break
 
+    case 'child_type_invalid':
+        // Sometimes title is not first element. We want to change it to paragraph,
+        // because moving it to 0 index could be confusing for translators.
+        if (child.type === 'title') {
+            change.setNodeByKey(child.key, 'paragraph')
+            return
+        }
+        console.warn('Unhandled admonition violation:', code)
+        break
+
     default:
         console.warn('Unhandled admonition violation:', code)
         break

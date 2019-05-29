@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export const input = <value>
+export const inputContent = <value>
     <document>
         <figure key="f1">
             <media alt="Figure content">
