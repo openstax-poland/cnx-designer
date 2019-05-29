@@ -6,6 +6,7 @@ import Admonition from './admonition'
 import Definition from './definition'
 import Exercise from './exercise'
 import Figure from './figure'
+import GlossaryDocument from './glossary'
 import List from './list'
 import Media from './media'
 import Quotation from './quotation'
@@ -131,6 +132,8 @@ export function Document(options={}) {
  *
  * @param {string[]} options.content additional block node types allowed in
  *                                   text-block content
+ * @param {string[]} options.glossary_content additional block node types
+ *                                            allowed as children of document
  * @param {string[]|null} options.marks List of additional mark types allowed
  *                                      in text content.
  * @param {object} options.list options for `slate-edit-list`
@@ -149,8 +152,14 @@ export function Glossary(options={}) {
         'code',
     ]
 
+    const glossary_content = [
+        ...(options.document_content || []),
+        'definition',
+    ]
+
     return [
         Definition({ content }),
+        GlossaryDocument({ content: glossary_content }),
         List(list),
         TextContent({ marks: options.marks }),
     ]
