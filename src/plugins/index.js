@@ -3,6 +3,7 @@
 // full license text.
 
 import Admonition from './admonition'
+import Definition from './definition'
 import Exercise from './exercise'
 import Figure from './figure'
 import List from './list'
@@ -21,6 +22,7 @@ export { default as Storage } from './storage'
 export {
     Admonition,
     Code,
+    Definition,
     Exercise,
     Figure,
     List,
@@ -110,7 +112,7 @@ export function Document(options={}) {
         }),
         TextContent({
             marks: options.marks,
-            ...(options.content_options || {}),
+            ...(options.content || {}),
         }),
         Exercise({ content }),
         Figure(),
@@ -119,5 +121,37 @@ export function Document(options={}) {
         Quotation({ content }),
         Section({ content: document_content }),
         Title({ marks }),
+    ]
+}
+
+/**
+ * Collection of plugins for working with CNX glossary.
+ *
+ * This also includes {@link TextContent}
+ *
+ * @param {string[]} options.content additional block node types allowed in
+ *                                   text-block content
+ * @param {string[]|null} options.marks List of additional mark types allowed
+ *                                      in text content.
+ * @param {object} options.list options for `slate-edit-list`
+ */
+export function Glossary(options={}) {
+    const {
+        list = {},
+    } = options
+
+    const content = [
+        ...(options.content || []),
+        'paragraph',
+        'quotation',
+        'ul_list',
+        'ol_list',
+        'code',
+    ]
+
+    return [
+        Definition({ content }),
+        List(list),
+        TextContent({ marks: options.marks }),
     ]
 }
