@@ -51,7 +51,16 @@ function onEnter(event, change) {
             && selection.end.isAtEndOfNode(block)
         if (!isEmpty && selection.start.offset > 0) return false
 
-        change.unwrapBlock('definition_meaning')
+        if (item.nodes.some(n => n.type === 'definition_example')) {
+            // If meaning have examples then remove empty line and
+            // add new meaning after current one.
+            change.withoutNormalizing(() => {
+                change.removeNodeByKey(block.key)
+                change.addMeaningToDefinition()
+            })
+        } else {
+            change.unwrapBlock('definition_meaning')
+        }
         return true
     }
 
