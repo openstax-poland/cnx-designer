@@ -59,8 +59,17 @@ export function addMeaningToDefinition(change) {
         nodes: [para],
     })
 
-    const index = definition.nodes.size
-        + (definition.nodes.last().type === 'definition_seealso' ? -1 : 0)
+    // Get index of closest meaning and insert new one after.
+    const startBlock = change.value.startBlock
+    const closestMeaning = definition.getClosest(startBlock.key, (n) => n.type === 'definition_meaning')
+    let index
+    if (closestMeaning) {
+        const meaningIndex = definition.nodes.findIndex(n => n.key === closestMeaning.key)
+        index = meaningIndex + 1
+    } else {
+        index = definition.nodes.size
+            + (definition.nodes.last().type === 'definition_seealso' ? -1 : 0)
+    }
 
     change.insertNodeByKey(definition.key, index, meaning)
     change.moveToStartOfNode(meaning)
