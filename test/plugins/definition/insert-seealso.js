@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.addSeeAlsoToDefinition()
+export default editor => editor.addSeeAlsoToDefinition()
 
 export const input = <value>
     <document>

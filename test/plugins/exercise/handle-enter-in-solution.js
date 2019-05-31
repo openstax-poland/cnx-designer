@@ -1,9 +1,9 @@
 /** @jsx h */
 
-export default (change, editor) => {
+export default editor => {
     editor.run('onKeyDown', { key: 'Enter' })
     editor.run('onKeyDown', { key: 'Enter' })
-    change.moveToEndOfBlock()
+    editor.moveToEndOfBlock()
     editor.run('onKeyDown', { key: 'Enter' })
     editor.run('onKeyDown', { key: 'Enter' })
     editor.run('onKeyDown', { key: 'Enter' })

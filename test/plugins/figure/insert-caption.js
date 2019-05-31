@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.insertCaption()
+export default editor => editor.insertCaption()
 
 export const input = <value>
     <document>

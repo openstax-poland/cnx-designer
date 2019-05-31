@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.insertSolution()
+export default editor => editor.insertSolution()
 
 export const input = <value>
     <document>

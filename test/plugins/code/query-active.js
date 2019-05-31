@@ -1,13 +1,13 @@
 /** @jsx h */
 
-export default change => {
-    let block = change.value.startBlock
+export default editor => {
+    let block = editor.value.startBlock
 
     let node = block.type === 'code' ? block : null
     should.not.exist(node)
 
-    change.moveToStartOfNode(change.value.document.getNode('code'))
-    block = change.value.startBlock
+    editor.moveToStartOfNode(editor.value.document.getNode('code'))
+    block = editor.value.startBlock
     node = block.type === 'code' ? block : null
     should.exist(node)
 }

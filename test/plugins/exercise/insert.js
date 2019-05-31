@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.insertExercise()
+export default editor => editor.insertExercise()
 
 export const input = <value>
     <document>

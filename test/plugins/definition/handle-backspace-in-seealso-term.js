@@ -1,8 +1,6 @@
 /** @jsx h */
 
-export default (change, editor) => {
-    editor.run('onKeyDown', { key: 'Backspace' })
-}
+export default editor => editor.run('onKeyDown', { key: 'Backspace' })
 
 export const input = <value>
     <document>

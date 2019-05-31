@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.wrapBlock('quotation')
+export default editor => editor.wrapBlock('quotation')
 
 export const input = <value>
     <document>

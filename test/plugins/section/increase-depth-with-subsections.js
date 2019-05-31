@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.increaseSectionDepth()
+export default editor => editor.increaseSectionDepth()
 
 export const input = <value>
     <document>

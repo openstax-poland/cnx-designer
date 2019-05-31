@@ -1,9 +1,9 @@
 /** @jsx h */
 
-export default change => {
-    change.changeListType('ul_list')
-    change.moveToStartOfNode(change.value.document.getNode('second'))
-    change.changeListType('ol_list')
+export default editor => {
+    editor.changeListType('ul_list')
+    editor.moveToStartOfNode(editor.value.document.getNode('second'))
+    editor.changeListType('ol_list')
 }
 
 export const checkSelection = false

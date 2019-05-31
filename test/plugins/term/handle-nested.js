@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.wrapInline({ type: 'term' })
+export default editor => editor.wrapInline({ type: 'term' })
 
 export const input = <value>
     <document>

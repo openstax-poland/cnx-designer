@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.insertAdmonition('tip')
+export default editor => editor.insertAdmonition('tip')
 
 export const input = <value>
     <document>

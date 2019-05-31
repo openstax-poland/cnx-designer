@@ -1,18 +1,18 @@
 /** @jsx h */
 
-export default change => {
-    let node = change.getActiveAdmonition(change.value)
+export default editor => {
+    let node = editor.getActiveAdmonition(editor.value)
     should.not.exist(node)
 
-    change.moveToStartOfNode(change.value.document.getNode('flat-target'))
-    node = change.getActiveAdmonition(change.value)
+    editor.moveToStartOfNode(editor.value.document.getNode('flat-target'))
+    node = editor.getActiveAdmonition(editor.value)
     should.exist(node)
-    node.should.equal(change.value.document.getNode('flat'))
+    node.should.equal(editor.value.document.getNode('flat'))
 
-    change.moveToStartOfNode(change.value.document.getNode('nested-target'))
-    node = change.getActiveAdmonition(change.value)
+    editor.moveToStartOfNode(editor.value.document.getNode('nested-target'))
+    node = editor.getActiveAdmonition(editor.value)
     should.exist(node)
-    node.should.equal(change.value.document.getNode('nested'))
+    node.should.equal(editor.value.document.getNode('nested'))
 }
 
 export const input = <value>

@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.insertSection()
+export default editor => editor.insertSection()
 
 export const input = <value>
     <document>

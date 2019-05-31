@@ -1,15 +1,15 @@
 /** @jsx h */
 
-export default change => {
-    change.moveToStartOfNode(change.value.document.getNode('flat-target'))
-    let node = change.getActiveDefinition(change.value)
+export default editor => {
+    editor.moveToStartOfNode(editor.value.document.getNode('flat-target'))
+    let node = editor.getActiveDefinition(editor.value)
     should.exist(node)
-    node.should.equal(change.value.document.getNode('flat'))
+    node.should.equal(editor.value.document.getNode('flat'))
 
-    change.moveToStartOfNode(change.value.document.getNode('nested-target'))
-    node = change.getActiveDefinition(change.value)
+    editor.moveToStartOfNode(editor.value.document.getNode('nested-target'))
+    node = editor.getActiveDefinition(editor.value)
     should.exist(node)
-    node.should.equal(change.value.document.getNode('nested'))
+    node.should.equal(editor.value.document.getNode('nested'))
 }
 
 export const input = <value>

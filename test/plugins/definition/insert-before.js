@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.insertDefinition('before')
+export default editor => editor.insertDefinition('before')
 
 export const input = <value>
     <document>

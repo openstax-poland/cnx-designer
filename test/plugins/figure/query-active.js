@@ -1,24 +1,24 @@
 /** @jsx h */
 
-export default change => {
-    should.not.exist(change.getActiveFigure(change.value))
-    should.not.exist(change.getActiveSubfigure(change.value))
+export default editor => {
+    should.not.exist(editor.getActiveFigure(editor.value))
+    should.not.exist(editor.getActiveSubfigure(editor.value))
 
-    change.moveToStartOfNode(change.value.document.getNode('first'))
-    const first = change.getActiveFigure(change.value)
-    should.equal(first, change.value.document.getNode('figure-1'))
-    should.equal(change.getActiveSubfigure(change.value), first)
+    editor.moveToStartOfNode(editor.value.document.getNode('first'))
+    const first = editor.getActiveFigure(editor.value)
+    should.equal(first, editor.value.document.getNode('figure-1'))
+    should.equal(editor.getActiveSubfigure(editor.value), first)
 
-    change.moveToStartOfNode(change.value.document.getNode('second'))
-    const second = change.getActiveFigure(change.value)
-    should.equal(second, change.value.document.getNode('figure-2'))
-    const second_sub = change.getActiveSubfigure(change.value)
-    should.equal(second_sub, change.value.document.getNode('figure-3'))
+    editor.moveToStartOfNode(editor.value.document.getNode('second'))
+    const second = editor.getActiveFigure(editor.value)
+    should.equal(second, editor.value.document.getNode('figure-2'))
+    const second_sub = editor.getActiveSubfigure(editor.value)
+    should.equal(second_sub, editor.value.document.getNode('figure-3'))
 
-    change.moveToStartOfNode(change.value.document.getNode('third'))
-    const third = change.getActiveFigure(change.value)
-    should.equal(third, change.value.document.getNode('figure-2'))
-    should.equal(change.getActiveSubfigure(change.value), third)
+    editor.moveToStartOfNode(editor.value.document.getNode('third'))
+    const third = editor.getActiveFigure(editor.value)
+    should.equal(third, editor.value.document.getNode('figure-2'))
+    should.equal(editor.getActiveSubfigure(editor.value), third)
 }
 
 export const input = <value>

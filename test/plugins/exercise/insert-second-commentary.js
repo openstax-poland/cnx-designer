@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.insertCommentary()
+export default editor => editor.insertCommentary()
 
 export const input = <value>
     <document>

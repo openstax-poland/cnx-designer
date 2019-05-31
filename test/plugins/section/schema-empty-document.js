@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.normalize()
+export default editor => editor.normalize()
 
 export const input = <value>
     <document/>

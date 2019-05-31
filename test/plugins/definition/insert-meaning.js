@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.addMeaningToDefinition()
+export default editor => editor.addMeaningToDefinition()
 
 export const input = <value>
     <document>

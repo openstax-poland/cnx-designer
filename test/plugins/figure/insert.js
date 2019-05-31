@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.insertFigure({
+export default editor => editor.insertFigure({
     mime: 'image/png',
     name: 'first.png',
     alt: 'First picture',

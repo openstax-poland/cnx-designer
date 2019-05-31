@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.insertSubfigure({
+export default editor => editor.insertSubfigure({
     mime: 'image/png',
     name: 'third.png',
     alt: 'Third picture',

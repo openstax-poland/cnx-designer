@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.wrapInline('code')
+export default editor => editor.wrapInline('code')
 
 export const input = <value>
     <document>

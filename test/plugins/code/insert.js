@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.insertBlock('code')
+export default editor => editor.insertBlock('code')
 
 export const input = <value>
     <document>

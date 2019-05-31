@@ -1,19 +1,19 @@
 /** @jsx h */
 
-export default change => {
-    should.not.exist(change.getActiveQuotation(change.value))
+export default editor => {
+    should.not.exist(editor.getActiveQuotation(editor.value))
 
-    change.moveToStartOfNode(change.value.document.getNode('first'))
-    const first = change.getActiveQuotation(change.value)
-    should.equal(first, change.value.document.getNode('quote-1'))
+    editor.moveToStartOfNode(editor.value.document.getNode('first'))
+    const first = editor.getActiveQuotation(editor.value)
+    should.equal(first, editor.value.document.getNode('quote-1'))
 
-    change.moveToStartOfNode(change.value.document.getNode('second'))
-    const second = change.getActiveQuotation(change.value)
-    should.equal(second, change.value.document.getNode('quote-2'))
+    editor.moveToStartOfNode(editor.value.document.getNode('second'))
+    const second = editor.getActiveQuotation(editor.value)
+    should.equal(second, editor.value.document.getNode('quote-2'))
 
-    change.moveToStartOfNode(change.value.document.getNode('third'))
-    const third = change.getActiveQuotation(change.value)
-    should.equal(third, change.value.document.getNode('quote-3'))
+    editor.moveToStartOfNode(editor.value.document.getNode('third'))
+    const third = editor.getActiveQuotation(editor.value)
+    should.equal(third, editor.value.document.getNode('quote-3'))
 }
 
 export const input = <value>

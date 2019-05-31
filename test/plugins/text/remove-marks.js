@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.removeMarks()
+export default editor => editor.removeMarks()
 
 // Currently after marks are removed we're left with a bunch of unmerged leafs,
 // which is hard to represent in hyperscript.

@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default change => change.insertAdmonition('warning')
+export default editor => editor.insertAdmonition('warning')
 
 export const input = <value>
     <document>

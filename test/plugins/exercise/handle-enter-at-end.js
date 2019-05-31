@@ -1,10 +1,10 @@
 /** @jsx h */
 
-export default (change, editor) => {
+export default editor => {
     editor.run('onKeyDown', { key: 'Enter' })
-    change.moveToStartOfNode(change.value.document.getNode('solution'))
+    editor.moveToStartOfNode(editor.value.document.getNode('solution'))
     editor.run('onKeyDown', { key: 'Enter' })
-    change.moveToStartOfNode(change.value.document.getNode('problem'))
+    editor.moveToStartOfNode(editor.value.document.getNode('problem'))
     editor.run('onKeyDown', { key: 'Enter' })
 }
 

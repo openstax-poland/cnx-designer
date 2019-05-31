@@ -1,19 +1,19 @@
 /** @jsx h */
 
-export default change => {
-    should.not.exist(change.getActiveSection(change.value))
-    should.not.exist(change.getActiveSubsection(change.value))
+export default editor => {
+    should.not.exist(editor.getActiveSection(editor.value))
+    should.not.exist(editor.getActiveSubsection(editor.value))
 
-    const top = change.value.document.getNode('s1')
-    const nested = change.value.document.getNode('s2')
+    const top = editor.value.document.getNode('s1')
+    const nested = editor.value.document.getNode('s2')
 
-    change.moveToStartOfNode(change.value.document.getNode('p1'))
-    should.equal(change.getActiveSection(change.value), top)
-    should.equal(change.getActiveSubsection(change.value), top)
+    editor.moveToStartOfNode(editor.value.document.getNode('p1'))
+    should.equal(editor.getActiveSection(editor.value), top)
+    should.equal(editor.getActiveSubsection(editor.value), top)
 
-    change.moveToStartOfNode(change.value.document.getNode('t1'))
-    should.equal(change.getActiveSection(change.value), top)
-    should.equal(change.getActiveSubsection(change.value), nested)
+    editor.moveToStartOfNode(editor.value.document.getNode('t1'))
+    should.equal(editor.getActiveSection(editor.value), top)
+    should.equal(editor.getActiveSubsection(editor.value), nested)
 }
 
 export const input = <value>

@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default (change, editor) => {
+export default editor => {
   editor.run('onKeyDown', { key: 'Backspace' })
 }
 
