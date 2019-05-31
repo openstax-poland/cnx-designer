@@ -28,14 +28,14 @@ const testPlugin = plugins => ({
 
 describe('Plugins', () => {
     fixtures(__dirname, 'admonition', testPlugin(CONTENT_PLUGINS))
+    fixtures(__dirname, 'code', testPlugin(CONTENT_PLUGINS))
+    fixtures(__dirname, 'definition', testPlugin(GLOSSARY_PLUGINS))
     fixtures(__dirname, 'exercise', testPlugin(CONTENT_PLUGINS))
     fixtures(__dirname, 'figure', testPlugin(CONTENT_PLUGINS))
     fixtures(__dirname, 'list', testPlugin(CONTENT_PLUGINS))
-    fixtures(__dirname, 'code', testPlugin(CONTENT_PLUGINS))
     fixtures(__dirname, 'quotation', testPlugin(CONTENT_PLUGINS))
     fixtures(__dirname, 'section', testPlugin(CONTENT_PLUGINS))
-    fixtures(__dirname, 'text', testPlugin(CONTENT_PLUGINS))
     fixtures(__dirname, 'term', testPlugin(CONTENT_PLUGINS))
+    fixtures(__dirname, 'text', testPlugin(CONTENT_PLUGINS))
     fixtures(__dirname, 'title', testPlugin(CONTENT_PLUGINS))
-    fixtures(__dirname, 'definition', testPlugin(GLOSSARY_PLUGINS))
 })
