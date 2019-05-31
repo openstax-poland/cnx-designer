@@ -29,6 +29,7 @@
     "cross-env": "^5.2.0",
     "jsdom": "^13.2.0",
     "mocha": "^5.2.0",
+    "nyc": "^14.1.1",
     "react-dom": "^16.8.0",
     "rollup": "^1.0.0",
     "rollup-plugin-babel": "^4.2.0",
@@ -50,6 +51,7 @@
     "build": "cross-env NODE_ENV=build rollup -c",
     "build:style": "stylus -o dist/index.css -d -m src/index.styl",
     "prepare": "cross-env NODE_ENV=build rollup -c && stylus -o dist/index.css -d -m src/index.styl",
-    "test": "mocha"
+    "test": "mocha",
+    "coverage": "nyc --reporter text --reporter html mocha"
   }
 }
