@@ -41,6 +41,7 @@ function normalizeQuotation(change, error) {
         change.unwrapNodeByKey(child.key)
         break
 
+    /* istanbul ignore next */
     default:
         console.warn('Unhandled quotation violation:', code)
         break

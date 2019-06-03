@@ -80,6 +80,7 @@ function normalizeExercise(change, error) {
         change.unwrapBlockByKey(node.key)
         break
 
+    /* istanbul ignore next */
     default:
         console.warn('Unhandled exercise violation:', violation)
         break
@@ -100,6 +101,7 @@ function normalizeContent(change, error) {
         change.setNodeByKey(node.key, { data: node.data.delete(key) })
         break
 
+    /* istanbul ignore next */
     default:
         console.warn('Unhandled exercise content violation:', violation)
         break

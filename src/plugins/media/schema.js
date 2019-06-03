@@ -14,6 +14,7 @@ function normalizeMedia(change, error) {
         }
         break
 
+    /* istanbul ignore next */
     default:
         console.warn("Unhandled media violation", violation)
         break

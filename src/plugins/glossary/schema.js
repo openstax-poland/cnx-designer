@@ -23,6 +23,7 @@ function normalizeDocument(change, error) {
         console.warn('Unhandled glossary document violation:', error.code)
         break
 
+    /* istanbul ignore next */
     default:
         console.warn('Unhandled glossary document violation:', error.code)
     }

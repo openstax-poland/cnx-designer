@@ -19,6 +19,7 @@ function normalizeHeading(change, error) {
             break
         }
 
+    /* istanbul ignore next */
     default:
         console.warn('Unhandled heading violation:', violation)
         break

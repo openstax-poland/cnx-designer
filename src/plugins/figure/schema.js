@@ -24,6 +24,7 @@ function normalizeFigure(change, error) {
         }
         break
 
+    /* istanbul ignore next */
     default:
         console.warn("Unhandled figure violation", violation)
         break
@@ -39,6 +40,7 @@ function normalizeCaption(change, error) {
         change.setNodeByKey(node.key, 'paragraph')
         break
 
+    /* istanbul ignore next */
     default:
         console.warn("Unhandled figure caption violation", violation)
         break

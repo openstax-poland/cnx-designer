@@ -3,6 +3,7 @@
 // full license text.
 
 function normalizeTitle(change, error) {
+    /* istanbul ignore next */
     console.warn('Unhandled title violation:', error.code)
 }
 

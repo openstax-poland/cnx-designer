@@ -78,6 +78,7 @@ function normalizeDefinition(change, error) {
         change.unwrapBlockByKey(child.key)
         break
 
+    /* istanbul ignore next */
     default:
         console.warn('Unhandled definition violation:', code)
         break
@@ -85,13 +86,8 @@ function normalizeDefinition(change, error) {
 }
 
 function normalizeTerm(change, error) {
-    const { code, key, node, child } = error
-
-    switch (code) {
-    default:
-        console.warn('Unhandled definition_term violation:', code)
-        break
-    }
+    /* istanbul ignore next */
+    console.warn('Unhandled definition_term violation:', error.code)
 }
 
 function normalizeMeaning(change, error) {
@@ -112,6 +108,7 @@ function normalizeMeaning(change, error) {
         change.unwrapChildrenByPath(path)
         break
 
+    /* istanbul ignore next */
     default:
         console.warn('Unhandled definition_meaning violation:', code)
         break
@@ -122,16 +119,13 @@ function normalizeExample(change, error) {
     const { code, key, node, child } = error
 
     switch (code) {
-    case 'child_type_invalid':
-        console.warn('Unhandled definition_example child_type_invalid:', child)
-        break
-
     case 'parent_type_invalid':
         // Unwrap content.
         const path = change.value.document.getPath(node.key)
         change.unwrapChildrenByPath(path)
         break
 
+    /* istanbul ignore next */
     default:
         console.warn('Unhandled definition_example violation:', code)
         break
@@ -157,6 +151,7 @@ function normalizeSeeAlso(change, error) {
         change.unwrapChildrenByPath(path)
         break
 
+    /* istanbul ignore next */
     default:
         console.warn('Unhandled definition_seealso violation:', code, JSON.stringify(child))
         break

@@ -35,6 +35,7 @@ function normalizeAdmonition(change, error) {
         console.warn('Unhandled admonition violation:', code)
         break
 
+    /* istanbul ignore next */
     default:
         console.warn('Unhandled admonition violation:', code)
         break

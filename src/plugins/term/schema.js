@@ -12,6 +12,7 @@ function normalizeTerm(change, error) {
         change.insertText(text)
         break
 
+    /* istanbul ignore next */
     default:
         console.warn('Unhandled term violation:', code)
         break

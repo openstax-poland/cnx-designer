@@ -24,6 +24,7 @@ function normalizeDocument(change, error) {
         console.warn('Unhandled document violation:', error.code)
         break
 
+    /* istanbul ignore next */
     default:
         console.warn('Unhandled document violation:', error.code)
     }
@@ -66,6 +67,7 @@ function normalizeSection(change, error) {
         change.moveNodeByKey(next.key, parent.key, parent.nodes.size)
         break
 
+    /* istanbul ignore next */
     default:
         console.warn('Unhandled section violation:', code)
         break
