@@ -11,7 +11,7 @@ export const input = <value>
             <p>Bad content</p>
             <ul><li>item</li></ul>
             <defseealso>
-                <defterm>Term</defterm>
+                <p>Term</p>
             </defseealso>
         </definition>
     </document>
