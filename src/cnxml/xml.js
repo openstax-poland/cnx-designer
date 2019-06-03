@@ -69,6 +69,10 @@ class Renderer {
                 return Array.from(component, c => this.renderComponent(c))
             }
 
+            if (component instanceof Node) {
+                return this.doc.adoptNode(component)
+            }
+
             throw new Error("Bad component")
         }
     }
