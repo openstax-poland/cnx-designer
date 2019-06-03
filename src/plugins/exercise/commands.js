@@ -24,17 +24,9 @@ export function insertExercise(change) {
             return !!document.getClosest(last.key, p2 => p1 === p2)
         }) || document
 
-        // When using `change.wrapBlock` slate will place blocks according to its
-        // own rules, which don't take into account legal parent-child relations,
-        // which may cause exercise to be created as a child of e.g. a list,
-        // and then promptly removed by normalizations. To avoid this we only use
-        // `change.wrapBlock` when we're sure output will be OK.
-        if (EXERCISE_PARENT.includes(parent.type)
-        || parent.object === 'document') {
-            change.wrapBlock('exercise')
-            change.wrapBlock('exercise_problem')
-            return
-        }
+
+        // Since Slate's wrapBlock* functions don't split blocks when selection
+        // is nested within them, we have to do it ourselves.
 
         // Adjust selection such that it begins on a direct descendant of |parent|.
         for (;;) {
@@ -69,22 +61,35 @@ export function insertExercise(change) {
         }
 
         // Previous two loops might have changed |parent|.
-        parent = change.value.document.getDescendant(parent.key)
+        parent = parent.object === 'document'
+            ? change.value.document
+            : change.value.document.getDescendant(parent.key)
+
+        // When using `change.wrapBlock` slate will place blocks according to its
+        // own rules, which don't take into account legal parent-child relations,
+        // which may cause exercise to be created as a child of e.g. a list,
+        // and then promptly removed by normalizations. To avoid this we only use
+        // `change.wrapBlock` when we're sure output will be OK.
+        if (EXERCISE_PARENT.includes(parent.type || parent.object)) {
+            change.wrapBlock('exercise')
+            change.wrapBlock('exercise_problem')
+            return
+        }
 
         // At this point the selection begins and ends on direct children
         // of |parent|, which means we can start unwrapping nodes out if it.
 
-        while (!EXERCISE_PARENT.includes(parent.type)) {
+        while (!EXERCISE_PARENT.includes(parent.type || parent.object)) {
             if (first === last) {
                 // Simple case, Slate can handle it on its own.
                 change.unwrapNodeByKey(first.key)
                 parent = change.value.document.getParent(first.key)
             } else {
                 const firstInx = parent.nodes.indexOf(first)
-                const lastInx = parent.nodes.indexOf(last) + 1
+                const lastInx = parent.nodes.indexOf(last)
 
                 if (lastInx + 1 < parent.nodes.size) {
-                    change.splitNodeByKey(parent.key, lastInx)
+                    change.splitNodeByKey(parent.key, lastInx + 1)
                 }
                 if (firstInx > 0) {
                     change.splitNodeByKey(parent.key, firstInx)
