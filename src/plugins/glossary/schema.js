@@ -8,10 +8,7 @@ function normalizeDocument(change, error) {
     switch (code) {
     // Document is empty.
     case 'child_min_invalid':
-        change.insertNodeByKey(node.key, 0, {
-            object: 'block',
-            type: 'paragraph',
-        })
+        change.insertDefinition()
         break
 
     case 'child_type_invalid':
