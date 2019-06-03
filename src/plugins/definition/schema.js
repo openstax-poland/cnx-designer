@@ -63,21 +63,6 @@ function normalizeDefinition(change, error) {
         console.log('Unhandled definition child_min_invalid:', child)
         break
 
-    case 'child_unknown':
-        // An invalid node following the See Also should be folded into the
-        // See Also.
-        if (index > 0) {
-            const nodeBefore = node.nodes.get(index - 1)
-            if (nodeBefore && nodeBefore.type === 'definition_seealso') {
-                change.moveNodeByKey(child.key, nodeBefore.key, nodeBefore.nodes.size)
-                break
-            }
-        }
-
-        // Unwrap any other nodes
-        change.unwrapBlockByKey(child.key)
-        break
-
     /* istanbul ignore next */
     default:
         console.warn('Unhandled definition violation:', code)
@@ -98,10 +83,6 @@ function normalizeMeaning(change, error) {
         change.unwrapNodeByKey(child.key)
         break
 
-    case 'child_unknown':
-        change.unwrapBlockByKey(child.key)
-        break
-
     case 'parent_type_invalid':
         // Unwrap content.
         const path = change.value.document.getPath(node.key)
@@ -116,20 +97,8 @@ function normalizeMeaning(change, error) {
 }
 
 function normalizeExample(change, error) {
-    const { code, key, node, child } = error
-
-    switch (code) {
-    case 'parent_type_invalid':
-        // Unwrap content.
-        const path = change.value.document.getPath(node.key)
-        change.unwrapChildrenByPath(path)
-        break
-
     /* istanbul ignore next */
-    default:
-        console.warn('Unhandled definition_example violation:', code)
-        break
-    }
+    console.warn('Unhandled definition_example violation:', code)
 }
 
 function normalizeSeeAlso(change, error) {
@@ -142,6 +111,7 @@ function normalizeSeeAlso(change, error) {
             break
         }
 
+        /* istanbul ignore next */
         console.warn('Unhandled definition_seealso child_type_invalid:', child)
         break
 
