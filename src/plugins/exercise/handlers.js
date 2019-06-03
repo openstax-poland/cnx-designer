@@ -36,7 +36,7 @@ function onEnter(event, change) {
     if (!exercise) return false
 
     const item = exercise.getParent(block.key)
-    const isItemLast = exercise.getNextBlock(item.key) === null
+    const isItemLast = exercise.getNextSibling(item.key) === null
     const atStartOfItem = item.getPreviousBlock(block.key) === null
 
     // Splitting here would create an empty item, ...
