@@ -39,4 +39,5 @@ describe('Plugins', () => {
     fixtures(__dirname, 'term', testPlugin(CONTENT_PLUGINS))
     fixtures(__dirname, 'text', testPlugin(CONTENT_PLUGINS))
     fixtures(__dirname, 'title', testPlugin(CONTENT_PLUGINS))
+    fixtures(__dirname, 'xref', testPlugin(CONTENT_PLUGINS))
 })

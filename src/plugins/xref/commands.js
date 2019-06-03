@@ -13,10 +13,12 @@ import { Inline } from 'slate'
  *                                is located
  */
 export function insertXref(change, target, document) {
-    const ref = Inline.create({
-        type: 'xref',
-        data: { target, document },
-    })
+    const data = { target }
 
+    if (document != null) {
+        data.document = document
+    }
+
+    const ref = Inline.create({ type: 'xref', data })
     change.insertInline(ref)
 }

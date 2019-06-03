@@ -81,11 +81,28 @@ const CASES = [
 
 
 function normalizeXRef(change, error) {
+    /* istanbul ignore next */
     console.warn('Unhandled xref violation:', error.code)
 }
 
 function normalizeLink(change, error) {
-    console.warn('Unhandled link violation:', error.code)
+    const { code, node, key } = error
+
+    switch (code) {
+    case 'node_data_invalid':
+        if (key === 'url') {
+            change.unwrapInlineByKey(node.key)
+            return
+        }
+
+        console.warn('Unhandled link violation:', error.code)
+        break
+
+    /* istanbul ignore next */
+    default:
+        console.warn('Unhandled link violation:', error.code)
+        break
+    }
 }
 
 export default {
