@@ -3,6 +3,7 @@
 // full license text.
 
 import Admonition from './admonition'
+import Classes from './classes'
 import Definition from './definition'
 import Exercise from './exercise'
 import Figure from './figure'
@@ -106,6 +107,13 @@ export function Document(options={}) {
         'subscript',
     ]
 
+    const class_types = [
+        'admonition',
+        'exercise',
+        'figure',
+        'section',
+    ]
+
     return [
         Admonition({
             title: 'title',
@@ -122,6 +130,7 @@ export function Document(options={}) {
         Quotation({ content }),
         Section({ content: document_content }),
         Title({ marks }),
+        Classes({ types: class_types }),
     ]
 }
 

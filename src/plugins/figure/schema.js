@@ -8,17 +8,6 @@ function normalizeFigure(change, error) {
     const { code: violation, key, node, child } = error
 
     switch (violation) {
-    case 'node_data_invalid':
-        if (key === 'class') {
-            const newClasses = List(node.data.get('class').join(' ').trim().split(/\s+/))
-            const newData = node.data.set('class', newClasses)
-            change.setNodeByKey(node.key, { data: newData })
-            break
-        }
-
-        console.warn('Unhandled figure violation:', violation)
-        break
-
     // Unwrap invalid nodes outside a figure.
     case 'child_unknown':
         change.unwrapNodeByKey(child.key)
@@ -59,9 +48,6 @@ function normalizeCaption(change, error) {
 export default {
     blocks: {
         figure: {
-            data: {
-                class: c => c == null || (List.isList(c) && c.every(x => x.match(/\s/) == null)),
-            },
             nodes: [
                 // HTMLBook also allows the opposite order, but for simplicity
                 // we limit ourselves just to this.
