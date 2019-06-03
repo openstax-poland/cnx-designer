@@ -3,23 +3,27 @@
 // full license text.
 
 function normalizeCodeBlock(change, error) {
-    const { code, node, child } = error
+    /* istanbul ignore next */
+    console.warn('Unhandled code (block) violation:', error.code)
+}
+
+function normalizeCodeInline(change, error) {
+    const { code, child, node } = error
 
     switch (code) {
-    case 'child_node_invalid':
-        change.unwrapBlockByKey(child.key)
+    case 'child_object_invalid':
+        change.unwrapNodeByKey(child.key)
+        break
+
+    case 'node_text_invalid':
+        change.removeNodeByKey(node.key)
         break
 
     /* istanbul ignore next */
     default:
-        console.warn('Unhandled code (block) violation:', code)
+        console.warn('Unhandled code (inline) violation:', code)
         break
     }
-}
-
-function normalizeCodeInline(change, error) {
-    /* istanbul ignore next */
-    console.warn('Unhandled code (inline) violation:', error.code)
 }
 
 export default {
@@ -34,6 +38,7 @@ export default {
             marks: [],
             nodes: [ { match: { object: 'text' } } ],
             normalize: normalizeCodeInline,
+            text: t => t.length > 0,
         }
     }
 }
