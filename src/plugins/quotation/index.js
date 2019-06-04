@@ -3,7 +3,7 @@
 // full license text.
 
 import onKeyDown from './handlers'
-import renderNode from './render'
+import renderBlock from './render'
 import make_schema from './schema'
 import * as queries from './queries'
 
@@ -18,5 +18,5 @@ export default function Quotation(options={}) {
 
     const schema = make_schema({ content })
 
-    return { queries, schema, onKeyDown, renderNode }
+    return { queries, schema, onKeyDown, renderBlock }
 }

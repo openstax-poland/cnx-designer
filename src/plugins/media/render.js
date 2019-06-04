@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 
 import Storage from '../../api/storage'
 
-export default function renderNode({ node, attributes, isFocused }, editor, next) {
+export default function renderBlock({ node, attributes, isFocused }, editor, next) {
     switch (node.type) {
     case 'image':
         return <Image

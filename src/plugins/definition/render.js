@@ -12,7 +12,7 @@ const TYPES = [
     'definition_seealso',
 ]
 
-export default function renderNode({ node, children, attributes }, editor, next) {
+export default function renderBlock({ node, children, attributes }, editor, next) {
     if (!TYPES.includes(node.type)) return next()
 
     return <div

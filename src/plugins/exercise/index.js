@@ -3,7 +3,7 @@
 // full license text.
 
 import make_schema from './schema'
-import renderNode from './render'
+import renderBlock from './render'
 import onKeyDown from './handlers'
 import renderXRef from './xref'
 import * as commands from './commands'
@@ -20,5 +20,5 @@ export default function Exercise(options={}) {
 
     const schema = make_schema({ content })
 
-    return { commands, queries, schema, renderNode, renderXRef, onKeyDown }
+    return { commands, queries, schema, renderBlock, renderXRef, onKeyDown }
 }

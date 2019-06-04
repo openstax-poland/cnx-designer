@@ -16,7 +16,7 @@ const MARKS = {
     strong: 'strong',
 }
 
-export function renderNode({ node, children, attributes }, editor, next) {
+export function renderBlock({ node, children, attributes }, editor, next) {
     const Node = NODES[node.type]
 
     if (Node) {

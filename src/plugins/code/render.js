@@ -4,13 +4,17 @@
 
 import React from 'react'
 
-export default function renderNode({ node, children, attributes }, editor, next) {
+export function renderBlock({ node, children, attributes }, editor, next) {
     if (node.type === 'code') {
-        if (node.object === 'block') {
-            return <pre {...attributes}>{children}</pre>
-        } else if (node.object === 'inline') {
-            return <code {...attributes}>{children}</code>
-        }
+        return <pre {...attributes}>{children}</pre>
+    }
+
+    return next()
+}
+
+export function renderInline({ node, children, attributes }, editor, next) {
+    if (node.type === 'code') {
+        return <code {...attributes}>{children}</code>
     }
 
     return next()
