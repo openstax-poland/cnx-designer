@@ -2,9 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import renderNode from './render'
+import renderBlock from './render'
 import schema from './schema'
 
 export default function Media(options) {
-    return { renderNode, schema }
+    return { renderBlock, schema }
 }

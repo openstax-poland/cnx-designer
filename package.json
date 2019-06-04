@@ -15,7 +15,7 @@
     "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
     "slate-edit-list": "https://github.com/katalysteducation/slate-edit-list.git#releases",
     "slate-html-serializer": "^0.8.0",
-    "slate-react": "^0.21.0"
+    "slate-react": "^0.22.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -45,7 +45,7 @@
     "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
     "slate-edit-list": "https://github.com/katalysteducation/slate-edit-list.git#releases",
     "slate-html-serializer": "^0.8.0",
-    "slate-react": "^0.21.0"
+    "slate-react": "^0.22.0"
   },
   "scripts": {
     "build": "cross-env NODE_ENV=build rollup -c",

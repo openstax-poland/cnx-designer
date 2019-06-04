@@ -4,7 +4,7 @@
 
 import React from 'react'
 
-export default function renderNode({ node, children, attributes }, editor, next) {
+export default function renderDecoration({ node, children, attributes }, editor, next) {
     if (node.type !== 'term') return next()
 
     return <span className="term" {...attributes}>{children}</span>

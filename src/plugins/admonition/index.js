@@ -3,7 +3,7 @@
 // full license text.
 
 import onKeyDown from './handlers'
-import renderNode from './render'
+import renderBlock from './render'
 import make_schema from './schema'
 import * as commands from './commands'
 import * as queries from './queries'
@@ -22,5 +22,5 @@ export default function Admonition(options={}) {
 
     const schema = make_schema({ title, content })
 
-    return { commands, queries, schema, onKeyDown, renderNode }
+    return { commands, queries, schema, onKeyDown, renderBlock }
 }

@@ -16,7 +16,7 @@ const MARKS = {
     strong: 'strong',
 }
 
-export function renderNode({ node, children, attributes }, editor, next) {
+export function renderBlock({ node, children, attributes }, editor, next) {
     const Node = NODES[node.type]
 
     if (Node) {
@@ -26,7 +26,7 @@ export function renderNode({ node, children, attributes }, editor, next) {
     return next()
 }
 
-export function renderMark({ mark, children, attributes }, editor, next) {
+export function renderDecoration({ mark, children, attributes }, editor, next) {
     const Mark = MARKS[mark.type]
 
     if (Mark) {
