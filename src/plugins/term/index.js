@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import renderDecoration from './render'
+import renderInline from './render'
 import make_schema from './schema'
 
 /**
@@ -16,5 +16,5 @@ export default function Term(options={}) {
 
     const schema = make_schema({ marks })
 
-    return { renderDecoration, schema }
+    return { renderInline, schema }
 }
