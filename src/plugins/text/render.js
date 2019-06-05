@@ -26,7 +26,7 @@ export function renderBlock({ node, children, attributes }, editor, next) {
     return next()
 }
 
-export function renderDecoration({ mark, children, attributes }, editor, next) {
+export function renderMark({ mark, children, attributes }, editor, next) {
     const Mark = MARKS[mark.type]
 
     if (Mark) {

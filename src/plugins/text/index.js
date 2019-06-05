@@ -4,7 +4,7 @@
 
 import make_schema from './schema'
 import * as commands from './commands'
-import { renderBlock, renderDecoration } from './render'
+import { renderBlock, renderMark } from './render'
 
 /**
  * @param {string[]} options.marks - List of mark types which may appear inside
@@ -17,5 +17,5 @@ export default function Text(options={}) {
 
     const schema = make_schema({ marks })
 
-    return { commands, renderBlock, renderDecoration, schema }
+    return { commands, renderBlock, renderMark, schema }
 }
