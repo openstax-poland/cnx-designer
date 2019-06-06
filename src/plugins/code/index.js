@@ -3,9 +3,9 @@
 // full license text.
 
 import onKeyDown from './handlers'
-import renderNode from './render'
+import { renderBlock, renderInline } from './render'
 import schema from './schema'
 
 export default function Code(options) {
-    return { onKeyDown, renderNode, schema }
+    return { onKeyDown, renderBlock, renderInline, schema }
 }

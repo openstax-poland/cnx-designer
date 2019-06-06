@@ -4,7 +4,7 @@
 
 import React from 'react'
 
-export default function renderNode({ node, children, attributes }, editor, next) {
+export default function renderBlock({ node, children, attributes }, editor, next) {
     if (node.type !== 'section') return next()
 
     return <section {...attributes}>

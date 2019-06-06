@@ -12,7 +12,7 @@ const TYPES = [
     'exercise_commentary',
 ]
 
-export default function renderNode(props, editor, next) {
+export default function renderBlock(props, editor, next) {
     const { node, children, attributes } = props
 
     switch (node.type) {

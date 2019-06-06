@@ -11,11 +11,11 @@
     "@babel/runtime": "^7.1.5",
     "immutable": "^3.8.2",
     "react": "^16.4.1",
-    "slate": "^0.44.0",
+    "slate": "^0.47.0",
     "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
     "slate-edit-list": "https://github.com/katalysteducation/slate-edit-list.git#releases",
-    "slate-html-serializer": "^0.7.0",
-    "slate-react": "^0.21.0"
+    "slate-html-serializer": "^0.8.0",
+    "slate-react": "^0.22.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -25,27 +25,27 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
     "chai": "^4.2.0",
-    "chai-immutable": "^1.6.0",
+    "chai-immutable": "^2.0.0",
     "cross-env": "^5.2.0",
-    "jsdom": "^13.2.0",
-    "mocha": "^5.2.0",
+    "jsdom": "^15.0.0",
+    "mocha": "^6.0.0",
     "nyc": "^14.1.1",
     "react-dom": "^16.8.0",
-    "rollup": "^1.0.0",
+    "rollup": "^1.12.0",
     "rollup-plugin-babel": "^4.2.0",
-    "rollup-plugin-node-resolve": "^4.0.0",
-    "slate-hyperscript": "^0.11.2",
+    "rollup-plugin-node-resolve": "^5.0.0",
+    "slate-hyperscript": "^0.13.0",
     "stylus": "^0.54.5"
   },
   "peerDependencies": {
     "immutable": "^3.8.2",
     "react": "^16.4.1",
     "react-dom": "^16.8.0",
-    "slate": "^0.44.0",
+    "slate": "^0.47.0",
     "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
     "slate-edit-list": "https://github.com/katalysteducation/slate-edit-list.git#releases",
-    "slate-html-serializer": "^0.7.0",
-    "slate-react": "^0.21.0"
+    "slate-html-serializer": "^0.8.0",
+    "slate-react": "^0.22.0"
   },
   "scripts": {
     "build": "cross-env NODE_ENV=build rollup -c",

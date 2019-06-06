@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import { Map } from 'immutable'
 import { WithCounters } from 'slate-counters'
 
-export default function renderNode(props, editor, next) {
+export default function renderInline(props, editor, next) {
     const { node, attributes, children } = props
 
     switch (node.type) {

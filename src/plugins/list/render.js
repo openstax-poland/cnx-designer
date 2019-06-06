@@ -4,7 +4,7 @@
 
 import React from 'react'
 
-export default function renderNode({ node, children, attributes }, editor, next) {
+export default function renderBlock({ node, children, attributes }, editor, next) {
     switch (node.type) {
     case 'ul_list': return <ul {...attributes}>{children}</ul>
     case 'ol_list': return <ol {...attributes}>{children}</ol>
