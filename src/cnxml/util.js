@@ -256,17 +256,29 @@ export function mixedContent(el, next, type='paragraph') {
 
     const cl = el.childNodes[0]
     const text = cl.nodeType === cl.TEXT_NODE && cl.textContent.match(/[^\s]/)
+    const childNodes = next(el.childNodes)
 
     if (text || INLINE_TAGS.includes(cl.tagName)) {
-        const nodes = next(el.childNodes)
-
-        return [{
+        const parsedNodes = splitBlocks({
             object: 'block',
-            type: type,
-            nodes: nodes,
-        }]
+            type,
+            nodes: childNodes,
+        })
+        return parsedNodes instanceof Array ? parsedNodes : [parsedNodes]
     } else {
-        return next(Array.from(el.children))
+        const filteredNodes = childNodes.filter(c => {
+            // Do not handle text containing only \n and spaces.
+            if (c.object === 'text' && c.text.trim() ===  '') {
+                return false
+            }
+            return true
+        })
+        const parsedNodes = splitBlocks({
+            object: 'block',
+            type,
+            nodes: filteredNodes,
+        })
+        return parsedNodes instanceof Array ? parsedNodes : [parsedNodes]
     }
 }
 
