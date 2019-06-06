@@ -98,7 +98,7 @@ function normalizeMeaning(change, error) {
 
 function normalizeExample(change, error) {
     /* istanbul ignore next */
-    console.warn('Unhandled definition_example violation:', code)
+    console.warn('Unhandled definition_example violation:', error.code)
 }
 
 function normalizeSeeAlso(change, error) {
