@@ -257,29 +257,30 @@ export function mixedContent(el, next, type='paragraph') {
     const cl = el.childNodes[0]
     const text = cl.nodeType === cl.TEXT_NODE && cl.textContent.match(/[^\s]/)
     const childNodes = next(el.childNodes)
+    let result
 
     if (text || INLINE_TAGS.includes(cl.tagName)) {
-        const parsedNodes = splitBlocks({
+        result = splitBlocks({
             object: 'block',
             type,
             nodes: childNodes,
         })
-        return parsedNodes instanceof Array ? parsedNodes : [parsedNodes]
     } else {
-        const filteredNodes = childNodes.filter(c => {
+        const nodes = childNodes.filter(c => {
             // Do not handle text containing only \n and spaces.
             if (c.object === 'text' && c.text.trim() ===  '') {
                 return false
             }
             return true
         })
-        const parsedNodes = splitBlocks({
+        result = splitBlocks({
             object: 'block',
             type,
-            nodes: filteredNodes,
+            nodes,
         })
-        return parsedNodes instanceof Array ? parsedNodes : [parsedNodes]
     }
+
+    return result instanceof Array ? result : [result]
 }
 
 /**
