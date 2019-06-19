@@ -4,8 +4,18 @@
 
 import onKeyDown from './handlers'
 import { renderBlock, renderInline } from './render'
-import schema from './schema'
+import make_schema from './schema'
 
-export default function Code(options) {
+/**
+ * @param {string[]} options.inlines - List of inline types which may appear
+ *                                     inside a code fragment.
+ */
+export default function Code(options={}) {
+    const {
+        inlines = [],
+    } = options
+
+    const schema = make_schema({ inlines })
+
     return { onKeyDown, renderBlock, renderInline, schema }
 }

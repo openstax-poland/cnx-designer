@@ -3,7 +3,7 @@
 // full license text.
 
 function normalizeTerm(change, error) {
-    const { code, child } = error
+    const { code, child, node } = error
 
     switch (code) {
     case 'child_object_invalid':
@@ -19,12 +19,15 @@ function normalizeTerm(change, error) {
     }
 }
 
-export default function schema({ marks }) {
+export default function schema({ marks, inlines }) {
     return {
         inlines: {
             term: {
                 nodes: [{
-                    match: { object: 'text' },
+                    match: [
+                        ...inlines.map(type => ({ type })),
+                        { object: 'text' },
+                    ],
                 }],
                 marks: marks.map(type => ({ type })),
                 data: {

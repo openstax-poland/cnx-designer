@@ -26,19 +26,26 @@ function normalizeCodeInline(change, error) {
     }
 }
 
-export default {
-    blocks: {
-        code: {
-            nodes: [ { match: { object: 'text' } } ],
-            normalize: normalizeCodeBlock,
-        }
-    },
-    inlines: {
-        code: {
-            marks: [],
-            nodes: [ { match: { object: 'text' } } ],
-            normalize: normalizeCodeInline,
-            text: t => t.length > 0,
+export default function schema(options) {
+    const content = [
+        ...options.inlines.map(type => ({ type })),
+        { object: 'text' },
+    ]
+
+    return {
+        blocks: {
+            code: {
+                nodes: [{ match: content }],
+                normalize: normalizeCodeBlock,
+            }
+        },
+        inlines: {
+            code: {
+                marks: [],
+                nodes: [{ match: content }],
+                normalize: normalizeCodeInline,
+                text: t => t.length > 0,
+            }
         }
     }
 }

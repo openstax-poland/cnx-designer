@@ -8,13 +8,16 @@ import make_schema from './schema'
 /**
  * @param {string[]} options.marks - List of mark types which may appear inside
  *                                   a term.
+ * @param {string[]} options.inlines - List of inline types which may appear
+ *                                     inside a term.
  */
 export default function Term(options={}) {
     const {
         marks = [],
+        inlines = [],
     } = options
 
-    const schema = make_schema({ marks })
+    const schema = make_schema({ marks, inlines })
 
     return { renderInline, schema }
 }
