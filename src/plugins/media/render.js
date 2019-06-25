@@ -5,8 +5,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Storage from '../../api/storage'
-
 export default function renderBlock({ node, attributes, isFocused }, editor, next) {
     switch (node.type) {
     case 'image':
@@ -29,13 +27,13 @@ class Image extends React.PureComponent {
         return <img
             className="image"
             data-selected={isFocused}
-            src={this.context.storage.mediaUrl(src)}
+            src={this.context.mediaUrl(src)}
             alt=""
             {...attributes}
             />
     }
 
     static contextTypes = {
-        storage: PropTypes.instanceOf(Storage),
+        mediaUrl: PropTypes.instanceOf(Function)
     }
 }
