@@ -121,7 +121,6 @@ export function Document(options={}) {
         }),
         TextContent({
             marks: options.marks,
-            ...(options.content || {}),
         }),
         Exercise({ content }),
         Figure(),
