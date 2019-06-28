@@ -42,6 +42,8 @@ export {
  *
  * @param {string[]|null} options.marks List of additional mark types allowed
  *                                      in text content.
+ * @param {object?} options.code options for `Code`
+ * @param {object?} options.term options for `Term`
  */
 export function TextContent(options={}) {
     const marks = [
@@ -54,8 +56,8 @@ export function TextContent(options={}) {
     ]
 
     return [
-        Code(),
-        Term({ marks }),
+        Code(options.code),
+        Term({ marks, ...options.term }),
         Text({ marks }),
         XReference(),
     ]
@@ -73,6 +75,7 @@ export function TextContent(options={}) {
  *                                            and document
  * @param {string[]|null} options.marks List of additional mark types allowed
  *                                      in text content.
+ * @param {object} options.text options for `TextContent`
  * @param {object} options.list options for `slate-edit-list`
  */
 export function Document(options={}) {
@@ -121,6 +124,7 @@ export function Document(options={}) {
         }),
         TextContent({
             marks: options.marks,
+            ...options.text,
         }),
         Exercise({ content }),
         Figure(),
@@ -144,6 +148,7 @@ export function Document(options={}) {
  *                                            allowed as children of document
  * @param {string[]|null} options.marks List of additional mark types allowed
  *                                      in text content.
+ * @param {object} options.text options for `TextContent`
  * @param {object} options.list options for `slate-edit-list`
  */
 export function Glossary(options={}) {
@@ -169,6 +174,9 @@ export function Glossary(options={}) {
         Definition({ content }),
         GlossaryDocument({ content: glossary_content }),
         List(list),
-        TextContent({ marks: options.marks }),
+        TextContent({
+            marks: options.marks,
+            ...options.text,
+        }),
     ]
 }
