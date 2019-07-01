@@ -189,9 +189,15 @@ export class DocumentDB {
         const tx = this.database.transaction('changes', 'readwrite')
         const store = tx.objectStore('changes')
 
+        let operation = op.toJS()
+        if (op.type === 'insert_node' && op.node.object === 'block') {
+            // We need to keep the same key for inserted nodes so xrefs targets
+            // are still valid after refreshing page.
+            operation.node.key = op.node.key
+        }
         await promisify(store.add({
             document: this.id,
-            change: op.toJS(),
+            change: operation,
         }))
     }
 
