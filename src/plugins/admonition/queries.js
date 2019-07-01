@@ -6,7 +6,9 @@ export function getCounterDefinitions(editor, definitions) {
     // TODO: different types of admonitions should use different counters, but
     // this is not currently possible.
     definitions.push({
-        admonition: 'enter',
+        admonition: {
+            admonition: 'enter',
+        },
     })
 }
 
