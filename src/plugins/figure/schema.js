@@ -80,7 +80,7 @@ export default {
                 first: { type: 'figure' },
             },
             nodes: [
-                { match: { type: 'figure' }, min: 2 },
+                { match: [{ type: 'figure' }, { type: 'figure_caption' } ], min: 2 },
             ],
             normalize: normalizeFigure,
         },
