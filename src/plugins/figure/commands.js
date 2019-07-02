@@ -56,34 +56,36 @@ export function insertSubfigure(change, media) {
         return
     }
 
-    if (node.nodes.first().type !== 'figure') {
-        // Figure has no sub-figures yet, convert its child into a sub-figure.
-        change.wrapBlockAtRange(
-            Range.create().moveToRangeOfNode(node),
-            'figure',
-        )
-    }
+    change.withoutNormalizing(() => {
+        if (node.nodes.first().type !== 'figure') {
+            // Figure has no sub-figures yet, convert its child into a sub-figure.
+            change.wrapBlockAtRange(
+                Range.create().moveToRangeOfNode(node),
+                'figure',
+            )
+        }
 
-    const image = Block.create({
-        type: media.mime.split('/', 1)[0],
-        data: { src: media.name },
+        const image = Block.create({
+            type: media.mime.split('/', 1)[0],
+            data: { src: media.name },
+        })
+
+        const media_node = Block.create({
+            type: 'media',
+            nodes: [image],
+            data: { alt: media.alt },
+        })
+
+        const subfigure = Block.create({
+            type: 'figure',
+            nodes: [media_node],
+        })
+
+        const index = node.nodes.last().type === 'figure_caption'
+            ? node.nodes.size - 1
+            : node.nodes.size
+        change.insertNodeByKey(node.key, index, subfigure)
     })
-
-    const media_node = Block.create({
-        type: 'media',
-        nodes: [image],
-        data: { alt: media.alt },
-    })
-
-    const subfigure = Block.create({
-        type: 'figure',
-        nodes: [media_node],
-    })
-
-    const index = node.nodes.last().type === 'figure_caption'
-        ? node.nodes.size - 1
-        : node.nodes.size
-    change.insertNodeByKey(node.key, index, subfigure)
 }
 
 /**
