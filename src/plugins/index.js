@@ -90,6 +90,7 @@ export function Document(options={}) {
         'ul_list',
         'ol_list',
         'code',
+        'figure',
     ]
 
     const document_content = [
