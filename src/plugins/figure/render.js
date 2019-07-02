@@ -10,7 +10,7 @@ export default function renderBlock(props, editor, next) {
 
     switch (node.type) {
     case 'figure':
-        return <figure {...attributes}>
+        return <figure {...attributes} onDragStart={forbidDrag}>
             {children}
         </figure>
 
@@ -33,3 +33,7 @@ const Caption = WithCounters(({ parent }) => parent.key)(function Caption({
         {children}
     </figcaption>
 })
+
+function forbidDrag(ev) {
+    ev.preventDefault()
+}
