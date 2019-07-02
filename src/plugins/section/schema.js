@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { List } from 'immutable'
+import { Range } from 'slate'
 
 function normalizeDocument(change, error) {
     const { code, node, child } = error
@@ -57,6 +57,27 @@ function normalizeSection(change, error) {
             return
         }
         console.warn('Unhandled violation in section:', code)
+        break
+
+    case 'child_type_invalid':
+        if (child.object === 'text') {
+            change.wrapBlock('paragraph')
+            return
+        } else if (child.type === 'title') {
+            const parent = change.value.document.getParent(child.key)
+            const last = parent.nodes.findLast(
+                (node, inx) => node.type !== 'section' && inx >= index)
+
+            const range = Range.create()
+                .moveStartToStartOfNode(child)
+                .moveEndToEndOfNode(last)
+            change.wrapBlockAtRange(range, 'section')
+
+            const section = change.value.document.getParent(child.key)
+            change.unwrapNodeByKey(section.key)
+            return
+        }
+        change.removeNodeByKey(child.key)
         break
 
     // There is a block after section that is not a section itself.
