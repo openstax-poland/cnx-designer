@@ -2,10 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { List } from 'immutable'
-
 function normalizeFigure(change, error) {
     const { code: violation, key, node, child } = error
+    console.log('normalizeFigure', violation, node.toJS())
 
     switch (violation) {
     // Unwrap invalid nodes outside a figure.
@@ -22,6 +21,17 @@ function normalizeFigure(change, error) {
                 change.unwrapNodeByKey(child.key)
             })
         }
+        break
+
+    case 'child_min_invalid':
+        const first = node.nodes.first()
+        // When one of subfigures is removed we are unwraping content of second one.
+        if (first && first.type === 'figure') {
+            const path = change.value.document.getPath(first.key)
+            change.unwrapChildrenByPath(path)
+            break
+        }
+        console.warn("Unhandled figure violation", violation)
         break
 
     /* istanbul ignore next */
@@ -63,4 +73,16 @@ export default {
             normalize: normalizeCaption,
         },
     },
+    rules: [
+        {
+            match: {
+                type: 'figure',
+                first: { type: 'figure' },
+            },
+            nodes: [
+                { match: { type: 'figure' }, min: 2 },
+            ],
+            normalize: normalizeFigure,
+        },
+    ],
 }
