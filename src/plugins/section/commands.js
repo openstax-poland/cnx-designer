@@ -8,8 +8,9 @@ import { Block, Range, Text } from 'slate'
  * Create a new section.
  *
  * @param {Slate~Change} change
+ * @param {string?} titleText
  */
-export function insertSection(change) {
+export function insertSection(change, titleText) {
     change.withoutNormalizing(change => {
         const { value } = change
         const { document, startBlock, endBlock } = value
@@ -22,7 +23,7 @@ export function insertSection(change) {
         // Create title for the new section, and put cursor in it
         const title = Block.create({
             type: 'title',
-            nodes: [Text.create()],
+            nodes: [Text.create(titleText)],
         })
         change.insertNodeByKey(parent.key, index, title)
         change.moveToStartOfNode(title)
