@@ -4,7 +4,6 @@
 
 function normalizeFigure(change, error) {
     const { code: violation, key, node, child } = error
-    console.log('normalizeFigure', violation, node.toJS())
 
     switch (violation) {
     // Unwrap invalid nodes outside a figure.
