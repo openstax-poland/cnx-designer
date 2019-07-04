@@ -7,6 +7,9 @@
  */
 
 import React from 'react'
+import { List } from 'immutable'
+
+import { normalizeWhiteSpace } from './whitespace'
 
 /**
  * A transformation function, mapping CNXML element to Slate node properties.
@@ -52,8 +55,6 @@ import React from 'react'
  * @param {Slate~Node} obj
  * @param {React~Element[]} children
  */
-
-import { List } from 'immutable'
 
 /**
  * Build a de/serializer for block elements.
@@ -263,7 +264,7 @@ export function mixedContent(el, next, type='paragraph') {
         result = splitBlocks({
             object: 'block',
             type,
-            nodes: childNodes,
+            nodes: normalizeWhiteSpace(childNodes),
         })
     } else {
         const nodes = childNodes.filter(c => {
@@ -288,7 +289,7 @@ export function mixedContent(el, next, type='paragraph') {
  */
 export const text = type => (el, next) => splitBlocks({
     type: type,
-    nodes: next(el.childNodes),
+    nodes: normalizeWhiteSpace(next(el.childNodes)),
 })
 
 /**
