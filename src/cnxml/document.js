@@ -9,6 +9,7 @@
 import React from 'react'
 
 import { block, mixed, text, loadClasses, mixedContent, splitBlocks } from './util'
+import { normalizeWhiteSpace } from './whitespace'
 
 /**
  * Process data for admonitions.
@@ -39,7 +40,7 @@ function de_figcaption(el, next) {
 
     return splitBlocks({
         type: 'figure_caption',
-        nodes: next(el.childNodes),
+        nodes: normalizeWhiteSpace(next(el.childNodes)),
     })
 }
 
