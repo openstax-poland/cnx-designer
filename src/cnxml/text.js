@@ -97,6 +97,7 @@ export const UNDERLINE = inline(null, null, 'underline', se_emphasis('underline'
  */
 function de_xref(el) {
     const target = el.getAttribute('target-id') || null
+    const document = el.getAttribute('document') || null
     const url = el.getAttribute('url') || null
     const cmlnleCase = el.getAttributeNS('http://katalysteducation.org/cmlnle/1.0', 'case') || null
 
@@ -105,7 +106,7 @@ function de_xref(el) {
             object: 'inline',
             type: 'xref',
             isVoid: true,
-            data: { target, case: cmlnleCase },
+            data: { target, document, case: cmlnleCase },
         }
     } else if (url) {
         return {
@@ -125,6 +126,11 @@ function de_xref(el) {
 function se_xref(obj, children) {
     let attrs = {
         'target-id': obj.data.get('target'),
+    }
+
+    const document = obj.data.get('document')
+    if (document) {
+        attrs.document = document
     }
 
     const cmlnleCase = obj.data.get('case')
