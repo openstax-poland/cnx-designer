@@ -10,6 +10,8 @@ import React from 'react'
 
 import { inline } from './util'
 
+export const DOCUMENT_REFERENCE = inline(null, null, 'docref', 'link')
+
 /**
  * Process data for emphasis marks.
  */
@@ -114,6 +116,12 @@ function de_xref(el) {
             type: 'link',
             data: { url },
         }
+    } else if (document) {
+        return {
+            object: 'inline',
+            type: 'docref',
+            data: { document },
+        }
     } else {
         // TODO: notify user perhaps?
         return null
@@ -147,6 +155,7 @@ function se_xref(obj, children) {
 export const XREF = inline('link', de_xref, 'xref', se_xref)
 
 export const TEXT_CONTENT = [
+    DOCUMENT_REFERENCE,
     EMPHASIS,
     LINK,
     STRONG,

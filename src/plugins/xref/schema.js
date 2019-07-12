@@ -85,6 +85,11 @@ function normalizeXRef(change, error) {
     console.warn('Unhandled xref violation:', error.code)
 }
 
+function normalizeDocRef(change, error) {
+    /* istanbul ignore next */
+    console.warn('Unhandled docref violation:', error.code)
+}
+
 function normalizeLink(change, error) {
     const { code, node, key } = error
 
@@ -116,6 +121,12 @@ export default {
                 case: c => c == null || CASES.includes(c),
             },
             normalize: normalizeXRef,
+        },
+        docref: {
+            data: {
+                document: value => typeof value == 'string',
+            },
+            normalize: normalizeDocRef,
         },
         link: {
             data: {

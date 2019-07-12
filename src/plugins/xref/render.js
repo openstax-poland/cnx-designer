@@ -14,6 +14,9 @@ export default function renderInline(props, editor, next) {
     case 'xref':
         return <Reference {...props} />
 
+    case 'docref':
+        return <a href={node.data.get('document')} {...attributes}>{children}</a>
+
     case 'link':
         return <a href={node.data.get('url')} {...attributes}>{children}</a>
 

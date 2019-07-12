@@ -10,6 +10,8 @@ export const input = cnxml`
 <sup>superscript</sup>,
 <sub>subscript</sub>,
 links to other elements (<link target-id="f1" />),
+elements in other documents (<link target-id="f1" document="d1" />),
+other <link document="d1">documents</link>,
 and <link url="https://example.test">external links</link>.</para>
 `.replace(/\s+/g, ' ')
 
@@ -31,8 +33,12 @@ export const outputContent = <value>
             {", "}
             <sub>subscript</sub>
             , links to other elements (
-            <xref target="f1" case={null}><text/></xref>
-            {"), and "}
+            <xref target="f1" case={null} document={null}><text/></xref>
+            {"), elements in other documents ("}
+            <xref target="f1" case={null} document="d1"><text/></xref>
+            {"), other "}
+            <docref document="d1">documents</docref>
+            {", and "}
             <link url="https://example.test">external links</link>
             .
         </p>
