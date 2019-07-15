@@ -59,12 +59,12 @@ export default class CNXML {
         this.document = new Html({
             rules: [...documentRules, ...DOCUMENT, ...TEXT_CONTENT, DEFAULT],
             defaultBlock: 'invalid',
-            parseHtml: x => x,
+            parseHtml,
         })
         this.glossary = new Html({
             rules: [...glossaryRules, ...GLOSSARY, ...TEXT_CONTENT, DEFAULT],
             defaultBlock: 'invalid',
-            parseHtml: x => x,
+            parseHtml,
         })
     }
 
@@ -97,4 +97,12 @@ function find(children, name) {
     return {
         childNodes: [],
     }
+}
+
+
+function parseHtml(root) {
+    // XXX: slate-html-serializer deserializes root element from childNodes
+    // without using custom deserializers, which makes it impossible to ignore
+    // white space in <content> and <glossary>.
+    return { childNodes: root.children || [] }
 }
