@@ -24,6 +24,11 @@ export function parseXml(xml) {
 
 
 export function writeXml({document, glossary}, options={}) {
+    const {
+        title = '',
+        language = 'en',
+    } = options
+
     let glossaryContent = null
 
     if (glossary) {
@@ -37,9 +42,9 @@ export function writeXml({document, glossary}, options={}) {
         cnxml-version="0.7"
         id="new"
         module-id="new"
-        xmlLang="en"
+        xmlLang={language}
         >
-        <title>TODO: load and preserve titles</title>
+        <title>{title}</title>
         <content>
             {document}
         </content>
@@ -74,6 +79,7 @@ export default class CNXML {
         }
 
         return {
+            language: xml.getAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang'),
             document: this.document.deserialize(find(xml.children, 'content'), options),
             glossary: this.glossary.deserialize(find(xml.children, 'glossary'), options),
         }
