@@ -76,6 +76,103 @@ export class PersistDB {
         return PersistDB.open().then(db => db.openDocument(id))
     }
 
+    /**
+     * Export contents of this database as a JS object.
+     *
+     * Returned object can later be used to import data into a database using
+     * {@link #import}. It contains only plain JS values and can safely be
+     * converted to/from JSON.
+     */
+    async export() {
+        const tx = this.database.transaction(
+            this.database.objectStoreNames, 'readonly')
+
+        const insert = {}
+        const objectStores = {}
+
+        for (const name of this.database.objectStoreNames) {
+            const store = tx.objectStore(name)
+            const indexes = Object.fromEntries(Array.from(store.indexNames)
+                .map(name => {
+                    const index = store.index(name)
+                    return [name, {
+                        name: index.name,
+                        keyPath: index.keyPath,
+                        multiEntry: index.multiEntry,
+                        unique: index.unique,
+                    }]
+                }))
+
+            insert[name] = await promisify(store.getAll())
+
+            objectStores[name] = {
+                indexes,
+                keyPath: store.keyPath,
+                autoIncrement: store.autoIncrement,
+            }
+        }
+
+        return {
+            database: {
+                name: this.database.name,
+                version: this.database.version,
+                objectStores,
+            },
+            remove: Object.fromEntries(
+                Array.from(this.database.objectStoreNames).map(st => [st, {}])),
+            insert,
+        }
+    }
+
+    /**
+     * Import data into this database.
+     */
+    async import(data) {
+        const { database: { name, version }, remove = {}, insert = {} } = data
+
+        if (name !== this.database.name) {
+            throw new Error(
+                `Cannot import data for database ${name} into potentially \
+                incompatible database ${this.database.name}`)
+        }
+        if (version !== this.database.version) {
+            throw new Error(
+                `Imported data is in an incompatible format ${version} (this \
+                database uses ${this.database.version}`)
+        }
+
+        const tx = this.database.transaction(
+            this.database.objectStoreNames, 'readwrite')
+
+        for (const [name, { key, index }] of Object.entries(remove)) {
+            const store = tx.objectStore(name)
+            const keys = key && (key instanceof Array ? key : [key])
+
+            if (index && keys) {
+                for (const key of keys) {
+                    await iterate(store.index(index), key, async cursor => {
+                        cursor.delete()
+                        cursor.continue()
+                    })
+                }
+            } else if (keys) {
+                for (const key of keys) {
+                    await store.delete(key)
+                }
+            } else {
+                await store.clear()
+            }
+        }
+
+        for (const [name, values] of Object.entries(insert)) {
+            const store = tx.objectStore(name)
+
+            for (const val of values) {
+                await promisify(store.add(val))
+            }
+        }
+    }
+
     constructor(db) {
         this.database = db
     }
