@@ -216,7 +216,13 @@ export class DocumentDB {
 
         return new Seq(ops)
             .map(op => Operation.fromJSON(op.change))
-            .reduce((value, op) => op.apply(value), Value.fromJSON(value.content))
+            .reduce((value, op) => {
+                try {
+                    return op.apply(value)
+                } catch (ex) {
+                    throw new RestoreError(ex, value)
+                }
+            }, Value.fromJSON(value.content))
     }
 
     /**
@@ -236,6 +242,15 @@ export class DocumentDB {
             promisify(states.delete(this.id)),
             promisify(contents.delete(this.id)),
         ])
+    }
+}
+
+export class RestoreError extends Error {
+    constructor(cause, value) {
+        super(`Cannot restore: ${cause.message}`)
+
+        this.cause = cause
+        this.value = value
     }
 }
 
