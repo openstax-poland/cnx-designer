@@ -193,6 +193,7 @@ export class PersistDB {
         const index = tx.objectStore('changes').index('document')
         const count = await promisify(index.count(id))
         document.dirty = count > 0
+        document.version = data.version
 
         return document
     }
@@ -246,6 +247,7 @@ export class DocumentDB {
         this.database = db
         this.id = id
         this.dirty = false
+        this.version = null
     }
 
     /**
@@ -277,6 +279,8 @@ export class DocumentDB {
                 content: content,
             }),
         ].map(promisify))
+
+        this.version = version
     }
 
     /**
