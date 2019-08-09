@@ -337,6 +337,8 @@ export class DocumentDB {
             promisify(states.delete(this.id)),
             promisify(contents.delete(this.id)),
         ])
+
+        this.dirty = false
     }
 }
 
