@@ -22,6 +22,8 @@ export default global.h = createHyperscript({
         },
         li: 'list_item',
         media: 'media',
+        mediaalt: 'media_alt',
+        mediatext: 'media_text',
         note: {
             type: 'admonition',
             data: { type: 'note' },

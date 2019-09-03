@@ -156,17 +156,64 @@ export const LIST_ITEM = block('item', de_list_item, 'list_item', 'item')
 /**
  * Process data for media nodes.
  */
-function media(el, next) {
+function de_media(el, next) {
+    const alt = el.getAttribute('alt')
+    const nodes = next(Array.from(el.children))
+
     return {
         type: 'media',
         data: {
-            alt: el.getAttribute('alt'),
+            alt,
         },
-        nodes: next(Array.from(el.children)),
+        nodes,
     }
 }
 
-export const MEDIA = block('media', media, 'media', 'media')
+/**
+ * Serializer for media.
+ */
+function se_media(obj, children) {
+    const mediaAlt = obj.nodes.find(c => c.type === 'media_alt')
+
+    return <media alt={mediaAlt.text}>
+        {children}
+    </media>
+}
+
+export const MEDIA = block('media', de_media, 'media', se_media)
+
+/**
+ * Process data for media_alt nodes.
+ */
+function de_media_alt(el, next) {
+    if (el.className === 'media-alt') {
+        return {
+            object: 'block',
+            type: 'media_alt',
+            nodes: next(Array.from(el.children)),
+        }
+    }
+    return
+}
+
+/**
+ * Serializer for media_alt.
+ *
+ * Text from media_alt will always be saved in media alt attribute.
+ * If it can't be properly serialized, for ex. because of suggestions inside of it
+ * then additional div.media-alt will be added to the media block.
+ */
+function se_media_alt(obj, children) {
+    if (obj.type === 'media_alt') {
+        if (obj.nodes.some(n => n.object !== 'text')) {
+            return <div class="media-alt">{children}</div>
+        }
+        return null
+    }
+    return
+}
+
+export const MEDIA_ALT = block('div', de_media_alt, 'media_alt', se_media_alt)
 
 export const PARA = block('para', text('paragraph'), 'paragraph', 'para')
 
@@ -191,6 +238,7 @@ export const DOCUMENT = [
     LIST,
     LIST_ITEM,
     MEDIA,
+    MEDIA_ALT,
     PARA,
     PROBLEM,
     QUOTE,

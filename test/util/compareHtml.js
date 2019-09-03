@@ -113,6 +113,8 @@ const BLOCK_NODES = [
     'figure',
     'list',
     'media',
+    'media_alt',
+    'media_text',
     'problem',
     'section',
     'seealso',

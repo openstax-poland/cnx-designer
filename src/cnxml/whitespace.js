@@ -76,7 +76,7 @@ export function normalizeWhiteSpace(nodes) {
  */
 function adjustWS(node) {
     if (!(node instanceof Array)) {
-        if (node.object === 'text' && node.marks.length > 0) {
+        if (node.object === 'text' && node.marks && node.marks.length > 0) {
             const m = node.text.match(/^(\s*)(.+?)(\s*)$/su)
             node.text = m[2]
             return [m[1], m[3]]

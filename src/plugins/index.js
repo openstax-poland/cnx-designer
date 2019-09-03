@@ -75,6 +75,7 @@ export function TextContent(options={}) {
  *                                            and document
  * @param {string[]|null} options.marks List of additional mark types allowed
  *                                      in text content.
+ * @param {string[]} options.media options for media plugin.
  * @param {object} options.text options for `TextContent`
  * @param {object} options.list options for `slate-edit-list`
  */
@@ -130,7 +131,7 @@ export function Document(options={}) {
         Exercise({ content }),
         Figure(),
         List(list),
-        Media(),
+        Media({ ...options.media }),
         Quotation({ content }),
         Section({ content: document_content }),
         Title({ marks }),
