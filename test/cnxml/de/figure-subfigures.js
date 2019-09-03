@@ -25,12 +25,14 @@ export const outputContent = <value>
             <figure key="f1-1" class={List()}>
                 <media alt="First subfigure's content">
                     <img src="f1.png"><text/></img>
+                    <mediaalt>First subfigure's content</mediaalt>
                 </media>
                 <figcaption>First subfigure</figcaption>
             </figure>
             <figure key="f1-2" class={List()}>
                 <media alt="Second subfigure's content">
                     <img src="f2.png"><text/></img>
+                    <mediaalt>Second subfigure's content</mediaalt>
                 </media>
             </figure>
             <figcaption>Two subfigures</figcaption>

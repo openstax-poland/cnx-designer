@@ -4,14 +4,16 @@ export const inputContent = <value>
     <document>
         <figure key="f1">
             <figure key="f1-1">
-                <media alt="First subfigure's content">
+                <media>
                     <img src="f1.png"><text/></img>
+                    <mediaalt>First subfigure's content</mediaalt>
                 </media>
                 <figcaption>First subfigure</figcaption>
             </figure>
             <figure key="f1-2">
-                <media alt="Second subfigure's content">
+                <media>
                     <img src="f2.png"><text/></img>
+                    <mediaalt>Second subfigure's content</mediaalt>
                 </media>
             </figure>
             <figcaption>Two subfigures</figcaption>

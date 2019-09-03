@@ -7,6 +7,7 @@ export const input = <value>
         <figure>
             <media alt="First picture">
                 <img src="first.png"><text/></img>
+                <mediaalt>First picture</mediaalt>
             </media>
             <figcaption>Cap<cursor/>tion</figcaption>
         </figure>
@@ -18,6 +19,7 @@ export const output = <value>
         <figure>
             <media alt="First picture">
                 <img src="first.png"><text/></img>
+                <mediaalt>First picture</mediaalt>
             </media>
             <figcaption>Cap</figcaption>
         </figure>

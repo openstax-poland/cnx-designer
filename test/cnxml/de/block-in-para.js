@@ -24,6 +24,7 @@ export const outputContent = <value>
         <figure key="f1" class={List()}>
             <media alt="This should not be inline">
                 <img src="f1.png"><text/></img>
+                <mediaalt>This should not be inline</mediaalt>
             </media>
         </figure>
         <p>Even more text</p>
