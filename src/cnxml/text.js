@@ -154,9 +154,32 @@ function se_xref(obj, children) {
 
 export const XREF = inline('link', de_xref, 'xref', se_xref)
 
+/**
+ * Process data for footnotes.
+ */
+function de_footnote(el) {
+    const id = el.getAttribute('id')
+
+    return {
+        object: 'inline',
+        type: 'footnote',
+        key: id,
+    }
+}
+
+/**
+ * Serializer for footnotes.
+ */
+function se_footnote(obj, children) {
+    return <footnote id={obj.key}>{children}</footnote>
+}
+
+export const FOOTNOTE = inline('footnote', de_footnote, 'footnote', se_footnote)
+
 export const TEXT_CONTENT = [
     DOCUMENT_REFERENCE,
     EMPHASIS,
+    FOOTNOTE,
     LINK,
     STRONG,
     SUBSCRIPT,
