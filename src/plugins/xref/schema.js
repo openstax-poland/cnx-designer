@@ -127,6 +127,7 @@ export default {
                 document: value => typeof value == 'string',
             },
             normalize: normalizeDocRef,
+            text: s => s.length,
         },
         link: {
             data: {
