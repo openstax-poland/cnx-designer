@@ -9,11 +9,11 @@ export const inputContent = <value>
             {'\n'}
             third line
         </code>
-        <p>Some <codeinline>code</codeinline> text</p>
+        <p>Some <codeinline lang="PHP">code</codeinline> text</p>
     </document>
 </value>
 
 export const output = cnxml`
 <code id="n1" display="block">Code\nmore code\nthird line</code>
-<para>Some <code>code</code> text</para>
+<para>Some <code lang="PHP">code</code> text</para>
 `

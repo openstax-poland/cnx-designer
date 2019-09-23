@@ -1,13 +1,13 @@
 /** @jsx h */
 
 export const input = cnxml`
-<code id="n1" display="block">Code\nmore code\nthird line</code>
+<code id="n1" display="block" lang="PHP">Code\nmore code\nthird line</code>
 <para>Some <code>code</code> text</para>
 `
 
 export const outputContent = <value>
     <document>
-        <code key="n1">
+        <code key="n1" lang="PHP">
             Code
             {'\n'}
             more code

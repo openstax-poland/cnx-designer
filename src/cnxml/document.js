@@ -51,11 +51,15 @@ export const FIGURE_CAPTION = block('caption', de_figcaption, 'figure_caption', 
  */
 function de_code(el, next) {
     const display = el.getAttribute('display') || 'inline'
+    const lang = el.getAttribute('lang')
 
     return {
         object: display === 'block' ? 'block' : 'inline',
         type: 'code',
         nodes: next(el.childNodes),
+        data: {
+            lang,
+        },
     }
 }
 
@@ -68,6 +72,10 @@ function se_code(obj, children) {
     if (obj.object === 'block') {
         attrs.display = 'block'
         attrs.id = obj.key
+    }
+
+    if (obj.data.has('lang')) {
+        attrs.lang = obj.data.get('lang')
     }
 
     return <code {...attrs}>

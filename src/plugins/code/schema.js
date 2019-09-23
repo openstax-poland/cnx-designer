@@ -36,6 +36,9 @@ export default function schema(options) {
         blocks: {
             code: {
                 nodes: [{ match: content }],
+                data: {
+                    lang: l => l === undefined || typeof l === 'string',
+                },
                 normalize: normalizeCodeBlock,
             }
         },
@@ -43,6 +46,9 @@ export default function schema(options) {
             code: {
                 marks: [],
                 nodes: [{ match: content }],
+                data: {
+                    lang: l => l === undefined || typeof l === 'string',
+                },
                 normalize: normalizeCodeInline,
                 text: t => t.length > 0,
             }
