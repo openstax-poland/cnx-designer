@@ -19,7 +19,9 @@ export const inputContent = <value>
             <sub>subscript</sub>
             , links to other elements (
             <xref target="f1"><text/></xref>
-            {"), and "}
+            {"), "}
+            <footnote key="footnote-id">footnotes</footnote>
+            {", and "}
             <link url="https://example.test">external links</link>
             .
         </p>
@@ -36,5 +38,6 @@ export const output = cnxml`
 <sup>superscript</sup>,
 <sub>subscript</sub>,
 links to other elements (<link target-id="f1" />),
+<footnote id="footnote-id">footnotes</footnote>,
 and <link url="https://example.test">external links</link>.</para>
 `.replace(/\s+/g, ' ')

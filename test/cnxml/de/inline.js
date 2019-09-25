@@ -12,6 +12,7 @@ export const input = cnxml`
 links to other elements (<link target-id="f1" />),
 elements in other documents (<link target-id="f1" document="d1" />),
 other <link document="d1">documents</link>,
+<footnote id="footnote-id">footnotes</footnote>,
 and <link url="https://example.test">external links</link>.</para>
 `.replace(/\s+/g, ' ')
 
@@ -38,6 +39,8 @@ export const outputContent = <value>
             <xref target="f1" case={null} document="d1"><text/></xref>
             {"), other "}
             <docref document="d1">documents</docref>
+            {", "}
+            <footnote key="footnote-id">footnotes</footnote>
             {", and "}
             <link url="https://example.test">external links</link>
             .

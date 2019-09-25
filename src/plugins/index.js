@@ -7,6 +7,7 @@ import Classes from './classes'
 import Definition from './definition'
 import Exercise from './exercise'
 import Figure from './figure'
+import Footnote from './footnote'
 import GlossaryDocument from './glossary'
 import List from './list'
 import Media from './media'
@@ -27,6 +28,7 @@ export {
     Definition,
     Exercise,
     Figure,
+    Footnote,
     List,
     Media,
     Quotation,
@@ -44,6 +46,7 @@ export {
  *                                      in text content.
  * @param {object?} options.code options for `Code`
  * @param {object?} options.term options for `Term`
+ * @param {object?} options.footnote options for `Footnote`
  */
 export function TextContent(options={}) {
     const marks = [
@@ -57,6 +60,7 @@ export function TextContent(options={}) {
 
     return [
         Code(options.code),
+        Footnote({ marks, ...options.footnote }),
         Term({ marks, ...options.term }),
         Text({ marks }),
         XReference(),
