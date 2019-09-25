@@ -119,6 +119,7 @@ const BLOCK_NODES = [
     'figure',
     'list',
     'media',
+    'preformat',
     'problem',
     'section',
     'seealso',
