@@ -16,6 +16,7 @@ export const outputContent = <value>
         <figure key="f1" class={List()}>
             <media alt="Figure content">
                 <img src="f1.png"><text/></img>
+                <mediaalt>Figure content</mediaalt>
             </media>
             <figcaption>Figure caption</figcaption>
         </figure>

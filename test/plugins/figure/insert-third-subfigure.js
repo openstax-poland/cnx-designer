@@ -12,12 +12,14 @@ export const input = <value>
             <figure>
                 <media alt="First picture">
                     <img src="first.png"><text/></img>
+                    <mediaalt>First picture</mediaalt>
                 </media>
                 <figcaption><cursor/>Caption</figcaption>
             </figure>
             <figure>
                 <media alt="Second picture">
                     <img src="second.png"><text/></img>
+                    <mediaalt>Second picture</mediaalt>
                 </media>
             </figure>
         </figure>
@@ -30,17 +32,20 @@ export const output = <value>
             <figure>
                 <media alt="First picture">
                     <img src="first.png"><text/></img>
+                    <mediaalt>First picture</mediaalt>
                 </media>
                 <figcaption><cursor/>Caption</figcaption>
             </figure>
             <figure>
                 <media alt="Second picture">
                     <img src="second.png"><text/></img>
+                    <mediaalt>Second picture</mediaalt>
                 </media>
             </figure>
             <figure>
                 <media alt="Third picture">
                     <img src="third.png"><text/></img>
+                    <mediaalt>Third picture</mediaalt>
                 </media>
             </figure>
         </figure>

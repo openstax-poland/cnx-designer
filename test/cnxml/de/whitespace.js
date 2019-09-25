@@ -45,6 +45,7 @@ export const outputContent = <value>
         <figure class={List()}>
             <media alt="Alt">
                 <img src="example.png"><text/></img>
+                <mediaalt>Alt</mediaalt>
             </media>
             <figcaption>excessive white space</figcaption>
         </figure>

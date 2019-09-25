@@ -27,6 +27,7 @@ export const input = <value>
         <figure key="figure-1">
             <media>
                 <img src="first.png"><text/></img>
+                <mediaalt><text/></mediaalt>
             </media>
             <figcaption key="first">Simple figure</figcaption>
         </figure>
@@ -34,12 +35,14 @@ export const input = <value>
             <figure key="figure-3">
                 <media>
                     <img src="second.png"><text/></img>
+                    <mediaalt><text/></mediaalt>
                 </media>
                 <figcaption key="second">Nested figure</figcaption>
             </figure>
             <figure>
                 <media>
                     <img src="third.png"><text/></img>
+                    <mediaalt><text/></mediaalt>
                 </media>
             </figure>
             <figcaption key="third">Compound figure</figcaption>

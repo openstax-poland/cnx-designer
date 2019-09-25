@@ -18,6 +18,7 @@ export const output = <value>
         <figure>
             <media alt="First picture">
                 <img src="first.png"><text><cursor/></text></img>
+                <mediaalt>First picture</mediaalt>
             </media>
         </figure>
     </document>

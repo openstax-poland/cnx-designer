@@ -108,6 +108,7 @@ const BLOCK_NODES = [
     'commentary',
     'content',
     'definition',
+    'div',
     'example',
     'exercise',
     'figure',

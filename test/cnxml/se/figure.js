@@ -3,8 +3,9 @@
 export const inputContent = <value>
     <document>
         <figure key="f1">
-            <media alt="Figure content">
+            <media>
                 <img src="f1.png"><text/></img>
+                <mediaalt>Figure content</mediaalt>
             </media>
             <figcaption>Figure caption</figcaption>
         </figure>

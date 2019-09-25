@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 
 import Storage from '../../api/storage'
 
-export default function renderBlock({ node, attributes, isFocused }, editor, next) {
+export default function renderBlock({ node, attributes, children, isFocused }, editor, next) {
     switch (node.type) {
     case 'image':
         return <Image
@@ -15,6 +15,11 @@ export default function renderBlock({ node, attributes, isFocused }, editor, nex
             attributes={attributes}
             isFocused={isFocused}
             />
+
+    case 'media_alt':
+        return <div className="media-alt" attributes={attributes}>
+            {children}
+        </div>
 
     default:
         return next()
@@ -25,12 +30,10 @@ class Image extends React.PureComponent {
     render() {
         const { src, attributes, isFocused } = this.props
 
-        // TODO: alt-text
         return <img
             className="image"
             data-selected={isFocused}
             src={this.context.storage.mediaUrl(src)}
-            alt=""
             {...attributes}
             />
     }
