@@ -46,7 +46,6 @@ export {
  *                                      in text content.
  * @param {object?} options.code options for `Code`
  * @param {object?} options.term options for `Term`
- * @param {object?} options.footnote options for `Footnote`
  */
 export function TextContent(options={}) {
     const marks = [
@@ -60,7 +59,7 @@ export function TextContent(options={}) {
 
     return [
         Code(options.code),
-        Footnote({ marks, ...options.footnote }),
+        Footnote({ marks }),
         Term({ marks, ...options.term }),
         Text({ marks }),
         XReference(),

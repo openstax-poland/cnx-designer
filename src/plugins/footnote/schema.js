@@ -19,16 +19,10 @@ function normalizeFootnote(change, error) {
     }
 }
 
-export default function schema({ marks, inlines }) {
+export default function schema({ marks }) {
     return {
         inlines: {
             footnote: {
-                nodes: [{
-                    match: [
-                        ...inlines.map(type => ({ type })),
-                        { object: 'text' },
-                    ],
-                }],
                 marks: marks.map(type => ({ type })),
                 normalize: normalizeFootnote,
                 text: s => s.length,
