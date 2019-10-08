@@ -26,19 +26,21 @@ export default function renderBlock({ node, attributes, children, isFocused }, e
     }
 }
 
-class Image extends React.PureComponent {
-    render() {
-        const { src, attributes, isFocused } = this.props
+function Image({ src, attributes, isFocused }, { storage }) {
+    return <img
+        className="image"
+        data-selected={isFocused}
+        src={storage.mediaUrl(src)}
+        {...attributes}
+        />
+}
 
-        return <img
-            className="image"
-            data-selected={isFocused}
-            src={this.context.storage.mediaUrl(src)}
-            {...attributes}
-            />
-    }
+Image.contextTypes = {
+    storage: PropTypes.instanceOf(Storage),
+}
 
-    static contextTypes = {
-        storage: PropTypes.instanceOf(Storage),
-    }
+Image.propTypes = {
+    src: PropTypes.string.isRequired,
+    attributes: PropTypes.object.isRequired,
+    isFocused: PropTypes.bool.isRequired,
 }

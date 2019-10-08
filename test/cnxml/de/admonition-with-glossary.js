@@ -33,7 +33,7 @@ export const input = `
 export const outputContent = <value>
     <document>
         <note key="n1" type="note" class={List()}>
-            <p>Notes' default type is ‘note’.</p>
+            <p>Notes&apos; default type is ‘note’.</p>
         </note>
         <note key="n2" type="warning" class={List()}>
             <title>This is a title</title>

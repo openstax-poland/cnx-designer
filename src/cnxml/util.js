@@ -129,7 +129,7 @@ export function inline(tagName, de, type, se) {
 }
 
 function makeTest(type) {
-    if (type == null) return _ => false
+    if (type == null) return () => false
 
     if (type instanceof Array) return t => type.includes(t)
 
@@ -269,7 +269,7 @@ export function mixedContent(el, next, type='paragraph') {
     } else {
         const nodes = childNodes.filter(c => {
             // Do not handle text containing only \n and spaces.
-            if (c.object === 'text' && c.text.trim() ===  '') {
+            if (c.object === 'text' && c.text.trim() === '') {
                 return false
             }
             return true
@@ -318,7 +318,6 @@ export function splitBlocks(node) {
     const res = []
 
     let nodes = []
-    let start = 0
 
     for (const child of node.nodes) {
         if (child.object !== 'block') {

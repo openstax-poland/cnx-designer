@@ -2,11 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { List } from 'immutable'
 import { Block, Text } from 'slate'
 
 function normalizeExercise(change, error) {
-    const { code: violation, key, index, node, child } = error
+    const { code: violation, index, node, child } = error
 
     switch (violation) {
     // A child of different type was expected.
@@ -72,6 +71,8 @@ function normalizeExercise(change, error) {
             change.moveNodeByKey(child.key, commentary.key, commentary.nodes.size)
             return
         }
+
+        console.warn('Unhandled exercise violation:', violation)
         break
 
     // Exercise was inserted into an invalid parent.

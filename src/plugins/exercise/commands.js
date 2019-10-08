@@ -21,7 +21,7 @@ export function insertExercise(change) {
 
         // Find the lowest common ancestor of nodes in selected range.
         let parent = document.getClosest(first.key, p1 => {
-            return !!document.getClosest(last.key, p2 => p1 === p2)
+            return Boolean(document.getClosest(last.key, p2 => p1 === p2))
         }) || document
 
 

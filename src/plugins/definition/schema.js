@@ -5,10 +5,10 @@
 import { Text, Block } from 'slate'
 
 function normalizeDefinition(change, error) {
-    const { code, key, index, node, child } = error
+    const { code, index, node, child } = error
 
     switch (code) {
-    case 'first_child_type_invalid':
+    case 'first_child_type_invalid': {
         // Insert missing definition_term
         const term = Block.create({
             type: 'definition_term',
@@ -16,6 +16,7 @@ function normalizeDefinition(change, error) {
         })
         change.insertNodeByKey(node.key, 0, term)
         break
+    }
 
     case 'child_max_invalid':
         // When user press Backspace in front of def_term it will jump into
@@ -76,18 +77,19 @@ function normalizeTerm(change, error) {
 }
 
 function normalizeMeaning(change, error) {
-    const { code, key, node, child } = error
+    const { code, node, child } = error
 
     switch (code) {
     case 'child_type_invalid':
         change.unwrapNodeByKey(child.key)
         break
 
-    case 'parent_type_invalid':
+    case 'parent_type_invalid': {
         // Unwrap content.
         const path = change.value.document.getPath(node.key)
         change.unwrapChildrenByPath(path)
         break
+    }
 
     /* istanbul ignore next */
     default:
@@ -102,7 +104,7 @@ function normalizeExample(change, error) {
 }
 
 function normalizeSeeAlso(change, error) {
-    const { code, key, node, child } = error
+    const { code, node, child } = error
 
     switch (code) {
     case 'child_type_invalid':
@@ -115,11 +117,12 @@ function normalizeSeeAlso(change, error) {
         console.warn('Unhandled definition_seealso child_type_invalid:', child)
         break
 
-    case 'parent_type_invalid':
+    case 'parent_type_invalid': {
         // Unwrap content.
         const path = change.value.document.getPath(node.key)
         change.unwrapChildrenByPath(path)
         break
+    }
 
     /* istanbul ignore next */
     default:

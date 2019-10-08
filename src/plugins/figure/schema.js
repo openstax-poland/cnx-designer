@@ -2,10 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { List } from 'immutable'
-
 function normalizeFigure(change, error) {
-    const { code: violation, key, node, child } = error
+    const { code: violation, child } = error
 
     switch (violation) {
     // Unwrap invalid nodes outside a figure.

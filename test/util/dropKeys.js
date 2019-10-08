@@ -4,13 +4,13 @@ export default function dropKeys(object) {
     case 'block':
     case 'inline':
         return object.withMutations(node => {
-            ;(node.get('key').match(/^\d+$/) ? node.delete('key') : node)
+            (node.get('key').match(/^\d+$/) ? node.delete('key') : node)
                 .update('nodes', nodes => nodes ? nodes.map(dropKeys) : nodes)
         })
 
     case 'text':
         return object.withMutations(node => {
-            ;(node.get('key').match(/^\d+$/) ? node.delete('key') : node)
+            (node.get('key').match(/^\d+$/) ? node.delete('key') : node)
                 .update('leaves', leaves => leaves ? leaves.map(dropKeys) : leaves)
         })
 
@@ -27,9 +27,10 @@ export default function dropKeys(object) {
                 .update('focus', dropKeys)
         })
 
-    case 'point':
+    case 'point': {
         const key = object.get('key')
         return key ? (key.match(/^\d+$/) ? object.delete('key') : object) : object
+    }
 
     case 'value':
         return object.update('document', document => dropKeys(document))

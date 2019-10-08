@@ -67,6 +67,4 @@ function onBackspace(event, change) {
         change.moveToEndOfPreviousBlock()
         return change.moveBackward(firstText.length)
     }
-
-    return
 }

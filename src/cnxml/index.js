@@ -85,7 +85,7 @@ export default class CNXML {
         }
     }
 
-    serialize(documentValue, glossaryValue,  options={}) {
+    serialize(documentValue, glossaryValue, options={}) {
         const document = this.document.serialize(documentValue, { render: false })
         const glossary = glossaryValue ? this.glossary.serialize(glossaryValue, { render: false }) : null
 

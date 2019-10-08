@@ -32,7 +32,7 @@ function iterate(store, ...args) {
 
     return new Promise((resolve, reject) => {
         const req = store.openCursor(...args)
-        req.onerror = () => reject()
+        req.onerror = err => reject(err)
         req.onsuccess = event => {
             const cursor = event.target.result
             if (cursor) {
@@ -61,6 +61,7 @@ export class PersistDB {
 
         const db = await promisify(req)
 
+        /* eslint-disable-next-line require-atomic-updates */
         DATABASE = new PersistDB(db)
 
         return DATABASE
@@ -150,7 +151,7 @@ export class PersistDB {
 
             if (index && keys) {
                 for (const key of keys) {
-                    await iterate(store.index(index), key, async cursor => {
+                    await iterate(store.index(index), key, cursor => {
                         cursor.delete()
                         cursor.continue()
                     })
@@ -260,7 +261,7 @@ export class DocumentDB {
         const changes = tx.objectStore('changes').index('document')
         const contents = tx.objectStore('contents')
 
-        await iterate(changes, this.id, async (cursor, value) => {
+        await iterate(changes, this.id, cursor => {
             cursor.delete()
             cursor.continue()
         })
@@ -330,7 +331,7 @@ export class DocumentDB {
         const contents = tx.objectStore('contents')
 
         await Promise.all([
-            iterate(changes, this.id, async (cursor, value) => {
+            iterate(changes, this.id, cursor => {
                 cursor.delete()
                 cursor.continue()
             }),
@@ -374,10 +375,12 @@ export class DocumentDB {
 //
 //   - content: JS<Value>
 //     Document's contents at the time it was last loaded.
+/* eslint-disable func-names */
 const MIGRATIONS = [
     // A dummy migration to fill index 0. It will never be executed, since
     // database versions start at 1 (0 is the “version” before first migration,
     // when database is created).
+    /* eslint-disable-next-line no-empty-function */
     function() {},
     // 0 → 1
     function(db) {
@@ -394,6 +397,7 @@ const MIGRATIONS = [
         })
     },
 ]
+/* eslint-enable func-names */
 
 function upgrade(event) {
     const { newVersion, oldVersion } = event

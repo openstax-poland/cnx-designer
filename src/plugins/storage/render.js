@@ -18,6 +18,11 @@ class StorageContext extends React.Component {
         storage: PropTypes.instanceOf(Storage),
     }
 
+    static propTypes = {
+        storage: PropTypes.instanceOf(Storage).isRequired,
+        children: PropTypes.node,
+    }
+
     getChildContext() {
         return {
             storage: this.props.storage,
@@ -25,9 +30,7 @@ class StorageContext extends React.Component {
     }
 
     render() {
-        return <React.Fragment>
-            {this.props.children}
-        </React.Fragment>
+        return this.props.children
     }
 }
 

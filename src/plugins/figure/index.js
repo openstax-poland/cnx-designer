@@ -8,6 +8,6 @@ import renderXRef from './xref'
 import * as commands from './commands'
 import * as queries from './queries'
 
-export default function Figure(options) {
+export default function Figure() {
     return { commands, queries, schema, renderBlock, renderXRef }
 }

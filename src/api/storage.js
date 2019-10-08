@@ -3,6 +3,7 @@
 // full license text.
 
 /* istanbul ignore file */
+/* eslint-disable no-unused-vars */
 
 export default class Storage {
     /**

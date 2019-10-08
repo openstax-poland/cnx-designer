@@ -3,13 +3,12 @@
 // full license text.
 
 function normalizeFootnote(change, error) {
-    const { code, child, node } = error
+    const { code, child } = error
 
     switch (code) {
     case 'child_object_invalid':
-        const text = child.getText()
         change.removeNodeByKey(child.key)
-        change.insertText(text)
+        change.insertText(child.getText())
         break
 
     /* istanbul ignore next */

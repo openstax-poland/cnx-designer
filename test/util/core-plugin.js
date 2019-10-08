@@ -7,7 +7,7 @@ export default function CorePlugin() {
     return { onKeyDown }
 }
 
-function onKeyDown(event, editor, next) {
+function onKeyDown(event, editor) {
     const { value } = editor
     const { document, selection } = value
     const hasVoidParent = document.hasVoidParent(selection.start.path, editor)

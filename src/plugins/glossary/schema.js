@@ -3,7 +3,7 @@
 // full license text.
 
 function normalizeDocument(change, error) {
-    const { code, node, child } = error
+    const { code, child } = error
 
     switch (code) {
     // Document is empty.

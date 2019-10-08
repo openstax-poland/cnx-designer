@@ -31,7 +31,7 @@ function normalizeDocument(change, error) {
 }
 
 function normalizeSection(change, error) {
-    const { code, node, child, next, index, key } = error
+    const { code, node, child, next, index } = error
 
     switch (code) {
     case 'child_min_invalid':
@@ -81,12 +81,13 @@ function normalizeSection(change, error) {
         break
 
     // There is a block after section that is not a section itself.
-    case 'next_sibling_type_invalid':
+    case 'next_sibling_type_invalid': {
         // XXX: while we would expect |node| to refer to section it is in fact
         // its parent.
         let parent = node.nodes.get(index)
         change.moveNodeByKey(next.key, parent.key, parent.nodes.size)
         break
+    }
 
     /* istanbul ignore next */
     default:

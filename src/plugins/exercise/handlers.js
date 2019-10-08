@@ -2,8 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Range } from 'slate'
-
 export default function onKeyDown(event, change, next) {
     switch (event.key) {
     case 'Enter':
@@ -43,7 +41,6 @@ function onEnter(event, change) {
     if (atStartOfItem) {
         // ... but since this is the last item we can just unwrap it.
         if (isItemLast) {
-            const parent = value.document.getParent(exercise.key)
             change.unwrapNodeByKey(item.key)
             return true
         }

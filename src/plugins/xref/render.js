@@ -3,8 +3,6 @@
 // full license text.
 
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Map } from 'immutable'
 import { WithCounters } from 'slate-counters'
 
 export default function renderInline(props, editor, next) {
@@ -39,18 +37,19 @@ function Reference({ node, editor, attributes, counters }) {
         text = "(undefined target)"
     }
 
-    const onClick = ev => {
-        ev.preventDefault()
-        ev.stopPropagation()
-
-        const target = document.querySelector(`[data-key="${targetKey}"]`)
-
-        if (target) {
-            target.scrollIntoView()
-        }
-    }
-
-    return <a href={"#" + targetKey} onClick={onClick} {...attributes}>
+    return <a href={"#" + targetKey} onClick={onClickReference} {...attributes} data-target={targetKey}>
         {text}
     </a>
 })
+
+function onClickReference(ev) {
+    ev.preventDefault()
+    ev.stopPropagation()
+
+    const targetKey = ev.target.dataset.target
+    const target = document.querySelector(`[data-key="${targetKey}"]`)
+
+    if (target) {
+        target.scrollIntoView()
+    }
+}

@@ -7,7 +7,7 @@
 const TYPES = ["note", "warning", "tip", "important"]
 
 function normalizeAdmonition(change, error) {
-    const { code, key, node, child } = error
+    const { code, node, child } = error
 
     switch (code) {
     // Admonition type is not valid.
@@ -52,7 +52,7 @@ export default function schema({ title, content }) {
                     type: v => TYPES.includes(v),
                 },
                 nodes: [
-                    { match: { type: 'title' }, min: 0, max: 1 },
+                    { match: { type: title }, min: 0, max: 1 },
                     { match: content_types },
                 ],
                 normalize: normalizeAdmonition,

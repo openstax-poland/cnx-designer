@@ -4,6 +4,7 @@
 
 import React from 'react'
 
+/* eslint-disable react/prop-types */
 export default function renderBlock({ node, children, attributes }, editor, next) {
     if (node.type !== 'section') return next()
 
@@ -11,3 +12,4 @@ export default function renderBlock({ node, children, attributes }, editor, next
         {children}
     </section>
 }
+/* eslint-enable react/prop-types */

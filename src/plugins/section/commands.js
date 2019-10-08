@@ -63,7 +63,7 @@ function lca(root, a, b) {
     if (a === b) return a
 
     return root.getClosest(a.key, p1 => {
-        return !!root.getClosest(b.key, p2 => p1 === p2)
+        return Boolean(root.getClosest(b.key, p2 => p1 === p2))
     }) || root
 }
 

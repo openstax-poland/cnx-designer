@@ -6,6 +6,6 @@ import schema from './schema'
 import renderInline from './render'
 import * as commands from './commands'
 
-export default function XReference(options={}) {
+export default function XReference() {
     return { commands, schema, renderInline }
 }

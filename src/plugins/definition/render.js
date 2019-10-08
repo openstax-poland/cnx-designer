@@ -12,6 +12,7 @@ const TYPES = [
     'definition_seealso',
 ]
 
+/* eslint-disable react/prop-types */
 export default function renderBlock({ node, children, attributes }, editor, next) {
     if (!TYPES.includes(node.type)) return next()
 
@@ -22,3 +23,4 @@ export default function renderBlock({ node, children, attributes }, editor, next
         {children}
     </div>
 }
+/* eslint-enable react/prop-types */

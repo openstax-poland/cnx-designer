@@ -31,8 +31,7 @@ const IGNORED_VALUE_PROPS = [
 export const onChange = db => function onChange(change, next) {
     next()
 
-    const { value, operations } = change
-    const document = value.document.key
+    const { operations } = change
 
     for (const op of operations) {
         if (IGNORED_OPERATIONS.includes(op.type)) continue

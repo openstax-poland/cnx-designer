@@ -6,6 +6,8 @@
  * De/serialization rules for document structure and elements.
  */
 
+/* eslint-disable react/no-unknown-property */
+
 import React from 'react'
 
 import { block, mixed, text, loadClasses, mixedContent, splitBlocks } from './util'
@@ -201,7 +203,6 @@ function de_media_alt(el, next) {
             nodes: next(Array.from(el.children)),
         }
     }
-    return
 }
 
 /**
@@ -218,7 +219,6 @@ function se_media_alt(obj, children) {
         }
         return null
     }
-    return
 }
 
 export const MEDIA_ALT = block('div', de_media_alt, 'media_alt', se_media_alt)

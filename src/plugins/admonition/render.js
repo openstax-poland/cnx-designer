@@ -4,6 +4,7 @@
 
 import React from 'react'
 
+/* eslint-disable react/prop-types */
 export default function renderBlock({ node, children, attributes }, editor, next) {
     if (node.type !== 'admonition') return next()
 
@@ -15,3 +16,4 @@ export default function renderBlock({ node, children, attributes }, editor, next
         {children}
     </div>
 }
+/* eslint-enable react/prop-types */

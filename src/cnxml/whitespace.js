@@ -198,6 +198,11 @@ function replaceWS(node) {
         return
     }
 
+    // no-misleading-character-class warns against using sequences of joining
+    // codepoints as they look like a single character but will be matched
+    // separately. Here this is exactly what we want, so we can safely disable
+    // this lint.
+    /* eslint-disable no-misleading-character-class */
     if (typeof node === 'string') {
         // 1st step
         return node.replace(/\s/gu, replaceWSChar)
@@ -215,6 +220,7 @@ function replaceWS(node) {
             // 6th step
             .replace(/[\s\u180e\u200b\u200c\u200d\u2060]{2,}/g, c => c[0])
     }
+    /* eslint-enable no-misleading-character-class */
 
     switch (node.object) {
     case 'text':
@@ -265,7 +271,7 @@ function collapseWSSequence(seq) {
     let out = ''
 
     for (let i=1 ; i<seq.length ; ++i) {
-        if (seq[i] != seq[start]) {
+        if (seq[i] !== seq[start]) {
             out += seq[start]
             start = i
         }

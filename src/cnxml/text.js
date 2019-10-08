@@ -6,6 +6,8 @@
  * De/serialization rules for text content.
  */
 
+/* eslint-disable react/void-dom-elements-no-children */
+
 import React from 'react'
 
 import { inline } from './util'
@@ -30,7 +32,7 @@ function de_emphasis(el) {
 /**
  * Serializer for CNXML emphasis tag.
  */
-const se_emphasis = type => function(obj, children) {
+const se_emphasis = type => function se_emphasis(obj, children) {
     return <emphasis effect={type}>{children}</emphasis>
 }
 

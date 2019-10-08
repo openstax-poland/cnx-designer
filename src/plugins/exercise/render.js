@@ -12,12 +12,11 @@ const TYPES = [
     'exercise_commentary',
 ]
 
+/* eslint-disable react/prop-types */
 export default function renderBlock(props, editor, next) {
     const { node, children, attributes } = props
 
-    switch (node.type) {
-    case 'exercise':
-    case 'exercise_solution':
+    if (node.type === 'exercise' || node.type === 'exercise_solution') {
         return <Exercise {...props} />
     }
 
@@ -30,6 +29,7 @@ export default function renderBlock(props, editor, next) {
         {children}
     </div>
 }
+/* eslint-enable react/prop-types */
 
 const Exercise = WithCounters(({ node }) => node.key)(function Exercise({
     node, children, attributes, counters,
