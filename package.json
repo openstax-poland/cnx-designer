@@ -24,9 +24,13 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
+    "babel-eslint": "^10.0.3",
     "chai": "^4.2.0",
     "chai-immutable": "^2.0.0",
     "cross-env": "^5.2.0",
+    "eslint": "^6.5.1",
+    "eslint-config-openstax-poland": "https://github.com/openstax-poland/eslint-config-openstax-poland.git",
+    "eslint-plugin-react": "^7.16.0",
     "jsdom": "^15.0.0",
     "mocha": "^6.0.0",
     "nyc": "^14.1.1",
@@ -50,6 +54,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=build rollup -c",
     "build:style": "stylus -o dist/index.css -d -m src/index.styl",
+    "lint": "eslint src/ test/",
     "prepare": "cross-env NODE_ENV=build rollup -c && stylus -o dist/index.css -d -m src/index.styl",
     "test": "mocha",
     "coverage": "nyc --reporter text --reporter html mocha"

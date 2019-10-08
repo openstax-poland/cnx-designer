@@ -1,0 +1,12 @@
+env:
+  node: true
+  mocha: true
+
+globals:
+  cnxml: readonly
+  h: readonly
+  should: readonly
+
+rules:
+  react/no-unknown-property: off
+  react/void-dom-elements-no-children: off
