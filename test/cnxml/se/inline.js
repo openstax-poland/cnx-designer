@@ -1,5 +1,7 @@
 /** @jsx h */
 
+/* eslint-disable react/jsx-curly-brace-presence, max-len */
+
 export const inputContent = <value>
     <document>
         <p>

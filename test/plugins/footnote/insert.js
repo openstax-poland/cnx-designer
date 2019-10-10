@@ -2,7 +2,7 @@
 
 export default editor => editor.insertInline({
     type: 'footnote',
-    nodes: [{object: 'text', text: ' '}],
+    nodes: [{ object: 'text', text: ' ' }],
 })
 
 export const input = <value>

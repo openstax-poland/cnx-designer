@@ -15,7 +15,7 @@ export default function onKeyDown(event, change, next) {
 function onEnter(event, change) {
     // Pressing shift should disable any special key handling
     if (event.shiftKey) {
-        return
+        return false
     }
 
     const { value } = change
@@ -27,7 +27,7 @@ function onEnter(event, change) {
     const isEmpty = selection.isCollapsed
         && selection.start.isAtStartOfNode(block)
         && selection.end.isAtEndOfNode(block)
-    if (!isEmpty && selection.start.offset > 0) return
+    if (!isEmpty && selection.start.offset > 0) return false
 
     // ... in an exercise.
     const exercise = change.getActiveExercise(change.value)

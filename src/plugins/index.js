@@ -49,7 +49,7 @@ export {
  */
 export function TextContent(options={}) {
     const marks = [
-        ...(options.marks || []),
+        ...options.marks || [],
         'strong',
         'emphasis',
         'underline',
@@ -88,7 +88,7 @@ export function Document(options={}) {
     } = options
 
     const content = [
-        ...(options.content || []),
+        ...options.content || [],
         'paragraph',
         'quotation',
         'ul_list',
@@ -98,7 +98,7 @@ export function Document(options={}) {
     ]
 
     const document_content = [
-        ...(options.document_content || []),
+        ...options.document_content || [],
         ...content,
         'admonition',
         'exercise',
@@ -107,7 +107,7 @@ export function Document(options={}) {
     ]
 
     const marks = [
-        ...(options.marks || []),
+        ...options.marks || [],
         'strong',
         'emphasis',
         'underline',
@@ -162,7 +162,7 @@ export function Glossary(options={}) {
     } = options
 
     const content = [
-        ...(options.content || []),
+        ...options.content || [],
         'paragraph',
         'quotation',
         'ul_list',
@@ -171,7 +171,7 @@ export function Glossary(options={}) {
     ]
 
     const glossary_content = [
-        ...(options.document_content || []),
+        ...options.document_content || [],
         'definition',
     ]
 

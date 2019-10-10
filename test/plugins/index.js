@@ -18,11 +18,13 @@ const testPlugin = plugins => ({
     editor.command(change)
 
     if (output) {
-        dropKeys(editor.value.document).should.equal(dropKeys(output.document))
+        dropKeys(editor.value.document)
+            .should.equal(dropKeys(output.document))
     }
 
     if (output && checkSelection) {
-        dropKeys(editor.value.selection).should.equal(dropKeys(output.selection))
+        dropKeys(editor.value.selection)
+            .should.equal(dropKeys(output.selection))
     }
 }
 

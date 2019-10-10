@@ -62,9 +62,8 @@ export function insertSection(change, titleText) {
 function lca(root, a, b) {
     if (a === b) return a
 
-    return root.getClosest(a.key, p1 => {
-        return Boolean(root.getClosest(b.key, p2 => p1 === p2))
-    }) || root
+    return root.getClosest(
+        a.key, p1 => Boolean(root.getClosest(b.key, p2 => p1 === p2))) || root
 }
 
 /**

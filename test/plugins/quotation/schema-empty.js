@@ -5,8 +5,7 @@ export default editor => editor.normalize()
 export const input = <value>
     <document>
         <p>Paragraph and an empty quote</p>
-        <quote>
-        </quote>
+        <quote/>
     </document>
 </value>
 

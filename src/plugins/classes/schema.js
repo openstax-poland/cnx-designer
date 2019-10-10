@@ -10,8 +10,11 @@ function normalizeClasses(change, error) {
     }
 
 
-    const newClasses = List(node.data.get('class').join(' ').trim().split(/\s+/))
-    let newData = node.data.set('class', newClasses)
+    const newClasses = List(node.data.get('class')
+        .join(' ')
+        .trim()
+        .split(/\s+/))
+    const newData = node.data.set('class', newClasses)
     change.setNodeByKey(node.key, { data: newData })
 }
 

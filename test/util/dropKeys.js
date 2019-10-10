@@ -11,7 +11,8 @@ export default function dropKeys(object) {
     case 'text':
         return object.withMutations(node => {
             (node.get('key').match(/^\d+$/) ? node.delete('key') : node)
-                .update('leaves', leaves => leaves ? leaves.map(dropKeys) : leaves)
+                .update(
+                    'leaves', leaves => leaves ? leaves.map(dropKeys) : leaves)
         })
 
     case 'leaf':
@@ -29,7 +30,9 @@ export default function dropKeys(object) {
 
     case 'point': {
         const key = object.get('key')
-        return key ? (key.match(/^\d+$/) ? object.delete('key') : object) : object
+        return key && key.match(/^\d+$/)
+            ? object.delete('key')
+            : object
     }
 
     case 'value':

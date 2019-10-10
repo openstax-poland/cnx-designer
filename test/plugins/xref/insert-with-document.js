@@ -1,5 +1,7 @@
 /** @jsx h */
 
+/* eslint-disable max-len */
+
 export default editor => editor.insertXref('target', 'document')
 
 export const input = <value>

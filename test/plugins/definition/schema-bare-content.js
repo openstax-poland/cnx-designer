@@ -18,4 +18,4 @@ export const input = <value>
 </value>
 
 // Glossary can contains only definitions
-export const output = <value><document></document></value>
+export const output = <value><document/></value>

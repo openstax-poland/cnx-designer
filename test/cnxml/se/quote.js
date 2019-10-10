@@ -12,7 +12,7 @@ export const inputContent = <value>
             <p>Quotes can also contain nested quotes</p>
             <quote>
                 <p>Like so</p>
-        </quote>
+            </quote>
         </quote>
     </document>
 </value>

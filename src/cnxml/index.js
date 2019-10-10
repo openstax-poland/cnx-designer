@@ -12,7 +12,7 @@ import { DOCUMENT } from './document'
 import { GLOSSARY } from './glossary'
 
 export function parseXml(xml) {
-    const parsed = new DOMParser().parseFromString(xml, 'application/xml');
+    const parsed = new DOMParser().parseFromString(xml, 'application/xml')
     const error = parsed.getElementsByTagName('parsererror')
 
     if (error.length > 0) {
@@ -23,7 +23,7 @@ export function parseXml(xml) {
 }
 
 
-export function writeXml({document, glossary}, options={}) {
+export function writeXml({ document, glossary }, options={}) {
     const {
         title = '',
         language = 'en',
@@ -79,17 +79,23 @@ export default class CNXML {
         }
 
         return {
-            language: xml.getAttributeNS('http://www.w3.org/XML/1998/namespace', 'lang'),
-            document: this.document.deserialize(find(xml.children, 'content'), options),
-            glossary: this.glossary.deserialize(find(xml.children, 'glossary'), options),
+            language: xml.getAttributeNS(
+                'http://www.w3.org/XML/1998/namespace', 'lang'),
+            document: this.document.deserialize(
+                find(xml.children, 'content'), options),
+            glossary: this.glossary.deserialize(
+                find(xml.children, 'glossary'), options),
         }
     }
 
     serialize(documentValue, glossaryValue, options={}) {
-        const document = this.document.serialize(documentValue, { render: false })
-        const glossary = glossaryValue ? this.glossary.serialize(glossaryValue, { render: false }) : null
+        const document = this.document.serialize(
+            documentValue, { render: false })
+        const glossary = glossaryValue
+            ? this.glossary.serialize(glossaryValue, { render: false })
+            : null
 
-        return writeXml({document, glossary}, options)
+        return writeXml({ document, glossary }, options)
     }
 }
 

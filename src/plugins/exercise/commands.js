@@ -20,22 +20,24 @@ export function insertExercise(change) {
         let last = value.endBlock
 
         // Find the lowest common ancestor of nodes in selected range.
-        let parent = document.getClosest(first.key, p1 => {
-            return Boolean(document.getClosest(last.key, p2 => p1 === p2))
-        }) || document
-
+        let parent = document.getClosest(
+            first.key,
+            p1 => Boolean(document.getClosest(last.key, p2 => p1 === p2)),
+        ) || document
 
         // Since Slate's wrapBlock* functions don't split blocks when selection
         // is nested within them, we have to do it ourselves.
 
-        // Adjust selection such that it begins on a direct descendant of |parent|.
+        // Adjust selection such that it begins on a direct descendant of
+        // |parent|.
         for (;;) {
             const pp = change.value.document.getParent(first.key)
             if (pp.key === parent.key) break
 
-            // If |first| is the first child of its parent (|pp|) then we can just
-            // move selection onto |pp|, otherwise we need to split |pp|, as we'll
-            // only be moving some of its contents into the new exercise.
+            // If |first| is the first child of its parent (|pp|) then we can
+            // just move selection onto |pp|, otherwise we need to split |pp|,
+            // as we'll only be moving some of its contents into the new
+            // exercise.
             const index = pp.nodes.indexOf(first)
             if (index === 0) {
                 first = pp
@@ -45,7 +47,8 @@ export function insertExercise(change) {
             }
         }
 
-        // Adjust selection such that it ends on a direct descendant of |parent|.
+        // Adjust selection such that it ends on a direct descendant of
+        // |parent|.
         for (;;) {
             const pp = change.value.document.getParent(last.key)
             if (pp.key === parent.key) break
@@ -65,11 +68,11 @@ export function insertExercise(change) {
             ? change.value.document
             : change.value.document.getDescendant(parent.key)
 
-        // When using `change.wrapBlock` slate will place blocks according to its
-        // own rules, which don't take into account legal parent-child relations,
-        // which may cause exercise to be created as a child of e.g. a list,
-        // and then promptly removed by normalizations. To avoid this we only use
-        // `change.wrapBlock` when we're sure output will be OK.
+        // When using `change.wrapBlock` slate will place blocks according to
+        // its own rules, which don't take into account legal parent-child
+        // relations, which may cause exercise to be created as a child of e.g.
+        // a list, and then promptly removed by normalizations. To avoid this we
+        // only use `change.wrapBlock` when we're sure output will be OK.
         if (EXERCISE_PARENT.includes(parent.type || parent.object)) {
             change.wrapBlock('exercise')
             change.wrapBlock('exercise_problem')
@@ -107,8 +110,8 @@ export function insertExercise(change) {
         const end = parent.nodes.indexOf(last) + 1
         const nodes = parent.nodes.slice(start, end)
 
-        // Note that nodes in |nodes| are still children of |parent|, so we can't
-        // pass them as to `Block.create`, we'll have to move them.
+        // Note that nodes in |nodes| are still children of |parent|, so we
+        // can't pass them as to `Block.create`, we'll have to move them.
         const problem = Block.create({ type: 'exercise_problem' })
         const exercise = Block.create({ type: 'exercise', nodes: [problem] })
         change.insertNodeByKey(parent.key, start, exercise)
@@ -164,7 +167,8 @@ export function insertSolution(change) {
 export function insertCommentary(change) {
     const exercise = change.getActiveExercise(change.value)
 
-    if (exercise === null || exercise.nodes.last().type === 'exercise_commentary') {
+    if (exercise === null
+    || exercise.nodes.last().type === 'exercise_commentary') {
         return
     }
 

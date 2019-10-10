@@ -1,5 +1,7 @@
 /** @jsx h */
 
+/* eslint-disable react/jsx-curly-brace-presence, max-len */
+
 export const input = cnxml`
 <para>Paragraphs can contain: text,
 <term>terms</term>,

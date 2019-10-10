@@ -5,9 +5,8 @@ import '../util/cnxml'
 import compareHtml from '../util/compareHtml'
 import dropKeys from '../util/dropKeys'
 import fixtures from '../util/fixtures'
-import { CONTENT_PLUGINS, GLOSSARY_PLUGINS } from '../util/plugins'
-
 import CNXML from '../../src/cnxml'
+import { CONTENT_PLUGINS, GLOSSARY_PLUGINS } from '../util/plugins'
 
 // While JSDOM recommends against doing this, we have no other way of passing
 // DOMParser and XMLSerializer.
@@ -20,7 +19,7 @@ global.DOMParser = dom.window.DOMParser
 global.XMLSerializer = dom.window.XMLSerializer
 global.Node = dom.window.Node
 
-const serializer = new CNXML({documentRules: [], glossaryRules: []})
+const serializer = new CNXML({ documentRules: [], glossaryRules: [] })
 
 function testDeserialization({ input, outputContent, outputGlossary }) {
     const { document, glossary } = serializer.deserialize(input)
@@ -34,11 +33,13 @@ function testDeserialization({ input, outputContent, outputGlossary }) {
     })
 
     if (outputContent) {
-        dropKeys(editorContent.value.document).should.equal(dropKeys(outputContent.document))
+        dropKeys(editorContent.value.document)
+            .should.equal(dropKeys(outputContent.document))
     }
 
     if (outputGlossary) {
-        dropKeys(editorGlossary.value.document).should.equal(dropKeys(outputGlossary.document))
+        dropKeys(editorGlossary.value.document)
+            .should.equal(dropKeys(outputGlossary.document))
     }
 }
 
@@ -46,8 +47,10 @@ function testSerialization({ inputContent, inputGlossary, output }) {
     const contentValue = inputContent ? dropKeys(inputContent) : null
     const glossaryValue = inputGlossary ? dropKeys(inputGlossary) : null
 
-    const serialized = serializer.serialize(contentValue, glossaryValue, { toString: false })
-    const referenceXml = new DOMParser().parseFromString(output, 'application/xml')
+    const serialized = serializer.serialize(
+        contentValue, glossaryValue, { toString: false })
+    const referenceXml = new DOMParser().parseFromString(
+        output, 'application/xml')
 
     const error = referenceXml.getElementsByTagName('parsererror')
     if (error[0]) {

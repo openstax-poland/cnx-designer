@@ -1,6 +1,7 @@
 /** @jsx h */
 
-export default editor => editor.setNodeByKey(editor.value.startBlock.key, { type: 'title' })
+export default editor => editor.setNodeByKey(
+    editor.value.startBlock.key, { type: 'title' })
 
 export const input = <value>
     <document>

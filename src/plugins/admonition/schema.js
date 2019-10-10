@@ -26,8 +26,9 @@ function normalizeAdmonition(change, error) {
         break
 
     case 'child_type_invalid':
-        // Sometimes title is not first element. We want to change it to paragraph,
-        // because moving it to 0 index could be confusing for translators.
+        // Sometimes title is not first element. We want to change it to
+        // paragraph, because moving it to 0 index could be confusing for
+        // translators.
         if (child.type === 'title') {
             change.setNodeByKey(child.key, 'paragraph')
             return
@@ -56,7 +57,7 @@ export default function schema({ title, content }) {
                     { match: content_types },
                 ],
                 normalize: normalizeAdmonition,
-            }
-        }
+            },
+        },
     }
 }

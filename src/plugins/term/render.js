@@ -5,7 +5,11 @@
 import React from 'react'
 
 /* eslint-disable react/prop-types */
-export default function renderInline({ node, children, attributes }, editor, next) {
+export default function renderInline(
+    { node, children, attributes },
+    editor,
+    next,
+) {
     if (node.type !== 'term') return next()
 
     return <span className="term" {...attributes}>{children}</span>

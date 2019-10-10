@@ -19,8 +19,8 @@ class StorageContext extends React.Component {
     }
 
     static propTypes = {
-        storage: PropTypes.instanceOf(Storage).isRequired,
         children: PropTypes.node,
+        storage: PropTypes.instanceOf(Storage).isRequired,
     }
 
     getChildContext() {

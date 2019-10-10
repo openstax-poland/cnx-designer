@@ -3,4 +3,4 @@ env:
 
 parser: babel-eslint
 
-extends: openstax-poland/react/base
+extends: openstax-poland/react/style

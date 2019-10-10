@@ -15,7 +15,7 @@ export default function onKeyDown(event, change, next) {
 function onEnter(event, change) {
     // Shift disables special handling
     if (event.shiftKey) {
-        return
+        return false
     }
 
     const { value } = change
@@ -27,12 +27,12 @@ function onEnter(event, change) {
         && selection.start.isAtStartOfNode(startBlock)
         && selection.end.isAtStartOfNode(startBlock)
     if (!isEmpty && selection.start.offset > 0) {
-        return
+        return false
     }
 
     // ... in an admonition
     const admonition = change.getActiveAdmonition(value)
-    if (!admonition) return
+    if (!admonition) return false
 
     return change.unwrapBlock('admonition')
 }

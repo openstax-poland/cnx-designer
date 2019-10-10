@@ -13,7 +13,11 @@ const TYPES = [
 ]
 
 /* eslint-disable react/prop-types */
-export default function renderBlock({ node, children, attributes }, editor, next) {
+export default function renderBlock(
+    { node, children, attributes },
+    editor,
+    next,
+) {
     if (!TYPES.includes(node.type)) return next()
 
     return <div

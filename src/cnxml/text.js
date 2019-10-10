@@ -36,7 +36,8 @@ const se_emphasis = type => function se_emphasis(obj, children) {
     return <emphasis effect={type}>{children}</emphasis>
 }
 
-export const EMPHASIS = inline('emphasis', de_emphasis, 'emphasis', se_emphasis('italics'))
+export const EMPHASIS = inline(
+    'emphasis', de_emphasis, 'emphasis', se_emphasis('italics'))
 
 export const LINK = inline(null, null, 'link', 'link')
 
@@ -50,7 +51,8 @@ export const SUPERSCRIPT = inline('sup', 'superscript', 'superscript', 'sup')
  * Process data for terms.
  */
 function de_term(el) {
-    const reference = el.getAttributeNS('http://katalysteducation.org/cmlnle/1.0', 'reference')
+    const reference = el.getAttributeNS(
+        'http://katalysteducation.org/cmlnle/1.0', 'reference')
 
     return {
         object: 'inline',
@@ -63,11 +65,11 @@ function de_term(el) {
  * Serializer for terms.
  */
 function se_term(obj, children) {
-    let attrs = {}
+    const attrs = {}
 
     const reference = obj.data.get('reference')
     if (reference && reference !== obj.text) {
-        attrs['cmlnleReference'] = reference
+        attrs.cmlnleReference = reference
     }
 
     return <term {...attrs}>
@@ -91,10 +93,13 @@ export const TERM = inline('term', de_term, 'term', se_term)
 const TEXT = {
     serialize(obj, children) {
         if (obj.object === 'string') return [children]
-    }
+
+        return undefined
+    },
 }
 
-export const UNDERLINE = inline(null, null, 'underline', se_emphasis('underline'))
+export const UNDERLINE = inline(
+    null, null, 'underline', se_emphasis('underline'))
 
 /**
  * Process data for links and cross-references.
@@ -103,7 +108,8 @@ function de_xref(el) {
     const target = el.getAttribute('target-id') || null
     const document = el.getAttribute('document') || null
     const url = el.getAttribute('url') || null
-    const cmlnleCase = el.getAttributeNS('http://katalysteducation.org/cmlnle/1.0', 'case') || null
+    const cmlnleCase = el.getAttributeNS(
+        'http://katalysteducation.org/cmlnle/1.0', 'case') || null
 
     if (target) {
         return {
@@ -124,17 +130,17 @@ function de_xref(el) {
             type: 'docref',
             data: { document },
         }
-    } else {
-        // TODO: notify user perhaps?
-        return null
     }
+
+    // TODO: notify user perhaps?
+    return null
 }
 
 /**
  * Serializer for cross-references.
  */
 function se_xref(obj, children) {
-    let attrs = {
+    const attrs = {
         'target-id': obj.data.get('target'),
     }
 
@@ -146,7 +152,7 @@ function se_xref(obj, children) {
     const cmlnleCase = obj.data.get('case')
 
     if (cmlnleCase) {
-        attrs['cmlnleCase'] = cmlnleCase
+        attrs.cmlnleCase = cmlnleCase
     }
 
     return <link {...attrs}>

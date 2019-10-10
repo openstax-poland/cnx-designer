@@ -13,9 +13,9 @@ function onKeyDown(event, editor) {
     const hasVoidParent = document.hasVoidParent(selection.start.path, editor)
 
     if (Hotkeys.isSplitBlock(event)) {
-      return hasVoidParent
-        ? editor.moveToStartOfNextText()
-        : editor.splitBlock()
+        return hasVoidParent
+            ? editor.moveToStartOfNextText()
+            : editor.splitBlock()
     }
 
     if (Hotkeys.isDeleteBackward(event)) {
@@ -25,4 +25,6 @@ function onKeyDown(event, editor) {
     if (Hotkeys.isDeleteForward(event)) {
         return editor.deleteCharForward()
     }
+
+    return false
 }

@@ -21,7 +21,7 @@ export const input = <value>
 export const output = <value>
     <document>
         <exercise>
-        <exproblem>
+            <exproblem>
                 <p>Problem</p>
             </exproblem>
             <exsolution>

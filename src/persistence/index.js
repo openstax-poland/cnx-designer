@@ -2,8 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Value, Operation } from 'slate'
 import { Seq } from 'immutable'
+import { Operation, Value } from 'slate'
 
 const DB_NAME = 'cnx:designer:persist'
 const DB_VERSION = 1
@@ -273,11 +273,11 @@ export class DocumentDB {
         await Promise.all([
             states.put({
                 id: this.id,
-                version: version,
+                version,
             }),
             contents.put({
                 id: this.id,
-                content: content,
+                content,
             }),
         ].map(promisify))
 
@@ -291,7 +291,7 @@ export class DocumentDB {
         const tx = this.database.transaction('changes', 'readwrite')
         const store = tx.objectStore('changes')
 
-        let operation = op.toJS()
+        const operation = op.toJS()
         if (op.type === 'insert_node' && op.node.object === 'block') {
             // We need to keep the same key for inserted nodes so xrefs targets
             // are still valid after refreshing page.
@@ -318,14 +318,16 @@ export class DocumentDB {
 
         return new Seq(ops)
             .map(op => Operation.fromJSON(op.change))
-            .reduce((value, op) => op.apply(value), Value.fromJSON(value.content))
+            .reduce(
+                (value, op) => op.apply(value), Value.fromJSON(value.content))
     }
 
     /**
      * Discard any saved changes to a document.
      */
     async discard() {
-        const tx = this.database.transaction(['states', 'changes', 'contents'], 'readwrite')
+        const tx = this.database.transaction(
+            ['states', 'changes', 'contents'], 'readwrite')
         const states = tx.objectStore('states')
         const changes = tx.objectStore('changes').index('document')
         const contents = tx.objectStore('contents')

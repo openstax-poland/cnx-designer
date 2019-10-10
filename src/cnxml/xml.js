@@ -55,7 +55,8 @@ class Renderer {
         switch (component.$$typeof) {
         case REACT_ELEMENT_TYPE:
             if (component.type === React.Fragment) {
-                return Array.from(component.props.children, c => this.renderComponent(c))
+                return Array.from(
+                    component.props.children, c => this.renderComponent(c))
             }
 
             return this.renderElement(component)
@@ -86,7 +87,7 @@ class Renderer {
         const node = this.doc.createElementNS(ns, element.type)
 
         for (const [key, value] of Object.entries(element.props)) {
-            if (SPECIAL_PROPS.includes(key)) continue;
+            if (SPECIAL_PROPS.includes(key)) continue
 
             if (value == null) {
                 continue
@@ -98,7 +99,8 @@ class Renderer {
                 const ns = NAMESPACES[prefix]
 
                 if (!ns) {
-                    throw new Error(`unknown prefix ${prefix} for attribute ${key}`)
+                    throw new Error(
+                        `unknown prefix ${prefix} for attribute ${key}`)
                 }
 
                 node.setAttributeNS(ns, attr.toLowerCase(), value.toString())

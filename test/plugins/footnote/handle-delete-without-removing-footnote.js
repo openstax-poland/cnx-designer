@@ -1,9 +1,9 @@
 /** @jsx h */
 
 export default editor => {
-  editor.run('onKeyDown', { key: 'Delete' })
-  editor.run('onKeyDown', { key: 'Delete' })
-  editor.run('onKeyDown', { key: 'Delete' })
+    editor.run('onKeyDown', { key: 'Delete' })
+    editor.run('onKeyDown', { key: 'Delete' })
+    editor.run('onKeyDown', { key: 'Delete' })
 }
 
 export const input = <value>

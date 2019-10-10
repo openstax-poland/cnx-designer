@@ -7,8 +7,8 @@ import make_schema from './schema'
 import * as queries from './queries'
 
 /**
- * @param {string[]} options.inlines - List of inline types which may appear inside
- *                                     an alt text.
+ * @param {string[]} options.inlines - List of inline types which may appear
+ *                                     inside an alt text.
  */
 export default function Media(options) {
     const {

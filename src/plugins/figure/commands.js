@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Block, Text, Range } from 'slate'
+import { Block, Range, Text } from 'slate'
 
 /**
  * @name MediaDescription
@@ -49,7 +49,7 @@ export function insertFigure(change, media) {
  */
 export function insertSubfigure(change, media) {
     const { value } = change
-    let node = change.getActiveFigure(value)
+    const node = change.getActiveFigure(value)
 
     if (node === null) {
         // No figure is selected.

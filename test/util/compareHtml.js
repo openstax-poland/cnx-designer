@@ -32,8 +32,10 @@ export default function compareHtml(dom, a, b, path='') {
             throw new HtmlError(
                 path,
                 'elements differ',
-                (a.namespaceURI ? '{' + a.namespaceURI + '}' : '') + a.localName,
-                (b.namespaceURI ? '{' + b.namespaceURI + '}' : '') + b.localName,
+                (a.namespaceURI ? '{' + a.namespaceURI + '}' : '')
+                    + a.localName,
+                (b.namespaceURI ? '{' + b.namespaceURI + '}' : '')
+                    + b.localName,
             )
         }
 
@@ -46,7 +48,7 @@ export default function compareHtml(dom, a, b, path='') {
             const attrB = b.attributes.getNamedItemNS(
                 attrA.namespaceURI, attrA.localName)
 
-            let apath = path + '/@'
+            const apath = path + '/@'
                     + (attrA.namespaceURI == null
                         ? ''
                         : '{' + attrA.namespaceURI + '}')
@@ -71,8 +73,11 @@ export default function compareHtml(dom, a, b, path='') {
                 attrB.namespaceURI, attrB.localName)
 
             if (attrA == null) {
-                let apath = path + '/@'
-                    + (attrB.namespaceURI == null ? '' : '{' + attrB.namespaceURI + '}')
+                const apath = path + '/@'
+                    + (attrB.namespaceURI == null
+                        ? ''
+                        : '{' + attrB.namespaceURI + '}'
+                    )
                     + attrB.localName
                 throw new HtmlError(
                     apath, 'attributes differ', 'unset', attrB.value)

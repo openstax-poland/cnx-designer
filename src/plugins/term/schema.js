@@ -30,7 +30,7 @@ export default function schema({ marks, inlines }) {
                 }],
                 marks: marks.map(type => ({ type })),
                 data: {
-                    reference: ref => ref == null || typeof ref === 'string'
+                    reference: ref => ref == null || typeof ref === 'string',
                 },
                 text: s => s.length,
                 normalize: normalizeTerm,

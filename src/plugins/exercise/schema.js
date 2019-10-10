@@ -24,7 +24,7 @@ function normalizeExercise(change, error) {
                 nodes: [
                     // An empty leaf will be added by slate in a subsequent
                     // normalization.
-                    Block.create({ type: 'paragraph' })
+                    Block.create({ type: 'paragraph' }),
                 ],
             })
             change.insertNodeByKey(node.key, 0, problem)
@@ -43,7 +43,7 @@ function normalizeExercise(change, error) {
                 nodes: [
                     // An empty leaf will be added by slate in a subsequent
                     // normalization.
-                    Block.create({ type: 'paragraph' })
+                    Block.create({ type: 'paragraph' }),
                 ],
             })
             change.insertNodeByKey(node.key, 0, problem)
@@ -68,7 +68,8 @@ function normalizeExercise(change, error) {
         // commentary.
         if (node.nodes.get(-2).type === 'exercise_commentary') {
             const commentary = node.nodes.get(-2)
-            change.moveNodeByKey(child.key, commentary.key, commentary.nodes.size)
+            change.moveNodeByKey(
+                child.key, commentary.key, commentary.nodes.size)
             return
         }
 
@@ -122,7 +123,7 @@ export default function schema(options) {
             exercise: {
                 parent: [{ object: 'document' }, { type: 'section' }],
                 nodes: [
-                    { match: { type: 'exercise_problem' }, min: 1, max: 1},
+                    { match: { type: 'exercise_problem' }, min: 1, max: 1 },
                     { match: { type: 'exercise_solution' }, min: 0 },
                     { match: { type: 'exercise_commentary' }, min: 0, max: 1 },
                 ],

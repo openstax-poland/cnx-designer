@@ -1,5 +1,7 @@
 /** @jsx h */
 
+/* eslint-disable max-len */
+
 export default editor => editor.normalize()
 
 export const input = <value>

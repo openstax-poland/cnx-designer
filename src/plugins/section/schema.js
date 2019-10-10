@@ -84,7 +84,7 @@ function normalizeSection(change, error) {
     case 'next_sibling_type_invalid': {
         // XXX: while we would expect |node| to refer to section it is in fact
         // its parent.
-        let parent = node.nodes.get(index)
+        const parent = node.nodes.get(index)
         change.moveNodeByKey(next.key, parent.key, parent.nodes.size)
         break
     }
@@ -120,7 +120,7 @@ export default function schema(options) {
                 ],
                 next: { type: 'section' },
                 normalize: normalizeSection,
-            }
+            },
         },
     }
 }

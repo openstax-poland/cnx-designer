@@ -28,7 +28,7 @@ export const outputContent = <value>
             <p>Quotes can also contain nested quotes</p>
             <quote class={List()}>
                 <p>Like so</p>
-        </quote>
+            </quote>
         </quote>
         <quote key="q2" class={List()}>
             <p>Quotes can have text content</p>

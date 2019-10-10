@@ -31,6 +31,7 @@ export default function renderBlock(props, editor, next) {
 }
 /* eslint-enable react/prop-types */
 
+/* eslint-disable-next-line prefer-arrow-callback */
 const Exercise = WithCounters(({ node }) => node.key)(function Exercise({
     node, children, attributes, counters,
 }) {

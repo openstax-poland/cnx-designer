@@ -13,7 +13,9 @@ export default function renderInline(props, editor, next) {
         return <Reference {...props} />
 
     case 'docref':
-        return <a href={node.data.get('document')} {...attributes}>{children}</a>
+        return <a href={node.data.get('document')} {...attributes}>
+            {children}
+        </a>
 
     case 'link':
         return <a href={node.data.get('url')} {...attributes}>{children}</a>
@@ -24,23 +26,31 @@ export default function renderInline(props, editor, next) {
 }
 
 const Reference = WithCounters(({ node }) => node.data.get('target'))(
-function Reference({ node, editor, attributes, counters }) {
-    const targetKey = node.data.get('target')
-    const target = editor.value.document.getNode(targetKey)
+    /* eslint-disable-next-line prefer-arrow-callback */
+    function Reference({ node, editor, attributes, counters }) {
+        const targetKey = node.data.get('target')
+        const target = editor.value.document.getNode(targetKey)
 
-    let text
+        let text
 
-    if (target) {
-        text = editor.run('renderXRef', target, counters) || `(${target.type})`
-    } else {
-        console.warn('Undefined target:', targetKey, 'in', node.key)
-        text = "(undefined target)"
-    }
+        if (target) {
+            text = editor.run('renderXRef', target, counters)
+                || `(${target.type})`
+        } else {
+            console.warn('Undefined target:', targetKey, 'in', node.key)
+            text = "(undefined target)"
+        }
 
-    return <a href={"#" + targetKey} onClick={onClickReference} {...attributes} data-target={targetKey}>
-        {text}
-    </a>
-})
+        return <a
+            href={"#" + targetKey}
+            onClick={onClickReference}
+            data-target={targetKey}
+            {...attributes}
+            >
+            {text}
+        </a>
+    },
+)
 
 function onClickReference(ev) {
     ev.preventDefault()

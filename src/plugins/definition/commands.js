@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Text, Block } from 'slate'
+import { Block, Text } from 'slate'
 
 /**
  * Insert definition before or after selected block.
@@ -18,11 +18,11 @@ export function insertDefinition(change, position = 'after') {
     const term = Block.create('definition_term')
     const para = Block.create({
         type: 'paragraph',
-        nodes: [Text.create()]
+        nodes: [Text.create()],
     })
     const meaning = Block.create({
         type: 'definition_meaning',
-        nodes: [para]
+        nodes: [para],
     })
     const definition = Block.create({
         type: 'definition',
@@ -52,7 +52,7 @@ export function addMeaningToDefinition(change) {
     const text = Text.create()
     const para = Block.create({
         type: 'paragraph',
-        nodes: [text]
+        nodes: [text],
     })
     const meaning = Block.create({
         type: 'definition_meaning',
@@ -61,10 +61,12 @@ export function addMeaningToDefinition(change) {
 
     // Get index of closest meaning and insert new one after.
     const startBlock = change.value.startBlock
-    const closestMeaning = definition.getClosest(startBlock.key, (n) => n.type === 'definition_meaning')
+    const closestMeaning = definition.getClosest(
+        startBlock.key, n => n.type === 'definition_meaning')
     let index
     if (closestMeaning) {
-        const meaningIndex = definition.nodes.findIndex(n => n.key === closestMeaning.key)
+        const meaningIndex = definition.nodes.findIndex(
+            n => n.key === closestMeaning.key)
         index = meaningIndex + 1
     } else {
         index = definition.nodes.size

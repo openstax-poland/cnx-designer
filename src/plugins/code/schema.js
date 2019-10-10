@@ -40,7 +40,7 @@ export default function schema(options) {
                     lang: l => l === undefined || typeof l === 'string',
                 },
                 normalize: normalizeCodeBlock,
-            }
+            },
         },
         inlines: {
             code: {
@@ -51,7 +51,7 @@ export default function schema(options) {
                 },
                 normalize: normalizeCodeInline,
                 text: t => t.length > 0,
-            }
-        }
+            },
+        },
     }
 }

@@ -22,6 +22,7 @@ export default function renderBlock(props, editor, next) {
     }
 }
 
+/* eslint-disable-next-line prefer-arrow-callback */
 const Caption = WithCounters(({ parent }) => parent.key)(function Caption({
     counters, children, attributes,
 }) {

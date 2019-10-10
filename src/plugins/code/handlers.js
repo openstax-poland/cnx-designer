@@ -19,7 +19,7 @@ function onEnter(event, change) {
     const { value } = change
 
     const code = value.startBlock && value.startBlock.type === 'code'
-    if (!code) return
+    if (!code) return false
 
     // Add new line
     if (event.shiftKey) {
@@ -31,7 +31,9 @@ function onEnter(event, change) {
     const isAtEnd = selection.start.isAtEndOfNode(startBlock)
         && selection.end.isAtEndOfNode(startBlock)
 
-    const lastNodeIsEmpty = startBlock.getText().split(/\r?\n/).pop() === ''
+    const lastNodeIsEmpty = startBlock.getText()
+        .split(/\r?\n/)
+        .pop() === ''
 
     // Add new paragraph and unwrap block
     if (isAtEnd && lastNodeIsEmpty) {
@@ -47,7 +49,7 @@ function onBackspace(event, change) {
     const { value } = change
 
     const code = value.startBlock.type === 'code' ? value.startBlock : null
-    if (!code) return
+    if (!code) return false
 
     const { selection } = value
 
@@ -56,7 +58,7 @@ function onBackspace(event, change) {
 
     if (isAtStart) {
         // Split code block at first \n
-        let texts = code.getText().split(/\r?\n/)
+        const texts = code.getText().split(/\r?\n/)
         change.removeNodeByKey(code.key)
         const firstText = texts.shift()
         change.insertText(firstText)
@@ -67,4 +69,6 @@ function onBackspace(event, change) {
         change.moveToEndOfPreviousBlock()
         return change.moveBackward(firstText.length)
     }
+
+    return false
 }

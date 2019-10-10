@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Text, Block } from 'slate'
+import { Block, Text } from 'slate'
 
 function normalizeDefinition(change, error) {
     const { code, index, node, child } = error
@@ -61,7 +61,7 @@ function normalizeDefinition(change, error) {
             break
         }
 
-        console.log('Unhandled definition child_min_invalid:', child)
+        console.warn('Unhandled definition child_min_invalid:', child)
         break
 
     /* istanbul ignore next */
@@ -126,7 +126,7 @@ function normalizeSeeAlso(change, error) {
 
     /* istanbul ignore next */
     default:
-        console.warn('Unhandled definition_seealso violation:', code, JSON.stringify(child))
+        console.warn('Unhandled definition_seealso violation:', code)
         break
     }
 }
@@ -161,14 +161,14 @@ export default function schema({ content }) {
                 normalize: normalizeMeaning,
             },
             definition_example: {
-                nodes: [ { match: content_types, min: 1 } ],
+                nodes: [{ match: content_types, min: 1 }],
                 normalize: normalizeExample,
             },
             definition_seealso: {
-                nodes: [ { match: { type: 'definition_term' }, min: 1 } ],
+                nodes: [{ match: { type: 'definition_term' }, min: 1 }],
                 parent: { type: 'definition' },
                 normalize: normalizeSeeAlso,
-            }
+            },
         },
     }
 }

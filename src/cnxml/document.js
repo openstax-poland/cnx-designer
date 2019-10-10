@@ -10,7 +10,14 @@
 
 import React from 'react'
 
-import { block, mixed, text, loadClasses, mixedContent, splitBlocks } from './util'
+import {
+    block,
+    loadClasses,
+    mixed,
+    mixedContent,
+    splitBlocks,
+    text,
+} from './util'
 import { normalizeWhiteSpace } from './whitespace'
 
 /**
@@ -37,7 +44,7 @@ function de_figcaption(el, next) {
     const allowedParents = ['figure', 'subfigure']
 
     if (!allowedParents.includes(el.parentElement.tagName)) {
-        return
+        return undefined
     }
 
     return splitBlocks({
@@ -46,7 +53,8 @@ function de_figcaption(el, next) {
     })
 }
 
-export const FIGURE_CAPTION = block('caption', de_figcaption, 'figure_caption', 'caption')
+export const FIGURE_CAPTION = block(
+    'caption', de_figcaption, 'figure_caption', 'caption')
 
 /**
  * Process data for code tags.
@@ -69,7 +77,7 @@ function de_code(el, next) {
  * Serializer for code.
  */
 function se_code(obj, children) {
-    let attrs = {}
+    const attrs = {}
 
     if (obj.object === 'block') {
         attrs.display = 'block'
@@ -87,7 +95,12 @@ function se_code(obj, children) {
 
 export const CODE = block('code', de_code, 'code', se_code)
 
-export const COMMENTARY = block('commentary', mixed('exercise_commentary'), 'exercise_commentary', 'commentary')
+export const COMMENTARY = block(
+    'commentary',
+    mixed('exercise_commentary'),
+    'exercise_commentary',
+    'commentary',
+)
 
 export const EXERCISE = block('exercise', 'exercise', 'exercise', 'exercise')
 
@@ -95,18 +108,24 @@ export const EXERCISE = block('exercise', 'exercise', 'exercise', 'exercise')
  * Serializer for figures.
  */
 function se_figure(obj, children) {
-    let attrs = obj.data.get('class') ? {class: obj.data.get('class').join(' ') } : {}
+    const attrs = obj.data.get('class')
+        ? { class: obj.data.get('class').join(' ') }
+        : {}
 
     return <figure id={obj.key} {...attrs}>
         {/* We need to turn nested figures from <figure>s to <subfigure>s */}
-        {children.map(el => el.type !== 'figure' ? el : {
-            ...el,
-            type: 'subfigure',
-        })}
+        {children.map(el => el.type !== 'figure'
+            ? el
+            : {
+                ...el,
+                type: 'subfigure',
+            }
+        )}
     </figure>
 }
 
-export const FIGURE = block(['figure', 'subfigure'], 'figure', 'figure', se_figure)
+export const FIGURE = block(
+    ['figure', 'subfigure'], 'figure', 'figure', se_figure)
 
 /**
  * Process data for images.
@@ -142,7 +161,9 @@ function de_list(el, next) {
 function se_list(obj, children) {
     const type = obj.type === 'ul_list' ? 'bulleted' : 'enumerated'
 
-    let attrs = obj.data.get('class') ? {class: obj.data.get('class').join(' ') } : {}
+    const attrs = obj.data.get('class')
+        ? { class: obj.data.get('class').join(' ') }
+        : {}
 
     return <list list-type={type} {...attrs}>
         {children}
@@ -203,35 +224,42 @@ function de_media_alt(el, next) {
             nodes: next(Array.from(el.children)),
         }
     }
+
+    return undefined
 }
 
 /**
  * Serializer for media_alt.
  *
  * Text from media_alt will always be saved in media alt attribute.
- * If it can't be properly serialized, for ex. because of suggestions inside of it
- * then additional div.media-alt will be added to the media block.
+ * If it can't be properly serialized, for ex. because of suggestions inside of
+ * it then additional div.media-alt will be added to the media block.
  */
 function se_media_alt(obj, children) {
     if (obj.type === 'media_alt') {
         if (obj.nodes.some(n => n.object !== 'text')) {
             return <div class="media-alt">{children}</div>
         }
+
         return null
     }
+
+    return undefined
 }
 
 export const MEDIA_ALT = block('div', de_media_alt, 'media_alt', se_media_alt)
 
 export const PARA = block('para', text('paragraph'), 'paragraph', 'para')
 
-export const PROBLEM = block('problem', 'exercise_problem', 'exercise_problem', 'problem')
+export const PROBLEM = block(
+    'problem', 'exercise_problem', 'exercise_problem', 'problem')
 
 export const QUOTE = block('quote', mixed('quotation'), 'quotation', 'quote')
 
 export const SECTION = block('section', 'section', 'section', 'section')
 
-export const SOLUTION = block('solution', 'exercise_solution', 'exercise_solution', 'solution')
+export const SOLUTION = block(
+    'solution', 'exercise_solution', 'exercise_solution', 'solution')
 
 export const TITLE = block('title', text('title'), 'title', 'title')
 

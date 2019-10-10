@@ -36,8 +36,8 @@
  *
  * 2.  Next, all zero-width marks neighbouring a spacing mark are removed.
  *
- * 3.  Next, sequences consisting of a single white space codepoint are collapsed
- *     into a single codepoint.
+ * 3.  Next, sequences consisting of a single white space codepoint are
+ *     collapsed into a single codepoint.
  *
  * 4.  Next, all spacing marks neighbouring U+1680 OGHAM SPACE MARK or
  *     U+3000 IDEOGRAPHIC SPACE are removed.
@@ -195,14 +195,15 @@ function replaceWS(node) {
         for (const child of node) {
             replaceWS(child)
         }
-        return
+
+        return undefined
     }
 
     // no-misleading-character-class warns against using sequences of joining
     // codepoints as they look like a single character but will be matched
     // separately. Here this is exactly what we want, so we can safely disable
     // this lint.
-    /* eslint-disable no-misleading-character-class */
+    /* eslint-disable no-misleading-character-class, max-len */
     if (typeof node === 'string') {
         // 1st step
         return node.replace(/\s/gu, replaceWSChar)
@@ -220,7 +221,7 @@ function replaceWS(node) {
             // 6th step
             .replace(/[\s\u180e\u200b\u200c\u200d\u2060]{2,}/g, c => c[0])
     }
-    /* eslint-enable no-misleading-character-class */
+    /* eslint-enable no-misleading-character-class, max-len */
 
     switch (node.object) {
     case 'text':
@@ -237,6 +238,8 @@ function replaceWS(node) {
         throw new Error(
             `replaceWS called on an unsupported node type: ${node.object}`)
     }
+
+    return undefined
 }
 
 function replaceWSChar(char) {

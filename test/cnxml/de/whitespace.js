@@ -1,5 +1,7 @@
 /** @jsx h */
 
+/* eslint-disable max-len */
+
 import { List } from 'immutable'
 
 export const input = cnxml`

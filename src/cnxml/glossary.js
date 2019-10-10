@@ -8,15 +8,15 @@ import React from 'react'
  * De/serialization rules for document structure and elements.
  */
 
+import { PARA } from './document'
 import { block, mixed } from './util'
 
-import { PARA } from './document'
-
-export const DEFINITION = block('definition', 'definition', 'definition', 'definition')
+export const DEFINITION = block(
+    'definition', 'definition', 'definition', 'definition')
 
 function se_meaning(obj, children) {
-    let meaning_children = []
-    let examples = []
+    const meaning_children = []
+    const examples = []
 
     children.forEach(c => {
         if (c.type === 'example') {
@@ -40,18 +40,21 @@ function se_meaning(obj, children) {
     </>
 }
 
-export const MEANING = block('meaning', mixed('definition_meaning'), 'definition_meaning', se_meaning)
+export const MEANING = block(
+    'meaning', mixed('definition_meaning'), 'definition_meaning', se_meaning)
 
-export const EXAMPLE = block('example', mixed('definition_example'), 'definition_example', 'example')
+export const EXAMPLE = block(
+    'example', mixed('definition_example'), 'definition_example', 'example')
 
-export const SEEALSO = block('seealso', 'definition_seealso', 'definition_seealso', 'seealso')
+export const SEEALSO = block(
+    'seealso', 'definition_seealso', 'definition_seealso', 'seealso')
 
 /**
  * Process data for terms.
  */
 function de_term(el, next) {
     if (el.parentElement && el.parentElement.tagName === 'meaning') {
-        return
+        return undefined
     }
 
     return {

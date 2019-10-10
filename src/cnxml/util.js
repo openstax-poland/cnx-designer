@@ -87,12 +87,16 @@ export function block(tagName, de, type, se) {
             if (test_de(el.tagName)) {
                 return deserializeBlock(el, next, de)
             }
+
+            return undefined
         },
 
         serialize(obj, children) {
             if (test_se(obj.type)) {
                 return serializeBlock(obj, children, se)
             }
+
+            return undefined
         },
     }
 }
@@ -118,13 +122,17 @@ export function inline(tagName, de, type, se) {
             if (test_de(el.tagName)) {
                 return deserializeMark(el, next, de)
             }
+
+            return undefined
         },
 
         serialize(obj, children) {
             if (test_se(obj.type)) {
                 return serializeMark(obj, children, se)
             }
-        }
+
+            return undefined
+        },
     }
 }
 
@@ -147,13 +155,15 @@ function makeTest(type) {
  * @see block
  */
 function deserializeBlock(el, next, block) {
-    const props = block instanceof Function ? block(el, next) : {
-        type: block,
-        data: {
-            class: loadClasses(el),
-        },
-        nodes: next(Array.from(el.children)),
-    }
+    const props = block instanceof Function
+        ? block(el, next)
+        : {
+            type: block,
+            data: {
+                class: loadClasses(el),
+            },
+            nodes: next(Array.from(el.children)),
+        }
 
     if (props instanceof Array) {
         props[0].key = props[0].key || el.getAttribute('id') || undefined
@@ -186,7 +196,7 @@ function serializeBlock(obj, children, Block) {
 
     if (!data.class) {
         // Remove empty classes
-        delete data['class']
+        delete data.class
     } else {
         data.class = data.class.join(' ')
     }
@@ -288,7 +298,7 @@ export function mixedContent(el, next, type='paragraph') {
  * Create transformer function for nodes containing just text.
  */
 export const text = type => (el, next) => splitBlocks({
-    type: type,
+    type,
     nodes: normalizeWhiteSpace(next(el.childNodes)),
 })
 
@@ -297,7 +307,7 @@ export const text = type => (el, next) => splitBlocks({
  * content.
  */
 export const mixed = type => (el, next) => ({
-    type: type,
+    type,
     data: {
         class: loadClasses(el),
     },
@@ -363,18 +373,19 @@ export function loadClasses(el) {
 export const DEFAULT = {
     deserialize(el, next) {
         if (el.nodeType !== Node.ELEMENT_NODE) {
-            return
+            return undefined
         }
 
         const ref = el.previousSibling
             ? el.parentNode.childNodes[0]
             : el.parentNode.childNodes[el.parentNode.childNodes.length - 1]
-        const text = ref.nodeType === ref.TEXT_NODE && ref.textContent.match(/[^\s]/)
+        const text = ref.nodeType === ref.TEXT_NODE
+            && ref.textContent.match(/[^\s]/)
 
         if (text || INLINE_TAGS.includes(ref.tagName)) {
             return next(el.childNodes)
-        } else {
-            return mixedContent(el, next)
         }
-    }
+
+        return mixedContent(el, next)
+    },
 }
