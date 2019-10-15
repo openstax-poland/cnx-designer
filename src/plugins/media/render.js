@@ -5,7 +5,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Storage from '../../api/storage'
+import { StorageContext } from '../../api/storage'
 
 export default function renderBlock(
     { node, attributes, children, isFocused },
@@ -30,17 +30,18 @@ export default function renderBlock(
     }
 }
 
-function Image({ src, attributes, isFocused }, { storage }) {
-    return <img
-        className="image"
-        data-selected={isFocused}
-        src={storage.mediaUrl(src)}
-        {...attributes}
-        />
-}
+function Image({ src, attributes, isFocused }) {
+    return <StorageContext.Consumer>
+        {
+            storage => <img
+                className="image"
+                data-selected={isFocused}
+                src={storage.mediaUrl(src)}
+                {...attributes}
+                />
 
-Image.contextTypes = {
-    storage: PropTypes.instanceOf(Storage),
+        }
+    </StorageContext.Consumer>
 }
 
 Image.propTypes = {

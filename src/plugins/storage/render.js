@@ -3,39 +3,15 @@
 // full license text.
 
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import Storage from '../../api/storage'
+import { StorageContext } from '../../api/storage'
 
 /**
  * Provide current {@link Storage} as a React context for easy access by node
  * components.
  */
-class StorageContext extends React.Component {
-    // Storage is passed in context to minimise impact on components which don't
-    // use it.
-    static childContextTypes = {
-        storage: PropTypes.instanceOf(Storage),
-    }
-
-    static propTypes = {
-        children: PropTypes.node,
-        storage: PropTypes.instanceOf(Storage).isRequired,
-    }
-
-    getChildContext() {
-        return {
-            storage: this.props.storage,
-        }
-    }
-
-    render() {
-        return this.props.children
-    }
-}
-
 export default storage => function renderEditor(props, editor, next) {
-    return <StorageContext storage={storage}>
+    return <StorageContext.Provider value={storage}>
         {next()}
-    </StorageContext>
+    </StorageContext.Provider>
 }

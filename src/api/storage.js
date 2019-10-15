@@ -2,14 +2,18 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-/* istanbul ignore file */
-/* eslint-disable no-unused-vars */
+import React from 'react'
 
-export default class Storage {
+/* istanbul ignore file */
+
+export class Storage {
     /**
      * Return an URL for a given media file.
      */
     mediaUrl(name) {
-        throw new Error("not implemented")
+        console.warn('You are using default Storage class.')
+        return name
     }
 }
+
+export const StorageContext = React.createContext(new Storage())
