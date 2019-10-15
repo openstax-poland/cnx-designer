@@ -151,8 +151,8 @@ export class PersistDB {
 
             if (index && keys) {
                 for (const key of keys) {
-                    await iterate(store.index(index), key, cursor => {
-                        cursor.delete()
+                    await iterate(store.index(index), key, async cursor => {
+                        await cursor.delete()
                         cursor.continue()
                     })
                 }
@@ -261,8 +261,8 @@ export class DocumentDB {
         const changes = tx.objectStore('changes').index('document')
         const contents = tx.objectStore('contents')
 
-        await iterate(changes, this.id, cursor => {
-            cursor.delete()
+        await iterate(changes, this.id, async cursor => {
+            await cursor.delete()
             cursor.continue()
         })
 
@@ -333,8 +333,8 @@ export class DocumentDB {
         const contents = tx.objectStore('contents')
 
         await Promise.all([
-            iterate(changes, this.id, cursor => {
-                cursor.delete()
+            iterate(changes, this.id, async cursor => {
+                await cursor.delete()
                 cursor.continue()
             }),
             promisify(states.delete(this.id)),
