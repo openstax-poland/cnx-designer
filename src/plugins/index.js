@@ -93,7 +93,13 @@ export function TextContent(options=DEFAULT_TEXT_OPTIONS) {
  */
 export function Document(options={}) {
     const {
-        list = {},
+        list = {
+            content: [
+                'ul_list',
+                'ol_list',
+                'paragraph',
+            ],
+        },
     } = options
 
     const content = [
@@ -168,7 +174,13 @@ export function Document(options={}) {
  */
 export function Glossary(options={}) {
     const {
-        list = {},
+        list = {
+            content: [
+                'ul_list',
+                'ol_list',
+                'paragraph',
+            ],
+        },
     } = options
 
     const content = [
