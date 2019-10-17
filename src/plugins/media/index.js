@@ -9,13 +9,19 @@ import * as queries from './queries'
 /**
  * @param {string[]} options.inlines - List of inline types which may appear
  *                                     inside an alt text.
+ * @param {Function} options.mediaUrl - Return URL for given media file.
  */
 export default function Media(options) {
     const {
         inlines = [],
+        mediaUrl = name => name,
     } = options
 
     const schema = make_schema({ inlines })
 
-    return { renderBlock, schema, queries }
+    return {
+        renderBlock: renderBlock(mediaUrl),
+        schema,
+        queries,
+    }
 }

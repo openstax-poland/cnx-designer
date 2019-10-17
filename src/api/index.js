@@ -3,4 +3,3 @@
 // full license text.
 
 export { default as APIError } from './error'
-export { Storage, StorageContext } from './storage'
