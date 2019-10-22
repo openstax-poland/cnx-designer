@@ -3,48 +3,29 @@
 // full license text.
 
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import Storage from '../../api/storage'
+export default function passMediaUrl(mediaUrl) {
+    return function renderBlock(
+        { node, attributes, children, isFocused },
+        editor,
+        next,
+    ) {
+        switch (node.type) {
+        case 'image':
+            return <img
+                className="image"
+                data-selected={isFocused}
+                src={mediaUrl(node.data.get('src'))}
+                {...attributes}
+                />
 
-export default function renderBlock(
-    { node, attributes, children, isFocused },
-    editor,
-    next,
-) {
-    switch (node.type) {
-    case 'image':
-        return <Image
-            src={node.data.get('src')}
-            attributes={attributes}
-            isFocused={isFocused}
-            />
+        case 'media_alt':
+            return <div className="media-alt" attributes={attributes}>
+                {children}
+            </div>
 
-    case 'media_alt':
-        return <div className="media-alt" attributes={attributes}>
-            {children}
-        </div>
-
-    default:
-        return next()
+        default:
+            return next()
+        }
     }
-}
-
-function Image({ src, attributes, isFocused }, { storage }) {
-    return <img
-        className="image"
-        data-selected={isFocused}
-        src={storage.mediaUrl(src)}
-        {...attributes}
-        />
-}
-
-Image.contextTypes = {
-    storage: PropTypes.instanceOf(Storage),
-}
-
-Image.propTypes = {
-    attributes: PropTypes.object.isRequired,
-    isFocused: PropTypes.bool.isRequired,
-    src: PropTypes.string.isRequired,
 }
