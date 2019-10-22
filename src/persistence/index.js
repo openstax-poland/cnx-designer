@@ -36,7 +36,11 @@ function iterate(store, ...args) {
         req.onsuccess = event => {
             const cursor = event.target.result
             if (cursor) {
-                f(cursor, cursor.value, reject).catch(reject)
+                try {
+                    f(cursor, cursor.value, reject)
+                } catch (err) {
+                    reject(err)
+                }
             } else {
                 resolve()
             }
