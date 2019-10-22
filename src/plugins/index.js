@@ -11,6 +11,7 @@ import Footnote from './footnote'
 import GlossaryDocument from './glossary'
 import List from './list'
 import Media from './media'
+import Preformat from './preformat'
 import Quotation from './quotation'
 import Section from './section'
 import Term from './term'
@@ -30,6 +31,7 @@ export {
     Footnote,
     List,
     Media,
+    Preformat,
     Quotation,
     Section,
     Term,
@@ -38,15 +40,22 @@ export {
     XReference,
 }
 
+const DEFAULT_TEXT_OPTIONS = {
+    preformat: {
+        inlines: ['code', 'docref', 'link', 'term', 'xref'],
+    },
+}
+
 /**
  * Collection of plugins for working with text content of a CNX document.
  *
  * @param {string[]|null} options.marks List of additional mark types allowed
  *                                      in text content.
  * @param {object?} options.code options for `Code`
+ * @param {object?} options.preformat options for `Preformat`
  * @param {object?} options.term options for `Term`
  */
-export function TextContent(options={}) {
+export function TextContent(options=DEFAULT_TEXT_OPTIONS) {
     const marks = [
         ...options.marks || [],
         'strong',
@@ -59,6 +68,7 @@ export function TextContent(options={}) {
     return [
         Code(options.code),
         Footnote({ marks }),
+        Preformat({ marks, ...options.preformat }),
         Term({ marks, ...options.term }),
         Text({ marks }),
         XReference(),
@@ -89,6 +99,7 @@ export function Document(options={}) {
     const content = [
         ...options.content || [],
         'paragraph',
+        'preformat',
         'quotation',
         'ul_list',
         'ol_list',

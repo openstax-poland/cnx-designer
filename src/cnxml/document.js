@@ -251,6 +251,31 @@ export const MEDIA_ALT = block('div', de_media_alt, 'media_alt', se_media_alt)
 
 export const PARA = block('para', text('paragraph'), 'paragraph', 'para')
 
+/**
+ * Process data for preformat tags.
+ *
+ * Preformat tag may in CNXML may have display="inline" attribute, but since
+ * <pre> tag is block element we support only this variation.
+ */
+function de_preformat(el, next) {
+    return {
+        type: 'preformat',
+        nodes: next(el.childNodes),
+    }
+}
+
+/**
+ * Serializer for preformat.
+ */
+function se_preformat(obj, children) {
+    return <preformat id={obj.key}>
+        {children}
+    </preformat>
+}
+
+export const PREFORMAT = block(
+    'preformat', de_preformat, 'preformat', se_preformat)
+
 export const PROBLEM = block(
     'problem', 'exercise_problem', 'exercise_problem', 'problem')
 
@@ -276,6 +301,7 @@ export const DOCUMENT = [
     MEDIA,
     MEDIA_ALT,
     PARA,
+    PREFORMAT,
     PROBLEM,
     QUOTE,
     SECTION,
