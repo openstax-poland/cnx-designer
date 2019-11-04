@@ -39,15 +39,12 @@ function normalizeMedia(change, error) {
     }
 }
 
-export default function schema({ inlines }) {
+export default function schema({ inlines, nodes }) {
     return {
         blocks: {
             // TODO: do we actually want to keep multiple versions?
             media: {
-                nodes: [
-                    { match: { type: 'image' }, min: 1 },
-                    { match: { type: 'media_alt' }, min: 1, max: 1 },
-                ],
+                nodes: nodes,
                 normalize: normalizeMedia,
             },
             media_alt: {
