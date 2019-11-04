@@ -44,7 +44,7 @@ export default function schema({ inlines, nodes }) {
         blocks: {
             // TODO: do we actually want to keep multiple versions?
             media: {
-                nodes: nodes,
+                nodes,
                 normalize: normalizeMedia,
             },
             media_alt: {

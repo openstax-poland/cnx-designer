@@ -10,7 +10,8 @@ import * as queries from './queries'
  * @param {string[]} options.inlines - List of inline types which may appear
  *                                     inside an alt text.
  * @param {Function} options.mediaUrl - Return URL for given media file.
- * @param {Function} options.nodes - List of nodes to match for schema validation.
+ * @param {Function} options.nodes - List of nodes to match
+ *                                   for schema validation.
  */
 export default function Media(options) {
     const {
