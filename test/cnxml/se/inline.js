@@ -23,6 +23,8 @@ export const inputContent = <value>
             <xref target="f1"><text/></xref>
             {"), "}
             <footnote key="footnote-id">footnotes</footnote>
+            {", "}
+            <foreign lang="pl">słowa obce</foreign>
             {", and "}
             <link url="https://example.test">external links</link>
             .
@@ -41,5 +43,6 @@ export const output = cnxml`
 <sub>subscript</sub>,
 links to other elements (<link target-id="f1" />),
 <footnote id="footnote-id">footnotes</footnote>,
+<foreign xml:lang="pl">słowa obce</foreign>,
 and <link url="https://example.test">external links</link>.</para>
 `.replace(/\s+/g, ' ')

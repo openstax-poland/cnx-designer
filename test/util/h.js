@@ -47,6 +47,7 @@ export default global.h = createHyperscript({
         codeinline: 'code',
         docref: 'docref',
         footnote: 'footnote',
+        foreign: 'foreign',
         link: 'link',
         xref: 'xref',
         term: 'term',

@@ -11,6 +11,7 @@
 import React from 'react'
 
 import { inline } from './util'
+import { NAMESPACES } from './xml'
 
 export const DOCUMENT_REFERENCE = inline(null, null, 'docref', 'link')
 
@@ -184,10 +185,40 @@ function se_footnote(obj, children) {
 
 export const FOOTNOTE = inline('footnote', de_footnote, 'footnote', se_footnote)
 
+/**
+ * Process data for foreign.
+ */
+function de_foreign(el) {
+    return {
+        object: 'inline',
+        type: 'foreign',
+        data: {
+            lang: el.getAttributeNS(NAMESPACES.xml, 'lang'),
+        },
+    }
+}
+
+/**
+ * Serializer for foreign.
+ */
+function se_foreign(obj, children) {
+    const attrs = {}
+    const lang = obj.data.get('lang')
+
+    if (lang) {
+        attrs.xmlLang = lang
+    }
+
+    return <foreign {...attrs}>{children}</foreign>
+}
+
+export const FOREIGN = inline('foreign', de_foreign, 'foreign', se_foreign)
+
 export const TEXT_CONTENT = [
     DOCUMENT_REFERENCE,
     EMPHASIS,
     FOOTNOTE,
+    FOREIGN,
     LINK,
     STRONG,
     SUBSCRIPT,

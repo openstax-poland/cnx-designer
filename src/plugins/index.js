@@ -8,6 +8,7 @@ import Definition from './definition'
 import Exercise from './exercise'
 import Figure from './figure'
 import Footnote from './footnote'
+import Foreign from './foreign'
 import GlossaryDocument from './glossary'
 import List from './list'
 import Media from './media'
@@ -68,6 +69,7 @@ export function TextContent(options=DEFAULT_TEXT_OPTIONS) {
     return [
         Code(options.code),
         Footnote({ marks }),
+        Foreign({ marks }),
         Preformat({ marks, ...options.preformat }),
         Term({ marks, ...options.term }),
         Text({ marks }),

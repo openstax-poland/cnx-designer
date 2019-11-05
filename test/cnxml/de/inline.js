@@ -15,6 +15,7 @@ links to other elements (<link target-id="f1" />),
 elements in other documents (<link target-id="f1" document="d1" />),
 other <link document="d1">documents</link>,
 <footnote id="footnote-id">footnotes</footnote>,
+<foreign xml:lang="pl">słowa obce</foreign>,
 and <link url="https://example.test">external links</link>.</para>
 `.replace(/\s+/g, ' ')
 
@@ -43,6 +44,8 @@ export const outputContent = <value>
             <docref document="d1">documents</docref>
             {", "}
             <footnote key="footnote-id">footnotes</footnote>
+            {", "}
+            <foreign lang="pl">słowa obce</foreign>
             {", and "}
             <link url="https://example.test">external links</link>
             .
