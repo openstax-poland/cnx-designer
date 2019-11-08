@@ -6,8 +6,6 @@
  * De/serialization rules for document structure and elements.
  */
 
-/* eslint-disable react/no-unknown-property */
-
 import React from 'react'
 
 import {
@@ -19,6 +17,7 @@ import {
     text,
 } from './util'
 import { normalizeWhiteSpace } from './whitespace'
+import { NAMESPACES } from './xml'
 
 /**
  * Process data for admonitions.
@@ -119,7 +118,7 @@ function se_figure(obj, children) {
             : {
                 ...el,
                 type: 'subfigure',
-            }
+            },
         )}
     </figure>
 }
@@ -217,7 +216,12 @@ export const MEDIA = block('media', de_media, 'media', se_media)
  * Process data for media_alt nodes.
  */
 function de_media_alt(el, next) {
-    if (el.className === 'media-alt') {
+    if (
+        // TODO: Remove check for className === 'media-alt' after few weeks
+        // when drafts will no longer contain those elements.
+        el.className === 'media-alt'
+        || (el.namespaceURI === NAMESPACES.editing && el.tagName === 'alt-text')
+    ) {
         return {
             object: 'block',
             type: 'media_alt',
@@ -233,12 +237,12 @@ function de_media_alt(el, next) {
  *
  * Text from media_alt will always be saved in media alt attribute.
  * If it can't be properly serialized, for ex. because of suggestions inside of
- * it then additional div.media-alt will be added to the media block.
+ * it then additional <alt-text> will be added to the media block.
  */
 function se_media_alt(obj, children) {
     if (obj.type === 'media_alt') {
         if (obj.nodes.some(n => n.object !== 'text')) {
-            return <div class="media-alt">{children}</div>
+            return <alt-text xmlns={NAMESPACES.editing}>{children}</alt-text>
         }
 
         return null
@@ -247,6 +251,9 @@ function se_media_alt(obj, children) {
     return undefined
 }
 
+export const ALT_TEXT = block(
+    'alt-text', de_media_alt, 'media_alt', se_media_alt)
+// TODO: Remove when drafts will no longer contain those elements.
 export const MEDIA_ALT = block('div', de_media_alt, 'media_alt', se_media_alt)
 
 export const PARA = block('para', text('paragraph'), 'paragraph', 'para')
@@ -290,6 +297,7 @@ export const TITLE = block('title', text('title'), 'title', 'title')
 
 export const DOCUMENT = [
     ADMONITION,
+    ALT_TEXT,
     FIGURE_CAPTION,
     CODE,
     COMMENTARY,

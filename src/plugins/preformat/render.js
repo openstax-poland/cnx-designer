@@ -7,7 +7,7 @@ import React from 'react'
 export default function renderBlock(
     { node, children, attributes },
     editor,
-    next
+    next,
 ) {
     if (node.type === 'preformat') {
         return <pre className="preformat" {...attributes}>{children}</pre>
