@@ -25,13 +25,13 @@ export const output = cnxml`
 <figure id="f1">
     <subfigure id="f1-1">
         <media alt="First subfigure's content">
-            <image src="f1.png" mime-type="image/png" />
+            <image src="f1.png" mime-type="image/png"/>
         </media>
         <caption>First subfigure</caption>
     </subfigure>
     <subfigure id="f1-2">
         <media alt="Second subfigure's content">
-            <image src="f2.png" mime-type="image/png" />
+            <image src="f2.png" mime-type="image/png"/>
         </media>
     </subfigure>
     <caption>Two subfigures</caption>

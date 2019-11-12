@@ -22,7 +22,7 @@ export const input = cnxml`
 
 <figure>
     <media alt="Alt">
-        <image src="example.png" mime-type="image/png"/>
+        <image src="example.png" mime-type="image/png" />
     </media>
     <caption>
         excessive      white  space
