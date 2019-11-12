@@ -11,6 +11,15 @@ export default function passMediaUrl(mediaUrl) {
         next,
     ) {
         switch (node.type) {
+        case 'audio':
+            return <audio
+                className="audio"
+                data-selected={isFocused}
+                src={mediaUrl(node.data.get('src'))}
+                controls={true}
+                {...attributes}
+                />
+
         case 'image':
             return <img
                 className="image"
@@ -23,6 +32,15 @@ export default function passMediaUrl(mediaUrl) {
             return <div className="media-alt" attributes={attributes}>
                 {children}
             </div>
+
+        case 'video':
+            return <video
+                className="video"
+                data-selected={isFocused}
+                src={mediaUrl(node.data.get('src'))}
+                controls={true}
+                {...attributes}
+                />
 
         default:
             return next()

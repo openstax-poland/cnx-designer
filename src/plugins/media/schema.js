@@ -4,6 +4,12 @@
 
 import { Block, Text } from 'slate'
 
+const mediaData = {
+    src: s => typeof s === 'string',
+    mime: m => typeof m === 'string',
+    for: s => s == null || ['default', 'pdf', 'online'],
+}
+
 function normalizeMedia(change, error) {
     const { code: violation, node, key } = error
 
@@ -42,10 +48,16 @@ function normalizeMedia(change, error) {
 export default function schema({ inlines }) {
     return {
         blocks: {
-            // TODO: do we actually want to keep multiple versions?
             media: {
                 nodes: [
-                    { match: { type: 'image' }, min: 1 },
+                    {
+                        match: [
+                            { type: 'audio' },
+                            { type: 'image' },
+                            { type: 'video' },
+                        ],
+                        min: 1,
+                    },
                     { match: { type: 'media_alt' }, min: 1, max: 1 },
                 ],
                 normalize: normalizeMedia,
@@ -59,17 +71,17 @@ export default function schema({ inlines }) {
                 }],
                 marks: [],
             },
-            // TODO: if we do, add target attribute.
+            audio: {
+                isVoid: true,
+                data: mediaData,
+            },
             image: {
                 isVoid: true,
-                data: {
-                    src: Boolean,
-                    // mime should be required, but since it wasn't earlier
-                    // some drafts doesn't have it.
-                    // Remove check for null after few weeks when all images
-                    // will have mime set by front end (adaptarr-front).
-                    mime: m => m == null || typeof m === 'string',
-                },
+                data: mediaData,
+            },
+            video: {
+                isVoid: true,
+                data: mediaData,
             },
         },
     }

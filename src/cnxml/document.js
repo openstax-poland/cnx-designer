@@ -133,13 +133,18 @@ export const FIGURE = block(
  * Process data for images.
  */
 function de_image(el) {
+    const data = {
+        mime: el.getAttribute('mime-type'),
+        src: el.getAttribute('src'),
+    }
+    if (el.hasAttribute('for')) {
+        data.for = el.getAttribute('for')
+    }
+
     return {
         type: 'image',
         isVoid: true,
-        data: {
-            src: el.getAttribute('src'),
-            mime: el.getAttribute('mime-type'),
-        },
+        data,
     }
 }
 
@@ -147,15 +152,78 @@ function de_image(el) {
  * Serializer for images.
  */
 function se_image(obj) {
-    const attrs = {
-        src: obj.data.get('src'),
-        'mime-type': obj.data.get('mime'),
-    }
+    const attrs = obj.data.toJS()
+    attrs['mime-type'] = obj.data.get('mime')
+    delete attrs.mime
 
     return <image {...attrs} />
 }
 
 export const IMAGE = block('image', de_image, 'image', se_image)
+
+/**
+ * Process data for audio.
+ */
+function de_audio(el) {
+    const data = {
+        mime: el.getAttribute('mime-type'),
+        src: el.getAttribute('src'),
+    }
+    if (el.hasAttribute('for')) {
+        data.for = el.getAttribute('for')
+    }
+
+    return {
+        type: 'audio',
+        isVoid: true,
+        data,
+    }
+}
+
+/**
+ * Serializer for audio.
+ */
+function se_audio(obj) {
+    const attrs = obj.data.toJS()
+    attrs['mime-type'] = obj.data.get('mime')
+    delete attrs.mime
+
+    return <audio {...attrs} />
+}
+
+export const AUDIO = block('audio', de_audio, 'audio', se_audio)
+
+/**
+ * Process data for video.
+ */
+function de_video(el) {
+    const data = {
+        mime: el.getAttribute('mime-type'),
+        src: el.getAttribute('src'),
+    }
+    if (el.hasAttribute('for')) {
+        data.for = el.getAttribute('for')
+    }
+
+    return {
+        type: 'video',
+        isVoid: true,
+        data,
+    }
+}
+
+/**
+ * Serializer for video.
+ */
+function se_video(obj) {
+    const attrs = obj.data.toJS()
+    attrs['mime-type'] = obj.data.get('mime')
+    delete attrs.mime
+
+    return <video {...attrs} />
+}
+
+export const VIDEO = block('video', de_video, 'video', se_video)
 
 /**
  * Process data for list nodes.
@@ -347,6 +415,7 @@ export const TITLE = block('title', text('title'), 'title', 'title')
 export const DOCUMENT = [
     ADMONITION,
     ALT_TEXT,
+    AUDIO,
     FIGURE_CAPTION,
     CODE,
     COMMENTARY,
@@ -368,4 +437,5 @@ export const DOCUMENT = [
     SOLUTION,
     STATEMENT,
     TITLE,
+    VIDEO,
 ]
