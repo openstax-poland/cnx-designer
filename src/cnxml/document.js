@@ -119,7 +119,7 @@ function se_figure(obj, children) {
             : {
                 ...el,
                 type: 'subfigure',
-            }
+            },
         )}
     </figure>
 }
