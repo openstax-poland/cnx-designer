@@ -6,7 +6,9 @@
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "private": true,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@babel/runtime": "^7.1.5",
     "immutable": "^3.8.2",
@@ -33,6 +35,7 @@
     "eslint": "^6.5.1",
     "eslint-config-openstax-poland": "https://github.com/openstax-poland/eslint-config-openstax-poland.git",
     "eslint-plugin-react": "^7.16.0",
+    "husky": "^3.0.9",
     "jsdom": "^15.0.0",
     "mocha": "^6.0.0",
     "nyc": "^14.1.1",
@@ -61,5 +64,11 @@
     "prepare": "cross-env NODE_ENV=build rollup -c && stylus -o dist/index.css -d -m src/index.styl",
     "test": "mocha",
     "coverage": "nyc --reporter text --reporter html mocha"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint",
+      "pre-push": "yarn test && yarn build"
+    }
   }
 }
