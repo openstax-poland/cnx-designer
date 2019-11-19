@@ -164,7 +164,7 @@ function se_list(obj, children) {
         ? { class: obj.data.get('class').join(' ') }
         : {}
 
-    return <list list-type={type} {...attrs}>
+    return <list id={obj.key} list-type={type} {...attrs}>
         {children}
     </list>
 }
@@ -205,7 +205,7 @@ function de_media(el, next) {
 function se_media(obj, children) {
     const mediaAlt = obj.nodes.find(c => c.type === 'media_alt')
 
-    return <media alt={mediaAlt.text}>
+    return <media id={obj.key} alt={mediaAlt.text}>
         {children}
     </media>
 }

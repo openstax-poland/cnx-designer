@@ -18,24 +18,20 @@ function se_meaning(obj, children) {
     const meaning_children = []
     const examples = []
 
-    children.forEach(c => {
+    for (const c of children) {
         if (c.type === 'example') {
             examples.push(c)
         } else {
             meaning_children.push(c)
         }
-    })
-
-    if (examples.length === 0) {
-        return <meaning>
-            {meaning_children}
-        </meaning>
     }
 
+    const meaning = <meaning id={obj.key}>
+        {meaning_children}
+    </meaning>
+
     return <>
-        <meaning>
-            {meaning_children}
-        </meaning>
+        {meaning}
         {examples}
     </>
 }
