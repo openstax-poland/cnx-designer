@@ -11,13 +11,16 @@ import * as queries from './queries'
 /**
  * @param {string[]} options.content - List of block node types allowed within
  *                                     an definition_meaning/example.
+ * @param {string[]} options.inlines - List of inline node types allowed within
+ *                                     an definition_term.
  */
 export default function Definition(options={}) {
     const {
         content = ['paragraph'],
+        inlines = [],
     } = options
 
-    const schema = make_schema({ content })
+    const schema = make_schema({ content, inlines })
 
     return { commands, queries, onKeyDown, schema, renderBlock }
 }

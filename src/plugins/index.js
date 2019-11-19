@@ -169,6 +169,7 @@ export function Document(options={}) {
  *                                            allowed as children of document
  * @param {string[]|null} options.marks List of additional mark types allowed
  *                                      in text content.
+ * @param {object} options.definition additional options for definition plugin.
  * @param {object} options.text options for `TextContent`
  * @param {object} options.list options for `slate-edit-list`
  */
@@ -198,7 +199,7 @@ export function Glossary(options={}) {
     ]
 
     return [
-        Definition({ content }),
+        Definition({ content, ...options.definition }),
         GlossaryDocument({ content: glossary_content }),
         List(list),
         TextContent({
