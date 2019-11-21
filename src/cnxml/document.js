@@ -293,6 +293,336 @@ export const SECTION = block('section', 'section', 'section', 'section')
 export const SOLUTION = block(
     'solution', 'exercise_solution', 'exercise_solution', 'solution')
 
+/**
+ * Process data for table nodes.
+ */
+function de_table(el, next) {
+    const nodes = next(Array.from(el.children))
+    const data = {}
+    Array.from(el.attributes).forEach(a => {
+        data[a.name] = Number(a.value) >= 0 ? Number(a.value) : a.value
+    })
+    return {
+        type: 'table',
+        data,
+        nodes,
+    }
+}
+
+/**
+ * Serializer for table.
+ */
+function se_table(obj, children) {
+    const summary = obj.nodes.find(c => c.type === 'table_summary')
+
+    return <table
+        id={obj.key}
+        {...obj.data.toJS()}
+        summary={summary.text}
+        >
+        {children}
+    </table>
+}
+
+export const TABLE = block('table', de_table, 'table', se_table)
+
+/**
+ * Process data for table summary nodes.
+ */
+function de_table_summary(el, next) {
+    if (
+        el.namespaceURI === NAMESPACES.editing
+        && el.tagName === 'table-summary'
+    ) {
+        return {
+            type: 'table_summary',
+            nodes: next(Array.from(el.children)),
+        }
+    }
+
+    return undefined
+}
+
+/**
+ * Serializer for table_summary.
+ *
+ * Text from table_summary will always be saved in table summary attribute.
+ * If it can't be properly serialized, for ex. because of suggestions inside of
+ * it then additional <table-summary> will be added to the table block.
+ */
+function se_table_summary(obj, children) {
+    if (obj.type === 'table_summary') {
+        if (obj.nodes.some(n => n.object !== 'text')) {
+            return <table-summary
+                xmlns={NAMESPACES.editing}
+                >
+                {children}
+            </table-summary>
+        }
+
+        return null
+    }
+
+    return undefined
+}
+
+export const TABLE_SUMMARY = block(
+    'table-summary', de_table_summary, 'table_summary', se_table_summary)
+
+/**
+ * Process data for table captions.
+ */
+function de_table_caption(el, next) {
+    if (el.parentElement.tagName !== 'table') {
+        return undefined
+    }
+
+    return splitBlocks({
+        type: 'table_caption',
+        nodes: normalizeWhiteSpace(next(el.childNodes)),
+    })
+}
+
+export const TABLE_CAPTION = block(
+    'caption', de_table_caption, 'table_caption', 'caption')
+
+/**
+ * Process data for tgroup nodes.
+ */
+function de_table_tgroup(el, next) {
+    const nodes = next(Array.from(el.children))
+    const data = {}
+    Array.from(el.attributes).forEach(a => {
+        data[a.name] = Number(a.value) >= 0 ? Number(a.value) : a.value
+    })
+    return {
+        type: 'table_tgroup',
+        data,
+        nodes,
+    }
+}
+
+/**
+ * Serializer for tgroup.
+ */
+function se_table_tgroup(obj, children) {
+    return <tgroup
+        id={obj.key}
+        {...obj.data.toJS()}
+        >
+        {children}
+    </tgroup>
+}
+
+export const TABLE_TGROUP = block(
+    'tgroup', de_table_tgroup, 'table_tgroup', se_table_tgroup)
+
+/**
+ * Process data for colspec nodes.
+ */
+function de_table_colspec(el, next) {
+    const nodes = next(Array.from(el.children))
+    const data = {}
+    Array.from(el.attributes).forEach(a => {
+        data[a.name] = Number(a.value) >= 0 ? Number(a.value) : a.value
+    })
+    return {
+        type: 'table_colspec',
+        data,
+        nodes,
+    }
+}
+
+/**
+ * Serializer for colspec.
+ */
+function se_table_colspec(obj) {
+    return <colspec id={obj.key} {...obj.data.toJS()} />
+}
+
+export const TABLE_COLSPEC = block(
+    'colspec', de_table_colspec, 'table_colspec', se_table_colspec)
+
+/**
+ * Process data for spanspec nodes.
+ */
+function de_table_spanspec(el, next) {
+    const nodes = next(Array.from(el.children))
+    const data = {}
+    Array.from(el.attributes).forEach(a => {
+        data[a.name] = Number(a.value) >= 0 ? Number(a.value) : a.value
+    })
+    return {
+        type: 'table_spanspec',
+        data,
+        nodes,
+    }
+}
+
+/**
+ * Serializer for spanspec.
+ */
+function se_table_spanspec(obj) {
+    return <spanspec id={obj.key} {...obj.data.toJS()} />
+}
+
+export const TABLE_SPANSPEC = block(
+    'spanspec', de_table_spanspec, 'table_spanspec', se_table_spanspec)
+
+/**
+ * Process data for thead nodes.
+ */
+function de_table_thead(el, next) {
+    const nodes = next(Array.from(el.children))
+    const data = {}
+    Array.from(el.attributes).forEach(a => {
+        data[a.name] = Number(a.value) >= 0 ? Number(a.value) : a.value
+    })
+    return {
+        type: 'table_thead',
+        data,
+        nodes,
+    }
+}
+
+/**
+ * Serializer for thead.
+ */
+function se_table_thead(obj, children) {
+    return <thead
+        id={obj.key}
+        {...obj.data.toJS()}
+        >
+        {children}
+    </thead>
+}
+
+export const TABLE_THEAD = block(
+    'thead', de_table_thead, 'table_thead', se_table_thead)
+
+/**
+ * Process data for tbody nodes.
+ */
+function de_table_tbody(el, next) {
+    const nodes = next(Array.from(el.children))
+    const data = {}
+    Array.from(el.attributes).forEach(a => {
+        data[a.name] = Number(a.value) >= 0 ? Number(a.value) : a.value
+    })
+    return {
+        type: 'table_tbody',
+        data,
+        nodes,
+    }
+}
+
+/**
+ * Serializer for tbody.
+ */
+function se_table_tbody(obj, children) {
+    return <tbody
+        id={obj.key}
+        {...obj.data.toJS()}
+        >
+        {children}
+    </tbody>
+}
+
+export const TABLE_TBODY = block(
+    'tbody', de_table_tbody, 'table_tbody', se_table_tbody)
+
+/**
+ * Process data for tfoot nodes.
+ */
+function de_table_tfoot(el, next) {
+    const nodes = next(Array.from(el.children))
+    const data = {}
+    Array.from(el.attributes).forEach(a => {
+        data[a.name] = Number(a.value) >= 0 ? Number(a.value) : a.value
+    })
+    return {
+        type: 'table_tfoot',
+        data,
+        nodes,
+    }
+}
+
+/**
+ * Serializer for tfoot.
+ */
+function se_table_tfoot(obj, children) {
+    return <tfoot
+        id={obj.key}
+        {...obj.data.toJS()}
+        >
+        {children}
+    </tfoot>
+}
+
+export const TABLE_TFOOT = block(
+    'tfoot', de_table_tfoot, 'table_tfoot', se_table_tfoot)
+
+/**
+ * Process data for row nodes.
+ */
+function de_table_row(el, next) {
+    const nodes = next(Array.from(el.children))
+    const data = {}
+    Array.from(el.attributes).forEach(a => {
+        data[a.name] = Number(a.value) >= 0 ? Number(a.value) : a.value
+    })
+    return {
+        type: 'table_row',
+        data,
+        nodes,
+    }
+}
+
+/**
+ * Serializer for row.
+ */
+function se_table_row(obj, children) {
+    return <row
+        id={obj.key}
+        {...obj.data.toJS()}
+        >
+        {children}
+    </row>
+}
+
+export const TABLE_ROW = block(
+    'row', de_table_row, 'table_row', se_table_row)
+
+/**
+ * Process data for entry nodes.
+ */
+function de_table_entry(el, next) {
+    const data = {}
+    Array.from(el.attributes).forEach(a => {
+        data[a.name] = Number(a.value) >= 0 ? Number(a.value) : a.value
+    })
+    return {
+        type: 'table_entry',
+        data,
+        nodes: normalizeWhiteSpace(next(el.childNodes)),
+    }
+}
+
+/**
+ * Serializer for entry.
+ */
+function se_table_entry(obj, children) {
+    return <entry
+        id={obj.key}
+        {...obj.data.toJS()}
+        >
+        {children}
+    </entry>
+}
+
+export const TABLE_ENTRY = block(
+    'entry', de_table_entry, 'table_entry', se_table_entry)
+
 export const TITLE = block('title', text('title'), 'title', 'title')
 
 export const DOCUMENT = [
@@ -314,5 +644,16 @@ export const DOCUMENT = [
     QUOTE,
     SECTION,
     SOLUTION,
+    TABLE,
+    TABLE_CAPTION,
+    TABLE_COLSPEC,
+    TABLE_ENTRY,
+    TABLE_ROW,
+    TABLE_SPANSPEC,
+    TABLE_SUMMARY,
+    TABLE_TBODY,
+    TABLE_TFOOT,
+    TABLE_TGROUP,
+    TABLE_THEAD,
     TITLE,
 ]

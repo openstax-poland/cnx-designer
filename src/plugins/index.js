@@ -15,6 +15,7 @@ import Media from './media'
 import Preformat from './preformat'
 import Quotation from './quotation'
 import Section from './section'
+import Table from './table'
 import Term from './term'
 import Text from './text'
 import Title from './title'
@@ -35,6 +36,7 @@ export {
     Preformat,
     Quotation,
     Section,
+    Table,
     Term,
     Text,
     Title,
@@ -90,6 +92,7 @@ export function TextContent(options=DEFAULT_TEXT_OPTIONS) {
  * @param {string[]|null} options.marks List of additional mark types allowed
  *                                      in text content.
  * @param {string[]} options.media options for media plugin.
+ * @param {object} options.table options for table plugin.
  * @param {object} options.text options for `TextContent`
  * @param {object} options.list options for `slate-edit-list`
  */
@@ -102,6 +105,7 @@ export function Document(options={}) {
                 'paragraph',
             ],
         },
+        table = {},
     } = options
 
     const content = [
@@ -122,6 +126,7 @@ export function Document(options={}) {
         'exercise',
         'figure',
         'section',
+        'table',
     ]
 
     const marks = [
@@ -140,10 +145,23 @@ export function Document(options={}) {
         'section',
     ]
 
+    const table_entry_types = [
+        ...table.entry_types || [],
+        'code',
+        'paragraph',
+        'preformat',
+        'ol_list',
+        'ul_list',
+    ]
+
     return [
         Admonition({
             title: 'title',
             content,
+        }),
+        Table({
+            ...table,
+            entry_types: table_entry_types,
         }),
         TextContent({
             marks: options.marks,
