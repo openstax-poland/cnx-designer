@@ -125,6 +125,12 @@ const BLOCK_NODES = [
     'seealso',
     'solution',
     'subfigure',
+    'table',
+    'tgroup',
+    'thead',
+    'tfoot',
+    'row',
+    'entry',
 ]
 
 const MIXED_NODES = [
