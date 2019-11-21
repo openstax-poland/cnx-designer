@@ -165,6 +165,8 @@ function deserializeBlock(el, next, block) {
             nodes: next(Array.from(el.children)),
         }
 
+    if (!props) return undefined
+
     if (props instanceof Array) {
         props[0].key = props[0].key || el.getAttribute('id') || undefined
 
