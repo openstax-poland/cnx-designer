@@ -175,6 +175,9 @@ export function Document(options={}) {
  */
 export function Glossary(options={}) {
     const {
+        definition = {
+            content: [],
+        },
         list = {
             content: [
                 'ul_list',
@@ -193,13 +196,21 @@ export function Glossary(options={}) {
         'code',
     ]
 
+    const definition_content = [
+        ...content,
+        ...definition.content || [],
+    ]
+
     const glossary_content = [
-        ...options.document_content || [],
+        ...options.glossary_content || [],
         'definition',
     ]
 
     return [
-        Definition({ content, ...options.definition }),
+        Definition({
+            ...definition,
+            content: definition_content,
+        }),
         GlossaryDocument({ content: glossary_content }),
         List(list),
         TextContent({
