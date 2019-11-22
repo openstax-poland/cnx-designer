@@ -131,8 +131,9 @@ function normalizeSeeAlso(change, error) {
     }
 }
 
-export default function schema({ content }) {
+export default function schema({ content, inlines }) {
     const content_types = content.map(type => ({ type }))
+    const inline_types = inlines.map(type => ({ type }))
 
     return {
         blocks: {
@@ -150,6 +151,12 @@ export default function schema({ content }) {
                     { match: { type: 'definition' } },
                     { match: { type: 'definition_seealso' } },
                 ],
+                nodes: [{
+                    match: [
+                        ...inline_types,
+                        { object: 'text' },
+                    ],
+                }],
                 normalize: normalizeTerm,
             },
             definition_meaning: {
