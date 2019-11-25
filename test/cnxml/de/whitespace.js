@@ -22,7 +22,7 @@ export const input = cnxml`
 
 <figure>
     <media alt="Alt">
-        <image src="example.png" />
+        <image src="example.png" mime-type="image/png"/>
     </media>
     <caption>
         excessive      white  space
@@ -46,7 +46,7 @@ export const outputContent = <value>
         </note>
         <figure class={List()}>
             <media alt="Alt">
-                <img src="example.png"><text/></img>
+                <img src="example.png" mime="image/png"><text/></img>
                 <mediaalt>Alt</mediaalt>
             </media>
             <figcaption>excessive white space</figcaption>

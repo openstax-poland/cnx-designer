@@ -129,17 +129,30 @@ export const FIGURE = block(
 /**
  * Process data for images.
  */
-function image(el) {
+function de_image(el) {
     return {
         type: 'image',
         isVoid: true,
         data: {
             src: el.getAttribute('src'),
+            mime: el.getAttribute('mime-type'),
         },
     }
 }
 
-export const IMAGE = block('image', image, 'image', 'image')
+/**
+ * Serializer for images.
+ */
+function se_image(obj) {
+    const attrs = {
+        src: obj.data.get('src'),
+        'mime-type': obj.data.get('mime'),
+    }
+
+    return <image {...attrs} />
+}
+
+export const IMAGE = block('image', de_image, 'image', se_image)
 
 /**
  * Process data for list nodes.

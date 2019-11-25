@@ -22,7 +22,7 @@ import { Block, Range, Text } from 'slate'
 export function insertFigure(change, media) {
     const image = Block.create({
         type: media.mime.split('/', 1)[0],
-        data: { src: media.name },
+        data: { src: media.name, mime: media.mime },
     })
     const media_node = Block.create({
         type: 'media',
@@ -66,7 +66,7 @@ export function insertSubfigure(change, media) {
 
     const image = Block.create({
         type: media.mime.split('/', 1)[0],
-        data: { src: media.name },
+        data: { src: media.name, mime: media.mime },
     })
 
     const media_node = Block.create({

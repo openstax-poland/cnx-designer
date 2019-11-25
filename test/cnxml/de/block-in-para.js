@@ -7,7 +7,7 @@ export const input = cnxml`
         <item>List item</item>
     </list>More text<figure id="f1">
         <media alt="This should not be inline">
-            <image src="f1.png" />
+            <image src="f1.png" mime-type="image/png" />
         </media>
     </figure>Even more text</para>
 `
@@ -23,7 +23,7 @@ export const outputContent = <value>
         <p>More text</p>
         <figure key="f1" class={List()}>
             <media alt="This should not be inline">
-                <img src="f1.png"><text/></img>
+                <img src="f1.png" mime="image/png"><text/></img>
                 <mediaalt>This should not be inline</mediaalt>
             </media>
         </figure>

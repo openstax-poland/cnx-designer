@@ -4,7 +4,7 @@ export const inputContent = <value>
     <document>
         <figure key="f1">
             <media>
-                <img src="f1.png"><text/></img>
+                <img src="f1.png" mime="image/png"><text/></img>
                 <mediaalt>Figure content</mediaalt>
             </media>
             <figcaption>Figure caption</figcaption>
@@ -15,7 +15,7 @@ export const inputContent = <value>
 export const output = cnxml`
 <figure id="f1">
     <media alt="Figure content">
-        <image src="f1.png" />
+        <image src="f1.png" mime-type="image/png" />
     </media>
     <caption>Figure caption</caption>
 </figure>

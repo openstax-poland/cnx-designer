@@ -64,6 +64,11 @@ export default function schema({ inlines }) {
                 isVoid: true,
                 data: {
                     src: Boolean,
+                    // mime should be required, but since it wasn't earlier
+                    // some drafts doesn't have it.
+                    // Remove check for null after few weeks when all images
+                    // will have mime set by front end (adaptarr-front).
+                    mime: m => m == null || typeof m === 'string',
                 },
             },
         },
