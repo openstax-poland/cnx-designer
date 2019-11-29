@@ -15,7 +15,5 @@ export function v4() {
     window.crypto.getRandomValues(r)
     r[6] = 0x40 | (r[6] & 0x0f)
     r[8] = 0x40 | (r[8] & 0x3f)
-    // XXX: Temporarily we omit hyphens, as Slate currently doesn't allow them
-    // in identifiers. See ianstormtaylor/slate#474.
-    return `${s(0, 4)}-${s(4, 6)}-${s(6, 8)}-${s(8, 16)}`
+    return `${s(0, 4)}-${s(4, 6)}-${s(6, 8)}-${s(8, 10)}-${s(10, 16)}`
 }
