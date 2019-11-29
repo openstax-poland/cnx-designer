@@ -39,19 +39,16 @@ const summaryValidation = s => typeof s === 'string'
 const valignValidation = va => va == null || VALIGN_OPTIONS.includes(va)
 
 function moveNodeBeforeParent(change, node) {
-    console.log('moveNodeBeforeParent')
     const document = change.value.document
     const parent = document.getParent(node.key)
     const grandParent = document.getParent(parent.key) || document
     const parentIndex = grandParent.nodes.findIndex(n => n.key === parent.key)
     const newIndexForNode = parentIndex
-    console.log('parent', parent.type, 'grandParent', grandParent.object, 'newIndexForNode', newIndexForNode)
     change.moveNodeByKey(node.key, grandParent.key, newIndexForNode)
 }
 
 function normalizeTable(change, error) {
-    const { code: violation, child, index, key, value, node } = error
-    console.log('normalizeTable', violation, 'index', index, 'child', child ? child.type : null, 'key', key, 'value', value, 'nodes', node ? node.toJS().nodes.map(n => n.type) : node)
+    const { code: violation, child, index, node } = error
 
     switch (violation) {
     case 'child_min_invalid': {
@@ -105,9 +102,6 @@ function normalizeTable(change, error) {
         moveNodeBeforeParent(change, child)
         break
 
-        // console.warn('Unhandled table violation:', violation)
-        // break
-
     default:
         console.warn('Unhandled table violation:', violation)
         break
@@ -119,8 +113,7 @@ function normalizeTsummary(change, error) {
 }
 
 function normalizeTgroup(change, error) {
-    const { code: violation, child, index, key, value, node } = error
-    console.log('normalizeTgroup', violation, 'index', index, 'child', child ? child.type : null, 'key', key, 'value', value, 'nodes', node ? node.toJS().nodes.map(n => n.type) : node)
+    const { code: violation, child, key, value, node } = error
 
     switch (violation) {
     case 'child_min_invalid': {
@@ -148,7 +141,9 @@ function normalizeTgroup(change, error) {
             change.moveNodeByKey(
                 child.key,
                 node.key,
-                lastIndexOfColspec < 0 ? 0 : node.nodes.size - lastIndexOfColspec)
+                lastIndexOfColspec < 0
+                    ? 0
+                    : node.nodes.size - lastIndexOfColspec)
             return
         } else if (child.type === 'table_tfoot') {
             change.moveNodeByKey(child.key, node.key, node.nodes.size)
@@ -157,8 +152,6 @@ function normalizeTgroup(change, error) {
 
         moveNodeBeforeParent(change, child)
         break
-        // console.warn('Unhandled tgroup violation:', error.code)
-        // break
 
     case 'node_data_invalid':
         if (key === 'cols' && Number(value) > 0) {
@@ -186,8 +179,7 @@ function normalizeSpanspec(change, error) {
 }
 
 function normalizeThead(change, error) {
-    const { code: violation, child, index, key, value, node } = error
-    console.log('normalizeThead', violation, 'index', index, 'child', child ? child.type : null, 'key', key, 'value', value, 'nodes', node ? node.toJS().nodes.map(n => n.type) : node)
+    const { code: violation, child } = error
 
     switch (violation) {
     case 'child_type_invalid':
@@ -201,8 +193,7 @@ function normalizeThead(change, error) {
 }
 
 function normalizeTbody(change, error) {
-    const { code: violation, child, index, key, value, node } = error
-    console.log('normalizeTbody', violation, 'index', index, 'child', child ? child.type : null, 'key', key, 'value', value, 'nodes', node ? node.toJS().nodes.map(n => n.type) : node)
+    const { code: violation, child } = error
 
     switch (violation) {
     case 'child_type_invalid':
@@ -216,8 +207,7 @@ function normalizeTbody(change, error) {
 }
 
 function normalizeTfoot(change, error) {
-    const { code: violation, child, index, key, value, node } = error
-    console.log('normalizeTfoot', violation, 'index', index, 'child', child ? child.type : null, 'key', key, 'value', value, 'nodes', node ? node.toJS().nodes.map(n => n.type) : node)
+    const { code: violation, child } = error
 
     switch (violation) {
     case 'child_type_invalid':
@@ -231,8 +221,7 @@ function normalizeTfoot(change, error) {
 }
 
 function normalizeRow(change, error) {
-    const { code: violation, child, index, key, value, node } = error
-    console.log('normalizeRow', violation, 'index', index, 'child', child ? child.type : null, 'key', key, 'value', value, 'nodes', node ? node.toJS().nodes.map(n => n.type) : node)
+    const { code: violation, child } = error
 
     switch (violation) {
     case 'child_type_invalid':
@@ -246,8 +235,7 @@ function normalizeRow(change, error) {
 }
 
 function normalizeEntry(change, error) {
-    const { code: violation, child, index, key, value, node } = error
-    console.log('normalizeEntry', violation, 'index', index, 'child', child ? child.type : null, 'key', key, 'value', value, 'nodes', node ? node.toJS().nodes.map(n => n.type) : node)
+    const { code: violation, child, node } = error
 
     switch (violation) {
     case 'child_min_invalid':
