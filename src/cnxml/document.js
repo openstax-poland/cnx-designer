@@ -216,9 +216,13 @@ function de_media(el, next) {
  * Serializer for media.
  */
 function se_media(obj, children) {
+    const attrs = {}
     const mediaAlt = obj.nodes.find(c => c.type === 'media_alt')
+    if (mediaAlt.nodes.every(n => n.object === 'text')) {
+        attrs.alt = mediaAlt.text
+    }
 
-    return <media id={obj.key} alt={mediaAlt.text}>
+    return <media id={obj.key} {...attrs}>
         {children}
     </media>
 }
