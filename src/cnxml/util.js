@@ -75,17 +75,18 @@ import { normalizeWhiteSpace } from './whitespace'
  * @param {BlockDeserializer|string|null} de
  * @param {string|string[]|null} tagName
  * @param {BlockSerializer|string|null} se
+ * @param {boolean} withClasses
  *
  * @see makeTest
  */
-export function block(tagName, de, type, se) {
+export function block(tagName, de, type, se, withClasses=true) {
     const test_de = makeTest(tagName)
     const test_se = makeTest(type)
 
     return {
         deserialize(el, next) {
             if (test_de(el.tagName)) {
-                return deserializeBlock(el, next, de)
+                return deserializeBlock(el, next, de, withClasses)
             }
 
             return undefined
@@ -154,13 +155,13 @@ function makeTest(type) {
  *
  * @see block
  */
-function deserializeBlock(el, next, block) {
+function deserializeBlock(el, next, block, withClasses) {
     const props = block instanceof Function
         ? block(el, next)
         : {
             type: block,
             data: {
-                class: loadClasses(el),
+                class: withClasses && loadClasses(el),
             },
             nodes: next(Array.from(el.children)),
         }
@@ -172,9 +173,16 @@ function deserializeBlock(el, next, block) {
             if (!node.object) {
                 node.object = 'block'
             }
+            if (node.data && !withClasses) {
+                delete node.data.class
+            }
         }
 
         return props
+    }
+
+    if (props.data && !withClasses) {
+        delete props.data.class
     }
 
     return {

@@ -101,6 +101,9 @@ export const COMMENTARY = block(
     'commentary',
 )
 
+export const EXAMPLE = block(
+    'example', 'rule_example', 'rule_example', 'example', false)
+
 export const EXERCISE = block('exercise', 'exercise', 'exercise', 'exercise')
 
 /**
@@ -299,12 +302,41 @@ export const PREFORMAT = block(
 export const PROBLEM = block(
     'problem', 'exercise_problem', 'exercise_problem', 'problem')
 
+export const PROOF = block('proof', 'rule_proof', 'rule_proof', 'proof', false)
+
 export const QUOTE = block('quote', mixed('quotation'), 'quotation', 'quote')
+
+function de_rule(el, next) {
+    return {
+        type: 'rule',
+        data: {
+            class: loadClasses(el),
+            type: el.getAttribute('type') || 'rule',
+        },
+        nodes: next(Array.from(el.children)),
+    }
+}
+
+function se_rule(obj, children) {
+    const attrs = {}
+    const type = obj.data.get('type')
+
+    if (type !== 'rule') {
+        attrs.type = type
+    }
+
+    return <rule id={obj.key} {...attrs}>{children}</rule>
+}
+
+export const RULE = block('rule', de_rule, 'rule', se_rule)
 
 export const SECTION = block('section', 'section', 'section', 'section')
 
 export const SOLUTION = block(
     'solution', 'exercise_solution', 'exercise_solution', 'solution')
+
+export const STATEMENT = block(
+    'statement', 'rule_statement', 'rule_statement', 'statement', false)
 
 export const TITLE = block('title', text('title'), 'title', 'title')
 
@@ -314,6 +346,7 @@ export const DOCUMENT = [
     FIGURE_CAPTION,
     CODE,
     COMMENTARY,
+    EXAMPLE,
     EXERCISE,
     FIGURE,
     IMAGE,
@@ -324,8 +357,11 @@ export const DOCUMENT = [
     PARA,
     PREFORMAT,
     PROBLEM,
+    PROOF,
     QUOTE,
+    RULE,
     SECTION,
     SOLUTION,
+    STATEMENT,
     TITLE,
 ]
