@@ -4,7 +4,7 @@
 
 import * as React from 'react'
 
-export default function renderBlock({ node, children }, _, next) {
+export default function renderBlock({ attributes, node, children }, _, next) {
     switch (node.type) {
     case 'table': {
         const classes = ['table']
@@ -17,18 +17,18 @@ export default function renderBlock({ node, children }, _, next) {
         if (node.data.has('rowsep')) {
             classes.push(`rowsep--${Boolean(node.data.get('rowsep'))}`)
         }
-        return <div className={classes.join(' ')}>
+        return <div className={classes.join(' ')} {...attributes}>
             {children}
         </div>
     }
 
     case 'table_summary':
-        return <div className="table__summary">
+        return <div className="table__summary" {...attributes}>
             {children}
         </div>
 
     case 'table_caption':
-        return <div className="table__caption">
+        return <div className="table__caption" {...attributes}>
             {children}
         </div>
 
@@ -49,18 +49,18 @@ export default function renderBlock({ node, children }, _, next) {
         if (node.data.has('char')) {
             classes.push(`char--${node.data.get('char')}`)
         }
-        return <table className={classes.join(' ')} {...attrs}>
+        return <table className={classes.join(' ')} {...attrs} {...attributes}>
             {children}
         </table>
     }
 
     case 'table_colspec':
-        return <div className="table__colspec">
+        return <div className="table__colspec" {...attributes}>
             {children}
         </div>
 
     case 'table_spanspec':
-        return <div className="table__spanspec">
+        return <div className="table__spanspec" {...attributes}>
             {children}
         </div>
 
@@ -69,7 +69,7 @@ export default function renderBlock({ node, children }, _, next) {
         if (node.data.has('valign')) {
             classes.push(`valign--${node.data.get('valign')}`)
         }
-        return <thead className={classes.join(' ')}>
+        return <thead className={classes.join(' ')} {...attributes}>
             {children}
         </thead>
     }
@@ -79,7 +79,7 @@ export default function renderBlock({ node, children }, _, next) {
         if (node.data.has('valign')) {
             classes.push(`valign--${node.data.get('valign')}`)
         }
-        return <tbody className={classes.join(' ')}>
+        return <tbody className={classes.join(' ')} {...attributes}>
             {children}
         </tbody>
     }
@@ -89,7 +89,7 @@ export default function renderBlock({ node, children }, _, next) {
         if (node.data.has('valign')) {
             classes.push(`valign--${node.data.get('valign')}`)
         }
-        return <tfoot className={classes.join(' ')}>
+        return <tfoot className={classes.join(' ')} {...attributes}>
             {children}
         </tfoot>
     }
@@ -103,7 +103,7 @@ export default function renderBlock({ node, children }, _, next) {
         if (node.data.has('valign')) {
             classes.push(`valign--${node.data.get('valign')}`)
         }
-        return <tr className={classes.join(' ')}>
+        return <tr className={classes.join(' ')} {...attributes}>
             {children}
         </tr>
     }
@@ -128,7 +128,7 @@ export default function renderBlock({ node, children }, _, next) {
         if (node.data.has('valign')) {
             classes.push(`valign--${node.data.get('valign')}`)
         }
-        return <td className={classes.join(' ')} {...attrs}>
+        return <td className={classes.join(' ')} {...attrs} {...attributes}>
             {children}
         </td>
     }
