@@ -68,6 +68,57 @@ export function insertTable(change, options) {
 }
 
 /**
+ * Insert column at @param index in selected table.
+ *
+ * @param {Slate~Change} change
+ * @param {number} index
+ */
+export function insertColumnAtIndex(change, index = 0) {
+    const tgroup = change.getActiveTableNode('table_tgroup')
+    if (!tgroup) return false
+
+    const tbody = change.getActiveTableNode('table_tbody')
+    const thead = change.getActiveTableNode('table_thead')
+    const tfoot = change.getActiveTableNode('table_tfoot')
+
+    change.withoutNormalizing(() => {
+        for (const row of tbody.nodes) {
+            const entry = Block.create({
+                type: 'table_entry',
+                nodes: [{ object: 'block', type: 'paragraph' }],
+            })
+            change.insertNodeByKey(row.key, index, entry)
+        }
+
+        if (thead) {
+            for (const row of thead.nodes) {
+                const entry = Block.create({
+                    type: 'table_entry',
+                    nodes: [{ object: 'block', type: 'paragraph' }],
+                })
+                change.insertNodeByKey(row.key, index, entry)
+            }
+        }
+
+        if (tfoot) {
+            for (const row of tfoot.nodes) {
+                const entry = Block.create({
+                    type: 'table_entry',
+                    nodes: [{ object: 'block', type: 'paragraph' }],
+                })
+                change.insertNodeByKey(row.key, index, entry)
+            }
+        }
+
+        change.setNodeByKey(tgroup.key, {
+            data: tgroup.data.set('cols', Number(tgroup.data.get('cols')) + 1),
+        })
+    })
+
+    return true
+}
+
+/**
  * Insert column before or after current column.
  *
  * @param {Slate~Change} change
@@ -137,15 +188,16 @@ export function insertColumn(change, position = 'after') {
 }
 
 /**
- * Insert row before or after current row.
+ * Insert row before or after @param refRow or current row.
  *
  * @param {Slate~Change} change
+ * @param {Slate~Block}  [refRow=null]
  * @param {before|after} [position=after]
  */
-export function insertRow(change, position = 'after') {
-    const tbody = change.getActiveTableNode('table_tbody')
-    const currRow = change.getActiveTableNode('table_row')
-    if (!tbody || !currRow) return false
+export function insertRow(change, refRow = null, position = 'after') {
+    const table = change.getActiveTableNode('table')
+    const currRow = refRow || change.getActiveTableNode('table_row')
+    if (!table || !currRow) return false
 
     const newRowData = {
         object: 'block',
@@ -159,13 +211,14 @@ export function insertRow(change, position = 'after') {
             nodes: [],
         })
     }
-
-    const currRowIndex = tbody.nodes.findIndex(row => row.key === currRow.key)
-
     const newRow = Block.create(newRowData)
+
+    const parent = table.getParent(currRow.key)
+    const currRowIndex = parent.nodes.findIndex(row => row.key === currRow.key)
+
     const entryToSelect = newRow.findDescendant(n => n.type === 'table_entry')
     change.insertNodeByKey(
-        tbody.key,
+        parent.key,
         position === 'after' ? currRowIndex + 1 : currRowIndex,
         newRow)
         .moveTo(entryToSelect.key)

@@ -1,6 +1,6 @@
 /** @jsx h */
 
-export default editor => editor.insertRow('before')
+export default editor => editor.insertRow(null, 'before')
 
 export const input = <value>
     <document>
