@@ -40,6 +40,7 @@ describe('Plugins', () => {
     fixtures(__dirname, 'list', testPlugin(CONTENT_PLUGINS))
     fixtures(__dirname, 'preformat', testPlugin(CONTENT_PLUGINS))
     fixtures(__dirname, 'quotation', testPlugin(CONTENT_PLUGINS))
+    fixtures(__dirname, 'rule', testPlugin(CONTENT_PLUGINS))
     fixtures(__dirname, 'section', testPlugin(CONTENT_PLUGINS))
     fixtures(__dirname, 'term', testPlugin(CONTENT_PLUGINS))
     fixtures(__dirname, 'text', testPlugin(CONTENT_PLUGINS))

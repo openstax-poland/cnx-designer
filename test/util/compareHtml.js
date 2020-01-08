@@ -121,9 +121,12 @@ const BLOCK_NODES = [
     'media',
     'preformat',
     'problem',
+    'proof',
+    'rule',
     'section',
     'seealso',
     'solution',
+    'statement',
     'subfigure',
 ]
 

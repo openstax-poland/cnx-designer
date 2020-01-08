@@ -14,6 +14,7 @@ import List from './list'
 import Media from './media'
 import Preformat from './preformat'
 import Quotation from './quotation'
+import Rule from './rule'
 import Section from './section'
 import Term from './term'
 import Text from './text'
@@ -34,6 +35,7 @@ export {
     Media,
     Preformat,
     Quotation,
+    Rule,
     Section,
     Term,
     Text,
@@ -113,6 +115,7 @@ export function Document(options={}) {
         'ol_list',
         'code',
         'figure',
+        'rule',
     ]
 
     const document_content = [
@@ -122,6 +125,7 @@ export function Document(options={}) {
         'exercise',
         'figure',
         'section',
+        'rule',
     ]
 
     const marks = [
@@ -154,6 +158,7 @@ export function Document(options={}) {
         List(list),
         Media({ ...options.media }),
         Quotation({ content }),
+        Rule({ content }),
         Section({ content: document_content }),
         Title({ marks }),
         Classes({ types: class_types }),

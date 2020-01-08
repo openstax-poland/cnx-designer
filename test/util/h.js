@@ -30,8 +30,15 @@ export default global.h = createHyperscript({
         ol: 'ol_list',
         p: 'paragraph',
         preformat: 'preformat',
+        proof: 'rule_proof',
         quote: 'quotation',
+        rule: {
+            type: 'rule',
+            data: { type: 'rule' },
+        },
+        ruleexample: 'rule_example',
         section: 'section',
+        statement: 'rule_statement',
         tip: {
             type: 'admonition',
             data: { type: 'tip' },
