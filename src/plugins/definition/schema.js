@@ -147,6 +147,9 @@ export default function schema({ content, inlines }) {
                 normalize: normalizeDefinition,
             },
             definition_term: {
+                data: {
+                    reference: ref => ref == null || typeof ref === 'string',
+                },
                 parent: [
                     { match: { type: 'definition' } },
                     { match: { type: 'definition_seealso' } },

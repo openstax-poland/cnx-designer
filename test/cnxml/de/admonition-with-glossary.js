@@ -3,7 +3,9 @@
 import { List } from 'immutable'
 
 export const input = `
-<document xmlns="http://cnx.rice.edu/cnxml">
+<document
+  xmlns="http://cnx.rice.edu/cnxml"
+  xmlns:cmlnle="http://katalysteducation.org/cmlnle/1.0">
     <content>
         <note id="n1">
             <para>Notes' default type is ‘note’.</para>
@@ -26,6 +28,12 @@ export const input = `
             <seealso>
                 <term>Term</term>
             </seealso>
+        </definition>
+        <definition>
+            <term cmlnle:reference="other value">Other term</term>
+            <meaning>
+                <para>Meaning</para>
+            </meaning>
         </definition>
     </glossary>
 </document>`
@@ -58,6 +66,12 @@ export const outputGlossary = <value>
             <defseealso class={List()}>
                 <defterm>Term</defterm>
             </defseealso>
+        </definition>
+        <definition class={List()}>
+            <defterm reference="other value">Other term</defterm>
+            <defmeaning class={List()}>
+                <p>Meaning</p>
+            </defmeaning>
         </definition>
     </document>
 </value>

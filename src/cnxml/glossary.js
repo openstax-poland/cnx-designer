@@ -53,13 +53,43 @@ function de_term(el, next) {
         return undefined
     }
 
+    const data = {}
+
+    const reference = el.getAttributeNS(
+        'http://katalysteducation.org/cmlnle/1.0', 'reference')
+    if (
+        reference != null
+        && el.parentElement
+        && el.parentElement.tagName === 'definition'
+    ) {
+        data.reference = reference
+    }
+
     return {
         type: 'definition_term',
+        data,
         nodes: next(el.childNodes),
     }
 }
 
-export const DEFINITION_TERM = block('term', de_term, 'definition_term', 'term')
+/**
+ * Serializer for terms.
+ */
+function se_term(obj, children) {
+    const attrs = {}
+
+    const reference = obj.data.get('reference')
+    if (reference && reference !== obj.text) {
+        attrs.cmlnleReference = reference
+    }
+
+    return <term {...attrs}>
+        {children}
+    </term>
+}
+
+export const DEFINITION_TERM = block(
+    'term', de_term, 'definition_term', se_term)
 
 export const GLOSSARY = [
     DEFINITION,
