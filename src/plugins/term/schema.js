@@ -7,8 +7,7 @@ function normalizeTerm(change, error) {
 
     switch (code) {
     case 'child_object_invalid':
-        change.removeNodeByKey(child.key)
-        change.insertText(child.getText())
+        change.unwrapChildrenByKey(child.key)
         break
 
     /* istanbul ignore next */
