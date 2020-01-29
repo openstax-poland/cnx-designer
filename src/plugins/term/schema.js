@@ -3,10 +3,18 @@
 // full license text.
 
 function normalizeTerm(change, error) {
-    const { code, child } = error
+    const { code, child, node } = error
 
     switch (code) {
     case 'child_object_invalid':
+        if (child.type === 'foreign') {
+            // Swap <foreign> and <term>.
+            change.wrapInlineByKey(
+                node.key, { type: 'foreign', data: child.data })
+            change.unwrapChildrenByKey(child.key)
+            return
+        }
+
         change.unwrapChildrenByKey(child.key)
         break
 
