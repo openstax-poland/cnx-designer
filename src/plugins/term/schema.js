@@ -6,6 +6,7 @@ function normalizeTerm(change, error) {
     const { code, child, node } = error
 
     switch (code) {
+    case 'child_type_invalid':
     case 'child_object_invalid':
         if (child.type === 'foreign') {
             // Swap <foreign> and <term>.
