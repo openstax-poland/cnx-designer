@@ -15,7 +15,7 @@ export const inputContent = <value>
 export const inputGlossary = <value>
     <document>
         <definition>
-            <defterm>Term</defterm>
+            <defterm reference="other value">Term</defterm>
             <defmeaning>
                 <p>Meaning</p>
                 <defexample>
@@ -30,7 +30,9 @@ export const inputGlossary = <value>
 </value>
 
 export const output = `
-<document xmlns="http://cnx.rice.edu/cnxml">
+<document
+  xmlns="http://cnx.rice.edu/cnxml"
+  xmlns:cmlnle="http://katalysteducation.org/cmlnle/1.0">
     <content>
         <note id="n1" type="note">
             <para>Notes are serialized without the ‘type’ attribute</para>
@@ -42,7 +44,7 @@ export const output = `
     </content>
     <glossary>
         <definition>
-            <term>Term</term>
+            <term cmlnle:reference="other value">Term</term>
             <meaning>
                 <para>Meaning</para>
             </meaning>
