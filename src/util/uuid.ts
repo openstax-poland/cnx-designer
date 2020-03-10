@@ -1,17 +1,17 @@
-// Copyright 2018 OpenStax Poland
+// Copyright 2020 OpenStax Poland
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
 const r = new Uint8Array(16)
 
-function s(start, end) {
+function s(start: number, end: number): string {
     return Array.from(
         r.subarray(start, end),
         x => x.toString(16).padStart(2, '0'),
     ).join('')
 }
 
-export function v4() {
+export function v4(): string {
     window.crypto.getRandomValues(r)
     r[6] = 0x40 | (r[6] & 0x0f)
     r[8] = 0x40 | (r[8] & 0x3f)
