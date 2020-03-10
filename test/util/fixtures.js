@@ -23,10 +23,6 @@ export default function fixtures(...args) {
 
             // This needs to be a non-arrow function to use `this.skip()`.
             it(name, function runTest() {
-                // Ensure that the key generator is reset. We have to do this
-                // here because the `require` call will create
-                // the Slate objects.
-                KeyUtils.resetGenerator()
                 const module = require(p)
 
                 if (module.skip) {

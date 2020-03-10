@@ -5,61 +5,43 @@
   "repository": "github.com/katalysteducation/cnx-designer",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
+  "types": "dist/index.es.d.ts",
   "private": true,
   "files": ["dist"],
   "dependencies": {
-    "@babel/runtime": "^7.1.5",
-    "immutable": "^3.8.2",
+    "is-hotkey": "^0.1.6",
     "prop-types": "^15.7.2",
-    "react": "^16.4.1",
-    "slate": "^0.47.0",
-    "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
-    "slate-edit-list": "https://github.com/katalysteducation/slate-edit-list.git#releases",
-    "slate-html-serializer": "^0.8.0",
-    "slate-react": "^0.22.0"
+    "slate": ">= 0.57.0, < 0.59.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-env": "^7.10.3",
+    "@babel/preset-react": "^7.8.3",
     "@babel/register": "^7.0.0",
+    "@typescript-eslint/eslint-plugin": "^2.23.0",
+    "@typescript-eslint/parser": "^2.23.0",
     "assertion-error": "^1.1.0",
-    "babel-eslint": "^10.0.3",
     "chai": "^4.2.0",
-    "chai-immutable": "^2.0.0",
     "cross-env": "^7.0.0",
     "eslint": "^6.5.1",
     "eslint-config-openstax-poland": "https://github.com/openstax-poland/eslint-config-openstax-poland.git",
-    "eslint-plugin-react": "^7.16.0",
     "jsdom": "^16.0.0",
     "mocha": "^7.0.0",
     "nyc": "^15.0.0",
     "react-dom": "^16.8.0",
     "rollup": "^2.0.0",
-    "rollup-plugin-babel": "^4.2.0",
-    "rollup-plugin-node-resolve": "^5.0.0",
-    "slate-hotkeys": "^0.2.9",
-    "slate-hyperscript": "^0.13.0",
-    "stylus": "^0.54.5"
+    "rollup-plugin-typescript2": "^0.27.0",
+    "slate-hyperscript": ">= 0.57.0, < 0.59.0",
+    "typescript": "^3.8.3"
   },
   "peerDependencies": {
-    "immutable": "^3.8.2",
-    "react": "^16.4.1",
-    "react-dom": "^16.8.0",
-    "slate": "^0.47.0",
-    "slate-counters": "https://github.com/katalysteducation/slate-counters.git",
-    "slate-edit-list": "https://github.com/katalysteducation/slate-edit-list.git#releases",
-    "slate-html-serializer": "^0.8.0",
-    "slate-react": "^0.22.0"
+    "slate": ">= 0.57.0, < 0.59.0"
   },
   "scripts": {
     "build": "cross-env NODE_ENV=build rollup -c",
-    "build:style": "stylus -o dist/index.css -d -m src/index.styl",
-    "lint": "eslint src/ test/",
-    "prepare": "cross-env NODE_ENV=build rollup -c && stylus -o dist/index.css -d -m src/index.styl",
-    "test": "mocha",
-    "coverage": "nyc --reporter text --reporter html mocha"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src/ test/",
+    "prepare": "cross-env NODE_ENV=build rollup -c",
+    "test": "rollup -c && mocha",
+    "coverage": "rollup -c && nyc --reporter text --reporter html mocha"
   }
 }

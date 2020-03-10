@@ -1,6 +1,9 @@
 env:
   browser: true
 
-parser: babel-eslint
+parser: '@typescript-eslint/parser'
 
-extends: openstax-poland/react/style
+parserOptions:
+  project: ./tsconfig.json
+
+extends: openstax-poland/typescript/style
