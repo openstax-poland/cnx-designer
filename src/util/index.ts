@@ -3,3 +3,4 @@
 // full license text.
 
 export * as uuid from './uuid'
+export { default as dedup } from './dedup'

@@ -20,5 +20,6 @@ export default {
     ],
     external: [
         'slate',
+        'slate-lists',
     ],
 }
