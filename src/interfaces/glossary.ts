@@ -52,6 +52,24 @@ export const Definition = {
     },
 }
 
+/**
+ * Term which is defined by a {@link Definition}
+ *
+ * This interface is the same as {@link Term} except that it is a block element
+ * meant to be used as a child of {@link Definition}.
+ */
+export interface DefinitionTerm extends Element {
+    type: 'definition_term'
+    reference?: string
+}
+
+export const DefinitionTerm = {
+    /** Check if value of unknown type is a term of a definition */
+    isDefinitionTerm(value: unknown): value is DefinitionTerm {
+        return Element.isElement(value) && value.type === 'definition_term'
+    },
+}
+
 /** Meaning of a term */
 export interface Meaning extends Element {
     type: 'definition_meaning'

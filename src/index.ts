@@ -3,4 +3,5 @@
 // full license text.
 
 export * from './interfaces'
+export * from './plugin'
 export * from './util'
