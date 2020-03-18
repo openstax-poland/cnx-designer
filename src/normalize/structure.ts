@@ -4,7 +4,7 @@
 
 import { Editor, NodeEntry, Transforms } from 'slate'
 
-import { Section, Title } from '../interfaces'
+import { Glossary, Section, Title } from '../interfaces'
 
 /**
  * Normalize document structure
@@ -16,8 +16,8 @@ export default function normalizeStructure(editor: Editor, entry: NodeEntry): bo
 
     // The document.
     if (path.length === 0) {
-        // Document must not be empty.
-        if (editor.children.length === 0) {
+        // Document must not be empty and must not start with a glossary.
+        if (editor.children.length === 0 || Glossary.isGlossary(editor.children[0])) {
             Transforms.insertNodes(editor, {
                 type: 'paragraph',
                 children: [],
@@ -59,9 +59,9 @@ export default function normalizeStructure(editor: Editor, entry: NodeEntry): bo
             return true
         }
 
-        // Section may only be followed by other sections.
+        // Section may only be followed by other sections and the glossary.
         const [next, nextPath] = Editor.next(editor, { at: path }) || []
-        if (next != null && !Section.isSection(next)) {
+        if (next != null && !Section.isSection(next) && !Glossary.isGlossary(next)) {
             Transforms.moveNodes(editor, {
                 at: nextPath,
                 to: [...path, node.children.length],

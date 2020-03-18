@@ -2,11 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, Element, Node, NodeEntry, Transforms } from 'slate'
+import { Editor, Element, Node, NodeEntry, Path, Transforms } from 'slate'
 
 import { enumerate } from '../util'
 
-type MatchNode = (node: Node) => boolean
+type NodeMatch<T extends Node> =
+  | ((node: Node) => node is T)
+  | ((node: Node) => boolean)
 
 /**
  * Find children which are out of order and move them to correct places
@@ -16,7 +18,7 @@ type MatchNode = (node: Node) => boolean
 export function normalizeOrderedChildren<T extends Element>(
     editor: Editor,
     entry: NodeEntry<T>,
-    groups: MatchNode[],
+    groups: NodeMatch<Node>[],
     normalize: (editor: Editor, entry: NodeEntry, parent: T) => void,
 ): boolean {
     const [node, path] = entry
@@ -26,7 +28,7 @@ export function normalizeOrderedChildren<T extends Element>(
     // Current group (groups[inx]).
     let match = groups[0]
     // For each group, the last group successfully matched at that point.
-    const lastMatch: MatchNode[] = []
+    const lastMatch: NodeMatch<Node>[] = []
 
     for (const [index, child] of enumerate(node.children)) {
         // Skip all groups which don't match child.
@@ -80,4 +82,32 @@ export function normalizeOrderedChildren<T extends Element>(
 
     // All children are correctly ordered.
     return false
+}
+
+/**
+ * Find a previous sibling of node matching specified criteria, and stepping
+ * only over siblings matching other criteria.
+ */
+export function previousOverOnly<T extends Node>(
+    editor: Editor,
+    options: {
+        at: Path,
+        match: NodeMatch<T>,
+        over: NodeMatch<Node>,
+    },
+): NodeEntry<T> | undefined {
+    const { at, match, over } = options
+    const [parent, parentPath] = Editor.parent(editor, at)
+
+    for (let index = at[at.length - 1] - 1 ; index >= 0 ; --index) {
+        const child = parent.children[index]
+
+        if (match(child)) {
+            return [child, [...parentPath, index]]
+        }
+
+        if (!over(child)) {
+            return
+        }
+    }
 }
