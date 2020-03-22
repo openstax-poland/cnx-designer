@@ -34,6 +34,21 @@ fixtures(__dirname, 'handlers', ({
     }
 })
 
+fixtures(__dirname, 'transforms', ({
+    default: act,
+    input,
+    output,
+    checkSelection = true,
+}) => {
+    const editor = withTest(input)
+    act(editor)
+    editor.children.should.deep.eq(output.children)
+
+    if (checkSelection) {
+        editor.selection.should.deep.eq(output.selection)
+    }
+})
+
 function withTest(editor) {
     return withCnx(editor)
 }
