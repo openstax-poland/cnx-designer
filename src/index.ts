@@ -6,3 +6,5 @@ export * from './handlers'
 export * from './interfaces'
 export * from './plugin'
 export * from './util'
+
+export { default as Transforms } from './transforms'
