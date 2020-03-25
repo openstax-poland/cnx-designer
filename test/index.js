@@ -49,6 +49,24 @@ fixtures(__dirname, 'transforms', ({
     }
 })
 
+// Behaviour tests test Slate's default behaviour, to make sure everything works
+// as we would expect. Should any of those tests stop passing we probably need
+// to add custom handling for some additional events.
+fixtures(__dirname, 'behaviours', ({
+    default: act,
+    input,
+    output,
+    checkSelection = true,
+}) => {
+    const editor = withTest(input)
+    act(editor)
+    editor.children.should.deep.eq(output.children)
+
+    if (checkSelection) {
+        editor.selection.should.deep.eq(output.selection)
+    }
+})
+
 function withTest(editor) {
     return withCnx(editor)
 }
