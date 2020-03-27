@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "declaration": true,
+        "jsx": "react",
         "moduleResolution": "node",
         "noErrorTruncation": true,
         "outDir": "dist",
