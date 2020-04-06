@@ -1,6 +1,5 @@
 /** @jsx h */
-
-import { List } from 'immutable'
+/** @jsxFrag 'fragment' */
 
 export const input = cnxml`
 <figure id="f1">
@@ -19,23 +18,21 @@ export const input = cnxml`
 </figure>
 `
 
-export const outputContent = <value>
-    <document>
-        <figure key="f1" class={List()}>
-            <figure key="f1-1" class={List()}>
-                <media alt="First subfigure's content">
-                    <img src="f1.png" mime="image/png"><text/></img>
-                    <mediaalt>First subfigure&apos;s content</mediaalt>
-                </media>
-                <figcaption>First subfigure</figcaption>
-            </figure>
-            <figure key="f1-2" class={List()}>
-                <media alt="Second subfigure's content">
-                    <img src="f2.png" mime="image/png"><text/></img>
-                    <mediaalt>Second subfigure&apos;s content</mediaalt>
-                </media>
-            </figure>
-            <figcaption>Two subfigures</figcaption>
+export const output = <document>
+    <figure id="f1">
+        <figure id="f1-1">
+            <media>
+                <img src="f1.png" intendedUse="all"><text/></img>
+                <mediaalt>First subfigure&apos;s content</mediaalt>
+            </media>
+            <caption>First subfigure</caption>
         </figure>
-    </document>
-</value>
+        <figure id="f1-2">
+            <media>
+                <img src="f2.png" intendedUse="all"><text/></img>
+                <mediaalt>Second subfigure&apos;s content</mediaalt>
+            </media>
+        </figure>
+        <caption>Two subfigures</caption>
+    </figure>
+</document>

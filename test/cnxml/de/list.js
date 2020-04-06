@@ -1,6 +1,5 @@
 /** @jsx h */
-
-import { List } from 'immutable'
+/** @jsxFrag 'fragment' */
 
 export const input = cnxml`
 <list>
@@ -16,22 +15,18 @@ export const input = cnxml`
 </list>
 `
 
-export const outputContent = <value>
-    <document>
-        <ul class={List()}>
+export const output = <document>
+    <itemlist>
+        <li>
+            <p>List items can contain text</p>
+        </li>
+        <li>
+            <p>Items can also contain block nodes</p>
+        </li>
+        <itemlist>
             <li>
-                <p>List items can contain text</p>
+                <p>Or nested lists</p>
             </li>
-            <li>
-                <p>Items can also contain block nodes</p>
-            </li>
-            <li>
-                <ul class={List()}>
-                    <li>
-                        <p>Or nested lists</p>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </document>
-</value>
+        </itemlist>
+    </itemlist>
+</document>

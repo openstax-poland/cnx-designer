@@ -1,9 +1,8 @@
 /** @jsx h */
-
-import { List } from 'immutable'
+/** @jsxFrag 'fragment' */
 
 export const input = cnxml`
-<para id="p1">Some text<list id="l1">
+<para>Some text<list id="l1">
         <item>List item</item>
     </list>More text<figure id="f1">
         <media alt="This should not be inline">
@@ -12,21 +11,24 @@ export const input = cnxml`
     </figure>Even more text</para>
 `
 
-export const outputContent = <value>
-    <document>
-        <p key="p1">Some text</p>
-        <ul key="l1" class={List()}>
-            <li>
-                <p>List item</p>
-            </li>
-        </ul>
-        <p>More text</p>
-        <figure key="f1" class={List()}>
-            <media alt="This should not be inline">
-                <img src="f1.png" mime="image/png"><text/></img>
-                <mediaalt>This should not be inline</mediaalt>
-            </media>
-        </figure>
-        <p>Even more text</p>
-    </document>
-</value>
+export const output = <document>
+    <p>Some text</p>
+    <itemlist id="l1">
+        <li>
+            <p>List item</p>
+        </li>
+    </itemlist>
+    <p>More text</p>
+    <figure id="f1">
+        <media>
+            <img src="f1.png" intendedUse="all"><text/></img>
+            <mediaalt>This should not be inline</mediaalt>
+        </media>
+    </figure>
+    <p>Even more text</p>
+</document>
+
+export const errors = [
+    ['unexpected-element', { namespace: 'http://cnx.rice.edu/cnxml', localName: 'list', id: 'l1' }],
+    ['unexpected-element', { namespace: 'http://cnx.rice.edu/cnxml', localName: 'figure', id: 'f1' }],
+]

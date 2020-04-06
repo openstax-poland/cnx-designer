@@ -1,26 +1,25 @@
 /** @jsx h */
+/** @jsxFrag 'fragment' */
 
-export const inputContent = <value>
-    <document>
-        <quote key="q1">
-            <p>Quotes can contain text</p>
-            <ul>
-                <li>
-                    <p>And lists</p>
-                </li>
-            </ul>
-            <p>Quotes can also contain nested quotes</p>
-            <quote>
-                <p>Like so</p>
-            </quote>
+export const input = <>
+    <quote id="q1">
+        <p>Quotes can contain text</p>
+        <itemlist>
+            <li>
+                <p>And lists</p>
+            </li>
+        </itemlist>
+        <p>Quotes can also contain nested quotes</p>
+        <quote>
+            <p>Like so</p>
         </quote>
-    </document>
-</value>
+    </quote>
+</>
 
 export const output = cnxml`
 <quote id="q1">
     <para>Quotes can contain text</para>
-    <list list-type="bulleted">
+    <list>
         <item>
             <para>And lists</para>
         </item>

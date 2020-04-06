@@ -1,34 +1,33 @@
 /** @jsx h */
+/** @jsxFrag 'fragment' */
 
-export const inputContent = <value>
-    <document>
-        <exercise key="e1">
-            <exproblem>
-                <p>This is a problem</p>
-                <p>It has multiple paragraphs</p>
-            </exproblem>
-            <excomment>
-                <p>This exercise has no solutions</p>
-            </excomment>
-        </exercise>
-        <exercise key="e2">
-            <exproblem>
-                <p>This is another problem</p>
-            </exproblem>
-            <exsolution>
-                <p>First solution</p>
-            </exsolution>
-            <exsolution>
-                <p>Second solution</p>
-                <p>Solutions can have multiple paragraphs</p>
-            </exsolution>
-            <excomment>
-                <p>This problem has two solutions</p>
-                <p>Commentaries can have multiple paragraphs as well</p>
-            </excomment>
-        </exercise>
-    </document>
-</value>
+export const input = <>
+    <exercise id="e1">
+        <exproblem>
+            <p>This is a problem</p>
+            <p>It has multiple paragraphs</p>
+        </exproblem>
+        <excomment>
+            <p>This exercise has no solutions</p>
+        </excomment>
+    </exercise>
+    <exercise id="e2">
+        <exproblem>
+            <p>This is another problem</p>
+        </exproblem>
+        <exsolution>
+            <p>First solution</p>
+        </exsolution>
+        <exsolution>
+            <p>Second solution</p>
+            <p>Solutions can have multiple paragraphs</p>
+        </exsolution>
+        <excomment>
+            <p>This problem has two solutions</p>
+            <p>Commentaries can have multiple paragraphs as well</p>
+        </excomment>
+    </exercise>
+</>
 
 export const output = cnxml`
 <exercise id="e1">

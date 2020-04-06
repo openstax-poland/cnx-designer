@@ -6,6 +6,8 @@ import './util/h'
 import fixtures from './util/fixtures'
 import withInput from './util/input'
 
+import './cnxml'
+
 global.should = chai.should()
 
 fixtures(__dirname, 'normalization', ({ input, output, checkSelection = true }) => {

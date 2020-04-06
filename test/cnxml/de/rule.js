@@ -1,6 +1,5 @@
 /** @jsx h */
-
-import { List } from 'immutable'
+/** @jsxFrag 'fragment' */
 
 export const input = cnxml`
 <rule id="r1">
@@ -26,28 +25,26 @@ export const input = cnxml`
 </rule>
 `
 
-export const outputContent = <value>
-    <document>
-        <rule key="r1" type="rule" class={List()}>
-            <title>This is a rule</title>
-            <statement>
-                <p>This is a statement</p>
-            </statement>
-            <statement>
-                <p>This is another statement</p>
-            </statement>
-            <proof>
-                <p>This is a proof</p>
-            </proof>
-            <proof>
-                <p>This is another proof</p>
-            </proof>
-            <ruleexample>
-                <p>This is an example</p>
-            </ruleexample>
-            <ruleexample>
-                <p>This is another example</p>
-            </ruleexample>
-        </rule>
-    </document>
-</value>
+export const output = <document>
+    <rule id="r1" type="rule">
+        <title>This is a rule</title>
+        <statement>
+            <p>This is a statement</p>
+        </statement>
+        <statement>
+            <p>This is another statement</p>
+        </statement>
+        <proof>
+            <p>This is a proof</p>
+        </proof>
+        <proof>
+            <p>This is another proof</p>
+        </proof>
+        <ruleexample>
+            <p>This is an example</p>
+        </ruleexample>
+        <ruleexample>
+            <p>This is another example</p>
+        </ruleexample>
+    </rule>
+</document>

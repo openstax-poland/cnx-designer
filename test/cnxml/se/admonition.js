@@ -1,16 +1,15 @@
 /** @jsx h */
+/** @jsxFrag 'fragment' */
 
-export const inputContent = <value>
-    <document>
-        <note key="n1" type="note">
-            <p>Notes are serialized without the ‘type’ attribute</p>
-        </note>
-        <note key="n2" type="warning">
-            <title>This is a title</title>
-            <p>And this is a paragraph</p>
-        </note>
-    </document>
-</value>
+export const input = <>
+    <note id="n1">
+        <p>Notes are serialized without the ‘type’ attribute</p>
+    </note>
+    <note id="n2" kind="warning">
+        <title>This is a title</title>
+        <p>And this is a paragraph</p>
+    </note>
+</>
 
 export const output = cnxml`
 <note id="n1" type="note">

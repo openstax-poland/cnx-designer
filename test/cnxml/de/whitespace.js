@@ -1,8 +1,7 @@
 /** @jsx h */
+/** @jsxFrag 'fragment' */
 
 /* eslint-disable max-len */
-
-import { List } from 'immutable'
 
 export const input = cnxml`
 <para>
@@ -14,14 +13,14 @@ export const input = cnxml`
      \x20
 </para>
 
-<note><p>   excessive   white  space </p></note>
+<note><para>   excessive   white  space </para></note>
 
 <note>
   excessive     white  space
 </note>
 
 <figure>
-    <media alt="Alt">
+    <media alt="   Alt ">
         <image src="example.png" mime-type="image/png" />
     </media>
     <caption>
@@ -35,22 +34,20 @@ export const input = cnxml`
 </code>
 `
 
-export const outputContent = <value>
-    <document>
-        <p>A paragraph{"\u3000"}with <b>excessive</b> white{"\xa0"}<link url="test">space</link><text/></p>
-        <note class={List()}>
-            <p>excessive white space</p>
-        </note>
-        <note class={List()}>
-            <p>excessive white space</p>
-        </note>
-        <figure class={List()}>
-            <media alt="Alt">
-                <img src="example.png" mime="image/png"><text/></img>
-                <mediaalt>Alt</mediaalt>
-            </media>
-            <figcaption>excessive white space</figcaption>
-        </figure>
-        <code>{"\n    This white space\n        should not be normalized\n"}</code>
-    </document>
-</value>
+export const output = <document>
+    <p>A paragraph{"\u3000"}with <b>excessive</b> white{"\xa0"}<link url="test">space</link><text/></p>
+    <note>
+        <p>excessive white space</p>
+    </note>
+    <note>
+        <p>excessive white space</p>
+    </note>
+    <figure>
+        <media>
+            <img src="example.png" intendedUse="all"><text/></img>
+            <mediaalt>Alt</mediaalt>
+        </media>
+        <caption>excessive white space</caption>
+    </figure>
+    <code>{"\n    This white space\n        should not be normalized\n"}</code>
+</document>

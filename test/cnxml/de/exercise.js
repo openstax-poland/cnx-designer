@@ -1,6 +1,5 @@
 /** @jsx h */
-
-import { List } from 'immutable'
+/** @jsxFrag 'fragment' */
 
 export const input = cnxml`
 <exercise id="e1">
@@ -19,21 +18,19 @@ export const input = cnxml`
 </exercise>
 `
 
-export const outputContent = <value>
-    <document>
-        <exercise key="e1" class={List()}>
-            <exproblem>
-                <p>This is a problem</p>
-            </exproblem>
-            <exsolution>
-                <p>This is a solution</p>
-            </exsolution>
-            <exsolution>
-                <p>This is another solution</p>
-            </exsolution>
-            <excomment>
-                <p>This is a commentary</p>
-            </excomment>
-        </exercise>
-    </document>
-</value>
+export const output = <document>
+    <exercise id="e1">
+        <exproblem>
+            <p>This is a problem</p>
+        </exproblem>
+        <exsolution>
+            <p>This is a solution</p>
+        </exsolution>
+        <exsolution>
+            <p>This is another solution</p>
+        </exsolution>
+        <excomment>
+            <p>This is a commentary</p>
+        </excomment>
+    </exercise>
+</document>

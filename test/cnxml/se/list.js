@@ -1,35 +1,30 @@
 /** @jsx h */
+/** @jsxFrag 'fragment' */
 
-export const inputContent = <value>
-    <document>
-        <ul>
+export const input = <>
+    <itemlist>
+        <li>
+            <p>List items can contain text</p>
+        </li>
+        <li>
+            <p>Or multiple paragraphs</p>
+            <p>Like this</p>
+        </li>
+        <itemlist>
             <li>
-                <p>List items can contain text</p>
+                <p>Lists can also contain nested lists</p>
             </li>
+        </itemlist>
+        <enumlist>
             <li>
-                <p>Or multiple paragraphs</p>
-                <p>Like this</p>
+                <p>And nested lists in different styles</p>
             </li>
-            <li>
-                <ul>
-                    <li>
-                        <p>Lists can also contain nested lists</p>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <ol>
-                    <li>
-                        <p>And nested lists in different styles</p>
-                    </li>
-                </ol>
-            </li>
-        </ul>
-    </document>
-</value>
+        </enumlist>
+    </itemlist>
+</>
 
 export const output = cnxml`
-<list list-type="bulleted">
+<list>
     <item>
         <para>List items can contain text</para>
     </item>
@@ -38,7 +33,7 @@ export const output = cnxml`
         <para>Like this</para>
     </item>
     <item>
-        <list list-type="bulleted">
+        <list>
             <item>
                 <para>Lists can also contain nested lists</para>
             </item>

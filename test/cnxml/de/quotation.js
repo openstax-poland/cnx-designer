@@ -1,6 +1,5 @@
 /** @jsx h */
-
-import { List } from 'immutable'
+/** @jsxFrag 'fragment' */
 
 export const input = cnxml`
 <quote id="q1">
@@ -16,22 +15,20 @@ export const input = cnxml`
 <quote id="q2">Quotes can have text content</quote>
 `
 
-export const outputContent = <value>
-    <document>
-        <quote key="q1" class={List()}>
-            <p>Quotes can contain text</p>
-            <ul class={List()}>
-                <li>
-                    <p>And lists</p>
-                </li>
-            </ul>
-            <p>Quotes can also contain nested quotes</p>
-            <quote class={List()}>
-                <p>Like so</p>
-            </quote>
+export const output = <document>
+    <quote id="q1">
+        <p>Quotes can contain text</p>
+        <itemlist>
+            <li>
+                <p>And lists</p>
+            </li>
+        </itemlist>
+        <p>Quotes can also contain nested quotes</p>
+        <quote>
+            <p>Like so</p>
         </quote>
-        <quote key="q2" class={List()}>
-            <p>Quotes can have text content</p>
-        </quote>
-    </document>
-</value>
+    </quote>
+    <quote id="q2">
+        <p>Quotes can have text content</p>
+    </quote>
+</document>

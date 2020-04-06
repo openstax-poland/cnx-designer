@@ -12,6 +12,7 @@ class HtmlError extends AssertionError {
 }
 
 const XMLNS_NS = 'http://www.w3.org/2000/xmlns/'
+const CNXML_NS = 'http://cnx.rice.edu/cnxml'
 
 export default function compareHtml(dom, a, b, path='') {
     if (Object.getPrototypeOf(a) !== Object.getPrototypeOf(b)) {
@@ -48,6 +49,16 @@ export default function compareHtml(dom, a, b, path='') {
             const attrB = b.attributes.getNamedItemNS(
                 attrA.namespaceURI, attrA.localName)
 
+            // IDs starting with UUID are randomly generated (for example in
+            // src/cnxml/se.stx, serializeNode), so it's impossible to predict
+            // what they may be when writing test cases. Instead where we care
+            // about IDs they should be manually set to some descriptive value.
+            if (attrA.namespaceURI == null && attrA.localName === 'id'
+            && attrA.value.startsWith('UUID')
+            && (attrB == null || attrB.value.startsWith('UUID'))) {
+                continue
+            }
+
             const apath = path + '/@'
                     + (attrA.namespaceURI == null
                         ? ''
@@ -68,6 +79,8 @@ export default function compareHtml(dom, a, b, path='') {
         // Find missing attributes
         for (const attrB of b.attributes) {
             if (attrB.namespaceURI === XMLNS_NS) continue
+
+            if (attrB.namespaceURI == null && attrB.localName === 'id') continue
 
             const attrA = a.attributes.getNamedItemNS(
                 attrB.namespaceURI, attrB.localName)
@@ -103,6 +116,8 @@ export default function compareHtml(dom, a, b, path='') {
             const childB = childrenB[inx]
             compareHtml(dom, childA, childB, path + '[' + inx + ']')
         }
+    } else if (a instanceof dom.window.Document) {
+        compareHtml(dom, a.documentElement, b.documentElement)
     } else {
         throw new Error(path + ': Trying to compare unsupported type '
             + Object.getPrototypeOf(a).constructor.name)
@@ -114,6 +129,7 @@ const BLOCK_NODES = [
     'content',
     'definition',
     'div',
+    'document',
     'example',
     'exercise',
     'figure',

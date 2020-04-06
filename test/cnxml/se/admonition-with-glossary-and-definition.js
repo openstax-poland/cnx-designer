@@ -1,38 +1,39 @@
 /** @jsx h */
+/** @jsxFrag 'fragment' */
 
-export const inputContent = <value>
-    <document>
-        <note key="n1" type="note">
-            <p>Notes are serialized without the ‘type’ attribute</p>
-        </note>
-        <note key="n2" type="warning">
-            <title>This is a title</title>
-            <p>And this is a paragraph</p>
-        </note>
-    </document>
-</value>
-
-export const inputGlossary = <value>
-    <document>
+export const input = <>
+    <note id="n1">
+        <p>Notes are serialized without the ‘type’ attribute</p>
+    </note>
+    <note id="n2" kind="warning">
+        <title>This is a title</title>
+        <p>And this is a paragraph</p>
+    </note>
+    <glossary>
         <definition>
             <defterm reference="other value">Term</defterm>
             <defmeaning>
                 <p>Meaning</p>
-                <defexample>
-                    <p>Example</p>
-                </defexample>
             </defmeaning>
+            <defexample>
+                <p>Example</p>
+            </defexample>
             <defseealso>
                 <defterm>Term</defterm>
             </defseealso>
         </definition>
-    </document>
-</value>
+    </glossary>
+</>
 
 export const output = `
 <document
-  xmlns="http://cnx.rice.edu/cnxml"
-  xmlns:cmlnle="http://katalysteducation.org/cmlnle/1.0">
+    xmlns="http://cnx.rice.edu/cnxml"
+    xmlns:cmlnle="http://katalysteducation.org/cmlnle/1.0"
+    cnxml-version="0.7"
+    module-id="test"
+    id="test"
+    >
+    <title>Test</title>
     <content>
         <note id="n1" type="note">
             <para>Notes are serialized without the ‘type’ attribute</para>

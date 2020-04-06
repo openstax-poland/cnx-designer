@@ -1,46 +1,54 @@
 /** @jsx h */
-
-import { List } from 'immutable'
+/** @jsxFrag 'fragment' */
 
 export const input = cnxml`
 <note>
-    <invalid>No such element</invalid>
+    <invalid id="A">No such element</invalid>
     <para>Valid element</para>
 </note>
 <exercise>
     <commentary>
-        <invalid>No such element</invalid>
+        <invalid id="B">No such element</invalid>
         <para>Valid element</para>
     </commentary>
 </exercise>
 <list>
     <item>
-        <invalid>No such <invalid>element</invalid></invalid>
+        <invalid id="C">No such <invalid id="D">element</invalid></invalid>
         <para>Valid element</para>
     </item>
 </list>
 `
 
-export const outputContent = <value>
-    <document>
-        <note class={List()}>
+export const output = <document>
+    <note>
+        <p>No such element</p>
+        <p>Valid element</p>
+    </note>
+    <exercise>
+        <exproblem>
+            <p><text/></p>
+        </exproblem>
+        <excomment>
             <p>No such element</p>
             <p>Valid element</p>
-        </note>
-        <exercise class={List()}>
-            <exproblem>
-                <p><text/></p>
-            </exproblem>
-            <excomment>
-                <p>No such element</p>
-                <p>Valid element</p>
-            </excomment>
-        </exercise>
-        <ul class={List()}>
-            <li>
-                <p>No such element</p>
-                <p>Valid element</p>
-            </li>
-        </ul>
-    </document>
-</value>
+        </excomment>
+    </exercise>
+    <itemlist>
+        <li>
+            <p>No such element</p>
+            <p>Valid element</p>
+        </li>
+    </itemlist>
+</document>
+
+export const errors = [
+    ['unknown-element', { namespace: 'http://cnx.rice.edu/cnxml', localName: 'invalid', id: 'A' }],
+    'text-in-block', // result of unwrapping A
+    ['unknown-element', { namespace: 'http://cnx.rice.edu/cnxml', localName: 'invalid', id: 'B' }],
+    'text-in-block', // result of unwrapping B
+    ['unknown-element', { namespace: 'http://cnx.rice.edu/cnxml', localName: 'invalid', id: 'C' }],
+    ['unknown-element', { namespace: 'http://cnx.rice.edu/cnxml', localName: 'invalid', id: 'D' }],
+    'text-in-block', // result of unwrapping C
+    'normalized', // exercise is lacking problem
+]

@@ -1,35 +1,34 @@
 /** @jsx h */
+/** @jsxFrag 'fragment' */
 
-export const inputContent = <value>
-    <document>
-        <rule key="e1" type="rule">
-            <statement>
-                <p>This is a statement</p>
-                <p>It has multiple paragraphs</p>
-            </statement>
-            <ruleexample>
-                <p>This rule has no proofs</p>
-            </ruleexample>
-        </rule>
-        <rule key="e2" type="theorem">
-            <title>Rules can have titles</title>
-            <statement>
-                <p>This is another statement</p>
-            </statement>
-            <proof>
-                <p>First proof</p>
-            </proof>
-            <proof>
-                <p>Second proof</p>
-                <p>Proofs can have multiple paragraphs</p>
-            </proof>
-            <ruleexample>
-                <p>This statement has two proofs</p>
-                <p>Examples can have multiple paragraphs as well</p>
-            </ruleexample>
-        </rule>
-    </document>
-</value>
+export const input = <>
+    <rule id="e1" kind="rule">
+        <statement>
+            <p>This is a statement</p>
+            <p>It has multiple paragraphs</p>
+        </statement>
+        <ruleexample>
+            <p>This rule has no proofs</p>
+        </ruleexample>
+    </rule>
+    <rule id="e2" kind="theorem">
+        <title>Rules can have titles</title>
+        <statement>
+            <p>This is another statement</p>
+        </statement>
+        <proof>
+            <p>First proof</p>
+        </proof>
+        <proof>
+            <p>Second proof</p>
+            <p>Proofs can have multiple paragraphs</p>
+        </proof>
+        <ruleexample>
+            <p>This statement has two proofs</p>
+            <p>Examples can have multiple paragraphs as well</p>
+        </ruleexample>
+    </rule>
+</>
 
 export const output = cnxml`
 <rule id="e1">

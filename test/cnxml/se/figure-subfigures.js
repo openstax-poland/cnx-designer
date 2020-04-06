@@ -1,25 +1,24 @@
 /** @jsx h */
+/** @jsxFrag 'fragment' */
 
-export const inputContent = <value>
-    <document>
-        <figure key="f1">
-            <figure key="f1-1">
-                <media>
-                    <img src="f1.png" mime="image/png"><text/></img>
-                    <mediaalt>First subfigure&apos;s content</mediaalt>
-                </media>
-                <figcaption>First subfigure</figcaption>
-            </figure>
-            <figure key="f1-2">
-                <media>
-                    <img src="f2.png" mime="image/png"><text/></img>
-                    <mediaalt>Second subfigure&apos;s content</mediaalt>
-                </media>
-            </figure>
-            <figcaption>Two subfigures</figcaption>
+export const input = <>
+    <figure id="f1">
+        <figure id="f1-1">
+            <media>
+                <img src="f1.png" intendedUse="all"><text/></img>
+                <mediaalt>First subfigure&apos;s content</mediaalt>
+            </media>
+            <caption>First subfigure</caption>
         </figure>
-    </document>
-</value>
+        <figure id="f1-2">
+            <media>
+                <img src="f2.png" intendedUse="all"><text/></img>
+                <mediaalt>Second subfigure&apos;s content</mediaalt>
+            </media>
+        </figure>
+        <caption>Two subfigures</caption>
+    </figure>
+</>
 
 export const output = cnxml`
 <figure id="f1">

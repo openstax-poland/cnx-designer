@@ -1,6 +1,5 @@
 /** @jsx h */
-
-import { List } from 'immutable'
+/** @jsxFrag 'fragment' */
 
 export const input = cnxml`
 <note id="n1">
@@ -13,17 +12,15 @@ export const input = cnxml`
 <note id="n3" type="tip">Notes can also have text content.</note>
 `
 
-export const outputContent = <value>
-    <document>
-        <note key="n1" type="note" class={List()}>
-            <p>Notes&apos; default type is ‘note’.</p>
-        </note>
-        <note key="n2" type="warning" class={List()}>
-            <title>This is a title</title>
-            <p>And this is a paragraph</p>
-        </note>
-        <note key="n3" type="tip" class={List()}>
-            <p>Notes can also have text content.</p>
-        </note>
-    </document>
-</value>
+export const output = <document>
+    <note id="n1" kind="note">
+        <p>Notes&apos; default type is ‘note’.</p>
+    </note>
+    <note id="n2" kind="warning">
+        <title>This is a title</title>
+        <p>And this is a paragraph</p>
+    </note>
+    <note id="n3" kind="tip">
+        <p>Notes can also have text content.</p>
+    </note>
+</document>
