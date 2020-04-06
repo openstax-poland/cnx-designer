@@ -30,6 +30,8 @@ export interface Document {
     content: Node[]
 }
 
+export { default as deserialize } from './de'
 export { default as serialize } from './se'
 export * as JSX from './jsx'
+export * from './de'
 export * from './se'

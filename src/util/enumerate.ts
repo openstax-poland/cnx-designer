@@ -3,7 +3,18 @@
 // full license text.
 
 /** Yield items of an iterable together with their indices */
-export default function *enumerate<T>(iter: Iterable<T>): Iterable<[number, T]> {
+export default function *enumerate<T>(iter: Iterable<T>, reverse?: boolean): Iterable<[number, T]> {
+    if (reverse) {
+        if (Array.isArray(iter)) {
+            for (let index = iter.length - 1 ; index >= 0 ; --index) {
+                yield [index, iter[index]]
+            }
+        } else {
+            yield* enumerate(Array.from(iter), true)
+        }
+        return
+    }
+
     let index = 0
 
     for (const value of iter) {
