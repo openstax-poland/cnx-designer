@@ -5,8 +5,8 @@
 import { Editor, Path, Range, Text, Transforms } from 'slate'
 
 import {
-    Admonition, Code, CodeBlock, Commentary, Definition, DefinitionExample,
-    Exercise, Preformat, Problem, Quotation, Rule,
+    Admonition, Caption, Code, CodeBlock, Commentary, Definition,
+    DefinitionExample, Exercise, Preformat, Problem, Quotation, Rule,
 } from './interfaces'
 
 /**
@@ -120,6 +120,20 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
         return ev.preventDefault()
     }
 
+    const [caption, captionPath] = Editor.above(editor, { match: Caption.isCaption }) || []
+    if (caption != null) {
+        Editor.withoutNormalizing(editor, () => {
+            if (!Range.isCollapsed(selection)) {
+                Editor.deleteFragment(editor)
+            }
+
+            Transforms.splitNodes(editor)
+            Transforms.liftNodes(editor, { at: Path.next(captionPath!) })
+        })
+
+        return ev.preventDefault()
+    }
+
     // Shift disables special handling
     if (ev.shiftKey) {
         return
@@ -138,6 +152,7 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
 
         const [container, containerPath] = Editor.above(editor, {
             match: n => Admonition.isAdmonition(n)
+                || Caption.isCaption(n)
                 || Definition.isDefinition(n)
                 || Exercise.isExercise(n)
                 || Preformat.isPreformat(n)

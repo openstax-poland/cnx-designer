@@ -2,13 +2,10 @@
 
 export default input => input.break()
 
-// Re-enable after porting figure implementation from #3
-export const skip = true
-
 export const input = <editor>
     <figure>
-        <media alt="First picture">
-            <img src="first.png" mime="image/png"><text/></img>
+        <media>
+            <img src="first.png" intendedUse="all"><text/></img>
             <mediaalt>First picture</mediaalt>
         </media>
         <caption>Cap<cursor/>tion</caption>
@@ -17,8 +14,8 @@ export const input = <editor>
 
 export const output = <editor>
     <figure>
-        <media alt="First picture">
-            <img src="first.png" mime="image/png"><text/></img>
+        <media>
+            <img src="first.png" intendedUse="all"><text/></img>
             <mediaalt>First picture</mediaalt>
         </media>
         <caption>Cap</caption>

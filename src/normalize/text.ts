@@ -21,6 +21,13 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
             Transforms.setNodes(editor, { type: 'paragraph' }, { at: path })
             return true
         }
+
+        // Figure must not have more than one caption.
+        const [next, nextPath] = Editor.next(editor, { at: path }) || []
+        if (Caption.isCaption(next)) {
+            Transforms.mergeNodes(editor, { at: nextPath })
+            return true
+        }
     }
 
     if (Title.isTitle(node)) {

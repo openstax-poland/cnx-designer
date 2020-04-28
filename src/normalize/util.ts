@@ -56,11 +56,12 @@ export function normalizeOrderedChildren<T extends Element>(
             return true
         }
 
+        const targetMatch = lastMatch[inx] || lastMatch[inx - 1] || ((): boolean => false)
+
         // Find child which should be directly before this one.
         const [, prevPath] = Editor.previous(editor, {
             at: childPath,
-            match: lastMatch[inx] || lastMatch[inx - 1] || ((): boolean => false),
-            mode: 'highest',
+            match: n => node.children.includes(n) && targetMatch(n),
         }) || []
 
         // Move the child to where it should be.

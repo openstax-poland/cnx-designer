@@ -7,6 +7,7 @@ import { Editor, NodeEntry } from 'slate'
 import normalizeAdmonition from './admonition'
 import normalizeClasses from './classes'
 import normalizeExercise from './exercise'
+import normalizeFigure from './figure'
 import normalizeGlossary from './glossary'
 import normalizeRule from './rule'
 import normalizeStructure from './structure'
@@ -22,6 +23,7 @@ export default function normalizeNode(
         normalizeAdmonition(editor, entry)
         || normalizeClasses(editor, entry)
         || normalizeExercise(editor, entry)
+        || normalizeFigure(editor, entry)
         || normalizeGlossary(editor, entry)
         || normalizeRule(editor, entry)
         || normalizeStructure(editor, entry)
