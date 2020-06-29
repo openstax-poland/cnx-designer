@@ -1,6 +1,5 @@
 import fs from 'fs'
 import { basename, extname, resolve } from 'path'
-import { KeyUtils } from 'slate'
 
 export default function fixtures(...args) {
     const fn = args.pop()

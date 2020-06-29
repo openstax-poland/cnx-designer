@@ -8,6 +8,7 @@ import normalizeNode from './normalize'
 import { isInline, isVoid } from './interfaces'
 
 /** A Slate editor augmented with support for editing CNX documents. */
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface CnxEditor extends Editor {
 }
 

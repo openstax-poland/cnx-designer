@@ -1,8 +1,6 @@
 /** @jsx h */
 /** @jsxFrag 'fragment' */
 
-/* eslint-disable max-len */
-
 export const input = cnxml`
 <para>
      \t

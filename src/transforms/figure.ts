@@ -60,7 +60,7 @@ export function insertSubfigure(
             at,
             match: Figure.isFigure,
             mode: 'highest',
-        })!
+        }) ?? []
 
         if (figure == null) return
 
@@ -101,6 +101,7 @@ export function insertSubfigure(
  * If select is set to true the selection will be collapsed into the new
  * caption.
  */
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion -- typescript-eslint#2248 */
 export function insertCaption(
     editor: Editor,
     options: {
@@ -109,7 +110,8 @@ export function insertCaption(
     } = {},
 ): void {
     Editor.withoutNormalizing(editor, () => {
-        let { at = editor.selection, select } = options
+        const { select } = options
+        let { at = editor.selection } = options
 
         if (at == null) return
 
@@ -117,7 +119,7 @@ export function insertCaption(
             const [figure, figurePath]: NodeEntry<Figure> | [] = Editor.above(editor, {
                 at,
                 match: Figure.isFigure,
-            }) || []
+            }) ?? []
 
             if (figure == null) return
 
@@ -137,3 +139,4 @@ export function insertCaption(
         }
     })
 }
+/* eslint-enable @typescript-eslint/no-unnecessary-type-assertion */

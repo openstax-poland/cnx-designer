@@ -3,13 +3,12 @@
 // full license text.
 
 import * as Slate from 'slate'
-import { Editor, Path, Text, Transforms } from 'slate'
+import { Editor, Path, Text, Transforms } from 'slate' // eslint-disable-line no-duplicate-imports
 
 import normalizeWhiteSpace, { collapseAdjacentText } from './whitespace'
 import { CnxmlVersion, Document as Doc } from '.'
 import { CNXML_NAMESPACE, CMLNLE_NAMESPACE, EDITING_NAMESPACE, XML_NAMESPACE } from './jsx'
 import { List, MediaUse, StyledText, WithClasses } from '../interfaces'
-import { enumerate } from '../util'
 
 /**
  * Editor used for deserialization
@@ -50,7 +49,7 @@ export interface DeserializingEditor extends Editor {
 
 export interface DeserializingError {
     type: string
-    [key: string]: any
+    [key: string]: unknown
 }
 
 /**
@@ -147,7 +146,7 @@ export default function deserialize(
 function withDeserializingEditor(ed: Editor): DeserializingEditor {
     const editor = ed as DeserializingEditor
 
-    editor.deserializeElement = function(el, at, context) {
+    editor.deserializeElement = function deserializeElement(el, at, context) {
         if (el.namespaceURI === CNXML_NAMESPACE
         || el.namespaceURI === EDITING_NAMESPACE) {
             const deserializer = context[el.localName]
@@ -160,7 +159,7 @@ function withDeserializingEditor(ed: Editor): DeserializingEditor {
         editor.unknownElement(el, at, context)
     }
 
-    editor.unknownElement = function(el, at, context) {
+    editor.unknownElement = function unknownElement(el, at, context) {
         if (el.namespaceURI === CNXML_NAMESPACE
         || el.namespaceURI === EDITING_NAMESPACE) {
             const deserializer = FALLBACK[el.localName]
@@ -183,7 +182,7 @@ function withDeserializingEditor(ed: Editor): DeserializingEditor {
         children(editor, el, at, context)
     }
 
-    editor.reportError = function(type, description) {
+    editor.reportError = function reportError(type, description) {
         console.error(type, description)
     }
 
@@ -208,7 +207,7 @@ export function children(
     el: Element,
     at: Path,
     context: Deserializers,
-) {
+): void {
     const path = Editor.pathRef(editor, at)
 
     for (const child of el.childNodes) {
@@ -302,7 +301,7 @@ export function normalizeBlock(editor: DeserializingEditor, at: Path): void {
  * White space will be normalized (and trailing removed), and block children
  * will be unwrapped, splitting this element if necessary.
  */
-export function normalizeLine(editor: Editor, at: Path) {
+export function normalizeLine(editor: Editor, at: Path): void {
     const unwrap = []
 
     for (const [child, path] of Slate.Node.children(editor, at)) {
@@ -343,7 +342,7 @@ function normalizeMixed(editor: DeserializingEditor, at: Path) {
 }
 
 /** Normalize element which shouldn't contain any children */
-export function normalizeVoid(editor: DeserializingEditor, at: Path) {
+export function normalizeVoid(editor: DeserializingEditor, at: Path): void {
     const node = Slate.Node.get(editor, at)
 
     if (!Slate.Element.isElement(node)) {
@@ -370,7 +369,6 @@ export function normalizeVoid(editor: DeserializingEditor, at: Path) {
 
     if (node.children.length === 0) {
         editor.apply({ type: 'insert_node', path: [...at, 0], node: { text: '' } })
-        return
     }
 }
 
@@ -380,7 +378,7 @@ function block(template: string | Partial<Slate.Element>, context: Deserializers
         ? { type: template }
         : template
 
-    return function(editor: DeserializingEditor, el: Element, at: Path) {
+    return function deserializer(editor: DeserializingEditor, el: Element, at: Path) {
         buildElement(editor, el, at, node, context)
         normalizeBlock(editor, at)
     }
@@ -392,7 +390,7 @@ function line(template: string | Partial<Slate.Element>) {
         ? { type: template }
         : template
 
-    return function(editor: DeserializingEditor, el: Element, at: Path) {
+    return function deserializer(editor: DeserializingEditor, el: Element, at: Path) {
         buildElement(editor, el, at, node, INLINE)
         normalizeLine(editor, at)
     }
@@ -404,7 +402,7 @@ function mixed(template: string | Partial<Slate.Element>, content: Deserializers
         ? { type: template }
         : template
 
-    return function(editor: DeserializingEditor, el: Element, at: Path) {
+    return function deserializer(editor: DeserializingEditor, el: Element, at: Path) {
         buildElement(editor, el, at, node, { ...INLINE, ...content })
         normalizeMixed(editor, at)
     }
@@ -504,7 +502,7 @@ const FALLBACK: Deserializers = { ...INLINE, ...SECTION, ...MEDIA }
 /* --- deserializers -------------------------------------------------------- */
 
 /** Deserialize <code> */
-function code(editor: DeserializingEditor, el: Element, at: Path) {
+function code(editor: DeserializingEditor, el: Element, at: Path): void {
     buildElement(editor, el, at, {
         type: 'code',
         language: el.getAttribute('lang'),
@@ -515,13 +513,13 @@ function code(editor: DeserializingEditor, el: Element, at: Path) {
 }
 
 /** Deserialize <content> */
-function content(editor: DeserializingEditor, el: Element) {
+function content(editor: DeserializingEditor, el: Element): void {
     children(editor, el, [0], CONTENT)
     normalizeBlock(editor, [])
 }
 
 /** Deserialize a <term> in <definition> */
-function definitionTerm(editor: DeserializingEditor, el: Element, at: Path) {
+function definitionTerm(editor: DeserializingEditor, el: Element, at: Path): void {
     buildElement(editor, el, at, {
         type: 'definition_term',
         reference: el.getAttributeNS(CMLNLE_NAMESPACE, 'reference'),
@@ -530,7 +528,7 @@ function definitionTerm(editor: DeserializingEditor, el: Element, at: Path) {
 }
 
 /** Deserialize <foreign> */
-function foreign(editor: DeserializingEditor, el: Element, at: Path) {
+function foreign(editor: DeserializingEditor, el: Element, at: Path): void {
     buildElement(editor, el, at, {
         type: 'foreign',
         language: el.getAttributeNS(XML_NAMESPACE, 'lang') ,
@@ -539,14 +537,14 @@ function foreign(editor: DeserializingEditor, el: Element, at: Path) {
 }
 
 /** Deserialize <glossary> */
-function glossary(editor: DeserializingEditor, el: Element) {
+function glossary(editor: DeserializingEditor, el: Element): void {
     const path = [editor.children.length]
     buildElement(editor, el, path, { type: 'glossary' }, GLOSSARY)
     normalizeBlock(editor, path)
 }
 
 /** Deserialize a list item */
-function item(editor: DeserializingEditor, el: Element, at: Path) {
+function item(editor: DeserializingEditor, el: Element, at: Path): void {
     buildElement(editor, el, at, { type: 'list_item' }, MIXED)
     normalizeMixed(editor, at)
 
@@ -557,7 +555,7 @@ function item(editor: DeserializingEditor, el: Element, at: Path) {
 }
 
 /** Deserialize a cross-reference, a document reference, or a hyperlink */
-function link(editor: DeserializingEditor, el: Element, at: Path) {
+function link(editor: DeserializingEditor, el: Element, at: Path): void {
     const target = el.getAttribute('target-id')
     const document = el.getAttribute('document')
     const url = el.getAttribute('url')
@@ -583,18 +581,18 @@ function link(editor: DeserializingEditor, el: Element, at: Path) {
     }
 }
 
-function list(editor: DeserializingEditor, el: Element, at: Path) {
+function list(editor: DeserializingEditor, el: Element, at: Path): void {
     const props = el.getAttribute('list-type') === 'enumerated'
         ? {
             type: 'list',
             style: 'enumerated',
-            numberStyle: el.getAttribute('number-style') || 'arabic',
-            start: Number(el.getAttribute('start-value') || 1),
+            numberStyle: el.getAttribute('number-style') ?? 'arabic',
+            start: Number(el.getAttribute('start-value') ?? 1),
         }
         : {
             type: 'list',
             style: 'bulleted',
-            bullet: el.getAttribute('bullet') || 'bullet',
+            bullet: el.getAttribute('bullet') ?? 'bullet',
         }
 
     buildElement(editor, el, at, props, LIST)
@@ -609,9 +607,9 @@ const MARKS: { [key: string]: Omit<StyledText, 'text'> } = {
 }
 
 /** Deserialize a styling element */
-function mark(editor: DeserializingEditor, el: Element, at: Path) {
+function mark(editor: DeserializingEditor, el: Element, at: Path): void {
     const mark = el.localName === 'emphasis'
-        ? el.getAttribute('effect') || 'bold'
+        ? el.getAttribute('effect') ?? 'bold'
         : el.localName
     const props = MARKS[mark]
     const end = Editor.pathRef(editor, at)
@@ -629,7 +627,7 @@ function mark(editor: DeserializingEditor, el: Element, at: Path) {
 }
 
 /** Deserialize media container */
-function media(editor: DeserializingEditor, el: Element, at: Path) {
+function media(editor: DeserializingEditor, el: Element, at: Path): void {
     buildElement(editor, el, at, { type: 'media' }, MEDIA)
 
     const node = Slate.Node.get(editor, at) as Slate.Element
@@ -652,7 +650,7 @@ function media(editor: DeserializingEditor, el: Element, at: Path) {
 }
 
 /** Deserialize a media item */
-function mediaItem(editor: DeserializingEditor, el: Element, at: Path) {
+function mediaItem(editor: DeserializingEditor, el: Element, at: Path): void {
     const use = el.getAttribute('for')
 
     buildElement(editor, el, at, {
@@ -665,38 +663,38 @@ function mediaItem(editor: DeserializingEditor, el: Element, at: Path) {
 }
 
 /** Deserialize an admonition */
-function note(editor: DeserializingEditor, el: Element, at: Path) {
+function note(editor: DeserializingEditor, el: Element, at: Path): void {
     buildElement(editor, el, at, {
         type: 'admonition',
-        kind: el.getAttribute('type') || 'note',
+        kind: el.getAttribute('type') ?? 'note',
     }, { ...MIXED, title })
     normalizeMixed(editor, at)
 }
 
 /** Deserialize <preformat> */
-function preformat(editor: DeserializingEditor, el: Element, at: Path) {
+function preformat(editor: DeserializingEditor, el: Element, at: Path): void {
     buildElement(editor, el, at, { type: 'preformat' }, INLINE)
     // NOTE: this element contains pre-formatted content and should not be
     // normalized.
 }
 
 /** Deserialize a rule */
-function rule(editor: DeserializingEditor, el: Element, at: Path) {
+function rule(editor: DeserializingEditor, el: Element, at: Path): void {
     buildElement(editor, el, at, {
         type: 'rule',
-        kind: el.getAttribute('type') || 'rule',
+        kind: el.getAttribute('type') ?? 'rule',
     }, RULE)
     normalizeBlock(editor, at)
 }
 
 /** Deserialize a <section> */
-function section(editor: DeserializingEditor, el: Element, at: Path) {
+function section(editor: DeserializingEditor, el: Element, at: Path): void {
     buildElement(editor, el, at, { type: 'section' }, SECTION)
     normalizeBlock(editor, at)
 }
 
 /** Deserialize a <term> */
-function term(editor: DeserializingEditor, el: Element, at: Path) {
+function term(editor: DeserializingEditor, el: Element, at: Path): void {
     buildElement(editor, el, at, {
         type: 'term',
         reference: el.getAttributeNS(CMLNLE_NAMESPACE, 'reference'),

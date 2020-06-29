@@ -32,7 +32,7 @@ export default function normalizeGlossary(editor: Editor, entry: NodeEntry): boo
         }
 
         // Glossary must be the last element.
-        const [next, nextPath] = Editor.next(editor, { at: path }) || []
+        const [next, nextPath] = Editor.next(editor, { at: path }) ?? []
         if (next != null) {
             if (Glossary.isGlossary(next)) {
                 Transforms.mergeNodes(editor, { at: nextPath })
@@ -70,7 +70,7 @@ export default function normalizeGlossary(editor: Editor, entry: NodeEntry): boo
 
         // Definition must have a term.
         if (!DefinitionTerm.isDefinitionTerm(node.children[0])) {
-            const [prev] = Editor.previous(editor, { at: path }) || []
+            const [prev] = Editor.previous(editor, { at: path }) ?? []
             if (Definition.isDefinition(prev)) {
                 Transforms.mergeNodes(editor, { at: path })
             } else {
@@ -105,7 +105,7 @@ export default function normalizeGlossary(editor: Editor, entry: NodeEntry): boo
                     || DefinitionTerm.isDefinitionTerm(n),
                 over: n => Meaning.isMeaning(n)
                     || DefinitionExample.isDefinitionExample(n),
-            }) || []
+            }) ?? []
 
             // There is a definition into which we can fold this node.
             if (Definition.isDefinition(prev)) {

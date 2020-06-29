@@ -35,7 +35,7 @@ export default function normalizeStructure(editor: Editor, entry: NodeEntry): bo
 
         // Sections must have a title.
         if (!Title.isTitle(node.children[0])) {
-            const [prev, prevPath] = Editor.previous(editor, { at: path }) || []
+            const [prev, prevPath] = Editor.previous(editor, { at: path }) ?? []
             if (Section.isSection(prev)) {
                 // If this is a subsequent section, move content into the
                 // previous section.
@@ -60,7 +60,7 @@ export default function normalizeStructure(editor: Editor, entry: NodeEntry): bo
         }
 
         // Section may only be followed by other sections and the glossary.
-        const [next, nextPath] = Editor.next(editor, { at: path }) || []
+        const [next, nextPath] = Editor.next(editor, { at: path }) ?? []
         if (next != null && !Section.isSection(next) && !Glossary.isGlossary(next)) {
             Transforms.moveNodes(editor, {
                 at: nextPath,

@@ -42,7 +42,7 @@ export function insertRule(
         if (Path.equals(startPath, endPath)) {
             Transforms.wrapNodes(editor, {
                 type: 'rule',
-                kind: kind || 'rule',
+                kind: kind ?? 'rule',
                 children: [],
             }, { at: startPath })
             return
@@ -70,7 +70,7 @@ export function insertRule(
 
         Transforms.insertNodes(editor, {
             type: 'rule',
-            kind: kind || 'rule',
+            kind: kind ?? 'rule',
             children: [
                 {
                     type: 'rule_statement',

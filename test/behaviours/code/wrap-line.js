@@ -1,6 +1,6 @@
 /** @jsx h */
 
-import { Editor, Text, Transforms } from 'slate'
+import { Transforms } from 'slate'
 
 export default editor => Transforms.wrapNodes(
     editor, { type: 'code', placement: 'line', children: [] }, { split: true })

@@ -12,7 +12,6 @@ class HtmlError extends AssertionError {
 }
 
 const XMLNS_NS = 'http://www.w3.org/2000/xmlns/'
-const CNXML_NS = 'http://cnx.rice.edu/cnxml'
 
 export default function compareHtml(dom, a, b, path='') {
     if (Object.getPrototypeOf(a) !== Object.getPrototypeOf(b)) {

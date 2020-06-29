@@ -14,10 +14,10 @@ const WHITESPACE = /[ \t\n]/
 
 export const WithClasses = {
     /** Check if value of unknown type has classes */
-    hasClasses(value: any): value is WithClasses {
+    hasClasses(value: unknown): value is WithClasses {
         return typeof value === 'object'
-            && Array.isArray(value.classes)
-            && typeof value.classes[0] === 'string'
+            && Array.isArray((value as WithClasses).classes)
+            && typeof (value as WithClasses).classes[0] === 'string'
     },
 
     /** Verify that a string is a valid class. */

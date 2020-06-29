@@ -101,7 +101,7 @@ function normalizeTextBoundaries(
             continue
         }
 
-        const [, before, inner, after] = child.text.match(/^(\s*)(.+?)(\s*)$/)!
+        const [, before, , after] = child.text.match(/^(\s*)(.+?)(\s*)$/)!
 
         if (after.length > 0) {
             Transforms.splitNodes(editor, {
@@ -235,7 +235,7 @@ function normalizeSpaces(editor: Editor, at: Path) {
     // codepoints as they look like a single character but will be matched
     // separately. Here this is exactly what we want, so we can safely disable
     // this lint.
-    /* eslint-disable no-misleading-character-class, max-len */
+    /* eslint-disable no-misleading-character-class */
 
     // 1st step
     const text = node.text.replace(/\s/gu, replaceWSChar)
@@ -253,7 +253,7 @@ function normalizeSpaces(editor: Editor, at: Path) {
         // 6th step
         .replace(/[\s\u180e\u200b\u200c\u200d\u2060]{2,}/g, c => c[0])
 
-    /* eslint-enable no-misleading-character-class, max-len */
+    /* eslint-enable no-misleading-character-class */
 
     editor.apply({ type: 'remove_node', path: at, node })
     editor.apply({ type: 'insert_node', path: at, node: { ...node, text }})
@@ -285,7 +285,7 @@ const WHITE_SPACE_MAP: { [key: string]: string | undefined } = {
 }
 
 function replaceWSChar(char: string): string {
-    return WHITE_SPACE_MAP[char] || char
+    return WHITE_SPACE_MAP[char] ?? char
 }
 
 function collapseWSSequence(seq: string): string {

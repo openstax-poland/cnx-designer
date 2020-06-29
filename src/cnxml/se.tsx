@@ -41,6 +41,7 @@ export type MediaMimeFunction = (media: MediaData) => string
 export type PartialSerializer =
     (node: Node, attrs: CommonAttrs, children: JSX.Node, ctx: Context) => JSX.Node
 
+/* eslint-disable import/export -- see eslint-plugin-import#1590 */
 export default function serialize(
     editor: Editor, document: Doc, options: Options<'xml'>): string
 export default function serialize(
@@ -89,6 +90,7 @@ export default function serialize(
         return x
     }
 }
+/* eslint-enable import/export */
 
 /** Serialization context */
 export interface Context {
@@ -357,8 +359,9 @@ const SERIALIZERS: SerializerEntry<Node>[] = [
 ] as SerializerEntry<Node>[]
 
 /** Create a serializer to a given tag from a given namespace */
+// eslint-disable-next-line @typescript-eslint/naming-convention
 function makeSerializer(Tag: string, namespace: string = JSX.CNXML_NAMESPACE) {
-    return function(node: Node, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
+    return function serializer(node: Node, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
         return <Tag xmlns={namespace} {...attrs}>{ children }</Tag>
     }
 }
@@ -465,6 +468,7 @@ function media(node: Media, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
 }
 
 function mediaItem(node: Audio | Image | Video, attrs: CommonAttrs, children: JSX.Node, ctx: Context): JSX.Node {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const Tag = node.type.slice(6) as 'audio' | 'image' | 'video'
 
     return <Tag
