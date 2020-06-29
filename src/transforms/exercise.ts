@@ -35,9 +35,9 @@ export function insertExercise(
             match: n => !Text.isText(n) && !Editor.isInline(editor, n),
         })!
 
-        // If both points are in the same node we can defer to Slate's wrapNodes.
-        // Otherwise we need to do this manually, as wrapNodes with split: true
-        // doesn't work when match points at the editor.
+        // If both points are in the same node we can defer to Slate's
+        // wrapNodes. Otherwise we need to do this manually, as wrapNodes with
+        // split: true doesn't work when match points at the editor.
         if (Path.equals(startPath, endPath)) {
             Transforms.wrapNodes(editor, {
                 type: 'exercise',

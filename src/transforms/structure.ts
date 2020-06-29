@@ -21,14 +21,14 @@ export function increaseSectionDepth(
         const [section, sectionPath] = Editor.above(editor, {
             at,
             match: Section.isSection,
-        }) || []
+        }) ?? []
 
         if (section == null) return
 
         const [prev, prevPath] = Editor.previous(editor, {
             at: sectionPath,
             match: Section.isSection,
-        }) || []
+        }) ?? []
 
         if (prev == null) return
 

@@ -2,6 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
+// eslint-disable-next-line max-len
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used in definition of CMLNLE.Attributes.Cased
 import { Case } from '../interfaces'
 
 /** Qualified name of an element or attribute */
@@ -22,10 +24,12 @@ export interface Element {
     /** Element's name */
     name: Name
     /** Attributes set on this element */
-    attributes: Omit<JSX.IntrinsicAttributes, 'children'> & { [key: string]: any }
+    attributes: Attributes
     /** Children nodes */
     children: Node
 }
+
+export type Attributes = Omit<JSX.IntrinsicAttributes, 'children'> & { [key: string]: unknown }
 
 /** Any value that can be used as child of a JSX element */
 export type Node = Element | globalThis.Node | string | Node[] | null
@@ -39,7 +43,7 @@ export function createElement<
     attrs: A | null,
     ...children: Node[]
 ): Element {
-    const { xmlns, ...attributes } = attrs || {}
+    const { xmlns, ...attributes } = attrs ?? ({} as Attributes)
 
     return {
         name: { namespace: xmlns, local: name },
@@ -93,7 +97,7 @@ export function render(root: Element): Document {
 
 /** Render a JSX element into an XML element */
 function renderElement(renderer: Renderer, element: Element): globalThis.Element {
-    const ns = element.name.namespace || renderer.namespace
+    const ns = element.name.namespace ?? renderer.namespace
     const el = renderer.doc.createElementNS(ns, element.name.local)
 
     finishElement(renderer, element, el)
@@ -102,17 +106,37 @@ function renderElement(renderer: Renderer, element: Element): globalThis.Element
 }
 
 /** CNXML tags which contain only block and can be safely formatted */
+/* eslint-disable array-element-newline */
 const BLOCK_TAGS = [
     'commentary', 'content', 'definition', 'document', 'example', 'exercise',
     'figure', 'glossary', 'item', 'list', 'meaning', 'media', 'note', 'problem',
     'proof', 'quote', 'rule', 'section', 'seealso', 'solution', 'statement',
     'subfigure',
 ]
+/* eslint-enable array-element-newline */
 
 /** Finish rendering an already created element */
 function finishElement(renderer: Renderer, element: Element, out: globalThis.Element): void {
     for (const [key, value] of Object.entries(element.attributes)) {
         if (value == null) continue
+
+        let val
+
+        switch (typeof value) {
+        case 'string':
+            val = value
+            break
+
+        case 'object':
+        case 'boolean':
+        case 'number':
+        case 'bigint':
+            val = value!.toString()
+            break
+
+        default:
+            continue
+        }
 
         const r = key.match(/([a-z]+)([A-Z][a-z]*)/)
         if (r) {
@@ -124,9 +148,9 @@ function finishElement(renderer: Renderer, element: Element, out: globalThis.Ele
                     `unknown namespace prefix ${prefix} for attribute ${key}`)
             }
 
-            out.setAttributeNS(ns, attr.toLowerCase(), value.toString())
+            out.setAttributeNS(ns, attr.toLowerCase(), val)
         } else {
-            out.setAttribute(key, value.toString())
+            out.setAttribute(key, val)
         }
     }
 
@@ -137,7 +161,7 @@ function finishElement(renderer: Renderer, element: Element, out: globalThis.Ele
     const r = {
         ...renderer,
         depth,
-        namespace: element.name.namespace || renderer.namespace,
+        namespace: element.name.namespace ?? renderer.namespace,
     }
 
     let count = 0
@@ -173,6 +197,8 @@ function finishElement(renderer: Renderer, element: Element, out: globalThis.Ele
         out.append('\n' + '  '.repeat(renderer.depth))
     }
 }
+
+/* eslint-disable @typescript-eslint/no-namespace, @typescript-eslint/no-empty-interface, max-len */
 
 declare global {
     /** Types defining CNXML schema for JSX */
@@ -268,7 +294,7 @@ declare global {
             display: 'inline'
         }
 
-        type DisplayAny<T = {}> = (DisplayBlock | DisplayInline) & T
+        type DisplayAny<T = Record<string, unknown>> = (DisplayBlock | DisplayInline) & T
 
         interface Audio extends Partial<Attributes.Common>, Attributes.PlayableMedia {}
         interface Caption extends Partial<Attributes.Common> {}
@@ -409,7 +435,7 @@ declare global {
     namespace JSX {
         interface Element {
             name: Name
-            attributes: Omit<JSX.IntrinsicAttributes, 'children'> & { [key: string]: any }
+            attributes: Omit<JSX.IntrinsicAttributes, 'children'> & { [key: string]: unknown }
             children: Node
         }
 

@@ -1,12 +1,18 @@
+root: true # prevent TypeScript lints being used in JavaScript test code
+
 env:
   node: true
   mocha: true
+
+extends: openstax-poland/react/base
 
 globals:
   cnxml: readonly
   h: readonly
   should: readonly
+  DOMParser: readonly
 
 rules:
+  react/jsx-no-useless-fragment: off
   react/no-unknown-property: off
   react/void-dom-elements-no-children: off

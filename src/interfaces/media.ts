@@ -52,8 +52,8 @@ export const MediaData = {
     /** Check if value of unknown type contains media data */
     isMediaData(value: unknown): value is MediaData {
         return typeof value === 'object'
-            && typeof (value as any).src === 'string'
-            && MediaUse.isMediaUse((value as any).intendedUse)
+            && typeof (value as MediaData).src === 'string'
+            && MediaUse.isMediaUse((value as MediaData).intendedUse)
     },
 }
 

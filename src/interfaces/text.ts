@@ -62,7 +62,7 @@ export const Title = {
     /** Check if value of unknown type is a title */
     isTitle(value: unknown): value is Title {
         return Element.isElement(value) && value.type === 'title'
-    }
+    },
 }
 
 /** A fragment of text in another language */
@@ -75,7 +75,7 @@ export const Foreign = {
     /** Check if value of unknown type is a foreign text */
     isForeign(value: unknown): value is Foreign {
         return Element.isElement(value) && value.type === 'foreign'
-    }
+    },
 }
 
 /** A footnote */
@@ -87,5 +87,5 @@ export const Footnote = {
     /** Check if value of unknown type is a footnote */
     isFootnote(value: unknown): value is Footnote {
         return Element.isElement(value) && value.type === 'footnote'
-    }
+    },
 }

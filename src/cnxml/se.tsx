@@ -41,6 +41,7 @@ export type MediaMimeFunction = (media: MediaData) => string
 export type PartialSerializer =
     (node: Node, attrs: CommonAttrs, children: JSX.Node, ctx: Context) => JSX.Node
 
+/* eslint-disable import/export -- see eslint-plugin-import#1590 */
 export default function serialize(
     editor: Editor, document: Doc, options: Options<'xml'>): string
 export default function serialize(
@@ -78,17 +79,18 @@ export default function serialize(
 
     if (format === 'dom') {
         return document
-    } else {
-        let x = new XMLSerializer().serializeToString(document)
-
-        // Some browsers serialize XML without declaration.
-        if (!x.startsWith('<?xml')) {
-            x = `<?xml version="1.0" encoding="${document.characterSet}"?>\n${x}`
-        }
-
-        return x
     }
+
+    let x = new XMLSerializer().serializeToString(document)
+
+    // Some browsers serialize XML without declaration.
+    if (!x.startsWith('<?xml')) {
+        x = `<?xml version="1.0" encoding="${document.characterSet}"?>\n${x}`
+    }
+
+    return x
 }
+/* eslint-enable import/export */
 
 /** Serialization context */
 export interface Context {
@@ -238,7 +240,8 @@ function serializeLine(editor: Editor, node: Element, ctx: Context): JSX.Node {
     function changeStyle(changed: Style): void {
         const keep = new Set()
 
-        // Remove from changed any styles which are already present on the stack.
+        // Remove from changed any styles which are already present on
+        // the stack.
         for (const [style] of text) {
             for (const [name, value] of style) {
                 if (changed.has(name) && changed.get(name) === value) {
@@ -357,8 +360,9 @@ const SERIALIZERS: SerializerEntry<Node>[] = [
 ] as SerializerEntry<Node>[]
 
 /** Create a serializer to a given tag from a given namespace */
+// eslint-disable-next-line @typescript-eslint/naming-convention
 function makeSerializer(Tag: string, namespace: string = JSX.CNXML_NAMESPACE) {
-    return function(node: Node, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
+    return function serializer(node: Node, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
         return <Tag xmlns={namespace} {...attrs}>{ children }</Tag>
     }
 }
@@ -394,7 +398,9 @@ function docref(node: DocumentReference, attrs: CommonAttrs, children: JSX.Node)
 
 function figure(node: Figure, attrs: CommonAttrs, children: JSX.Node[]): JSX.Node {
     function mapChild(child: JSX.Node): JSX.Node {
-        if (child == null || typeof child === 'string' || child instanceof globalThis.Node) return child
+        if (child == null || typeof child === 'string' || child instanceof globalThis.Node) {
+            return child
+        }
 
         if (Array.isArray(child)) {
             return child.map(mapChild)
@@ -420,7 +426,9 @@ function figure(node: Figure, attrs: CommonAttrs, children: JSX.Node[]): JSX.Nod
 }
 
 function foreign(node: Foreign, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
-    return <foreign xmlns={JSX.CNXML_NAMESPACE} xmlLang={node.language} {...attrs}>{ children }</foreign>
+    return <foreign xmlns={JSX.CNXML_NAMESPACE} xmlLang={node.language} {...attrs}>
+        { children }
+    </foreign>
 }
 
 function link(node: Link, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
@@ -429,7 +437,9 @@ function link(node: Link, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
 
 function list(node: List, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
     function mapChild(child: JSX.Node): JSX.Node {
-        if (child == null || typeof child === 'string' || child instanceof globalThis.Node) return child
+        if (child == null || typeof child === 'string' || child instanceof globalThis.Node) {
+            return child
+        }
 
         if (Array.isArray(child)) return child.map(mapChild)
 
@@ -464,7 +474,13 @@ function media(node: Media, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
     return <media xmlns={JSX.CNXML_NAMESPACE} alt={alt!} {...attrs}>{children}</media>
 }
 
-function mediaItem(node: Audio | Image | Video, attrs: CommonAttrs, children: JSX.Node, ctx: Context): JSX.Node {
+function mediaItem(
+    node: Audio | Image | Video,
+    attrs: CommonAttrs,
+    children: JSX.Node,
+    ctx: Context,
+): JSX.Node {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const Tag = node.type.slice(6) as 'audio' | 'image' | 'video'
 
     return <Tag

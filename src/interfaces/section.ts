@@ -13,5 +13,5 @@ export const Section = {
     /** Check if value of unknown type is a section */
     isSection(value: unknown): value is Section {
         return Element.isElement(value) && value.type === 'section'
-    }
+    },
 }

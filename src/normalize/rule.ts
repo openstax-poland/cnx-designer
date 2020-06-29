@@ -4,7 +4,7 @@
 
 import { Editor, Element, NodeEntry, Transforms } from 'slate'
 
-import { Rule, RuleExample, Section, Statement, Title, Proof } from '../interfaces'
+import { Proof, Rule, RuleExample, Section, Statement, Title } from '../interfaces'
 import { normalizeOrderedChildren } from './util'
 
 /**

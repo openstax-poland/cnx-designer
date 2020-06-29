@@ -41,7 +41,7 @@ function onBackspace(editor: Editor, ev: KeyboardEvent): void {
         return
     }
 
-    const [code, codePath] = Editor.above(editor, { match: isCodeLike }) || []
+    const [code, codePath] = Editor.above(editor, { match: isCodeLike }) ?? []
     if (code != null) {
         // Backspace not at the end will only remove one character, which is
         // exactly what we want.
@@ -80,7 +80,7 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
         return
     }
 
-    const [code, codePath] = Editor.above(editor, { match: isCodeLike }) || []
+    const [code, codePath] = Editor.above(editor, { match: isCodeLike }) ?? []
     if (code != null) {
         Editor.withoutNormalizing(editor, () => {
             if (!Range.isCollapsed(selection)) {
@@ -120,7 +120,7 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
         return ev.preventDefault()
     }
 
-    const [caption, captionPath] = Editor.above(editor, { match: Caption.isCaption }) || []
+    const [caption, captionPath] = Editor.above(editor, { match: Caption.isCaption }) ?? []
     if (caption != null) {
         Editor.withoutNormalizing(editor, () => {
             if (!Range.isCollapsed(selection)) {
@@ -158,7 +158,7 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
                 || Preformat.isPreformat(n)
                 || Quotation.isQuotation(n)
                 || Rule.isRule(n),
-        }) || []
+        }) ?? []
 
         if (Admonition.isAdmonition(container) || Quotation.isQuotation(container)) {
             Transforms.unwrapNodes(editor, {
@@ -179,7 +179,7 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
             if (blockIndex === 0) {
                 // ... but since this is the last item we can just unwrap it.
                 if (itemIndex + 1 === container.children.length) {
-                    Transforms.liftNodes(editor, { at: itemPath, })
+                    Transforms.liftNodes(editor, { at: itemPath })
                 }
 
                 // Otherwise we prevent any action.
@@ -205,7 +205,7 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
                 if (Problem.isProblem(item)) {
                     Transforms.setNodes(
                         editor,
-                        { type: 'exercise_solution'},
+                        { type: 'exercise_solution' },
                         { at: Path.next(itemPath) },
                     )
                 }

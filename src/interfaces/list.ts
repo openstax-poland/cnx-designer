@@ -3,6 +3,7 @@
 // full license text.
 
 import { List as BaseList } from 'slate-lists'
+
 export { ListItem } from 'slate-lists'
 
 /** A styled list */

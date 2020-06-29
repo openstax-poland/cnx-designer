@@ -32,7 +32,7 @@ export const Term = {
     /** Check if value of unknown type is a term */
     isTerm(value: unknown): value is Term {
         return Element.isElement(value) && value.type === 'term'
-    }
+    },
 }
 
 /**

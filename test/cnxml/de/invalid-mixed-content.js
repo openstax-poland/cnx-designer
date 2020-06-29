@@ -1,8 +1,6 @@
 /** @jsx h */
 /** @jsxFrag 'fragment' */
 
-/* eslint-disable max-len */
-
 export const input = cnxml`
 <list>
     <item>Or mixed text content<para>With paragraph 1</para><para>and paragraph 2</para></item>
