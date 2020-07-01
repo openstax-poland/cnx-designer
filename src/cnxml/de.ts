@@ -46,6 +46,9 @@ export interface DeserializingEditor extends Editor {
      * to format a user message.
      */
     reportError(type: string, description?: { [key: string]: unknown }): void
+
+    /** Finalize deserialization */
+    finalize(): Doc
 }
 
 export interface DeserializingError {
@@ -95,9 +98,8 @@ export default function deserialize(
         doc.language = root.getAttributeNS(XML_NAMESPACE, 'lang')!
     }
 
-    const editor = withEditor(withDeserializingEditor(Slate.createEditor()))
+    const editor = withEditor(withDeserializingEditor(doc, Slate.createEditor()))
 
-    let nodes
     Editor.withoutNormalizing(editor, () => {
         for (const child of root.children) {
             if (child.namespaceURI !== CNXML_NAMESPACE) {
@@ -132,19 +134,19 @@ export default function deserialize(
             }
         }
 
-        nodes = editor.children
+        doc.content = editor.children
     })
 
-    if (editor.children !== nodes) {
+    if (editor.children !== doc.content) {
         editor.reportError('normalized')
+        doc.content = editor.children
     }
 
-    doc.content = editor.children
-    return doc
+    return editor.finalize()
 }
 
 /** Wrap a Slate editor with additional deserialization-oriented functionality */
-function withDeserializingEditor(ed: Editor): DeserializingEditor {
+function withDeserializingEditor(doc: Doc, ed: Editor): DeserializingEditor {
     const editor = ed as DeserializingEditor
 
     editor.deserializeElement = function(el, at, context) {
@@ -185,6 +187,10 @@ function withDeserializingEditor(ed: Editor): DeserializingEditor {
 
     editor.reportError = function(type, description) {
         console.error(type, description)
+    }
+
+    editor.finalize = function() {
+        return doc
     }
 
     return editor
