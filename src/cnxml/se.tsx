@@ -60,7 +60,7 @@ export default function serialize(
 
     const content = doc.content.map(n => serializeNode(editor, n, context))
     const glossary = Glossary.isGlossary(doc.content[doc.content.length - 1])
-        ? content.pop()
+        ? content.pop()!
         : null
 
     const document = JSX.render(<document
