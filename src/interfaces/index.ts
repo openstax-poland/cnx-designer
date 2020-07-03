@@ -7,7 +7,7 @@ import { Element } from 'slate'
 import { Code } from './code'
 import { Term } from './glossary'
 import { Audio, Image, Video } from './media'
-import { Foreign, Footnote } from './text'
+import { Footnote, Foreign } from './text'
 import { CrossReference, DocumentReference, Link } from './xref'
 
 export * from './admonition'

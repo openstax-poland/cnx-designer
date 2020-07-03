@@ -22,10 +22,12 @@ export interface Element {
     /** Element's name */
     name: Name
     /** Attributes set on this element */
-    attributes: Omit<JSX.IntrinsicAttributes, 'children'> & { [key: string]: any }
+    attributes: Attributes
     /** Children nodes */
     children: Node
 }
+
+export type Attributes = Omit<JSX.IntrinsicAttributes, 'children'> & { [key: string]: unknown }
 
 /** Any value that can be used as child of a JSX element */
 export type Node = Element | globalThis.Node | string | Node[] | null
@@ -39,7 +41,7 @@ export function createElement<
     attrs: A | null,
     ...children: Node[]
 ): Element {
-    const { xmlns, ...attributes } = attrs || {}
+    const { xmlns, ...attributes } = attrs ?? ({} as Attributes)
 
     return {
         name: { namespace: xmlns, local: name },
@@ -93,7 +95,7 @@ export function render(root: Element): Document {
 
 /** Render a JSX element into an XML element */
 function renderElement(renderer: Renderer, element: Element): globalThis.Element {
-    const ns = element.name.namespace || renderer.namespace
+    const ns = element.name.namespace ?? renderer.namespace
     const el = renderer.doc.createElementNS(ns, element.name.local)
 
     finishElement(renderer, element, el)
@@ -102,17 +104,37 @@ function renderElement(renderer: Renderer, element: Element): globalThis.Element
 }
 
 /** CNXML tags which contain only block and can be safely formatted */
+/* eslint-disable array-element-newline */
 const BLOCK_TAGS = [
     'commentary', 'content', 'definition', 'document', 'example', 'exercise',
     'figure', 'glossary', 'item', 'list', 'meaning', 'media', 'note', 'problem',
     'proof', 'quote', 'rule', 'section', 'seealso', 'solution', 'statement',
     'subfigure',
 ]
+/* eslint-enable array-element-newline */
 
 /** Finish rendering an already created element */
 function finishElement(renderer: Renderer, element: Element, out: globalThis.Element): void {
     for (const [key, value] of Object.entries(element.attributes)) {
         if (value == null) continue
+
+        let val
+
+        switch (typeof value) {
+        case 'string':
+            val = value
+            break
+
+        case 'object':
+        case 'boolean':
+        case 'number':
+        case 'bigint':
+            val = value!.toString()
+            break
+
+        default:
+            continue
+        }
 
         const r = key.match(/([a-z]+)([A-Z][a-z]*)/)
         if (r) {
@@ -124,9 +146,9 @@ function finishElement(renderer: Renderer, element: Element, out: globalThis.Ele
                     `unknown namespace prefix ${prefix} for attribute ${key}`)
             }
 
-            out.setAttributeNS(ns, attr.toLowerCase(), value.toString())
+            out.setAttributeNS(ns, attr.toLowerCase(), val.toString())
         } else {
-            out.setAttribute(key, value.toString())
+            out.setAttribute(key, val.toString())
         }
     }
 
@@ -137,7 +159,7 @@ function finishElement(renderer: Renderer, element: Element, out: globalThis.Ele
     const r = {
         ...renderer,
         depth,
-        namespace: element.name.namespace || renderer.namespace,
+        namespace: element.name.namespace ?? renderer.namespace,
     }
 
     let count = 0
@@ -173,6 +195,8 @@ function finishElement(renderer: Renderer, element: Element, out: globalThis.Ele
         out.append('\n' + '  '.repeat(renderer.depth))
     }
 }
+
+/* eslint-disable @typescript-eslint/no-namespace, @typescript-eslint/no-empty-interface, max-len */
 
 /** Types defining CNXML schema for JSX */
 export declare namespace CNXML {
@@ -267,7 +291,7 @@ export declare namespace CNXML {
         display: 'inline'
     }
 
-    type DisplayAny<T = {}> = (DisplayBlock | DisplayInline) & T
+    type DisplayAny<T = Record<string, unknown>> = (DisplayBlock | DisplayInline) & T
 
     interface Audio extends Partial<Attributes.Common>, Attributes.PlayableMedia {}
     interface Caption extends Partial<Attributes.Common> {}
@@ -408,7 +432,7 @@ export declare namespace Editing {
 export declare namespace JSX {
     interface Element {
         name: Name
-        attributes: Omit<IntrinsicAttributes, 'children'> & { [key: string]: any }
+        attributes: Omit<IntrinsicAttributes, 'children'> & { [key: string]: unknown }
         children: Node
     }
 

@@ -32,7 +32,7 @@ export function addGlossaryDefinition(
             children: [{
                 type: 'definition_term',
                 children: [{ text: '' }],
-            }]
+            }],
         }
 
         // Fast path: there is no glossary in the document.

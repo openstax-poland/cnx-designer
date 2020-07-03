@@ -14,8 +14,8 @@ export interface Rule extends Element {
 export type RuleKind =
     'rule' | 'theorem' | 'lemma' | 'corollary' | 'law' | 'proposition'
 
-export const RULE_KINDS: RuleKind[] =
-    ['rule', 'theorem', 'lemma', 'corollary', 'law', 'proposition']
+export const RULE_KINDS: RuleKind[]
+    = ['rule', 'theorem', 'lemma', 'corollary', 'law', 'proposition']
 
 export const Rule = {
     /** Check if value of unknown type is a rule */

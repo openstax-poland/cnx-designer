@@ -23,7 +23,7 @@ export function addMediaItem(
         const [media, mediaPath] = Editor.above(editor, {
             at,
             match: Media.isMedia,
-        })!
+        }) ?? []
 
         if (media == null) return
 

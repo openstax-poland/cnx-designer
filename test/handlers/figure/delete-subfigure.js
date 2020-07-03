@@ -1,7 +1,5 @@
 /** @jsx h */
 
-import { Editor } from 'slate'
-
 export default input => input.delete()
 
 export const input = <editor>

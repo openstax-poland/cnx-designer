@@ -1,10 +1,12 @@
-/// Copyright 2020 OpenStax Poland
+// Copyright 2020 OpenStax Poland
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
 import { Editor, Node, NodeEntry, Path, Transforms } from 'slate'
 
-import { Definition, DefinitionTerm, DefinitionExample, Glossary, Meaning, SeeAlso, Term } from '../interfaces'
+import {
+    Definition, DefinitionExample, DefinitionTerm, Glossary, Meaning, SeeAlso, Term,
+} from '../interfaces'
 import { normalizeOrderedChildren, previousOverOnly } from './util'
 
 /**
@@ -32,7 +34,7 @@ export default function normalizeGlossary(editor: Editor, entry: NodeEntry): boo
         }
 
         // Glossary must be the last element.
-        const [next, nextPath] = Editor.next(editor, { at: path }) || []
+        const [next, nextPath] = Editor.next(editor, { at: path }) ?? []
         if (next != null) {
             if (Glossary.isGlossary(next)) {
                 Transforms.mergeNodes(editor, { at: nextPath })
@@ -70,7 +72,7 @@ export default function normalizeGlossary(editor: Editor, entry: NodeEntry): boo
 
         // Definition must have a term.
         if (!DefinitionTerm.isDefinitionTerm(node.children[0])) {
-            const [prev] = Editor.previous(editor, { at: path }) || []
+            const [prev] = Editor.previous(editor, { at: path }) ?? []
             if (Definition.isDefinition(prev)) {
                 Transforms.mergeNodes(editor, { at: path })
             } else {
@@ -101,11 +103,12 @@ export default function normalizeGlossary(editor: Editor, entry: NodeEntry): boo
             // a new definition.
             const [prev, prevPath] = previousOverOnly(editor, {
                 at: path,
-                match: n => (Definition.isDefinition(n) && !SeeAlso.isSeeAlso(n.children[n.children.length - 1]))
+                match: n => (Definition.isDefinition(n)
+                        && !SeeAlso.isSeeAlso(n.children[n.children.length - 1]))
                     || DefinitionTerm.isDefinitionTerm(n),
                 over: n => Meaning.isMeaning(n)
                     || DefinitionExample.isDefinitionExample(n),
-            }) || []
+            }) ?? []
 
             // There is a definition into which we can fold this node.
             if (Definition.isDefinition(prev)) {

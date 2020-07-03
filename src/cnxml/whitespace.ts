@@ -101,7 +101,7 @@ function normalizeTextBoundaries(
             continue
         }
 
-        const [, before, inner, after] = child.text.match(/^(\s*)(.+?)(\s*)$/)!
+        const [, before, , after] = child.text.match(/^(\s*)(.+?)(\s*)$/)!
 
         if (after.length > 0) {
             Transforms.splitNodes(editor, {
@@ -256,7 +256,7 @@ function normalizeSpaces(editor: Editor, at: Path) {
     /* eslint-enable no-misleading-character-class, max-len */
 
     editor.apply({ type: 'remove_node', path: at, node })
-    editor.apply({ type: 'insert_node', path: at, node: { ...node, text }})
+    editor.apply({ type: 'insert_node', path: at, node: { ...node, text } })
 }
 
 const WHITE_SPACE_MAP: { [key: string]: string | undefined } = {
@@ -285,7 +285,7 @@ const WHITE_SPACE_MAP: { [key: string]: string | undefined } = {
 }
 
 function replaceWSChar(char: string): string {
-    return WHITE_SPACE_MAP[char] || char
+    return WHITE_SPACE_MAP[char] ?? char
 }
 
 function collapseWSSequence(seq: string): string {

@@ -1,8 +1,6 @@
 /** @jsx h */
 /** @jsxFrag 'fragment' */
 
-/* eslint-disable react/jsx-curly-brace-presence, max-len */
-
 export const input = <>
     <p>
         {"Paragraphs can contain: text, "}

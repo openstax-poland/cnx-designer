@@ -26,8 +26,8 @@ export const CrossReference = {
     },
 
     /** Check if value of unknown type is a valid grammatical case */
-    isCase(value: any): value is Case {
-        return CASES.includes(value)
+    isCase(value: unknown): value is Case {
+        return CASES.includes(value as Case)
     },
 }
 

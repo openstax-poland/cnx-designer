@@ -12,8 +12,7 @@ import { Element } from 'slate'
  */
 export type AdmonitionKind = "note" | "warning" | "tip" | "important"
 
-export const ADMONITION_KINDS: AdmonitionKind[] =
-    ["note", "warning", "tip", "important"]
+export const ADMONITION_KINDS: AdmonitionKind[] = ["note", "warning", "tip", "important"]
 
 /**
  * Admonitions are portions of text set off from the main text
