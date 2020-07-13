@@ -28,6 +28,8 @@ export interface Document {
     version: CnxmlVersion
     /** Content of the document */
     content: Node[]
+    /** Additional properties set by extensions */
+    [key: string]: unknown
 }
 
 export { default as deserialize } from './de'

@@ -101,7 +101,7 @@ function normalizeTextBoundaries(
             continue
         }
 
-        const [, before, , after] = child.text.match(/^(\s*)(.+?)(\s*)$/)!
+        const [, before, , after] = child.text.match(/^(\s*)(.*?)(\s*)$/)!
 
         if (after.length > 0) {
             Transforms.splitNodes(editor, {
@@ -209,7 +209,15 @@ export function collapseAdjacentText(editor: Editor, at: Path): void {
 
         if (Text.isText(child) && Text.isText(prev)
         && Text.equals(child, prev, { loose: true })) {
-            Transforms.mergeNodes(editor, { at: [...at, index] })
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { text, ...rest } = child
+            editor.apply({
+                type: 'merge_node',
+                path: [...at, index],
+                position: prev.text.length,
+                target: null,
+                properties: rest,
+            })
         }
     }
 }
@@ -238,25 +246,22 @@ function normalizeSpaces(editor: Editor, at: Path) {
     /* eslint-disable no-misleading-character-class, max-len */
 
     // 1st step
-    const text = node.text.replace(/\s/gu, replaceWSChar)
-        // 2nd step
-        .replace(/\s[\u180e\u200b\u200c\u200d\u2060]/g, c => c[0])
-        .replace(/[\u180e\u200b\u200c\u200d\u2060]\s/g, c => c[1])
-        // 3rd step
-        .replace(/[\s\u180e\u200b\u200c\u200d\u2060]{2,}/g, collapseWSSequence)
-        // 4th step
-        .replace(/[\u0020\u2000-\u2006\u2008\u2009\u200A\u205F]+([\u1680\u3000])/g, (_, r) => r)
-        .replace(/([\u1680\u3000][\u0020\u2000-\u2006\u2008\u2009\u200A\u205F]+)/g, (_, r) => r)
-        // 5th step
-        .replace(/[\u0020\u1680\u2000-\u2006\u2008\u2009\u200A\u205F\u3000]+([\u00a0])/g, (_, r) => r)
-        .replace(/([\u00a0][\u0020\u1680\u2000-\u2006\u2008\u2009\u200A\u205F\u3000]+)/g, (_, r) => r)
-        // 6th step
-        .replace(/[\s\u180e\u200b\u200c\u200d\u2060]{2,}/g, c => c[0])
+    regexReplace(editor, at, /\s/gu, replaceWSChar)
+    // 2nd step
+    regexReplace(editor, at, /\s[\u180e\u200b\u200c\u200d\u2060]/g, c => c[0])
+    regexReplace(editor, at, /[\u180e\u200b\u200c\u200d\u2060]\s/g, c => c[1])
+    // 3rd step
+    regexReplace(editor, at, /[\s\u180e\u200b\u200c\u200d\u2060]{2,}/g, collapseWSSequence)
+    // 4th step
+    regexReplace(editor, at, /[\u0020\u2000-\u2006\u2008\u2009\u200A\u205F]+([\u1680\u3000])/g, (_, r) => r)
+    regexReplace(editor, at, /([\u1680\u3000][\u0020\u2000-\u2006\u2008\u2009\u200A\u205F]+)/g, (_, r) => r)
+    // 5th step
+    regexReplace(editor, at, /[\u0020\u1680\u2000-\u2006\u2008\u2009\u200A\u205F\u3000]+([\u00a0])/g, (_, r) => r)
+    regexReplace(editor, at, /([\u00a0][\u0020\u1680\u2000-\u2006\u2008\u2009\u200A\u205F\u3000]+)/g, (_, r) => r)
+    // 6th step
+    regexReplace(editor, at, /[\s\u180e\u200b\u200c\u200d\u2060]{2,}/g, c => c[0])
 
     /* eslint-enable no-misleading-character-class, max-len */
-
-    editor.apply({ type: 'remove_node', path: at, node })
-    editor.apply({ type: 'insert_node', path: at, node: { ...node, text } })
 }
 
 const WHITE_SPACE_MAP: { [key: string]: string | undefined } = {
@@ -304,4 +309,40 @@ function collapseWSSequence(seq: string): string {
     }
 
     return out
+}
+
+/**
+ * Equivalent of String#replace working on Slate nodes
+ *
+ * This function will replace each occurrence by issuing `remove_text` and
+ * `apply_text` operations.
+ *
+ * `path` must point at a {@link Text} node.
+ */
+function regexReplace(
+    editor: Editor,
+    path: Path,
+    re: RegExp,
+    replacer: (substring: string, ...args: unknown[]) => string,
+) {
+    Editor.withoutNormalizing(editor, () => {
+        const node = Node.get(editor, path)
+
+        if (!Text.isText(node)) {
+            throw new Error(`Cannot RegExp replace a non-text node at path [${path}]`)
+        }
+
+        let adjust = 0
+
+        for (const m of node.text.matchAll(re)) {
+            const remove = m[0]
+            const add = replacer(remove)
+            const offset = m.index! + adjust
+
+            editor.apply({ type: 'remove_text', path, offset, text: remove })
+            editor.apply({ type: 'insert_text', path, offset, text: add })
+
+            adjust += add.length - remove.length
+        }
+    })
 }
