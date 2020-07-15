@@ -253,11 +253,11 @@ function normalizeSpaces(editor: Editor, at: Path) {
     // 3rd step
     regexReplace(editor, at, /[\s\u180e\u200b\u200c\u200d\u2060]{2,}/g, collapseWSSequence)
     // 4th step
-    regexReplace(editor, at, /[\u0020\u2000-\u2006\u2008\u2009\u200A\u205F]+([\u1680\u3000])/g, (_, r) => r)
-    regexReplace(editor, at, /([\u1680\u3000][\u0020\u2000-\u2006\u2008\u2009\u200A\u205F]+)/g, (_, r) => r)
+    regexReplace(editor, at, /[\u0020\u2000-\u2006\u2008\u2009\u200A\u205F]+([\u1680\u3000])/g, (_, r) => r!)
+    regexReplace(editor, at, /([\u1680\u3000][\u0020\u2000-\u2006\u2008\u2009\u200A\u205F]+)/g, (_, r) => r!)
     // 5th step
-    regexReplace(editor, at, /[\u0020\u1680\u2000-\u2006\u2008\u2009\u200A\u205F\u3000]+([\u00a0])/g, (_, r) => r)
-    regexReplace(editor, at, /([\u00a0][\u0020\u1680\u2000-\u2006\u2008\u2009\u200A\u205F\u3000]+)/g, (_, r) => r)
+    regexReplace(editor, at, /[\u0020\u1680\u2000-\u2006\u2008\u2009\u200A\u205F\u3000]+([\u00a0])/g, (_, r) => r!)
+    regexReplace(editor, at, /([\u00a0][\u0020\u1680\u2000-\u2006\u2008\u2009\u200A\u205F\u3000]+)/g, (_, r) => r!)
     // 6th step
     regexReplace(editor, at, /[\s\u180e\u200b\u200c\u200d\u2060]{2,}/g, c => c[0])
 
@@ -323,7 +323,7 @@ function regexReplace(
     editor: Editor,
     path: Path,
     re: RegExp,
-    replacer: (substring: string, ...args: unknown[]) => string,
+    replacer: (substring: string, ...args: (string | undefined)[]) => string,
 ) {
     Editor.withoutNormalizing(editor, () => {
         const node = Node.get(editor, path)
@@ -335,8 +335,8 @@ function regexReplace(
         let adjust = 0
 
         for (const m of node.text.matchAll(re)) {
-            const remove = m[0]
-            const add = replacer(remove)
+            const [remove, ...args] = m
+            const add = replacer(remove, ...args)
             const offset = m.index! + adjust
 
             editor.apply({ type: 'remove_text', path, offset, text: remove })
