@@ -1,11 +1,9 @@
 /** @jsx h */
 
-export const checkSelection = false
-
 export const input = <editor>
     <quote>
         <quote>
-            <p>Content</p>
+            <p><cursor/>Content</p>
         </quote>
     </quote>
     <quote>
@@ -20,7 +18,9 @@ export const input = <editor>
 
 export const output = <editor>
     <quote>
-        <p>Content</p>
+        <quote>
+            <p><cursor/>Content</p>
+        </quote>
     </quote>
     <quote>
         <quote>
