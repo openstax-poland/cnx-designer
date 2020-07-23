@@ -148,7 +148,7 @@ export function insertCommentary(
     } = {},
 ): void {
     Editor.withoutNormalizing(editor, () => {
-        const { at, select = false } = options
+        const { at = editor.selection, select = false } = options
 
         if (at == null) return
 
