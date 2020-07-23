@@ -62,7 +62,7 @@ describe('CNXML', () => {
             throw new Error('Invalid XML:' + error.textContent)
         }
 
-        compareHtml(dom, serialized, reference)
+        compareHtml(dom, serialized.documentElement, reference.documentElement)
     })
 })
 
