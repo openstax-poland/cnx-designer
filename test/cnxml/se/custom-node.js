@@ -1,4 +1,4 @@
-import { CNXML } from '../../..'
+import { CNXML } from '../../../src'
 
 export const input = [
     {

@@ -1,6 +1,6 @@
 /** @jsx h */
 
-import { Transforms } from '../../..'
+import { Transforms } from '../../../src'
 
 export default editor => Transforms.insertFigure(editor, {
     type: 'media_image',

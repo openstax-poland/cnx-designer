@@ -1,6 +1,6 @@
 /** @jsx h */
 
-import { Transforms } from '../../..'
+import { Transforms } from '../../../src'
 
 export default editor => Transforms.insertCaption(editor, { select: true })
 

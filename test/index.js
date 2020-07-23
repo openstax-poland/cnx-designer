@@ -1,6 +1,6 @@
 import chai from 'chai'
 import { Editor } from 'slate'
-import { withCnx } from '..'
+import { withCnx } from '../src'
 
 import './util/h'
 import fixtures from './util/fixtures'

@@ -1,6 +1,6 @@
 /** @jsx h */
 
-import { CNXML } from '../../..'
+import { CNXML } from '../../../src'
 
 export const input = cnxml`
 <t:custom xmlns:t="urn:test" attr="12">Custom <emphasis effect="bold">node</emphasis></t:custom>

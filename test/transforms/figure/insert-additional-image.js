@@ -1,7 +1,7 @@
 /** @jsx h */
 
 import { Transforms } from 'slate'
-import { Transforms as CnxTransforms, MediaData } from '../../..'
+import { Transforms as CnxTransforms, MediaData } from '../../../src'
 
 export default editor => {
     Transforms.setNodes(editor, { intendedUse: 'online' }, { match: MediaData.isMediaData })

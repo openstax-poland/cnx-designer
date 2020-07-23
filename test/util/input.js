@@ -1,6 +1,6 @@
 import { Editor } from 'slate'
 
-import { onKeyDown } from '../..'
+import { onKeyDown } from '../../src'
 
 /** Construct a user input simulator for a given editor */
 export default function withInput(editor) {

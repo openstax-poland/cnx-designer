@@ -33,6 +33,7 @@
     "rollup": "^2.0.0",
     "rollup-plugin-typescript2": "^0.27.0",
     "slate-hyperscript": ">= 0.57.0 < 0.59.0",
+    "ts-node": "^8.10.2",
     "tslib": "^2.0.0",
     "typescript": "^3.8.3"
   },
@@ -44,7 +45,7 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src/ test/",
     "prepack": "cross-env NODE_ENV=build rollup -c",
     "prepare": "cross-env NODE_ENV=build rollup -c",
-    "test": "rollup -c && mocha",
-    "coverage": "rollup -c && nyc --reporter text --reporter html mocha"
+    "test": "mocha",
+    "coverage": "nyc --reporter text --reporter html mocha"
   }
 }

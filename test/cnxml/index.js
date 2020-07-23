@@ -1,6 +1,6 @@
 import { createEditor } from 'slate'
 import { JSDOM } from 'jsdom'
-import { CNXML, withCnx } from '../..'
+import { CNXML, withCnx } from '../../src'
 
 import '../util/cnxml'
 import compareHtml from '../util/compareHtml'
