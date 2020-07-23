@@ -59,6 +59,8 @@ export const CNXML_NAMESPACE = 'http://cnx.rice.edu/cnxml'
 /** Natural language extensions to CNXML */
 export const CMLNLE_NAMESPACE = 'http://katalysteducation.org/cmlnle/1.0'
 
+export const CXLXT_NAMESPACE = 'http://katalysteducation.org/cxlxt/1.0'
+
 /** CNXML extensions to facilitate better editing experience */
 export const EDITING_NAMESPACE = 'http://adaptarr.naukosfera.com/editing/1.0'
 
@@ -406,7 +408,7 @@ export declare namespace CNXML {
     interface Subfigure extends Attributes.Common, Attributes.Typed {}
     interface Sup extends Partial<Attributes.Common> {}
     interface Statement extends Attributes.Common, Attributes.Typed {}
-    type Term = Partial<Attributes.Common & Attributes.Link> & CMLNLE.Attributes.Reference
+    type Term = Partial<Attributes.Common & Attributes.Link> & CMLNLE.Attributes.Reference & CXLXT.Attributes.Index
     interface Title extends Partial<Attributes.Common> {}
     interface Video extends Partial<Attributes.Common>, Attributes.PlayableMedia, Attributes.VisualMedia {}
 }
@@ -420,6 +422,14 @@ export declare namespace CMLNLE {
 
         interface Reference {
             cmlnleReference?: string
+        }
+    }
+}
+
+export declare namespace CXLXT {
+    namespace Attributes {
+        interface Index {
+            cxlxtIndex?: string
         }
     }
 }

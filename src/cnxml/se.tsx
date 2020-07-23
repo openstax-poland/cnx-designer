@@ -506,6 +506,7 @@ function rule(node: Rule, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
 function term(node: Term, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
     return <term
         xmlns={JSX.CNXML_NAMESPACE}
+        cxlxtIndex={node.index}
         cmlnleReference={node.reference}
         {...attrs}>
         { children }

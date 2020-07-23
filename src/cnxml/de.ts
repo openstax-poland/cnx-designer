@@ -7,7 +7,9 @@ import { Editor, Path, Text, Transforms } from 'slate' // eslint-disable-line no
 
 import normalizeWhiteSpace, { collapseAdjacentText } from './whitespace'
 import { CnxmlVersion, Document as Doc } from '.'
-import { CMLNLE_NAMESPACE, CNXML_NAMESPACE, EDITING_NAMESPACE, XML_NAMESPACE } from './jsx'
+import {
+    CMLNLE_NAMESPACE, CNXML_NAMESPACE, CXLXT_NAMESPACE, EDITING_NAMESPACE, XML_NAMESPACE,
+} from './jsx'
 import { List, MediaUse, StyledText, WithClasses } from '../interfaces'
 
 /**
@@ -706,6 +708,7 @@ function section(editor: DeserializingEditor, el: Element, at: Path): void {
 function term(editor: DeserializingEditor, el: Element, at: Path): void {
     buildElement(editor, el, at, {
         type: 'term',
+        index: el.getAttributeNS(CXLXT_NAMESPACE, 'index'),
         reference: el.getAttributeNS(CMLNLE_NAMESPACE, 'reference'),
     }, INLINE)
     normalizeLine(editor, at)

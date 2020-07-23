@@ -25,6 +25,7 @@ export const Glossary = {
  */
 export interface Term extends Element {
     type: 'term'
+    index?: string
     reference?: string
 }
 

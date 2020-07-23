@@ -5,6 +5,7 @@ export const input = cnxml`
 <para>Paragraphs can contain: text,
 <term>terms</term>,
 <term xmlns:cmlnle="http://katalysteducation.org/cmlnle/1.0" cmlnle:reference="other value">terms with references</term>,
+<term xmlns:cxlxt="http://katalysteducation.org/cxlxt/1.0" cxlxt:index="foreign">terms with indexes</term>,
 <emphasis>strong text</emphasis>,
 <emphasis effect="italics">emphasized text</emphasis>,
 <sup>superscript</sup>,
@@ -23,6 +24,8 @@ export const output = <document>
         <term>terms</term>
         {", "}
         <term reference="other value">terms with references</term>
+        {", "}
+        <term index="foreign">terms with indexes</term>
         {", "}
         <b>strong text</b>
         {", "}

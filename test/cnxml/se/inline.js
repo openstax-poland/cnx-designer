@@ -8,6 +8,8 @@ export const input = <>
         {", "}
         <term reference="other value">terms with references</term>
         {", "}
+        <term index="foreign">terms with indexes</term>
+        {", "}
         <b>strong text</b>
         {", "}
         <i>emphasized text</i>
@@ -35,6 +37,7 @@ export const output = cnxml`
 <para>Paragraphs can contain: text,
 <term>terms</term>,
 <term xmlns:cmlnle="http://katalysteducation.org/cmlnle/1.0" cmlnle:reference="other value">terms with references</term>,
+<term xmlns:cxlxt="http://katalysteducation.org/cxlxt/1.0" cxlxt:index="foreign">terms with indexes</term>,
 <emphasis effect="bold">strong text</emphasis>,
 <emphasis effect="italics">emphasized text</emphasis>,
 <sup>superscript</sup>,
