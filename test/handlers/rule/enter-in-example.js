@@ -1,10 +1,13 @@
 /** @jsx h */
 
+import { RuleExample } from '../../../src'
 import { Editor, Element, Transforms } from 'slate'
 
 export default (input, editor) => {
     input.break().break()
-    Transforms.select(editor, Editor.end(editor, Editor.above(editor, { match: Element.isElement })[1]))
+    const [[newExample, path]] = Editor.nodes(
+        editor, { match: RuleExample.isRuleExample, reverse: true })
+    Transforms.select(editor, Editor.end(editor, path))
     input.break().break().break()
 }
 
