@@ -32,7 +32,8 @@ export function writeXml({ document, glossary }, options={}) {
     let glossaryContent = null
 
     if (glossary) {
-        glossaryContent = <glossary>
+        // eslint-disable-next-line react/no-unknown-property
+        glossaryContent = <glossary class={options.glossaryClassName}>
             {glossary}
         </glossary>
     }
@@ -43,6 +44,8 @@ export function writeXml({ document, glossary }, options={}) {
         id="new"
         module-id="new"
         xmlLang={language}
+        // eslint-disable-next-line react/no-unknown-property
+        class={options.documentClassName}
         >
         <title>{title}</title>
         <content>
@@ -78,13 +81,16 @@ export default class CNXML {
             xml = parseXml(xml)
         }
 
+        const glossary = find(xml.children, 'glossary')
+
         return {
             language: xml.getAttributeNS(
                 'http://www.w3.org/XML/1998/namespace', 'lang'),
             document: this.document.deserialize(
                 find(xml.children, 'content'), options),
-            glossary: this.glossary.deserialize(
-                find(xml.children, 'glossary'), options),
+            documentClassName: xml.getAttribute('class'),
+            glossary: this.glossary.deserialize(glossary, options),
+            glossaryClassName: glossary ? glossary.getAttribute('class') : undefined,
         }
     }
 
