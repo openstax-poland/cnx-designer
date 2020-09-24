@@ -90,7 +90,9 @@ export default class CNXML {
                 find(xml.children, 'content'), options),
             documentClassName: xml.getAttribute('class'),
             glossary: this.glossary.deserialize(glossary, options),
-            glossaryClassName: glossary ? glossary.getAttribute('class') : undefined,
+            glossaryClassName: glossary && glossary.getAttribute
+                ? glossary.getAttribute('class')
+                : undefined,
         }
     }
 
