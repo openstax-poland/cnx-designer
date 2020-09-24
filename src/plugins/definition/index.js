@@ -17,7 +17,7 @@ import * as queries from './queries'
 export default function Definition(options={}) {
     const {
         content = ['paragraph'],
-        inlines = [],
+        inlines = ['foreign'],
     } = options
 
     const schema = make_schema({ content, inlines })

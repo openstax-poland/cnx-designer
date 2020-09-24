@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /** @jsx h */
 
 import { List } from 'immutable'
@@ -18,7 +19,7 @@ export const input = `
     </content>
     <glossary>
         <definition>
-            <term>Term</term>
+            <term>Term (pl. <foreign xml:lang="pl"><term>termin</term></foreign>)</term>
             <meaning>
                 <para>Meaning</para>
             </meaning>
@@ -56,7 +57,7 @@ export const outputContent = <value>
 export const outputGlossary = <value>
     <document>
         <definition class={List()}>
-            <defterm>Term</defterm>
+            <defterm>Term (pl. <foreign lang="pl"><text/><term reference={null}>termin</term><text/></foreign>)</defterm>
             <defmeaning class={List()}>
                 <p>Meaning</p>
                 <defexample class={List()}>

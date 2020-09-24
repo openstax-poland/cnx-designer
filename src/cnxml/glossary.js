@@ -49,7 +49,10 @@ export const SEEALSO = block(
  * Process data for terms.
  */
 function de_term(el, next) {
-    if (el.parentElement && el.parentElement.tagName === 'meaning') {
+    if (
+        el.parentElement
+        && !['definition', 'seealso'].includes(el.parentElement.tagName)
+    ) {
         return undefined
     }
 

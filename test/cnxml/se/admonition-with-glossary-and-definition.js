@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /** @jsx h */
 
 export const inputContent = <value>
@@ -15,7 +16,7 @@ export const inputContent = <value>
 export const inputGlossary = <value>
     <document>
         <definition>
-            <defterm reference="other value">Term</defterm>
+            <defterm reference="other value">Term (pl. <foreign><term>termin</term></foreign>)</defterm>
             <defmeaning>
                 <p>Meaning</p>
                 <defexample>
@@ -44,7 +45,7 @@ export const output = `
     </content>
     <glossary>
         <definition>
-            <term cmlnle:reference="other value">Term</term>
+            <term cmlnle:reference="other value">Term (pl. <foreign><term>termin</term></foreign>)</term>
             <meaning>
                 <para>Meaning</para>
             </meaning>

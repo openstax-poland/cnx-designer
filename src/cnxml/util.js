@@ -166,6 +166,8 @@ function deserializeBlock(el, next, block, withClasses) {
             nodes: next(Array.from(el.children)),
         }
 
+    if (!props) return undefined
+
     if (props instanceof Array) {
         props[0].key = props[0].key || el.getAttribute('id') || undefined
 
@@ -224,6 +226,8 @@ function serializeBlock(obj, children, Block) {
  */
 function deserializeMark(el, next, mark) {
     const props = mark instanceof Function ? mark(el) : { type: mark }
+
+    if (!props) return undefined
 
     return {
         object: 'mark',
