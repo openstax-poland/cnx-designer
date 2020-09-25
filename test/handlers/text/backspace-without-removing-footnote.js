@@ -8,6 +8,6 @@ export const input = <editor>
 </editor>
 
 export const output = <editor>
-    <p>Before<footnote><cursor/>otnote</footnote><text/></p>
+    <p>Before<cursor/><footnote>otnote</footnote><text/></p>
     <p>After</p>
 </editor>

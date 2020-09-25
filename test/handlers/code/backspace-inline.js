@@ -7,5 +7,5 @@ export const input = <editor>
 </editor>
 
 export const output = <editor>
-    <p>Tex<codeline><cursor/>me code</codeline><text/></p>
+    <p>Tex<cursor/><codeline>me code</codeline><text/></p>
 </editor>
