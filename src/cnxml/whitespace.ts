@@ -141,7 +141,7 @@ function normalizeTextBoundaries(
 
     if (start != null && !Editor.isStart(editor, start, nodePath.current!)) {
         if (ends === 'unwrap') {
-            Transforms.splitNodes(editor, { at: start, match: Text.isText })
+            Transforms.splitNodes(editor, { at: start, match: Text.isText, always: true })
             Transforms.liftNodes(editor, {
                 at: Editor.range(editor, nodePath.current!, start),
                 match: Text.isText,
