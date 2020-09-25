@@ -4,7 +4,7 @@ import { Transforms } from 'slate'
 
 export default editor => Transforms.insertNodes(editor, {
     type: 'footnote',
-    children: [{ text: '' }],
+    children: [{ text: ' ' }],
 })
 
 export const input = <editor>
@@ -12,5 +12,5 @@ export const input = <editor>
 </editor>
 
 export const output = <editor>
-    <p>Text<footnote><cursor/></footnote><text/></p>
+    <p>Text<footnote> <cursor/></footnote><text/></p>
 </editor>

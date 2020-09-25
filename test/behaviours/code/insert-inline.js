@@ -3,12 +3,12 @@
 import { Transforms } from 'slate'
 
 export default editor => Transforms.insertNodes(
-    editor, { type: 'code', placement: 'line', children: [{ text: '' }] }, { split: true })
+    editor, { type: 'code', placement: 'line', children: [{ text: ' ' }] }, { split: true })
 
 export const input = <editor>
     <p>Some<cursor/> code</p>
 </editor>
 
 export const output = <editor>
-    <p>Some<codeline><cursor/></codeline> code</p>
+    <p>Some<codeline> <cursor/></codeline> code</p>
 </editor>

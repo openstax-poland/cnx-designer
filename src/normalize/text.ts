@@ -83,9 +83,18 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
 
     // Remove empty inlines, but only if they are not selected.
     if (Editor.isInline(editor, node) && !Editor.isVoid(editor, node)
-    && Editor.isEmpty(editor, node)
-    && (editor.selection == null || !Range.includes(editor.selection, path))) {
+    && Editor.isEmpty(editor, node)) {
+    // For now Slate does not support typing inside empty inlines
+    // and in case of:
+    // <inline><cursor/></inline>
+    // Backspace
+    // <cursor/><inline></inline>
+    // inline will not be removed because it will not be normalized.
+    // We want to support this check in the future when these examples
+    // will behave properly.
+    // && (editor.selection == null || !Range.includes(editor.selection, path))
         Transforms.removeNodes(editor, { at: path })
+        return true
     }
 
     return false
