@@ -10,6 +10,7 @@ import React from 'react'
 
 import {
     block,
+    cleanAttrs,
     loadClasses,
     mixed,
     mixedContent,
@@ -230,10 +231,17 @@ export const VIDEO = block('video', de_video, 'video', se_video)
  */
 function de_list(el, next) {
     return {
-        type: el.getAttribute('type') === 'enumerated' ? 'ol_list' : 'ul_list',
-        data: {
+        type: el.getAttribute('list-type') === 'enumerated' ? 'ol_list' : 'ul_list',
+        data: cleanAttrs({
             class: loadClasses(el),
-        },
+            type: el.getAttribute('type'),
+            bulletStyle: el.getAttribute('bullet-style'),
+            numberStyle: el.getAttribute('number-style'),
+            startValue: el.getAttribute('start-value'),
+            markPrefix: el.getAttribute('mark-prefix'),
+            markSuffix: el.getAttribute('mark-suffix'),
+            itemSep: el.getAttribute('item-sep'),
+        }),
         nodes: next(Array.from(el.children)),
     }
 }
@@ -242,13 +250,20 @@ function de_list(el, next) {
  * Serializer for lists.
  */
 function se_list(obj, children) {
-    const type = obj.type === 'ul_list' ? 'bulleted' : 'enumerated'
+    const listType = obj.type === 'ul_list' ? 'bulleted' : 'enumerated'
 
-    const attrs = obj.data.get('class')
-        ? { class: obj.data.get('class').join(' ') }
-        : {}
+    const attrs = {
+        class: obj.data.get('class')?.join(' '),
+        type: obj.data.get('type'),
+        'bullet-style': obj.data.get('bulletStyle'),
+        'number-style': obj.data.get('numberStyle'),
+        'start-value': obj.data.get('startValue'),
+        'mark-prefix': obj.data.get('markPrefix'),
+        'mark-suffix': obj.data.get('markSuffix'),
+        'item-sep': obj.data.get('itemSep'),
+    }
 
-    return <list id={obj.key} list-type={type} {...attrs}>
+    return <list id={obj.key} list-type={listType} {...cleanAttrs(attrs)}>
         {children}
     </list>
 }

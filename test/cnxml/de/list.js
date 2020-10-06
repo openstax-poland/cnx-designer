@@ -3,13 +3,13 @@
 import { List } from 'immutable'
 
 export const input = cnxml`
-<list>
+<list type="user-input" bullet-style="a" number-style="b" start-value="1">
     <item>List items can contain text</item>
     <item>
         <para>Items can also contain block nodes</para>
     </item>
     <item>
-        <list>
+        <list mark-prefix="1" mark-suffix="|" item-sep="*">
             <item>Or nested lists</item>
         </list>
     </item>
@@ -18,7 +18,7 @@ export const input = cnxml`
 
 export const outputContent = <value>
     <document>
-        <ul class={List()}>
+        <ul class={List()} type="user-input" bulletStyle="a" numberStyle="b" startValue="1">
             <li>
                 <p>List items can contain text</p>
             </li>
@@ -26,7 +26,7 @@ export const outputContent = <value>
                 <p>Items can also contain block nodes</p>
             </li>
             <li>
-                <ul class={List()}>
+                <ul class={List()} markPrefix="1" markSuffix="|" itemSep="*">
                     <li>
                         <p>Or nested lists</p>
                     </li>
