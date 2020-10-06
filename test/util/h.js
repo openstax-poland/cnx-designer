@@ -30,6 +30,10 @@ export default global.h = createHyperscript({
         },
         ol: 'ol_list',
         p: 'paragraph',
+        pi: {
+            type: 'pi',
+            isVoid: true,
+        },
         preformat: 'preformat',
         proof: 'rule_proof',
         quote: 'quotation',

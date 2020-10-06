@@ -102,6 +102,7 @@ export default function schema(options) {
     return {
         document: {
             nodes: [
+                { match: { type: 'pi' } },
                 {
                     match: content,
                     min: 1,
@@ -120,6 +121,9 @@ export default function schema(options) {
                 ],
                 next: { type: 'section' },
                 normalize: normalizeSection,
+            },
+            pi: {
+                isVoid: true,
             },
         },
     }
