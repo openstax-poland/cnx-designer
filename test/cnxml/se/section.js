@@ -1,8 +1,10 @@
 /** @jsx h */
 
+import { List } from 'immutable'
+
 export const inputContent = <value>
     <document>
-        <section key="s1">
+        <section key="s1" class={List([''])}>
             <title>Section</title>
             <p>This is a section</p>
             <section key="s2">

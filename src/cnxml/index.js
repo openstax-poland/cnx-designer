@@ -30,10 +30,11 @@ export function writeXml({ document, glossary }, options={}) {
     } = options
 
     let glossaryContent = null
+    const documentAttrs = options.documentClassName ? { class: options.documentClassName } : {}
+    const glossaryAttrs = options.glossaryClassName ? { class: options.glossaryClassName } : {}
 
     if (glossary) {
-        // eslint-disable-next-line react/no-unknown-property
-        glossaryContent = <glossary class={options.glossaryClassName}>
+        glossaryContent = <glossary {...glossaryAttrs}>
             {glossary}
         </glossary>
     }
@@ -44,8 +45,7 @@ export function writeXml({ document, glossary }, options={}) {
         id="new"
         module-id="new"
         xmlLang={language}
-        // eslint-disable-next-line react/no-unknown-property
-        class={options.documentClassName}
+        {...documentAttrs}
         >
         <title>{title}</title>
         <content>

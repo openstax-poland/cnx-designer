@@ -203,12 +203,13 @@ function serializeBlock(obj, children, Block) {
     if (Block instanceof Function) return Block(obj, children)
 
     const data = obj.data.toJS()
+    const className = data.class?.join(' ')
 
-    if (!data.class) {
+    if (!className) {
         // Remove empty classes
         delete data.class
     } else {
-        data.class = data.class.join(' ')
+        data.class = className
     }
 
     return <Block id={obj.key} {...data}>
