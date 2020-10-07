@@ -7,7 +7,7 @@ import React from 'react'
 
 import render from './xml'
 import { TEXT_CONTENT } from './text'
-import { DEFAULT } from './util'
+import { DEFAULT, PROCESSING_INSTRUCTION } from './util'
 import { DOCUMENT } from './document'
 import { GLOSSARY } from './glossary'
 
@@ -65,7 +65,7 @@ export default class CNXML {
             glossaryRules = [],
         } = args
         this.document = new Html({
-            rules: [...documentRules, ...DOCUMENT, ...TEXT_CONTENT, DEFAULT],
+            rules: [PROCESSING_INSTRUCTION, ...documentRules, ...DOCUMENT, ...TEXT_CONTENT, DEFAULT],
             defaultBlock: 'invalid',
             parseHtml,
         })
@@ -124,5 +124,5 @@ function parseHtml(root) {
     // XXX: slate-html-serializer deserializes root element from childNodes
     // without using custom deserializers, which makes it impossible to ignore
     // white space in <content> and <glossary>.
-    return { childNodes: root.children || [] }
+    return { childNodes: Array.from(root.childNodes || []).filter(n => n.nodeType != n.TEXT_NODE) }
 }

@@ -402,6 +402,32 @@ export const DEFAULT = {
     },
 }
 
+export const PROCESSING_INSTRUCTION = {
+    deserialize(el, next) {
+        if (el.nodeType != Node.PROCESSING_INSTRUCTION_NODE) {
+            return undefined
+        }
+
+        return {
+            object: 'block',
+            type: 'pi',
+            isVoid: true,
+            data: {
+                target: el.target,
+                value: el.data,
+            },
+        }
+    },
+
+    serialize(obj) {
+        if (obj.type !== 'pi') {
+            return undefined
+        }
+
+        return <pi target={obj.data.get('target')} value={obj.data.get('value')} />
+    },
+}
+
 export const cleanAttrs = obj => {
     for (const key in obj) {
         if (obj[key] == null) {

@@ -84,6 +84,10 @@ class Renderer {
     }
 
     renderElement(element) {
+        if (element.type === 'pi') {
+            return this.doc.createProcessingInstruction(element.props.target, element.props.value)
+        }
+
         const ns = element.props.xmlns || this.ns
         const node = this.doc.createElementNS(ns, element.type)
 
