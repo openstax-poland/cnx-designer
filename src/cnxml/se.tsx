@@ -69,6 +69,8 @@ export default function serialize(
         cnxml-version={doc.version}
         id={doc.moduleId}
         module-id={doc.moduleId}
+        xmlLang={doc.language}
+        class={doc.classes?.join(' ')}
         >
         <title>{doc.title}</title>
         <content>

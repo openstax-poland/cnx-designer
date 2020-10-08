@@ -10,7 +10,7 @@ export interface WithClasses {
     classes: string[]
 }
 
-const WHITESPACE = /[ \t\n]/
+const WHITESPACE = /[ \t\n]+/
 
 export const WithClasses = {
     /** Check if value of unknown type has classes */
@@ -27,7 +27,7 @@ export const WithClasses = {
 
     /** Iterate over all valid classes in a string */
     *splitClasses(str: string): Iterable<string> {
-        yield* str.split(WHITESPACE)
+        yield* str.trim().split(WHITESPACE)
     },
 
     /** Normalize an array of classes, returning a new array */

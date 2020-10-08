@@ -85,6 +85,7 @@ export default function deserialize(
     }
 
     const doc: Doc = {
+        classes: Array.from(WithClasses.splitClasses(root.getAttribute('class') ?? '')),
         moduleId: root.getAttribute('module-id') ?? 'new',
         version: root.getAttribute('cnxml-version') as CnxmlVersion,
         title: '',
@@ -265,7 +266,7 @@ export function buildElement(
     }
 
     if (el.hasAttribute('class')) {
-        node.class = WithClasses.normalizeClasses([el.getAttribute('class')!])
+        node.classes = WithClasses.normalizeClasses([el.getAttribute('class')!])
     }
 
     for (const [key, value] of Object.entries(node)) {

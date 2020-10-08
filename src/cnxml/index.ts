@@ -14,6 +14,8 @@ export type CnxmlVersion = '0.7' | '0.8'
 
 /** A serialized CNXML document */
 export interface Document {
+    /** Class names for the <document> element */
+    classes?: string[]
     /** ISO language code naming the primary language of this document */
     language?: string
     /** Document's title */

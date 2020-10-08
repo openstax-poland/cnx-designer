@@ -315,6 +315,7 @@ export declare namespace CNXML {
     interface Document extends Attributes.Common {
         'cnxml-version': '0.7' | '0.8'
         'module-id': string
+        'class': string | undefined
     }
 
     interface Download extends Partial<Attributes.Common>, Attributes.Media {}
