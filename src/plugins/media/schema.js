@@ -15,8 +15,8 @@ function normalizeMedia(change, error) {
 
     switch (violation) {
     case 'child_min_invalid':
-        if (error.index === 1) {
-            change.insertNodeByKey(node.key, 1, Block.create({
+        if (error.index === node.nodes.size) {
+            change.insertNodeByKey(node.key, node.nodes.size, Block.create({
                 type: 'media_alt',
                 nodes: [Text.create(node.data.get('alt'))],
             }))
