@@ -3,7 +3,7 @@
 // full license text.
 
 function normalizeTerm(change, error) {
-    const { code, child, node } = error
+    const { code, child, node, key } = error
 
     switch (code) {
     case 'child_type_invalid':
@@ -17,6 +17,17 @@ function normalizeTerm(change, error) {
         }
 
         change.unwrapChildrenByKey(child.key)
+        break
+
+    case 'node_data_invalid':
+        switch (key) {
+        // reference is empty or is not a string.
+        case 'reference':
+            change.setNodeByKey(node.key, { data: node.data.delete('reference') })
+            return
+        }
+
+        console.warn('Unhandled term violation:', code, key)
         break
 
     /* istanbul ignore next */
@@ -38,7 +49,7 @@ export default function schema({ marks, inlines }) {
                 }],
                 marks: marks.map(type => ({ type })),
                 data: {
-                    reference: ref => ref == null || typeof ref === 'string',
+                    reference: ref => ref == null || (typeof ref === 'string' && ref.length > 0),
                 },
                 text: s => s.length,
                 normalize: normalizeTerm,

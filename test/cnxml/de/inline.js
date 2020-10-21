@@ -23,7 +23,7 @@ export const outputContent = <value>
     <document>
         <p>
             {"Paragraphs can contain: text, "}
-            <term reference={null}>terms</term>
+            <term>terms</term>
             {", "}
             <term reference="other value">terms with references</term>
             {", "}

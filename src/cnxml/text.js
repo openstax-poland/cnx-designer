@@ -52,13 +52,16 @@ export const SUPERSCRIPT = inline('sup', 'superscript', 'superscript', 'sup')
  * Process data for terms.
  */
 function de_term(el) {
-    const reference = el.getAttributeNS(
-        'http://katalysteducation.org/cmlnle/1.0', 'reference')
+    const data = {}
+
+    if (el.hasAttributeNS(NAMESPACES.cmlnle, 'reference')) {
+        data.reference = el.getAttributeNS(NAMESPACES.cmlnle, 'reference')
+    }
 
     return {
         object: 'inline',
         type: 'term',
-        data: { reference },
+        data,
     }
 }
 
@@ -66,9 +69,9 @@ function de_term(el) {
  * Serializer for terms.
  */
 function se_term(obj, children) {
+    const { reference } = obj.data.toJS()
     const attrs = {}
 
-    const reference = obj.data.get('reference')
     if (reference && reference !== obj.text) {
         attrs.cmlnleReference = reference
     }

@@ -57,7 +57,7 @@ export const outputContent = <value>
 export const outputGlossary = <value>
     <document>
         <definition class={List()}>
-            <defterm>Term (pl. <foreign lang="pl"><text/><term reference={null}>termin</term><text/></foreign>)</defterm>
+            <defterm>Term (pl. <foreign lang="pl"><text/><term>termin</term><text/></foreign>)</defterm>
             <defmeaning class={List()}>
                 <p>Meaning</p>
                 <defexample class={List()}>
