@@ -35,6 +35,17 @@ function normalizeTerm(change, error) {
             change.setNodeByKey(node.key, { data: node.data.set('index', index) })
             return
         }
+
+        // name is empty, or is not a string.
+        case 'name':
+            change.setNodeByKey(node.key, { data: node.data.delete('name') })
+            return
+
+        // born or died are not numbers.
+        case 'born':
+        case'died':
+            change.setNodeByKey(node.key, { data: node.data.delete(key) })
+            return
         }
 
         console.warn('Unhandled term violation:', code, key)
@@ -61,6 +72,9 @@ export default function schema({ marks, inlines }) {
                 data: {
                     reference: ref => ref == null || (typeof ref === 'string' && ref.length > 0),
                     index: ref => typeof ref === 'string' && ref.length > 0,
+                    name: ref => ref == null || typeof (ref === 'string' && ref.length > 0),
+                    born: ref => ref == null || typeof ref === 'number',
+                    died: ref => ref == null || typeof ref === 'number',
                 },
                 text: s => s.length,
                 normalize: normalizeTerm,

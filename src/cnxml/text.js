@@ -60,6 +60,21 @@ function de_term(el) {
 
     data.index = el.getAttributeNS(NAMESPACES.cxlxt, 'index') ?? 'default'
 
+    if (data.index === 'name') {
+        data.name = el.getAttributeNS(NAMESPACES.cxlxt, 'name')
+
+        const born = el.getAttributeNS(NAMESPACES.cxlxt, 'born')
+        const died = el.getAttributeNS(NAMESPACES.cxlxt, 'died')
+
+        if (born != null) {
+            data.born = Number(born)
+        }
+
+        if (died != null) {
+            data.died = Number(died)
+        }
+    }
+
     return {
         object: 'inline',
         type: 'term',
@@ -71,7 +86,7 @@ function de_term(el) {
  * Serializer for terms.
  */
 function se_term(obj, children) {
-    const { reference, index } = obj.data.toJS()
+    const { reference, index, name, born, died } = obj.data.toJS()
     const attrs = {}
 
     if (reference && reference !== obj.text) {
@@ -80,6 +95,18 @@ function se_term(obj, children) {
 
     if (index && index !== 'default') {
         attrs.cxlxtIndex = index
+    }
+
+    if (index === 'name') {
+        if (name != null) {
+            attrs.cxlxtName = name
+        }
+        if (born != null) {
+            attrs.cxlxtBorn = born
+        }
+        if (died != null) {
+            attrs.cxlxtDied = died
+        }
     }
 
     return <term {...attrs}>
