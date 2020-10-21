@@ -14,6 +14,7 @@ export const NAMESPACES = {
     xml: 'http://www.w3.org/XML/1998/namespace',
     cmlnle: 'http://katalysteducation.org/cmlnle/1.0',
     editing: 'http://adaptarr.naukosfera.com/editing/1.0',
+    cxlxt: 'http://katalysteducation.org/cxlxt/1.0',
 }
 
 const SPECIAL_PROPS = [
