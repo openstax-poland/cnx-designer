@@ -23,9 +23,9 @@ export const outputContent = <value>
     <document>
         <p>
             {"Paragraphs can contain: text, "}
-            <term>terms</term>
+            <term index="default">terms</term>
             {", "}
-            <term reference="other value">terms with references</term>
+            <term index="default" reference="other value">terms with references</term>
             {", "}
             <b>strong text</b>
             {", "}

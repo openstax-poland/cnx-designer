@@ -10,6 +10,6 @@ export const input = <value>
 
 export const output = <value>
     <document>
-        <p>Before <term><anchor/>term</term><focus/> after</p>
+        <p>Before <term index="default"><anchor/>term</term><focus/> after</p>
     </document>
 </value>

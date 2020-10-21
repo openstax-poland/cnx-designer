@@ -20,7 +20,7 @@ export const output = <value>
     <document>
         <p>
             <text/>
-            <foreign>Foreign <term><anchor/>term</term><focus/> text</foreign>
+            <foreign>Foreign <term index="foreign"><anchor/>term</term><focus/> text</foreign>
             <text/>
         </p>
     </document>

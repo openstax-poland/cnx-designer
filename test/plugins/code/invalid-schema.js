@@ -16,7 +16,7 @@ export const input = <value>
 
 export const output = <value>
     <document>
-        <p>Some <codeinline>code </codeinline><text/><term>Term</term><text/></p>
+        <p>Some <codeinline>code </codeinline><text/><term index="default">Term</term><text/></p>
         <code>
             Some code
         </code>

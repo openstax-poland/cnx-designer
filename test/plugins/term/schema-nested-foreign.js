@@ -22,7 +22,7 @@ export const output = <value>
             <text/>
             <foreign>
                 <text/>
-                <term>Foreign</term>
+                <term index="foreign">Foreign</term>
                 <text/>
             </foreign>
             <text/>

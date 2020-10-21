@@ -13,6 +13,7 @@ function normalizeTerm(change, error) {
             change.wrapInlineByKey(
                 node.key, { type: 'foreign', data: child.data })
             change.unwrapChildrenByKey(child.key)
+            change.setNodeByKey(node.key, { data: node.data.set('index', 'foreign') })
             return
         }
 
@@ -25,6 +26,15 @@ function normalizeTerm(change, error) {
         case 'reference':
             change.setNodeByKey(node.key, { data: node.data.delete('reference') })
             return
+
+        // index is missing, is empty, or is not a string.
+        case 'index': {
+            const index = change.value.document.getParent(node.key).type === 'foreign'
+                ? 'foreign'
+                : 'default'
+            change.setNodeByKey(node.key, { data: node.data.set('index', index) })
+            return
+        }
         }
 
         console.warn('Unhandled term violation:', code, key)
@@ -50,6 +60,7 @@ export default function schema({ marks, inlines }) {
                 marks: marks.map(type => ({ type })),
                 data: {
                     reference: ref => ref == null || (typeof ref === 'string' && ref.length > 0),
+                    index: ref => typeof ref === 'string' && ref.length > 0,
                 },
                 text: s => s.length,
                 normalize: normalizeTerm,

@@ -13,7 +13,7 @@ export const input = <value>
 export const output = <value>
     <document>
         <p>
-            <text/><term>Term term<cursor/> term</term><text/>
+            <text/><term index="default">Term term<cursor/> term</term><text/>
         </p>
     </document>
 </value>

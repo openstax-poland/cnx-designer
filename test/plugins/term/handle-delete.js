@@ -19,7 +19,7 @@ export const output = <value>
     <document>
         <p>
             Before<cursor/>
-            <term>
+            <term index="default">
                 erm
             </term>
             <text/>

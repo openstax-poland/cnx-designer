@@ -10,7 +10,7 @@ export const input = <value>
 
 export const output = <value>
     <document>
-        <p>Before <term>te</term><text/></p>
-        <p><text/><term><cursor/>rm</term> after</p>
+        <p>Before <term index="default">te</term><text/></p>
+        <p><text/><term index="default"><cursor/>rm</term> after</p>
     </document>
 </value>

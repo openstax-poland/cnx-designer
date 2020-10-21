@@ -58,6 +58,8 @@ function de_term(el) {
         data.reference = el.getAttributeNS(NAMESPACES.cmlnle, 'reference')
     }
 
+    data.index = el.getAttributeNS(NAMESPACES.cxlxt, 'index') ?? 'default'
+
     return {
         object: 'inline',
         type: 'term',
@@ -69,11 +71,15 @@ function de_term(el) {
  * Serializer for terms.
  */
 function se_term(obj, children) {
-    const { reference } = obj.data.toJS()
+    const { reference, index } = obj.data.toJS()
     const attrs = {}
 
     if (reference && reference !== obj.text) {
         attrs.cmlnleReference = reference
+    }
+
+    if (index && index !== 'default') {
+        attrs.cxlxtIndex = index
     }
 
     return <term {...attrs}>
