@@ -85,7 +85,6 @@ export default function deserialize(
     }
 
     const doc: Doc = {
-        classes: Array.from(WithClasses.splitClasses(root.getAttribute('class') ?? '')),
         moduleId: root.getAttribute('module-id') ?? 'new',
         version: root.getAttribute('cnxml-version') as CnxmlVersion,
         title: '',
@@ -98,6 +97,10 @@ export default function deserialize(
 
     if (root.hasAttributeNS(XML_NAMESPACE, 'lang')) {
         doc.language = root.getAttributeNS(XML_NAMESPACE, 'lang')!
+    }
+
+    if (root.hasAttribute('class')) {
+        doc.classes = WithClasses.normalizeClasses([root.getAttribute('class')!])
     }
 
     const editor = withEditor(withDeserializingEditor(doc, Slate.createEditor()))

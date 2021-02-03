@@ -34,6 +34,7 @@ export default global.h = createHyperscript({
         sup: createMark('position', 'superscript'),
         sub: createMark('position', 'subscript'),
         document: (tagName, attrs, content) => ({
+            language: 'en',
             title: 'Test',
             moduleId: 'test',
             version: '0.7',

@@ -29,6 +29,7 @@ export const output = `
 <document
     xmlns="http://cnx.rice.edu/cnxml"
     xmlns:cmlnle="http://katalysteducation.org/cmlnle/1.0"
+    xml:lang="en"
     cnxml-version="0.7"
     module-id="test"
     id="test"
