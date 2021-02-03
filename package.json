@@ -7,9 +7,12 @@
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
   "private": true,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "is-hotkey": "^0.1.6",
+    "is-plain-object": "^5.0.0",
     "prop-types": "^15.7.2",
     "slate": ">= 0.57.0 < 0.59.0",
     "slate-lists": "https://github.com/openstax-poland/slate-lists.git"

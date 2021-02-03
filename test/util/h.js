@@ -69,6 +69,7 @@ export default global.h = createHyperscript({
         mediaalt: { type: 'media_alt' },
         note: { type: 'admonition', kind: 'note' },
         p: { type: 'paragraph' },
+        pi: { type: 'processing_instruction' },
         preformat: { type: 'preformat' },
         proof: { type: 'rule_proof' },
         quote: { type: 'quotation' },

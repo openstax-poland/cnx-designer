@@ -2,6 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
+import { isPlainObject } from 'is-plain-object'
+
 import { Case } from '../interfaces'
 
 /** Qualified name of an element or attribute */
@@ -17,6 +19,7 @@ export interface Name {
     local: string
 }
 
+
 /** An element */
 export interface Element {
     /** Element's name */
@@ -29,8 +32,25 @@ export interface Element {
 
 export type Attributes = Omit<JSX.IntrinsicAttributes, 'children'> & { [key: string]: unknown }
 
+/** A processing instruction */
+export interface ProcessingInstruction {
+    /** PI's target */
+    target: string
+    /** PI's value */
+    value: string
+}
+
 /** Any value that can be used as child of a JSX element */
-export type Node = Element | globalThis.Node | string | Node[] | null
+export type Node = Element | ProcessingInstruction | globalThis.Node | string | Node[] | null
+
+export const Node = {
+    isElement(node: Node): node is Element {
+        return isPlainObject(node) && typeof (node as Element).name === 'object'
+    },
+    isProcessingInstruction(node: Node): node is ProcessingInstruction {
+        return node != null && typeof (node as ProcessingInstruction).target === 'string'
+    },
+}
 
 /** JSX element creator */
 export function createElement<
@@ -185,6 +205,8 @@ function finishElement(renderer: Renderer, element: Element, out: globalThis.Ele
             out.append(renderer.doc.importNode(child, true))
         } else if (typeof child === 'string') {
             out.append(child)
+        } else if (Node.isProcessingInstruction(child)) {
+            out.append(document.createProcessingInstruction(child.target, child.value))
         } else {
             out.append(renderElement(r, child))
         }
@@ -393,6 +415,11 @@ export declare namespace CNXML {
         value: string
     }
 
+    interface ProcesingInstruction extends Partial<Attributes.Common> {
+        target: string
+        value: string
+    }
+
     type Preformat = DisplayAny
     interface Problem extends Attributes.Common, Attributes.Typed {}
     interface Proof extends Attributes.Common, Attributes.Typed {}
@@ -488,6 +515,7 @@ export declare namespace JSX {
         note: IntrinsicAttributes & CNXML.Note
         para: IntrinsicAttributes & CNXML.Para
         param: IntrinsicAttributes & CNXML.Param
+        pi: IntrinsicAttributes & CNXML.ProcesingInstruction
         preformat: IntrinsicAttributes & CNXML.Preformat
         problem: IntrinsicAttributes & CNXML.Problem
         proof: IntrinsicAttributes & CNXML.Proof
