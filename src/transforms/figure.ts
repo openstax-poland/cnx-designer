@@ -4,18 +4,26 @@
 
 import { Editor, Location, Node, NodeEntry, Path, Transforms } from 'slate'
 
-import { Audio, Caption, Figure, Image, Media, Video } from '../interfaces'
+import { AltText, Audio, Caption, Figure, Image, Media, Video } from '../interfaces'
 
 export type MediaItem = Media | Omit<Audio | Image | Video, 'children'>
 
 function itemToChildren(media: MediaItem): Node[] {
+    const alt = {
+        type: 'media_alt',
+        children: [{ text: '' }],
+    }
+
     if (Media.isMedia(media)) {
+        if (!media.children.some(AltText.isAltText)) {
+            media.children.push(alt)
+        }
         return [media]
     }
 
     return [{
         type: 'media',
-        children: [{ ...media, children: [] }],
+        children: [{ ...media, children: [] }, alt],
     }]
 }
 
