@@ -714,6 +714,13 @@ function term(editor: DeserializingEditor, el: Element, at: Path): void {
         type: 'term',
         index: el.getAttributeNS(CXLXT_NAMESPACE, 'index'),
         reference: el.getAttributeNS(CMLNLE_NAMESPACE, 'reference'),
+        name: el.getAttributeNS(CXLXT_NAMESPACE, 'name'),
+        born: el.hasAttributeNS(CXLXT_NAMESPACE, 'born')
+            ? Number(el.getAttributeNS(CXLXT_NAMESPACE, 'born'))
+            : undefined,
+        died: el.hasAttributeNS(CXLXT_NAMESPACE, 'died')
+            ? Number(el.getAttributeNS(CXLXT_NAMESPACE, 'died'))
+            : undefined,
     }, INLINE)
     normalizeLine(editor, at)
 }

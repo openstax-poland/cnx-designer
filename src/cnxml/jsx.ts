@@ -410,7 +410,10 @@ export declare namespace CNXML {
     interface Subfigure extends Attributes.Common, Attributes.Typed {}
     interface Sup extends Partial<Attributes.Common> {}
     interface Statement extends Attributes.Common, Attributes.Typed {}
-    type Term = Partial<Attributes.Common & Attributes.Link> & CMLNLE.Attributes.Reference & CXLXT.Attributes.Index
+    type Term = Partial<Attributes.Common & Attributes.Link>
+    & CMLNLE.Attributes.Reference
+    & CXLXT.Attributes.NameIndex
+    & CXLXT.Attributes.Index
     interface Title extends Partial<Attributes.Common> {}
     interface Video extends Partial<Attributes.Common>, Attributes.PlayableMedia, Attributes.VisualMedia {}
 }
@@ -432,6 +435,12 @@ export declare namespace CXLXT {
     namespace Attributes {
         interface Index {
             cxlxtIndex?: string
+        }
+
+        interface NameIndex {
+            cxlxtBorn?: number
+            cxlxtDied?: number
+            cxlxtName?: string
         }
     }
 }

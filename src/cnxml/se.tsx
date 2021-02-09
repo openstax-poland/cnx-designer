@@ -11,9 +11,9 @@ import {
     Admonition, AltText, Audio, Caption, Code, Commentary, CrossReference,
     Definition, DefinitionExample, DefinitionTerm, DocumentReference, Exercise,
     Figure, Footnote, Foreign, Glossary, Image, Link, List, ListItem, Meaning,
-    Media, MediaData, NumberStyle, Paragraph, Preformat, Problem, Proof,
-    Quotation, Rule, RuleExample, Section, SeeAlso, Solution, Statement,
-    StyledText, Term, Title, Video, WithClasses,
+    Media, MediaData, NameTerm, NumberStyle, Paragraph, Preformat, Problem,
+    Proof, Quotation, Rule, RuleExample, Section, SeeAlso, Solution,
+    Statement, StyledText, Term, Title, Video, WithClasses,
 } from '../interfaces'
 import { uuid } from '../util'
 import { Document as Doc } from '.'
@@ -505,11 +505,20 @@ function rule(node: Rule, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
     </rule>
 }
 
-function term(node: Term, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
+function term(node: Term | NameTerm, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
+    const nameIndexAttributes: JSX.CXLXT.Attributes.NameIndex = {}
+
+    if (Term.isNameTerm(node)) {
+        nameIndexAttributes.cxlxtName = node.name
+        nameIndexAttributes.cxlxtBorn = node.born
+        nameIndexAttributes.cxlxtDied = node.died
+    }
+
     return <term
         xmlns={JSX.CNXML_NAMESPACE}
         cxlxtIndex={node.index}
         cmlnleReference={node.reference}
+        {...nameIndexAttributes}
         {...attrs}>
         { children }
     </term>

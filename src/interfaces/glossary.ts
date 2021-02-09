@@ -29,10 +29,23 @@ export interface Term extends Element {
     reference?: string
 }
 
+/**
+ * A term that goes into name index
+ */
+export interface NameTerm extends Term {
+    index: 'name'
+    name?: string
+    born?: number
+    died?: number
+}
+
 export const Term = {
     /** Check if value of unknown type is a term */
     isTerm(value: unknown): value is Term {
         return Element.isElement(value) && value.type === 'term'
+    },
+    isNameTerm(value: unknown): value is NameTerm {
+        return Term.isTerm(value) && value.index === 'name'
     },
 }
 

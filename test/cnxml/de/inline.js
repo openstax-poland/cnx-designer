@@ -6,6 +6,7 @@ export const input = cnxml`
 <term>terms</term>,
 <term xmlns:cmlnle="http://katalysteducation.org/cmlnle/1.0" cmlnle:reference="other value">terms with references</term>,
 <term xmlns:cxlxt="http://katalysteducation.org/cxlxt/1.0" cxlxt:index="foreign">terms with indexes</term>,
+<term xmlns:cxlxt="http://katalysteducation.org/cxlxt/1.0" cxlxt:index="name" cxlxt:name="John Doe" cxlxt:born="1950" cxlxt:died="2020">terms with name index</term>,
 <emphasis>strong text</emphasis>,
 <emphasis effect="italics">emphasized text</emphasis>,
 <sup>superscript</sup>,
@@ -26,6 +27,8 @@ export const output = <document>
         <term reference="other value">terms with references</term>
         {", "}
         <term index="foreign">terms with indexes</term>
+        {", "}
+        <term index="name" name="John Doe" born={1950} died={2020}>terms with name index</term>
         {", "}
         <b>strong text</b>
         {", "}
