@@ -3,7 +3,8 @@
 // full license text.
 
 import * as Slate from 'slate'
-import { Editor, Path, Text, Transforms } from 'slate' // eslint-disable-line no-duplicate-imports
+// eslint-disable-next-line @typescript-eslint/no-duplicate-imports
+import { Editor, Path, Text, Transforms } from 'slate'
 
 import normalizeWhiteSpace, { collapseAdjacentText } from './whitespace'
 import { CnxmlVersion, Document as Doc } from '.'

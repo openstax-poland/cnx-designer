@@ -150,12 +150,6 @@ function serializeNode(editor: Editor, node: Node, ctx: Context): JSX.Node {
     throw new Error(`no serializer defined for ${JSON.stringify(node)}`)
 }
 
-interface MarkedText extends Text {
-    emphasis?: boolean
-    strong?: boolean
-    position?: ''
-}
-
 /** Check if a node contains only plain, unmarked text */
 function isPlainText(node: Node): boolean {
     if (Element.isElement(node)) {
@@ -482,7 +476,6 @@ function mediaItem(
     children: JSX.Node,
     ctx: Context,
 ): JSX.Node {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const Tag = node.type.slice(6) as 'audio' | 'image' | 'video'
 
     return <Tag
