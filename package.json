@@ -29,6 +29,8 @@
     "cross-env": "^7.0.0",
     "eslint": "^7.0.0",
     "eslint-config-openstax-poland": "https://github.com/openstax-poland/eslint-config-openstax-poland.git",
+    "eslint-import-resolver-node": "^0.3.4",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-react": "^7.20.1",
     "jsdom": "^16.0.0",
     "mocha": "^7.0.0",
