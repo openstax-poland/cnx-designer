@@ -11,11 +11,11 @@
   "dependencies": {
     "is-hotkey": "^0.1.6",
     "prop-types": "^15.7.2",
-    "slate": ">= 0.57.0 < 0.59.0",
+    "slate": "0.57.0 - 0.59.x",
     "slate-lists": "https://github.com/openstax-poland/slate-lists.git"
   },
   "resolutions": {
-    "slate": "openstax-poland/slate#slate-v0.58.4-1-gitpkg"
+    "slate": "openstax-poland/slate#slate-v0.59.0-gitpkg"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -33,17 +33,17 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-react": "^7.20.1",
     "jsdom": "^16.0.0",
-    "mocha": "^7.0.0",
+    "mocha": "^8.2.1",
     "nyc": "^15.0.0",
     "rollup": "^2.0.0",
     "rollup-plugin-typescript2": "^0.27.0",
-    "slate-hyperscript": ">= 0.57.0 < 0.59.0",
-    "ts-node": "^8.10.2",
+    "slate-hyperscript": "0.57.0 - 0.59.x",
+    "ts-node": "^9.1.1",
     "tslib": "^2.0.0",
-    "typescript": "^3.8.3"
+    "typescript": "^4.1.4"
   },
   "peerDependencies": {
-    "slate": ">= 0.57.0 < 0.59.0"
+    "slate": "0.57.0 - 0.59.x"
   },
   "scripts": {
     "build": "cross-env NODE_ENV=build rollup -c",
