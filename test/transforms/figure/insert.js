@@ -21,6 +21,7 @@ export const output = <editor>
             <img src="first.png" intendedUse="all">
                 <text/>
             </img>
+            <mediaalt><text/></mediaalt>
         </media>
     </figure>
 </editor>

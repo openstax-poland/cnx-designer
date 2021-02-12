@@ -19,6 +19,7 @@ export const output = <editor>
     <figure>
         <media>
             <audio src="audio.wav" intendedUse="all"><text/></audio>
+            <mediaalt><text/></mediaalt>
         </media>
     </figure>
 </editor>

@@ -3,9 +3,19 @@
 import { Transforms } from '../../../src'
 
 export default editor => Transforms.insertSubfigure(editor, {
-    type: 'media_image',
-    src: 'third.png',
-    intendedUse: 'all',
+    type: 'media',
+    children: [
+        {
+            type: 'media_image',
+            src: 'third.png',
+            intendedUse: 'all',
+            children: []
+        },
+        {
+            type: 'media_alt',
+            children: [{ text: 'Third picture' }]
+        }
+    ]
 })
 
 export const checkSelection = false
@@ -40,6 +50,7 @@ export const output = <editor>
         <figure>
             <media>
                 <img src="third.png" intendedUse="all"><text/></img>
+                <mediaalt>Third picture</mediaalt>
             </media>
         </figure>
         <figure>

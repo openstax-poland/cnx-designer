@@ -19,6 +19,7 @@ export const output = <editor>
     <figure>
         <media>
             <video src="video.mpg" intendedUse="all"><text/></video>
+            <mediaalt><text/></mediaalt>
         </media>
     </figure>
 </editor>
