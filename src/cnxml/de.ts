@@ -239,8 +239,20 @@ export function children(
                 node: { text: (child as CharacterData).data },
             })
             break
+        case Node.PROCESSING_INSTRUCTION_NODE:
+            editor.apply({
+                type: 'insert_node',
+                path: path.current!,
+                node: {
+                    type: 'processing_instruction',
+                    target: (child as ProcessingInstruction).target,
+                    value: (child as ProcessingInstruction).data,
+                    children: [{ text: '' }],
+                },
+            })
+            break
 
-        // Comments, processing instructions, etc.
+        // Comments, etc.
         default: break
         }
     }
