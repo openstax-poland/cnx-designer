@@ -1,11 +1,11 @@
 /** @jsx h */
 
 import { Proof } from '../../../src'
-import { Editor, Element, Transforms } from 'slate'
+import { Editor, Transforms } from 'slate'
 
 export default (input, editor) => {
     input.break().break()
-    const [[newProof, path]] = Editor.nodes(editor, { match: Proof.isProof, reverse: true })
+    const [[, path]] = Editor.nodes(editor, { match: Proof.isProof, reverse: true })
     Transforms.select(editor, Editor.end(editor, path))
     input.break().break().break()
 }

@@ -3,7 +3,8 @@
 // full license text.
 
 import * as Slate from 'slate'
-import { Editor, Path, Text, Transforms } from 'slate' // eslint-disable-line no-duplicate-imports
+// eslint-disable-next-line @typescript-eslint/no-duplicate-imports
+import { Editor, Path, Text, Transforms } from 'slate'
 
 import normalizeWhiteSpace, { collapseAdjacentText } from './whitespace'
 import { CnxmlVersion, Document as Doc } from '.'
@@ -238,8 +239,20 @@ export function children(
                 node: { text: (child as CharacterData).data },
             })
             break
+        case Node.PROCESSING_INSTRUCTION_NODE:
+            editor.apply({
+                type: 'insert_node',
+                path: path.current!,
+                node: {
+                    type: 'processing_instruction',
+                    target: (child as ProcessingInstruction).target,
+                    value: (child as ProcessingInstruction).data,
+                    children: [{ text: '' }],
+                },
+            })
+            break
 
-        // Comments, processing instructions, etc.
+        // Comments, etc.
         default: break
         }
     }

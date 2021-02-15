@@ -12,7 +12,7 @@ import {
     Definition, DefinitionExample, DefinitionTerm, DocumentReference, Exercise,
     Figure, Footnote, Foreign, Glossary, Image, Link, List, ListItem, Meaning,
     Media, MediaData, NameTerm, NumberStyle, Paragraph, Preformat, Problem,
-    Proof, Quotation, Rule, RuleExample, Section, SeeAlso, Solution,
+    ProcessingInstruction, Proof, Quotation, Rule, RuleExample, Section, SeeAlso, Solution,
     Statement, StyledText, Term, Title, Video, WithClasses,
 } from '../interfaces'
 import { uuid } from '../util'
@@ -148,12 +148,6 @@ function serializeNode(editor: Editor, node: Node, ctx: Context): JSX.Node {
     }
 
     throw new Error(`no serializer defined for ${JSON.stringify(node)}`)
-}
-
-interface MarkedText extends Text {
-    emphasis?: boolean
-    strong?: boolean
-    position?: ''
 }
 
 /** Check if a node contains only plain, unmarked text */
@@ -344,6 +338,7 @@ const SERIALIZERS: SerializerEntry<Node>[] = [
     [Media.isMedia, media],
     [Paragraph.isParagraph, makeSerializer('para')],
     [Preformat.isPreformat, makeSerializer('preformat')],
+    [ProcessingInstruction.isProcessingInstruction, processingInstruction],
     [Problem.isProblem, makeSerializer('problem')],
     [Proof.isProof, makeSerializer('proof')],
     [Quotation.isQuotation, makeSerializer('quote')],
@@ -400,12 +395,12 @@ function docref(node: DocumentReference, attrs: CommonAttrs, children: JSX.Node)
 
 function figure(node: Figure, attrs: CommonAttrs, children: JSX.Node[]): JSX.Node {
     function mapChild(child: JSX.Node): JSX.Node {
-        if (child == null || typeof child === 'string' || child instanceof globalThis.Node) {
-            return child
-        }
-
         if (Array.isArray(child)) {
             return child.map(mapChild)
+        }
+
+        if (!JSX.Node.isElement(child)) {
+            return child
         }
 
         if (child.name.namespace === JSX.CNXML_NAMESPACE
@@ -439,11 +434,11 @@ function link(node: Link, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
 
 function list(node: List, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
     function mapChild(child: JSX.Node): JSX.Node {
-        if (child == null || typeof child === 'string' || child instanceof globalThis.Node) {
+        if (Array.isArray(child)) return child.map(mapChild)
+
+        if (!JSX.Node.isElement(child)) {
             return child
         }
-
-        if (Array.isArray(child)) return child.map(mapChild)
 
         if ((child.name.namespace == null || child.name.namespace === JSX.CNXML_NAMESPACE)
         && child.name.local === 'list') {
@@ -482,7 +477,6 @@ function mediaItem(
     children: JSX.Node,
     ctx: Context,
 ): JSX.Node {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const Tag = node.type.slice(6) as 'audio' | 'image' | 'video'
 
     return <Tag
@@ -494,6 +488,10 @@ function mediaItem(
         >
         {children}
     </Tag>
+}
+
+function processingInstruction(node: ProcessingInstruction): JSX.Node {
+    return { target: node.target, value: node.value }
 }
 
 function rule(node: Rule, attrs: CommonAttrs, children: JSX.Node): JSX.Node {
