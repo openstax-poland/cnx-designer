@@ -31,6 +31,7 @@ export const output = <editor>
         <figure>
             <media>
                 <img src="second.png" intendedUse="all"><text/></img>
+                <mediaalt><text/></mediaalt>
             </media>
         </figure>
         <caption>Caption</caption>

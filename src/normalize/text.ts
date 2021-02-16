@@ -4,7 +4,7 @@
 
 import { Editor, NodeEntry, Range, Text, Transforms } from 'slate'
 
-import { Caption, Figure, Foreign, Quotation, Term, Title } from '../interfaces'
+import { AltText, Caption, Figure, Foreign, Quotation, Term, Title } from '../interfaces'
 
 /**
  * Normalize text nodes
@@ -25,6 +25,15 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
         // Figure must not have more than one caption.
         const [next, nextPath] = Editor.next(editor, { at: path }) ?? []
         if (Caption.isCaption(next)) {
+            Transforms.mergeNodes(editor, { at: nextPath })
+            return true
+        }
+    }
+
+    if (AltText.isAltText(node)) {
+        // Media must not have more than one alt text.
+        const [next, nextPath] = Editor.next(editor, { at: path }) ?? []
+        if (AltText.isAltText(next)) {
             Transforms.mergeNodes(editor, { at: nextPath })
             return true
         }
