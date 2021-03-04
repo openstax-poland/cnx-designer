@@ -136,9 +136,16 @@ const BLOCK_TAGS = [
 ]
 /* eslint-enable array-element-newline */
 
+/**
+ * Attributes added for ex. when transforming from JSX to HTML.
+ * We want to omit them.
+ */
+const RESERVED_ATTRIBUTES = ['__source']
+
 /** Finish rendering an already created element */
 function finishElement(renderer: Renderer, element: Element, out: globalThis.Element): void {
     for (const [key, value] of Object.entries(element.attributes)) {
+        if (RESERVED_ATTRIBUTES.includes(key)) continue
         if (value == null) continue
 
         let val
