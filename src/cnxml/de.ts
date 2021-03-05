@@ -257,6 +257,10 @@ export function children(
         }
     }
 
+    if (el.childNodes.length === 0) {
+        editor.apply({ type: 'insert_node', path: path.current!, node: { text: '' } })
+    }
+
     path.unref()
 }
 
@@ -594,7 +598,7 @@ function link(editor: DeserializingEditor, el: Element, at: Path): void {
             target,
             document,
             case: el.getAttributeNS(CMLNLE_NAMESPACE, 'case'),
-            children: [{ text: '' }],
+            children: [],
         }, {})
         normalizeVoid(editor, at)
     } else if (url != null) {
