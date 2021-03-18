@@ -29,6 +29,8 @@ export const input = <>
         <footnote id="footnote-id">footnotes</footnote>
         {", "}
         <foreign language="pl">słowa obce</foreign>
+        {", "}
+        <foreign language="pl"><text/><term>term in foreign</term><text/></foreign>
         {", and "}
         <link url="https://example.test">external links</link>
         .
@@ -50,5 +52,8 @@ elements in other documents (<link target-id="f1" document="d1" />),
 other <link document="d1">documents</link>,
 <footnote id="footnote-id">footnotes</footnote>,
 <foreign xml:lang="pl">słowa obce</foreign>,
+<foreign xml:lang="pl">
+  <term>term in foreign</term>
+</foreign>,
 and <link url="https://example.test">external links</link>.</para>
 `.replace(/\s+/g, ' ')
