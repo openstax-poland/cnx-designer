@@ -228,6 +228,17 @@ export function children(
     for (const child of el.childNodes) {
         switch (child.nodeType) {
         case Node.ELEMENT_NODE:
+            if (
+                child.childNodes.length === 3
+                && child.childNodes[0].nodeType === Node.TEXT_NODE
+                && child.childNodes[0].textContent!.trim() === ''
+                && child.childNodes[2].nodeType === Node.TEXT_NODE
+                && child.childNodes[2].textContent!.trim() === ''
+                && child.childNodes[1].nodeType === Node.ELEMENT_NODE
+            ) {
+                child.childNodes[2].remove()
+                child.childNodes[0].remove()
+            }
             editor.deserializeElement(child as Element, path.current!, context)
             break
 
