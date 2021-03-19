@@ -3,6 +3,7 @@
 // full license text.
 
 export * from './handlers'
+export * from './id'
 export * from './interfaces'
 export * from './plugin'
 export * from './util'
