@@ -16,6 +16,10 @@ elements in other documents (<link target-id="f1" document="d1" />),
 other <link document="d1">documents</link>,
 <footnote id="footnote-id">footnotes</footnote>,
 <foreign xml:lang="pl">słowa obce</foreign>,
+<foreign xml:lang="en"><term xmlns:cxlxt="http://katalysteducation.org/cxlxt/1.0" cxlxt:index="foreign">term inside foreign - from not formatted xml</term></foreign>,
+<foreign xml:lang="en">
+    <term xmlns:cxlxt="http://katalysteducation.org/cxlxt/1.0" cxlxt:index="foreign">term inside foreign - from formatted xml</term>
+</foreign>,
 and <link url="https://example.test">external links</link>.</para>
 `.replace(/\s+/g, ' ')
 
@@ -47,7 +51,11 @@ export const output = <document>
         <footnote id="footnote-id">footnotes</footnote>
         {", "}
         <foreign language="pl">słowa obce</foreign>
-        {", and "}
+        {", "}
+        <foreign language="en"><text/><term index="foreign">term inside foreign - from not formatted xml</term><text/></foreign>
+        {", "}
+        <foreign language="en"><text/><term index="foreign">term inside foreign - from formatted xml</term><text/></foreign>
+        {" , and "}
         <link url="https://example.test">external links</link>
         .
     </p>
