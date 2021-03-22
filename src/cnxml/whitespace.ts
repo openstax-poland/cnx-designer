@@ -155,6 +155,27 @@ function normalizeTextBoundaries(
     // have the same properties, and remove empty text nodes.
     collapseAdjacentText(editor, nodePath.current!)
 
+    // Step 4: ensure that all elements begin and end with a text node.
+    const node = Node.get(editor, nodePath.current!) as Element
+
+    if (editor.isInline(node)) {
+        if (!Text.isText(node.children[node.children.length - 1])) {
+            editor.apply({
+                type: 'insert_node',
+                path: [...nodePath.current!, node.children.length],
+                node: { text: '' },
+            })
+        }
+
+        if (!Text.isText(node.children[0])) {
+            editor.apply({
+                type: 'insert_node',
+                path: [...nodePath.current!, 0],
+                node: { text: '' },
+            })
+        }
+    }
+
     nodePath.unref()
 }
 
