@@ -9,6 +9,7 @@ import normalizeClasses from './classes'
 import normalizeExercise from './exercise'
 import normalizeFigure from './figure'
 import normalizeGlossary from './glossary'
+import normalizeQuotation from './quotation'
 import normalizeRule from './rule'
 import normalizeStructure from './structure'
 import normalizeText from './text'
@@ -25,6 +26,7 @@ export default function normalizeNode(
         || normalizeExercise(editor, entry)
         || normalizeFigure(editor, entry)
         || normalizeGlossary(editor, entry)
+        || normalizeQuotation(editor, entry)
         || normalizeRule(editor, entry)
         || normalizeStructure(editor, entry)
         || normalizeText(editor, entry)
