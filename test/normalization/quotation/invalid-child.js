@@ -1,7 +1,5 @@
 /** @jsx h */
 
-export const skip = true
-
 export const input = <editor>
     <quote key="q1">
         <p key="p1">First paragraph</p>
@@ -19,7 +17,7 @@ export const output = <editor>
     <note key="n1">
         <p><cursor/>Second paragraph</p>
     </note>
-    <quote>
+    <quote key="q1">
         <p key="p3">Third paragraph</p>
     </quote>
 </editor>
