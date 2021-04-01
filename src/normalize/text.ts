@@ -2,9 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, NodeEntry, Range, Text, Transforms } from 'slate'
+import { Editor, NodeEntry, Path, Range, Text, Transforms } from 'slate'
 
-import { AltText, Caption, Figure, Foreign, Quotation, Term, Title } from '../interfaces'
+import { AltText, Caption, Code, Figure, Foreign, Quotation, Term, Title } from '../interfaces'
 
 /**
  * Normalize text nodes
@@ -104,6 +104,39 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
     // && (editor.selection == null || !Range.includes(editor.selection, path))
         Transforms.removeNodes(editor, { at: path })
         return true
+    }
+
+    // Move white space from beginning and end of inlines outside of them,
+    // unless they are currently selected.
+    if (Editor.isInline(editor, node) && !Code.isCodeLine(node)
+    && (editor.selection == null || !Range.includes(editor.selection, path))) {
+        let match
+
+        const first = node.children[0]
+        if (first != null && Text.isText(first) && (match = first.text.match(/^\s+/u))) {
+            Transforms.delete(editor, {
+                at: {
+                    path: [...path, 0],
+                    offset: 0,
+                },
+                distance: match[0].length,
+            })
+            Transforms.insertNodes(editor, { text: match[0] }, { at: path })
+            return true
+        }
+
+        const last = node.children[node.children.length - 1]
+        if (last != null && Text.isText(last) && (match = last.text.match(/\s+$/u))) {
+            Transforms.delete(editor, {
+                at: {
+                    path: [...path, node.children.length - 1],
+                    offset: match.index!,
+                },
+                distance: match[0].length,
+            })
+            Transforms.insertNodes(editor, { text: match[0] }, { at: Path.next(path) })
+            return true
+        }
     }
 
     return false
