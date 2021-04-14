@@ -16,6 +16,8 @@ export const input = <>
         {", "}
         <i>emphasized text</i>
         {", "}
+        <u>underlined text</u>
+        {", "}
         <sup>superscript</sup>
         {", "}
         <sub>subscript</sub>
@@ -45,6 +47,7 @@ export const output = cnxml`
 <term xmlns:cxlxt="http://katalysteducation.org/cxlxt/1.0" cxlxt:index="name" cxlxt:name="John Doe" cxlxt:born="1950" cxlxt:died="2020">terms with name index</term>,
 <emphasis effect="bold">strong text</emphasis>,
 <emphasis effect="italics">emphasized text</emphasis>,
+<emphasis effect="underline">underlined text</emphasis>,
 <sup>superscript</sup>,
 <sub>subscript</sub>,
 links to other elements (<link target-id="f1" />),

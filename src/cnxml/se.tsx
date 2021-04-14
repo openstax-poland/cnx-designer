@@ -164,9 +164,9 @@ function isPlainText(node: Node): boolean {
 }
 
 /** Name of a style attribute on a {@link StyledText} node */
-type TextStyle = 'emphasis' | 'strong' | 'position'
+type TextStyle = 'emphasis' | 'underline' | 'strong' | 'position'
 
-const STYLES: TextStyle[] = ['emphasis', 'strong', 'position']
+const STYLES: TextStyle[] = ['emphasis', 'underline', 'strong', 'position']
 
 /** Map storing values of style attributes of a {@link StyledText} node */
 type Style = Map<TextStyle, string | boolean>
@@ -182,6 +182,11 @@ function applyTextStyle(style: TextStyle, value: string | boolean, node: JSX.Nod
     case 'strong':
         return value
             ? <emphasis xmlns={JSX.CNXML_NAMESPACE} effect="bold">{node}</emphasis>
+            : node
+
+    case 'underline':
+        return value
+            ? <emphasis xmlns={JSX.CNXML_NAMESPACE} effect="underline">{node}</emphasis>
             : node
 
     case 'position':

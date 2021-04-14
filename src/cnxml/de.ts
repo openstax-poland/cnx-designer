@@ -635,6 +635,7 @@ const MARKS: { [key: string]: Omit<StyledText, 'text'> } = {
     sub: { position: 'subscript' },
     sup: { position: 'superscript' },
     bold: { strong: true },
+    underline: { underline: true },
     italics: { emphasis: true },
 }
 
