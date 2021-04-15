@@ -3,6 +3,7 @@
 // full license text.
 
 import { Editor, Path, Range, Text, Transforms } from 'slate'
+import { List, ListItem } from 'slate-lists'
 
 import {
     Admonition, Caption, Code, CodeBlock, Commentary, Definition,
@@ -157,7 +158,8 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
                 || Exercise.isExercise(n)
                 || Preformat.isPreformat(n)
                 || Quotation.isQuotation(n)
-                || Rule.isRule(n),
+                || Rule.isRule(n)
+                || List.isList(n),
         }) ?? []
 
         if (Admonition.isAdmonition(container) || Quotation.isQuotation(container)) {
@@ -253,6 +255,11 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
 
             // Otherwise split current block.
             Transforms.splitNodes(editor, { at: [...itemPath, blockIndex] })
+            return ev.preventDefault()
+        }
+
+        if (List.isList(container)) {
+            Transforms.splitNodes(editor, { match: ListItem.isListItem })
             return ev.preventDefault()
         }
     }
