@@ -19,6 +19,7 @@ export default {
         typescript(),
     ],
     external: [
+        'is-plain-object',
         'slate',
         'slate-lists',
     ],
