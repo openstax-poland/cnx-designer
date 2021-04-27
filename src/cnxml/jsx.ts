@@ -140,7 +140,10 @@ const BLOCK_TAGS = [
  * Attributes added for ex. when transforming from JSX to HTML.
  * We want to omit them.
  */
-const RESERVED_ATTRIBUTES = ['__source']
+const RESERVED_ATTRIBUTES = [
+    '__self', // Value of this when evaluation the JSX expression
+    '__source', // Location of JSX expression in the source
+]
 
 /** Finish rendering an already created element */
 function finishElement(renderer: Renderer, element: Element, out: globalThis.Element): void {
