@@ -4,7 +4,9 @@
 
 import { Editor, Node, NodeEntry, Transforms } from 'slate'
 
-import { AltText, Audio, Caption, Figure, Image, Media, Section, Video } from '../interfaces'
+import {
+    Admonition, AltText, Audio, Caption, Figure, Image, Media, Section, Video,
+} from '../interfaces'
 import { enumerate } from '../util'
 import { normalizeOrderedChildren } from './util'
 
@@ -17,11 +19,11 @@ export default function normalizeFigure(editor: Editor, entry: NodeEntry): boole
     const [node, path] = entry
 
     if (Figure.isFigure(node)) {
-        // Figure can only be a child of sections, the document, and other
-        // figures.
+        // Figure can only be a child of sections, admonitions, the document,
+        // and other figures.
         const [parent, parentPath] = Editor.parent(editor, path)
         if (!Section.isSection(parent) && !Figure.isFigure(parent)
-        && parentPath.length > 0) {
+            && !Admonition.isAdmonition(parent) && parentPath.length > 0) {
             Transforms.liftNodes(editor, { at: path })
             return true
         }
