@@ -6,7 +6,7 @@ import { Editor, Path, Range, Text, Transforms } from 'slate'
 
 import {
     Admonition, Caption, Code, CodeBlock, Commentary, Definition,
-    DefinitionExample, Exercise, Preformat, Problem, Quotation, Rule,
+    DefinitionExample, Exercise, Preformat, Problem, Quotation, Rule, Title,
 } from './interfaces'
 
 /**
@@ -78,6 +78,15 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
 
     if (selection == null) {
         return
+    }
+
+    const [, titlePath] = Editor.above(editor, { match: Title.isTitle }) ?? []
+    if (titlePath != null) {
+        Editor.withoutNormalizing(editor, () => {
+            Transforms.splitNodes(editor)
+            Transforms.setNodes(editor, { type: 'paragraph' }, { at: Path.next(titlePath) })
+        })
+        return ev.preventDefault()
     }
 
     const [code, codePath] = Editor.above(editor, { match: isCodeLike }) ?? []

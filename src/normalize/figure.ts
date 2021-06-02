@@ -5,7 +5,7 @@
 import { Editor, Node, NodeEntry, Transforms } from 'slate'
 
 import {
-    Admonition, AltText, Audio, Caption, Figure, Image, Media, Section, Video,
+    Admonition, AltText, Audio, Caption, Figure, Image, Media, Section, Title, Video,
 } from '../interfaces'
 import { enumerate } from '../util'
 import { normalizeOrderedChildren } from './util'
@@ -42,7 +42,7 @@ export default function normalizeFigure(editor: Editor, entry: NodeEntry): boole
         if (normalizeOrderedChildren(
             editor,
             [node, path],
-            [isFigureItem, Caption.isCaption],
+            [Title.isTitle, isFigureItem, Caption.isCaption],
             normalizeInvalidChild,
         )) {
             return true
@@ -51,7 +51,8 @@ export default function normalizeFigure(editor: Editor, entry: NodeEntry): boole
         // At this point there can only be one caption, and it can only be the
         // last child.
         const hasCaption = Caption.isCaption(node.children[node.children.length - 1])
-        const length = node.children.length - (hasCaption ? 1 : 0)
+        const hasTitle = Title.isTitle(node.children[0])
+        const length = node.children.length - (hasCaption ? 1 : 0) - (hasTitle ? 1 : 0)
 
         // Figures must not be empty.
         if (length === 0) {
@@ -68,7 +69,7 @@ export default function normalizeFigure(editor: Editor, entry: NodeEntry): boole
         // If there is more than one item, all must be subfigures.
         if (length > 1) {
             for (const [inx, child] of enumerate(node.children)) {
-                if (Figure.isFigure(child) || Caption.isCaption(child)) {
+                if (Title.isTitle(child) || Figure.isFigure(child) || Caption.isCaption(child)) {
                     continue
                 }
 

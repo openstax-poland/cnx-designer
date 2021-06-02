@@ -10,8 +10,7 @@ export const input = <editor>
 
 export const output = <editor>
     <note>
-        <title>Note</title>
-        <p><cursor/>More titles</p>
+        <title>Note<cursor/>More titles</title>
         <p>Note</p>
     </note>
 </editor>

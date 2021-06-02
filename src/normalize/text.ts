@@ -40,7 +40,19 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
     }
 
     if (Title.isTitle(node)) {
-        // Title must be the first child of it's parent.
+        // Title shouldn't be followed by another title.
+        const [prev] = Editor.previous(editor, { at: path }) ?? []
+        if (Title.isTitle(prev)) {
+            Transforms.mergeNodes(editor, { at: path })
+            return true
+        }
+
+        const [parent] = Editor.parent(editor, path)
+        // Titles in figures are normalized in figure.ts.
+        if (Figure.isFigure(parent)) {
+            return false
+        }
+
         if (path[path.length - 1] > 0) {
             Transforms.setNodes(editor, { type: 'paragraph' }, { at: path })
             return true
