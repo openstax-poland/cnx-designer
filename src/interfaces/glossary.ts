@@ -21,7 +21,7 @@ export const Glossary = {
  *
  * This element can be used as an inline in text to mark it as a term, for
  * inclusion in an index or formatting. It can also be used as a key of
- a {@link Definition}.
+ * a {@link Definition}.
  */
 export interface Term extends Element {
     type: 'term'
