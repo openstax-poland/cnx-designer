@@ -8,8 +8,8 @@ import withInput from './util/input'
 
 global.should = chai.should()
 
-fixtures(__dirname, 'normalization', ({ input, output, checkSelection = true }) => {
-    const editor = withTest(input)
+fixtures(__dirname, 'normalization', ({ input, output, checkSelection = true, ...options }) => {
+    const editor = withTest(input, options)
     Editor.normalize(editor, { force: true })
     editor.children.should.deep.eq(output.children)
 
@@ -67,6 +67,10 @@ fixtures(__dirname, 'behaviours', ({
     }
 })
 
-function withTest(editor) {
-    return withCnx(editor)
+function withTest(editor, { withEditor } = {}) {
+    editor = withCnx(editor)
+    if (withEditor != null) {
+        editor = withEditor(editor)
+    }
+    return editor
 }

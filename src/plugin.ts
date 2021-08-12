@@ -8,8 +8,9 @@ import normalizeNode from './normalize'
 import { isInline, isVoid } from './interfaces'
 
 /** A Slate editor augmented with support for editing CNX documents. */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface CnxEditor extends Editor {
+    /** Can {@code element} be used as content of an {@link Equation}? */
+    isEquationContent(element: Element): boolean
 }
 
 /**
@@ -25,6 +26,8 @@ export function withCnx<T extends Editor>(editor: T): T & CnxEditor {
     } = ed
 
     ed.normalizeNode = normalizeNode.bind(null, oldNormalizeNode, ed)
+
+    ed.isEquationContent = (): boolean => false
 
     ed.isInline = (element: Element): boolean => isInline(element) || oldIsInline(element)
 

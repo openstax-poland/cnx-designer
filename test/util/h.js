@@ -54,6 +54,7 @@ export default global.h = createHyperscript({
         defterm: { type: 'definition_term' },
         docref: { type: 'docref' },
         enumlist: { type: 'list', style: 'enumerated', numberStyle: 'arabic', start: 1 },
+        equation: { type: 'equation' },
         excomment: { type: 'exercise_commentary' },
         exercise: { type: 'exercise' },
         exproblem: { type: 'exercise_problem' },

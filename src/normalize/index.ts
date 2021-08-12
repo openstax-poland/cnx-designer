@@ -2,10 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, NodeEntry } from 'slate'
+import { NodeEntry } from 'slate'
 
+import { CnxEditor } from '../plugin'
 import normalizeAdmonition from './admonition'
 import normalizeClasses from './classes'
+import normalizeEquation from './equation'
 import normalizeExercise from './exercise'
 import normalizeFigure from './figure'
 import normalizeGlossary from './glossary'
@@ -17,12 +19,13 @@ import normalizeXref from './xref'
 
 export default function normalizeNode(
     normalizeNode: (entry: NodeEntry) => void,
-    editor: Editor,
+    editor: CnxEditor,
     entry: NodeEntry,
 ): void {
     if (
         normalizeAdmonition(editor, entry)
         || normalizeClasses(editor, entry)
+        || normalizeEquation(editor, entry)
         || normalizeExercise(editor, entry)
         || normalizeFigure(editor, entry)
         || normalizeGlossary(editor, entry)
