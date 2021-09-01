@@ -61,7 +61,7 @@ export default global.h = createHyperscript({
         exsolution: { type: 'exercise_solution' },
         figure: { type: 'figure' },
         footnote: { type: 'footnote' },
-        foreign: { type: 'foreign' },
+        foreign: { type: 'foreign', language: 'en' },
         glossary: { type: 'glossary' },
         img: { type: 'media_image' },
         itemlist: { type: 'list', style: 'bulleted', bullet: 'bullet' },

@@ -102,6 +102,16 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
         }
     }
 
+    // It will be removed after implementation of
+    // https://github.com/openstax-poland/adaptarr-backlog/issues/92
+    if (Foreign.isForeign(node)) {
+        // Set default foreign language
+        if (!node.language) {
+            Transforms.setNodes(editor, { language: 'en' }, { at: path })
+            return true
+        }
+    }
+
     // Remove empty inlines, but only if they are not selected.
     if (Editor.isInline(editor, node) && !Editor.isVoid(editor, node)
     && Editor.isEmpty(editor, node)) {
