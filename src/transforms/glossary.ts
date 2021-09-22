@@ -50,7 +50,7 @@ export function addGlossaryDefinition(
         let [glossary, glossaryPath] = Editor.above(editor, {
             at: path,
             match: Glossary.isGlossary,
-        })!
+        }) ?? []
 
         let index
 
@@ -59,12 +59,12 @@ export function addGlossaryDefinition(
             glossary = Editor.node(editor, glossaryPath)[0] as Glossary
             index = mode === 'before' ? 0 : glossary.children.length
         } else {
-            index = Path.relative(path, glossaryPath)[0]
+            index = Path.relative(path, glossaryPath!)[0]
                 + (mode === 'before' ? 0 : 1)
         }
 
         Transforms.insertNodes(editor, node, {
-            at: [...glossaryPath, index],
+            at: [...glossaryPath!, index],
             select,
         })
     })
