@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, Node, NodeEntry, Transforms } from 'slate'
+import { Editor, Node, NodeEntry, Text, Transforms } from 'slate'
 
 import {
     Admonition, AltText, Audio, Caption, Figure, Image, Media, Section, Title, Video,
@@ -125,6 +125,9 @@ function isMediaItem(node: Node): node is Image | Audio | Video {
 }
 
 function normalizeInvalidChild(editor: Editor, entry: NodeEntry): void {
-    const [, path] = entry
-    Transforms.unwrapNodes(editor, { at: path })
+    const [node, path] = entry
+    if (Text.isText(node)) {
+        Transforms.wrapNodes(editor, { type: 'paragraph', children: [] }, { at: path })
+    }
+    Transforms.liftNodes(editor, { at: path })
 }
