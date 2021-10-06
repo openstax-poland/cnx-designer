@@ -113,6 +113,21 @@ export default function normalizeFigure(editor: Editor, entry: NodeEntry): boole
         }
     }
 
+    if (isMediaItem(node)) {
+        // Media item must be inside media
+        const [parent] = Editor.parent(editor, path)
+        if (!Media.isMedia(parent)) {
+            Transforms.wrapNodes(editor, {
+                type: 'media',
+                children: [
+                    node,
+                    { type: 'media_alt', children: [{ text: '' }] },
+                ],
+            }, { at: path })
+            return true
+        }
+    }
+
     return false
 }
 
