@@ -1,4 +1,4 @@
-import { Editor, Element, Operation } from 'slate'
+import { Editor, Element, Node, Operation } from 'slate'
 
 import { uuid } from './util'
 
@@ -26,32 +26,36 @@ function apply(apply: (op: Operation) => void, ed: Editor, op: Operation) {
         ID_MAP.set(ed, ids = new Set())
     }
 
-    let add, remove
+    const add: string[] = []
+    const remove: string[] = []
 
     switch (op.type) {
     case 'insert_node':
-        if (Element.isElement(op.node)
-        && (!('id' in op.node) || typeof op.node.id !== 'string' || ids.has(op.node.id))) {
-            op.node.id = generateId()
-        }
-        add = op.node.id as string
+        walk(op.node, el => {
+            if (!('id' in el) || typeof el.id !== 'string' || ids!.has(el.id)) {
+                el.id = generateId()
+            }
+            add.push(el.id as string)
+        })
         break
 
     case 'merge_node':
         if ('id' in op.properties && typeof op.properties.id === 'string') {
-            remove = op.properties.id
+            remove.push(op.properties.id)
         }
         break
 
     case 'remove_node':
-        if ('id' in op.node && typeof op.node.id === 'string') {
-            remove = op.node.id
-        }
+        walk(op.node, el => {
+            if ('id' in el && typeof el.id === 'string') {
+                remove.push(el.id)
+            }
+        })
         break
 
     case 'set_node':
         if ('id' in op.properties && typeof op.properties.id === 'string') {
-            remove = op.properties.id
+            remove.push(op.properties.id)
         }
         if ('id' in op.newProperties) {
             if (typeof op.newProperties.id !== 'string') {
@@ -60,13 +64,14 @@ function apply(apply: (op: Operation) => void, ed: Editor, op: Operation) {
             if (ids.has(op.newProperties.id)) {
                 throw new Error(`a node with ID ${op.newProperties.id} already exists`)
             }
-            add = op.properties.id as string
+            add.push(op.properties.id as string)
         }
         break
 
     case 'split_node':
         if ('id' in op.properties) {
             op.properties.id = generateId()
+            add.push(op.properties.id as string)
         }
         break
 
@@ -76,16 +81,24 @@ function apply(apply: (op: Operation) => void, ed: Editor, op: Operation) {
 
     apply(op)
 
-    if (remove != null) {
-        ids.delete(remove)
+    for (const id of remove) {
+        ids.delete(id)
     }
 
-    if (add != null) {
-        ids.add(add)
+    for (const id of add) {
+        ids.add(id)
     }
 }
 
 /** Generate a new, random ID */
 function generateId(): string {
     return `UUID${uuid.v4()}`
+}
+
+function walk(node: Node, callback: (element: Element) => void) {
+    if (Element.isElement(node)) {
+        callback(node)
+
+        for (const child of node.children) walk(child, callback)
+    }
 }
