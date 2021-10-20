@@ -23,7 +23,7 @@ function apply(apply: (op: Operation) => void, ed: Editor, op: Operation) {
     let ids = ID_MAP.get(ed)
 
     if (ids == null) {
-        ID_MAP.set(ed, ids = new Set())
+        ID_MAP.set(ed, ids = collectIds(ed))
     }
 
     const add: string[] = []
@@ -101,4 +101,11 @@ function walk(node: Node, callback: (element: Element) => void) {
 
         for (const child of node.children) walk(child, callback)
     }
+}
+
+function collectIds(editor: Editor): Set<string> {
+    return new Set(Array.from(Editor.nodes(editor, {
+        at: [[0], [editor.children.length]],
+        match: node => Element.isElement(node) && 'id' in node && typeof node.id === 'string',
+    }), ([node]) => node.id as string))
 }
