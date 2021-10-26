@@ -5,7 +5,13 @@
 import { Editor, Node, NodeEntry, Path, Transforms } from 'slate'
 
 import {
-    Definition, DefinitionExample, DefinitionTerm, Glossary, Meaning, SeeAlso, Term,
+    Definition,
+    DefinitionExample,
+    DefinitionTerm,
+    Glossary,
+    Meaning,
+    SeeAlso,
+    Term,
 } from '../interfaces'
 import { normalizeOrderedChildren, previousOverOnly } from './util'
 
