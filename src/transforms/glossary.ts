@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, Element, Location, Path, Range, Transforms } from 'slate'
+import { Editor, Element, Location, Node, Path, Range, Transforms } from 'slate'
 
 import { Definition, DefinitionExample, Glossary, Meaning, SeeAlso } from '../interfaces'
 
@@ -27,11 +27,14 @@ export function addGlossaryDefinition(
 
         if (at == null) return
 
+        const fragment = Editor.fragment(editor, at)
+        const text = Node.string({ children: fragment })
+
         const node = {
             type: 'definition',
             children: [{
                 type: 'definition_term',
-                children: [{ text: '' }],
+                children: [{ text }],
             }],
         }
 
