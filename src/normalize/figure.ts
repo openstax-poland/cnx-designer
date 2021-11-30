@@ -97,6 +97,13 @@ export default function normalizeFigure(editor: Editor, entry: NodeEntry): boole
         const hasAltText = AltText.isAltText(node.children[node.children.length - 1])
         const length = node.children.length - (hasAltText ? 1 : 0)
 
+        // Media parent must be a figure
+        const [parent] = Editor.parent(editor, path)
+        if (!Figure.isFigure(parent)) {
+            Transforms.wrapNodes(editor, { type: 'figure', children: [] }, { at: path })
+            return true
+        }
+
         // Media elements must contain at least one media item.
         if (length < 1) {
             Transforms.removeNodes(editor, { at: path })
