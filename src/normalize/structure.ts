@@ -24,6 +24,17 @@ export default function normalizeStructure(editor: Editor, entry: NodeEntry): bo
             }, { at: [0] })
             return true
         }
+
+        // If the document starts with a title,
+        // the title must be wrapped in a section
+        if (Title.isTitle(editor.children[0])) {
+            Transforms.wrapNodes(editor, {
+                type: 'section',
+                children: [],
+            }, { at: [0] })
+            Transforms.moveNodes(editor, { at: [1], to: [0, 1] })
+            return true
+        }
     }
 
     if (Section.isSection(node)) {
