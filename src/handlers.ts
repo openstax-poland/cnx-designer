@@ -136,7 +136,7 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
                 Editor.deleteFragment(editor)
             }
 
-            Transforms.splitNodes(editor)
+            Transforms.splitNodes(editor, { always: true })
             Transforms.liftNodes(editor, { at: Path.next(captionPath!) })
         })
 
