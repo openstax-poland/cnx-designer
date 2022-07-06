@@ -11,6 +11,7 @@ import {
     Caption,
     Figure,
     Image,
+    ListItem,
     Media,
     Problem,
     Section,
@@ -34,10 +35,12 @@ export default function normalizeFigure(editor: Editor, entry: NodeEntry): boole
         // sections, admonitions, problems, the document,
         // and other figures.
         const [parent, parentPath] = Editor.parent(editor, path)
-        if (!Section.isSection(parent) && !Figure.isFigure(parent)
+        if (!Section.isSection(parent)
+            && !Figure.isFigure(parent)
             && !Admonition.isAdmonition(parent)
             && !Problem.isProblem(parent)
             && !Solution.isSolution(parent)
+            && !ListItem.isListItem(parent)
             && parentPath.length > 0) {
             Transforms.liftNodes(editor, { at: path })
             return true
