@@ -42,6 +42,7 @@ export function isInline(element: Element): boolean {
 export function isVoid(element: Element): boolean {
     return Audio.isAudio(element)
         || CrossReference.isCrossReference(element)
+        || DocumentReference.isDocumentReference(element)
         || Image.isImage(element)
         || ProcessingInstruction.isProcessingInstruction(element)
         || Video.isVideo(element)
