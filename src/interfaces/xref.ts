@@ -36,6 +36,8 @@ export interface DocumentReference extends Element {
     type: 'docref'
     /** Identifier of the target document */
     document: string
+    /** Grammatical case in which the reference should be rendered */
+    case?: Case
 }
 
 export const DocumentReference = {

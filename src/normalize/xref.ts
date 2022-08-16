@@ -4,7 +4,7 @@
 
 import { Editor, NodeEntry, Transforms } from 'slate'
 
-import { CrossReference } from '../interfaces'
+import { CrossReference, DocumentReference } from '../interfaces'
 
 /**
  * Normalize links and cross-references
@@ -14,7 +14,8 @@ import { CrossReference } from '../interfaces'
 export default function normalizeXref(editor: Editor, entry: NodeEntry): boolean {
     const [node, path] = entry
 
-    if (CrossReference.isCrossReference(node)) {
+    if (CrossReference.isCrossReference(node)
+    || DocumentReference.isDocumentReference(node)) {
         if (node.case && !CrossReference.isCase(node.case)) {
             Transforms.unsetNodes(editor, 'case', { at: path })
             return true
