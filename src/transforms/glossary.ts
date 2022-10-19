@@ -4,7 +4,14 @@
 
 import { Editor, Element, Location, Path, Range, Transforms } from 'slate'
 
-import { Definition, DefinitionExample, Glossary, Meaning, SeeAlso } from '../interfaces'
+import {
+    Definition,
+    DefinitionExample,
+    Glossary,
+    Meaning,
+    SeeAlso,
+} from '../interfaces'
+import { unpackBlocks } from '../util'
 
 /**
  * Add a new definition to the glossary
@@ -27,11 +34,13 @@ export function addGlossaryDefinition(
 
         if (at == null) return
 
+        const toInsert = unpackBlocks(editor, Editor.fragment(editor, at) as [])
+
         const node = {
             type: 'definition',
             children: [{
                 type: 'definition_term',
-                children: [{ text: '' }],
+                children: toInsert,
             }],
         }
 

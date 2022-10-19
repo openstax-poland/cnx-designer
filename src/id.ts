@@ -97,7 +97,7 @@ function generateId(): string {
 
 function walk(node: Node, callback: (element: Element) => void) {
     if (Element.isElement(node)) {
-        callback(node)
+        callback({ ...node })
 
         for (const child of node.children) walk(child, callback)
     }
