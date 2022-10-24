@@ -33,8 +33,9 @@ export function addGlossaryDefinition(
         const { at = editor.selection, mode = 'after', select } = options
 
         if (at == null) return
-
-        const toInsert = unpackBlocks(editor, Editor.fragment(editor, at) as [])
+        const toInsert = Range.isCollapsed(at as Range)
+            ? [{ text: '' }]
+            : unpackBlocks(editor, Editor.fragment(editor, at) as [])
 
         const node = {
             type: 'definition',
