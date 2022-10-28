@@ -2,11 +2,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, Path, Range, Text, Transforms } from 'slate'
+import { Editor, Node, Path, Range, Text, Transforms } from 'slate'
 
 import {
-    Admonition, Caption, Code, CodeBlock, Commentary, Definition,
-    DefinitionExample, Exercise, Preformat, Problem, Quotation, Rule, Title,
+    Admonition, AltText, Caption, Code, CodeBlock, Commentary, Definition,
+    DefinitionExample, Exercise, Figure, Media, Preformat, Problem, Quotation, Rule, Title,
 } from './interfaces'
 
 /**
@@ -139,6 +139,37 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
             Transforms.splitNodes(editor, { always: true })
             Transforms.liftNodes(editor, { at: Path.next(captionPath!) })
         })
+
+        return ev.preventDefault()
+    }
+
+    const [altText, altTextPath] = Editor.above(editor, { match: AltText.isAltText }) ?? []
+    if (altText != null && altTextPath != null && Range.isCollapsed(selection)) {
+        const after = Editor.after(editor, altTextPath)
+
+        if (!after) return
+
+        const newSelection = {
+            anchor: {
+                path: after.path,
+                offset: 0,
+            },
+            focus: {
+                path: after.path,
+                offset: 0,
+            },
+        }
+
+        Transforms.setSelection(editor, newSelection)
+
+        if (!Editor.above(editor, { match: Caption.isCaption })) {
+            Transforms.insertNodes(editor, {
+                type: 'paragraph',
+                children: [
+                    { text: '' },
+                ],
+            })
+        }
 
         return ev.preventDefault()
     }
