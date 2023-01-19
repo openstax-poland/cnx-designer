@@ -3,6 +3,7 @@
 // full license text.
 
 import { Editor, Node, Path, Range, Text, Transforms } from 'slate'
+import { ListItem } from 'slate-lists'
 
 import {
     Admonition, AltText, Caption, Code, CodeBlock, Commentary, Definition,
@@ -170,6 +171,38 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
                 ],
             })
         }
+
+        return ev.preventDefault()
+    }
+
+    const [listItem, listItemPath] = Editor.above(editor, { match: ListItem.isListItem }) ?? []
+    if (listItem != null && listItemPath != null && Range.isCollapsed(selection)) {
+        if (Node.string(listItem) !== '') return
+
+        const after = Editor.after(editor, listItemPath)
+        Transforms.removeNodes(editor)
+
+        if (!after) return
+
+        const newSelection = {
+            anchor: {
+                path: after.path,
+                offset: 0,
+            },
+            focus: {
+                path: after.path,
+                offset: 0,
+            },
+        }
+
+        Transforms.setSelection(editor, newSelection)
+
+        Transforms.insertNodes(editor, {
+            type: 'paragraph',
+            children: [
+                { text: '' },
+            ],
+        })
 
         return ev.preventDefault()
     }
