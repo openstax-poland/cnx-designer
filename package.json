@@ -1,0 +1,27 @@
+{
+  "name": "cnx-designer",
+  "version": "0.2.4-rc.16",
+  "license": "MIT",
+  "repository": "github.com/katalysteducation/cnx-designer",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "private": true,
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "is-hotkey": "^0.2.0",
+    "is-plain-object": "^5.0.0",
+    "prop-types": "^15.7.2",
+    "slate": "0.57.0 - 0.59.x",
+    "slate-lists": "openstax-poland/slate-lists#gitpub/slate-lists@0.1.0-rc.1"
+  },
+  "resolutions": {
+    "slate": "openstax-poland/slate#slate-v0.59.0-gitpkg"
+  },
+  "peerDependencies": {
+    "slate": "0.57.0 - 0.59.x"
+  },
+  "packageManager": "yarn@3.5.0"
+}
