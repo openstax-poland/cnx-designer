@@ -70,6 +70,16 @@ function onBackspace(editor: Editor, ev: KeyboardEvent): void {
         Transforms.delete(editor, { at: point })
         Transforms.splitNodes(editor, { at: point })
     }
+
+    const [alt] = Editor.above(editor, { match: AltText.isAltText }) ?? []
+    if (alt != null) {
+        if (selection.anchor.offset > 0) return
+
+        // Backspace at the beginning of an alt-text. Slate's default handling
+        // would try merging it with the preceding node, which in this case is
+        // the void MediaData.
+        return ev.preventDefault()
+    }
 }
 
 /** Handle enter/paragraph break */
