@@ -5,21 +5,27 @@ import { uuid } from './util'
 /** Set of all IDs currently present in an editor */
 const ID_MAP: WeakMap<Editor, Set<string>> = new WeakMap()
 
+export interface IdEditor extends Editor {
+    generateID: () => string
+}
+
 /**
  * Augment an editor with an ID manager
  *
  * The ID manager will ensure that each {@link Element} has a document-unique
  * property {@code id: string}.
  */
-export function withIds<T extends Editor>(editor: T): T {
-    const { apply: oldApply } = editor
+export function withIds<T extends Editor>(editor: T): T & IdEditor {
+    const ed = editor as T & IdEditor
+    const { apply: oldApply } = ed
 
-    editor.apply = apply.bind(null, oldApply, editor)
+    ed.generateID = generateID
+    ed.apply = apply.bind(null, oldApply, ed)
 
-    return editor
+    return ed
 }
 
-function apply(apply: (op: Operation) => void, ed: Editor, op: Operation) {
+function apply(apply: (op: Operation) => void, ed: IdEditor, op: Operation) {
     let ids = ID_MAP.get(ed)
 
     if (ids == null) {
@@ -33,7 +39,7 @@ function apply(apply: (op: Operation) => void, ed: Editor, op: Operation) {
     case 'insert_node':
         walk(op.node, el => {
             if (!('id' in el) || typeof el.id !== 'string' || ids!.has(el.id)) {
-                el.id = generateId()
+                el.id = ed.generateID()
             }
             add.push(el.id as string)
         })
@@ -70,7 +76,7 @@ function apply(apply: (op: Operation) => void, ed: Editor, op: Operation) {
 
     case 'split_node':
         if ('id' in op.properties) {
-            op.properties.id = generateId()
+            op.properties.id = ed.generateID()
             add.push(op.properties.id as string)
         }
         break
@@ -91,7 +97,7 @@ function apply(apply: (op: Operation) => void, ed: Editor, op: Operation) {
 }
 
 /** Generate a new, random ID */
-function generateId(): string {
+function generateID(): string {
     return `UUID${uuid.v4()}`
 }
 
