@@ -37,6 +37,7 @@ function apply(apply: (op: Operation) => void, ed: Editor, op: Operation) {
             }
             add.push(el.id as string)
         })
+        if (!op.node.id) op.node.id = generateId()
         break
 
     case 'merge_node':
