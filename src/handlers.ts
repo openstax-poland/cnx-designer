@@ -93,8 +93,18 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
     const [, titlePath] = Editor.above(editor, { match: Title.isTitle }) ?? []
     if (titlePath != null) {
         Editor.withoutNormalizing(editor, () => {
-            Transforms.splitNodes(editor)
-            Transforms.setNodes(editor, { type: 'paragraph' }, { at: Path.next(titlePath) })
+            if (Editor.point(editor, titlePath, { edge: 'end' }).offset
+             !== editor.selection?.focus.offset) {
+                Transforms.splitNodes(editor)
+                Transforms.setNodes(editor, { type: 'paragraph' }, { at: Path.next(titlePath) })
+            } else {
+                Transforms.insertNodes(editor, {
+                    type: 'paragraph',
+                    children: [
+                        { text: '' },
+                    ],
+                })
+            }
         })
         return ev.preventDefault()
     }
