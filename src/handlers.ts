@@ -206,7 +206,7 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
 
         // Only handle key if selection is in an empty block, or at a beginning
         // of a block.
-        if (path[path.length - 1] === 0 && selection.anchor.offset > 0) {
+        if (path[path.length - 1] !== 0 || selection.anchor.offset > 0) {
             return
         }
 
