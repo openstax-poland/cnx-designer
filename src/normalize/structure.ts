@@ -46,14 +46,11 @@ export default function normalizeStructure(editor: Editor, entry: NodeEntry): bo
 
         // Sections must have a title.
         if (!Title.isTitle(node.children[0])) {
-            const [prev, prevPath] = Editor.previous(editor, { at: path }) ?? []
+            const [prev] = Editor.previous(editor, { at: path }) ?? []
             if (Section.isSection(prev)) {
-                // If this is a subsequent section, move content into the
+                // If this is a subsequent section, merge content into the
                 // previous section.
-                Transforms.moveNodes(editor, {
-                    at: Editor.range(editor, path),
-                    to: [...prevPath!, prev.children.length],
-                })
+                Transforms.mergeNodes(editor, { at: path })
             } else {
                 // Otherwise unwrap it into the parent section.
                 Transforms.unwrapNodes(editor, { at: path })
