@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, NodeEntry, Path, Range, Text, Transforms } from 'slate'
+import { Editor, Element, NodeEntry, Path, Range, Text, Transforms } from 'slate'
 
 import { AltText, Caption, Code, Figure, Foreign, Quotation, Term, Title } from '../interfaces'
 
@@ -13,8 +13,11 @@ import { AltText, Caption, Code, Figure, Foreign, Quotation, Term, Title } from 
  */
 export default function normalizeText(editor: Editor, entry: NodeEntry): boolean {
     const [node, path] = entry
+    let container: Element | undefined
 
     if (Caption.isCaption(node)) {
+        container = node
+
         // Caption is only allowed as the last child of a figure.
         const [parent] = Editor.parent(editor, path)
         if (!Figure.isFigure(parent)) {
@@ -31,6 +34,8 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
     }
 
     if (AltText.isAltText(node)) {
+        container = node
+
         // Media must not have more than one alt text.
         const [next, nextPath] = Editor.next(editor, { at: path }) ?? []
         if (AltText.isAltText(next)) {
@@ -40,6 +45,8 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
     }
 
     if (Title.isTitle(node)) {
+        container = node
+
         // Title shouldn't be followed by another title.
         const [prev] = Editor.previous(editor, { at: path }) ?? []
         if (Title.isTitle(prev)) {
@@ -57,6 +64,10 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
             Transforms.setNodes(editor, { type: 'paragraph' }, { at: path })
             return true
         }
+    }
+
+    if (container != null && ensureTextOnly(editor, container, path)) {
+        return true
     }
 
     if (Quotation.isQuotation(node)) {
@@ -161,5 +172,17 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
         }
     }
 
+    return false
+}
+
+function ensureTextOnly(editor: Editor, node: Element, path: Path): boolean {
+    for (let i = 0; i < node.children.length; ++i) {
+        if (Editor.isBlock(editor, node.children[i])) {
+            Transforms.unwrapNodes(editor, {
+                at: [...path, i],
+            })
+            return true
+        }
+    }
     return false
 }
