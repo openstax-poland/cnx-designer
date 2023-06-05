@@ -5,8 +5,8 @@
 import { Editor, Node, Path, Range, Text, Transforms } from 'slate'
 
 import {
-    Admonition, AltText, Caption, Code, CodeBlock, Commentary, Definition,
-    DefinitionExample, Exercise, Figure, Media, Preformat, Problem, Quotation, Rule, Title,
+    Admonition, AltText, Caption, Code, CodeBlock, Commentary, DefinitionExample, Meaning,
+    Preformat, Problem, Proof, Quotation, Rule, RuleExample, Solution, Statement, Title,
 } from './interfaces'
 
 /**
@@ -90,13 +90,18 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
         return
     }
 
-    const [, titlePath] = Editor.above(editor, { match: Title.isTitle }) ?? []
-    if (titlePath != null) {
+    // Non-null assertion is valid because there must be at least one block
+    // between the text node containing the cursor and the editor itself.
+    const [block, blockPath] = Editor.above(editor, {
+        match: n => Editor.isBlock(editor, n),
+    })!
+
+    if (Title.isTitle(block)) {
         Editor.withoutNormalizing(editor, () => {
-            if (Editor.point(editor, titlePath, { edge: 'end' }).offset
+            if (Editor.point(editor, blockPath, { edge: 'end' }).offset
              !== editor.selection?.focus.offset) {
                 Transforms.splitNodes(editor)
-                Transforms.setNodes(editor, { type: 'paragraph' }, { at: Path.next(titlePath) })
+                Transforms.setNodes(editor, { type: 'paragraph' }, { at: Path.next(blockPath) })
             } else {
                 Transforms.insertNodes(editor, {
                     type: 'paragraph',
@@ -109,8 +114,7 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
         return ev.preventDefault()
     }
 
-    const [code, codePath] = Editor.above(editor, { match: isCodeLike }) ?? []
-    if (code != null) {
+    if (isCodeLike(block)) {
         Editor.withoutNormalizing(editor, () => {
             if (!Range.isCollapsed(selection)) {
                 Editor.deleteFragment(editor)
@@ -122,7 +126,7 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
             }
 
             // First split for the future paragraph.
-            const paraPath = Path.next(codePath!)
+            const paraPath = Path.next(blockPath)
             Transforms.splitNodes(editor)
 
             // Check if there are any new lines after the split, ...
@@ -149,23 +153,21 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
         return ev.preventDefault()
     }
 
-    const [caption, captionPath] = Editor.above(editor, { match: Caption.isCaption }) ?? []
-    if (caption != null) {
+    if (Caption.isCaption(block)) {
         Editor.withoutNormalizing(editor, () => {
             if (!Range.isCollapsed(selection)) {
                 Editor.deleteFragment(editor)
             }
 
             Transforms.splitNodes(editor, { always: true })
-            Transforms.liftNodes(editor, { at: Path.next(captionPath!) })
+            Transforms.liftNodes(editor, { at: Path.next(blockPath) })
         })
 
         return ev.preventDefault()
     }
 
-    const [altText, altTextPath] = Editor.above(editor, { match: AltText.isAltText }) ?? []
-    if (altText != null && altTextPath != null && Range.isCollapsed(selection)) {
-        const after = Editor.after(editor, altTextPath)
+    if (AltText.isAltText(block) && Range.isCollapsed(selection)) {
+        const after = Editor.after(editor, blockPath)
 
         if (!after) return
 
@@ -199,7 +201,6 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
         return
     }
 
-    // Selection is collapsed.
     if (Range.isCollapsed(selection)) {
         // Since selection is collapsed it can only be within a single node.
         const path = selection.anchor.path
@@ -211,13 +212,8 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
         }
 
         const [container, containerPath] = Editor.above(editor, {
-            match: n => Admonition.isAdmonition(n)
-                || Caption.isCaption(n)
-                || Definition.isDefinition(n)
-                || Exercise.isExercise(n)
-                || Preformat.isPreformat(n)
-                || Quotation.isQuotation(n)
-                || Rule.isRule(n),
+            match: n => Editor.isBlock(editor, n),
+            at: blockPath,
         }) ?? []
 
         if (Admonition.isAdmonition(container) || Quotation.isQuotation(container)) {
@@ -229,17 +225,19 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
             return ev.preventDefault()
         }
 
-        if (Exercise.isExercise(container)) {
-            const [itemIndex, blockIndex] = Path.relative(path, containerPath!)
-            const item = container.children[itemIndex]
-            const itemPath = [...containerPath!, itemIndex]
+        if (Problem.isProblem(container) || Solution.isSolution(container)
+        || Commentary.isCommentary(container)) {
+            const exercise = Node.parent(editor, containerPath!)
+            const exercisePath = Path.parent(containerPath!)
+            const itemIndex = containerPath![containerPath!.length - 1]
+            const blockIndex = blockPath[blockPath.length - 1]
 
             // First element of the item; splitting here would create an empty
             // item, ...
             if (blockIndex === 0) {
                 // ... but since this is the last item we can just unwrap it.
-                if (itemIndex + 1 === container.children.length) {
-                    Transforms.liftNodes(editor, { at: itemPath })
+                if (itemIndex + 1 === exercise.children.length) {
+                    Transforms.liftNodes(editor, { at: containerPath! })
                 }
 
                 // Otherwise we prevent any action.
@@ -248,25 +246,25 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
 
             // Since commentaries are always last, the only reasonable thing to
             // do is unwrap content following cursor from the exercise.
-            if (Commentary.isCommentary(item)) {
+            if (Commentary.isCommentary(container)) {
                 Transforms.moveNodes(editor, {
-                    at: Editor.range(editor, path, itemPath),
-                    to: Path.next(containerPath!),
+                    at: Editor.range(editor, path, containerPath),
+                    to: Path.next(exercisePath),
                 })
                 return ev.preventDefault()
             }
 
             // Otherwise split current block.
             Editor.withoutNormalizing(editor, () => {
-                Transforms.splitNodes(editor, { at: [...itemPath, blockIndex] })
+                Transforms.splitNodes(editor, { at: [...containerPath!, blockIndex] })
 
                 // When splitting a problem this way we want to create
                 // a solution instead.
-                if (Problem.isProblem(item)) {
+                if (Problem.isProblem(container)) {
                     Transforms.setNodes(
                         editor,
                         { type: 'exercise_solution' },
-                        { at: Path.next(itemPath) },
+                        { at: Path.next(containerPath!) },
                     )
                 }
             })
@@ -274,20 +272,16 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
             return ev.preventDefault()
         }
 
-        if (Definition.isDefinition(container)) {
-            const [itemIndex, blockIndex] = Path.relative(path, containerPath!)
-            const item = container.children[itemIndex]
-            const itemPath = [...containerPath!, itemIndex]
-
+        if (Meaning.isMeaning(container) || DefinitionExample.isDefinitionExample(container)) {
             Editor.withoutNormalizing(editor, () => {
-                Transforms.splitNodes(editor, { at: [...itemPath, blockIndex] })
+                Transforms.splitNodes(editor, { at: blockPath })
 
                 // When splitting an example we want to create a meaning instead
-                if (DefinitionExample.isDefinitionExample(item)) {
+                if (DefinitionExample.isDefinitionExample(container)) {
                     Transforms.setNodes(
                         editor,
                         { type: 'definition_meaning' },
-                        { at: Path.next(itemPath) },
+                        { at: Path.next(containerPath!) },
                     )
                 }
             })
@@ -295,16 +289,19 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
             return ev.preventDefault()
         }
 
-        if (Rule.isRule(container)) {
-            const [itemIndex, blockIndex] = Path.relative(path, containerPath!)
-            const itemPath = [...containerPath!, itemIndex]
+        if (Statement.isStatement(container)
+        || Proof.isProof(container)
+        || RuleExample.isRuleExample(container)) {
+            const [rule] = Editor.above(editor, { at: containerPath, match: Rule.isRule })!
+            const itemIndex = containerPath![containerPath!.length - 1]
+            const blockIndex = blockPath[blockPath.length - 1]
 
             // First element of the item; splitting here would create an empty
             // item, ...
             if (blockIndex === 0) {
                 // ... but since this is the last item we can just unwrap it.
-                if (itemIndex + 1 === container.children.length) {
-                    Transforms.liftNodes(editor, { at: itemPath })
+                if (itemIndex + 1 === rule.children.length) {
+                    Transforms.liftNodes(editor, { at: containerPath! })
                 }
 
                 // Otherwise we prevent any action.
@@ -312,7 +309,7 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
             }
 
             // Otherwise split current block.
-            Transforms.splitNodes(editor, { at: [...itemPath, blockIndex] })
+            Transforms.splitNodes(editor, { at: [...containerPath!, blockIndex] })
             return ev.preventDefault()
         }
     }
