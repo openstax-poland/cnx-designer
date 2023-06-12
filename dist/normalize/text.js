@@ -1,0 +1,164 @@
+// Copyright 2020 OpenStax Poland
+// Licensed under the MIT license. See LICENSE file in the project root for
+// full license text.
+import { Editor, Path, Range, Text, Transforms } from 'slate';
+import { AltText, Caption, Code, Figure, Foreign, Quotation, Term, Title } from '../interfaces';
+/**
+ * Normalize text nodes
+ *
+ * Return true if entry was normalized and false otherwise.
+ */
+export default function normalizeText(editor, entry) {
+    var _a, _b, _c;
+    const [node, path] = entry;
+    let container;
+    if (Caption.isCaption(node)) {
+        container = node;
+        // Caption is only allowed as the last child of a figure.
+        const [parent] = Editor.parent(editor, path);
+        if (!Figure.isFigure(parent)) {
+            Transforms.setNodes(editor, { type: 'paragraph' }, { at: path });
+            return true;
+        }
+        // Figure must not have more than one caption.
+        const [next, nextPath] = (_a = Editor.next(editor, { at: path })) !== null && _a !== void 0 ? _a : [];
+        if (Caption.isCaption(next)) {
+            Transforms.mergeNodes(editor, { at: nextPath });
+            return true;
+        }
+    }
+    if (AltText.isAltText(node)) {
+        container = node;
+        // Media must not have more than one alt text.
+        const [next, nextPath] = (_b = Editor.next(editor, { at: path })) !== null && _b !== void 0 ? _b : [];
+        if (AltText.isAltText(next)) {
+            Transforms.mergeNodes(editor, { at: nextPath });
+            return true;
+        }
+    }
+    if (Title.isTitle(node)) {
+        container = node;
+        // Title shouldn't be followed by another title.
+        const [prev] = (_c = Editor.previous(editor, { at: path })) !== null && _c !== void 0 ? _c : [];
+        if (Title.isTitle(prev)) {
+            Transforms.mergeNodes(editor, { at: path });
+            return true;
+        }
+        const [parent] = Editor.parent(editor, path);
+        // Titles in figures are normalized in figure.ts.
+        if (Figure.isFigure(parent)) {
+            return false;
+        }
+        if (path[path.length - 1] > 0) {
+            Transforms.setNodes(editor, { type: 'paragraph' }, { at: path });
+            return true;
+        }
+    }
+    if (Quotation.isQuotation(node)) {
+        container = node;
+        // A quotation must not be empty.
+        if (node.children.length === 0) {
+            Transforms.removeNodes(editor, { at: path });
+            return true;
+        }
+        // A quotation must have other elements than just a title.
+        if (node.children.length === 1 && Title.isTitle(node.children[0])) {
+            Transforms.insertNodes(editor, {
+                type: 'paragraph',
+                children: [],
+            }, { at: [...path, 1] });
+            return true;
+        }
+        // A quotation must not consist only of another quotation. This however
+        // shouldn't apply while outer quotation is selected, as that would it
+        // more difficult to create a quotation which begins with another
+        // quotation.
+        const [parent, parentPath] = Editor.parent(editor, path);
+        if (Quotation.isQuotation(parent) && parent.children.length === 1
+            && (editor.selection == null || !Range.includes(editor.selection, parentPath))) {
+            Transforms.unwrapNodes(editor, { at: path });
+            return true;
+        }
+    }
+    if (container != null && ensureTextOnly(editor, container, path)) {
+        return true;
+    }
+    if (Term.isTerm(node)) {
+        // Term containing only a foreign.
+        if (node.children.length === 3
+            && Text.isText(node.children[0]) && node.children[0].text === ''
+            && Text.isText(node.children[2]) && node.children[2].text === ''
+            && Foreign.isForeign(node.children[1])) {
+            const foreign = node.children[1];
+            Transforms.unwrapNodes(editor, { at: [...path, 1] });
+            Transforms.wrapNodes(editor, { ...foreign, children: [] }, { at: path });
+            return true;
+        }
+    }
+    // It will be removed after implementation of
+    // https://github.com/openstax-poland/adaptarr-backlog/issues/92
+    if (Foreign.isForeign(node)) {
+        // Set default foreign language
+        if (!node.language) {
+            Transforms.setNodes(editor, { language: 'en' }, { at: path });
+            return true;
+        }
+    }
+    // Remove empty inlines, but only if they are not selected.
+    if (Editor.isInline(editor, node) && !Editor.isVoid(editor, node)
+        && Editor.isEmpty(editor, node)) {
+        // For now Slate does not support typing inside empty inlines
+        // and in case of:
+        // <inline><cursor/></inline>
+        // Backspace
+        // <cursor/><inline></inline>
+        // inline will not be removed because it will not be normalized.
+        // We want to support this check in the future when these examples
+        // will behave properly.
+        // && (editor.selection == null || !Range.includes(editor.selection, path))
+        Transforms.removeNodes(editor, { at: path });
+        return true;
+    }
+    // Move white space from beginning and end of inlines outside of them,
+    // unless they are currently selected.
+    if (Editor.isInline(editor, node) && !Code.isCodeLine(node)
+        && (editor.selection == null || !Range.includes(editor.selection, path))) {
+        let match;
+        const first = node.children[0];
+        if (first != null && Text.isText(first) && (match = first.text.match(/^\s+/u))) {
+            Transforms.delete(editor, {
+                at: {
+                    path: [...path, 0],
+                    offset: 0,
+                },
+                distance: match[0].length,
+            });
+            Transforms.insertNodes(editor, { text: match[0] }, { at: path });
+            return true;
+        }
+        const last = node.children[node.children.length - 1];
+        if (last != null && Text.isText(last) && (match = last.text.match(/\s+$/u))) {
+            Transforms.delete(editor, {
+                at: {
+                    path: [...path, node.children.length - 1],
+                    offset: match.index,
+                },
+                distance: match[0].length,
+            });
+            Transforms.insertNodes(editor, { text: match[0] }, { at: Path.next(path) });
+            return true;
+        }
+    }
+    return false;
+}
+function ensureTextOnly(editor, node, path) {
+    for (let i = 0; i < node.children.length; ++i) {
+        if (Editor.isBlock(editor, node.children[i])) {
+            Transforms.unwrapNodes(editor, {
+                at: [...path, i],
+            });
+            return true;
+        }
+    }
+    return false;
+}
