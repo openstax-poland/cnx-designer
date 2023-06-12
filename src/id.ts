@@ -9,6 +9,19 @@ export interface IdEditor extends Editor {
     generateID: () => string
 }
 
+export const IdEditor = {
+    /**
+     * Invalidate ID cache
+     *
+     * This function must be called each time `editor.children` are manually
+     * updated. It will invalidate the internal ID cache, ensuring it is rebuilt
+     * the next time it is needed.
+     */
+    invalidateIDs(editor: IdEditor): void {
+        ID_MAP.delete(editor)
+    },
+}
+
 /**
  * Augment an editor with an ID manager
  *
