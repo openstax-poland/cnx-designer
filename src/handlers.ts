@@ -122,32 +122,21 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
 
             if (!ev.shiftKey) {
                 Editor.insertText(editor, '\n')
-                return
             }
 
-            // First split for the future paragraph.
-            const paraPath = Path.next(blockPath)
-            Transforms.splitNodes(editor)
-
-            // Check if there are any new lines after the split, ...
-            const [nel] = Editor.nodes(editor, {
-                at: paraPath,
-                match: isTextNel,
-            })
-
-            // ... and if so perform another split at the first one.
-            if (nel != null) {
-                const [node, path] = nel
-                const offset = node.text.indexOf('\n')
-                const point = { path, offset }
-
-                Transforms.delete(editor, { at: point })
-                Transforms.splitNodes(editor, { at: point })
+            if (Node.string(Editor.node(editor, selection)[0]).endsWith('\n\n')) {
+                Transforms.delete(editor, { distance: 2, unit: 'character', reverse: true })
+                Transforms.insertNodes(editor, {
+                    type: 'paragraph',
+                    children: [
+                        { text: '' },
+                    ],
+                })
+            } else if (selection.anchor.path[selection.anchor.path.length - 1] === 0
+                && selection.anchor.offset === 0) {
+                Transforms.removeNodes(editor, { at: blockPath })
+                Transforms.move(editor, { distance: 1, unit: 'character' })
             }
-
-            // Finally turn the middle code/preformat into a paragraph.
-            Transforms.setNodes(editor, { type: 'paragraph' }, { at: paraPath })
-            Transforms.unsetNodes(editor, 'placement', { at: paraPath })
         })
 
         return ev.preventDefault()
