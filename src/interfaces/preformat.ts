@@ -11,7 +11,7 @@ export interface Preformat extends Element {
 
 export const Preformat = {
     /** Check if value of unknown type is a pre-formatted block */
-    isPreformat(value: unknown): value is Preformat {
+    isPreformat(this: void, value: unknown): value is Preformat {
         return Element.isElement(value) && value.type === 'preformat'
     },
 }

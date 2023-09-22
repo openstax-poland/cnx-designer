@@ -78,6 +78,8 @@ function apply(apply: (op: Operation) => void, ed: IdEditor, op: Operation) {
         }
         if ('id' in op.newProperties) {
             if (typeof op.newProperties.id !== 'string') {
+                /* eslint-disable-next-line
+                    @typescript-eslint/restrict-template-expressions */
                 throw new Error(`${op.newProperties.id} is not a valid ID`)
             }
             if (ids.has(op.newProperties.id)) {

@@ -9,7 +9,7 @@ import * as MediaTransforms from './media'
 import * as RuleTransforms from './rule'
 import * as StructureTransforms from './structure'
 
-export default {
+const Transforms = {
     ...ExerciseTransforms,
     ...FigureTransforms,
     ...GlossaryTransforms,
@@ -17,3 +17,4 @@ export default {
     ...RuleTransforms,
     ...StructureTransforms,
 }
+export default Transforms

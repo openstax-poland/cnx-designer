@@ -11,7 +11,7 @@ export interface Glossary extends Element {
 
 export const Glossary = {
     /** Check if value of unknown type is a glossary */
-    isGlossary(value: unknown): value is Glossary {
+    isGlossary(this: void, value: unknown): value is Glossary {
         return Element.isElement(value) && value.type === 'glossary'
     },
 }
@@ -41,10 +41,10 @@ export interface NameTerm extends Term {
 
 export const Term = {
     /** Check if value of unknown type is a term */
-    isTerm(value: unknown): value is Term {
+    isTerm(this: void, value: unknown): value is Term {
         return Element.isElement(value) && value.type === 'term'
     },
-    isNameTerm(value: unknown): value is NameTerm {
+    isNameTerm(this: void, value: unknown): value is NameTerm {
         return Term.isTerm(value) && value.index === 'name'
     },
 }
@@ -61,7 +61,7 @@ export interface Definition extends Element {
 
 export const Definition = {
     /** Check if value of unknown type is a definition */
-    isDefinition(value: unknown): value is Definition {
+    isDefinition(this: void, value: unknown): value is Definition {
         return Element.isElement(value) && value.type === 'definition'
     },
 }
@@ -79,7 +79,7 @@ export interface DefinitionTerm extends Element {
 
 export const DefinitionTerm = {
     /** Check if value of unknown type is a term of a definition */
-    isDefinitionTerm(value: unknown): value is DefinitionTerm {
+    isDefinitionTerm(this: void, value: unknown): value is DefinitionTerm {
         return Element.isElement(value) && value.type === 'definition_term'
     },
 }
@@ -91,7 +91,7 @@ export interface Meaning extends Element {
 
 export const Meaning = {
     /** Check if value of unknown type is a meaning of a definition */
-    isMeaning(value: unknown): value is Meaning {
+    isMeaning(this: void, value: unknown): value is Meaning {
         return Element.isElement(value) && value.type === 'definition_meaning'
     },
 }
@@ -103,7 +103,7 @@ export interface DefinitionExample extends Element {
 
 export const DefinitionExample = {
     /** Check if value of unknown type is an example usage of a definition */
-    isDefinitionExample(value: unknown): value is DefinitionExample {
+    isDefinitionExample(this: void, value: unknown): value is DefinitionExample {
         return Element.isElement(value) && value.type === 'definition_example'
     },
 }
@@ -118,7 +118,7 @@ export const SeeAlso = {
      * Check if value of unknown type is a reference to other related
      * definitions
      */
-    isSeeAlso(value: unknown): value is SeeAlso {
+    isSeeAlso(this: void, value: unknown): value is SeeAlso {
         return Element.isElement(value) && value.type === 'definition_seealso'
     },
 }

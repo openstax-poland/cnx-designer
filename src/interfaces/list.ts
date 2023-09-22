@@ -13,7 +13,7 @@ export interface List extends BaseList {
 }
 
 export const List = {
-    isList(value: unknown): value is List {
+    isList(this: void, value: unknown): value is List {
         return BaseList.isList(value)
     },
 }
@@ -27,7 +27,7 @@ export interface BulletedList extends List {
 
 export const BulletedList = {
     /** Check if value of unknown type is a bulleted list */
-    isBulletedList(value: unknown): value is BulletedList {
+    isBulletedList(this: void, value: unknown): value is BulletedList {
         return List.isList(value) && value.style === 'bulleted'
     },
 }
@@ -55,7 +55,7 @@ export type NumberStyle =
 
 export const EnumeratedList = {
     /** Check if value of unknown type is an enumerated list */
-    isEnumeratedList(value: unknown): value is BulletedList {
+    isEnumeratedList(this: void, value: unknown): value is BulletedList {
         return List.isList(value) && value.style === 'enumerated'
     },
 }

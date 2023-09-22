@@ -19,12 +19,12 @@ export const RULE_KINDS: RuleKind[]
 
 export const Rule = {
     /** Check if value of unknown type is a rule */
-    isRule(value: unknown): value is Rule {
+    isRule(this: void, value: unknown): value is Rule {
         return Element.isElement(value) && value.type === 'rule'
     },
 
     /** Check if value of unknown type is a kind of rule */
-    isRuleKind(value: string): value is RuleKind {
+    isRuleKind(this: void, value: string): value is RuleKind {
         return (RULE_KINDS as string[]).includes(value)
     },
 }
@@ -36,7 +36,7 @@ export interface Statement extends Element {
 
 export const Statement = {
     /** Check if value of unknown type is a statement of a rule */
-    isStatement(value: unknown): value is Statement {
+    isStatement(this: void, value: unknown): value is Statement {
         return Element.isElement(value) && value.type === 'rule_statement'
     },
 }
@@ -48,7 +48,7 @@ export interface Proof extends Element {
 
 export const Proof = {
     /** Check if value of unknown type is a proof of a rule */
-    isProof(value: unknown): value is Proof {
+    isProof(this: void, value: unknown): value is Proof {
         return Element.isElement(value) && value.type === 'rule_proof'
     },
 }
@@ -60,7 +60,7 @@ export interface RuleExample extends Element {
 
 export const RuleExample = {
     /** Check if value of unknown type is an example usage of a rule */
-    isRuleExample(value: unknown): value is RuleExample {
+    isRuleExample(this: void, value: unknown): value is RuleExample {
         return Element.isElement(value) && value.type === 'rule_example'
     },
 }

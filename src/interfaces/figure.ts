@@ -11,7 +11,7 @@ export interface Figure extends Element {
 
 export const Figure = {
     /** Check if value of unknown type is a figure */
-    isFigure(value: unknown): value is Figure {
+    isFigure(this: void, value: unknown): value is Figure {
         return Element.isElement(value) && value.type === 'figure'
     },
 }

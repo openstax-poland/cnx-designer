@@ -25,17 +25,17 @@ export interface CodeLine extends Code {
 
 export const Code = {
     /** Check if value of unknown type is a piece of code */
-    isCode(value: unknown): value is Code {
+    isCode(this: void, value: unknown): value is Code {
         return Element.isElement(value) && value.type === 'code'
     },
 
     /** Check if value of unknown type is a block of code */
-    isCodeBlock(value: unknown): value is CodeBlock {
+    isCodeBlock(this: void, value: unknown): value is CodeBlock {
         return Code.isCode(value) && value.placement === 'block'
     },
 
     /** Check if value of unknown type is a line of code */
-    isCodeLine(value: unknown): value is CodeLine {
+    isCodeLine(this: void, value: unknown): value is CodeLine {
         return Code.isCode(value) && value.placement === 'line'
     },
 }

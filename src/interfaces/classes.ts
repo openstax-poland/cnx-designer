@@ -14,24 +14,24 @@ const WHITESPACE = /[ \t\n]+/
 
 export const WithClasses = {
     /** Check if value of unknown type has classes */
-    hasClasses(value: unknown): value is WithClasses {
+    hasClasses(this: void, value: unknown): value is WithClasses {
         return typeof value === 'object'
             && Array.isArray((value as WithClasses).classes)
             && typeof (value as WithClasses).classes[0] === 'string'
     },
 
     /** Verify that a string is a valid class. */
-    isValidClass(value: string): boolean {
+    isValidClass(this: void, value: string): boolean {
         return value.match(WHITESPACE) == null
     },
 
     /** Iterate over all valid classes in a string */
-    *splitClasses(str: string): Iterable<string> {
+    *splitClasses(this: void, str: string): Iterable<string> {
         yield* str.trim().split(WHITESPACE)
     },
 
     /** Normalize an array of classes, returning a new array */
-    normalizeClasses(classes: string[]): string[] {
+    normalizeClasses(this: void, classes: string[]): string[] {
         const result = []
 
         for (const cls of classes) {

@@ -24,7 +24,7 @@ export interface Paragraph extends Element {
 
 export const Paragraph = {
     /** Check if value of unknown type is a paragraph */
-    isParagraph(value: unknown): value is Paragraph {
+    isParagraph(this: void, value: unknown): value is Paragraph {
         return Element.isElement(value) && value.type === 'paragraph'
     },
 }
@@ -36,7 +36,7 @@ export interface Caption extends Element {
 
 export const Caption = {
     /** Check if value of unknown type is a caption */
-    isCaption(value: unknown): value is Caption {
+    isCaption(this: void, value: unknown): value is Caption {
         return Element.isElement(value) && value.type === 'caption'
     },
 }
@@ -48,7 +48,7 @@ export interface Quotation extends Element {
 
 export const Quotation = {
     /** Check if value of unknown type is a quotation */
-    isQuotation(value: unknown): value is Quotation {
+    isQuotation(this: void, value: unknown): value is Quotation {
         return Element.isElement(value) && value.type === 'quotation'
     },
 }
@@ -60,7 +60,7 @@ export interface Title extends Element {
 
 export const Title = {
     /** Check if value of unknown type is a title */
-    isTitle(value: unknown): value is Title {
+    isTitle(this: void, value: unknown): value is Title {
         return Element.isElement(value) && value.type === 'title'
     },
 }
@@ -73,7 +73,7 @@ export interface Foreign extends Element {
 
 export const Foreign = {
     /** Check if value of unknown type is a foreign text */
-    isForeign(value: unknown): value is Foreign {
+    isForeign(this: void, value: unknown): value is Foreign {
         return Element.isElement(value) && value.type === 'foreign'
     },
 }
@@ -85,7 +85,7 @@ export interface Footnote extends Element {
 
 export const Footnote = {
     /** Check if value of unknown type is a footnote */
-    isFootnote(value: unknown): value is Footnote {
+    isFootnote(this: void, value: unknown): value is Footnote {
         return Element.isElement(value) && value.type === 'footnote'
     },
 }

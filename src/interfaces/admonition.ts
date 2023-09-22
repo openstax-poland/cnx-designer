@@ -27,12 +27,12 @@ export interface Admonition extends Element {
 
 export const Admonition = {
     /** Check if value of unknown type is an admonition */
-    isAdmonition(value: unknown): value is Admonition {
+    isAdmonition(this: void, value: unknown): value is Admonition {
         return Element.isElement(value) && value.type === 'admonition'
     },
 
     /** Check if value of unknown type is an admonition kind */
-    isAdmonitionKind(value: string): value is AdmonitionKind {
+    isAdmonitionKind(this: void, value: string): value is AdmonitionKind {
         return (ADMONITION_KINDS as string[]).includes(value)
     },
 }

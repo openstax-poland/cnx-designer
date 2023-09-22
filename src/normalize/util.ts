@@ -104,7 +104,7 @@ export function previousOverOnly<T extends Node>(
         const child = parent.children[index]
 
         if (match(child)) {
-            return [child, [...parentPath, index]]
+            return [child as T, [...parentPath, index]]
         }
 
         if (!over(child)) {

@@ -11,7 +11,7 @@ export interface Exercise extends Element {
 
 export const Exercise = {
     /** Check if value of unknown type is an exercise */
-    isExercise(value: unknown): value is Exercise {
+    isExercise(this: void, value: unknown): value is Exercise {
         return Element.isElement(value) && value.type === 'exercise'
     },
 }
@@ -23,7 +23,7 @@ export interface Problem extends Element {
 
 export const Problem = {
     /** Check if value of unknown type is a problem statement of an exercise */
-    isProblem(value: unknown): value is Problem {
+    isProblem(this: void, value: unknown): value is Problem {
         return Element.isElement(value) && value.type === 'exercise_problem'
     },
 }
@@ -35,7 +35,7 @@ export interface Solution extends Element {
 
 export const Solution = {
     /** Check if value of unknown type is a solution of an exercise */
-    isSolution(value: unknown): value is Solution {
+    isSolution(this: void, value: unknown): value is Solution {
         return Element.isElement(value) && value.type === 'exercise_solution'
     },
 }
@@ -47,7 +47,7 @@ export interface Commentary extends Element {
 
 export const Commentary = {
     /** Check if value of unknown type is a commentary to an exercise*/
-    isCommentary(value: unknown): value is Commentary {
+    isCommentary(this: void, value: unknown): value is Commentary {
         return Element.isElement(value) && value.type === 'exercise_commentary'
     },
 }

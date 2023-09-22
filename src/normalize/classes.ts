@@ -33,8 +33,6 @@ export default function normalizeClasses(editor: Editor, entry: NodeEntry): bool
         // Classes must be sorted and contain no duplicates.
         if (!isSortedUnique(node.classes)) {
             Transforms.setNodes(editor, {
-                // eslint-disable-next-line max-len
-                // eslint-disable-next-line @typescript-eslint/require-array-sort-compare
                 classes: dedup(node.classes.sort()),
             }, { at: path })
             return false

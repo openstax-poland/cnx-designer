@@ -21,12 +21,12 @@ export interface CrossReference extends Element {
 
 export const CrossReference = {
     /** Check if value of unknown type is a cross-reference */
-    isCrossReference(value: unknown): value is CrossReference {
+    isCrossReference(this: void, value: unknown): value is CrossReference {
         return Element.isElement(value) && value.type === 'xref'
     },
 
     /** Check if value of unknown type is a valid grammatical case */
-    isCase(value: unknown): value is Case {
+    isCase(this: void, value: unknown): value is Case {
         return CASES.includes(value as Case)
     },
 }
@@ -42,7 +42,7 @@ export interface DocumentReference extends Element {
 
 export const DocumentReference = {
     /** Check if value of unknown type is a reference to another document */
-    isDocumentReference(value: unknown): value is DocumentReference {
+    isDocumentReference(this: void, value: unknown): value is DocumentReference {
         return Element.isElement(value) && value.type === 'docref'
     },
 }
@@ -55,7 +55,7 @@ export interface Link extends Element {
 
 export const Link = {
     /** Check if value of unknown type is a hyperlink */
-    isLink(value: unknown): value is Link {
+    isLink(this: void, value: unknown): value is Link {
         return Element.isElement(value) && value.type === 'link'
     },
 }

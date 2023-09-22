@@ -9,7 +9,7 @@ export interface Equation extends Element {
 }
 
 export const Equation = {
-    isEquation(value: unknown): value is Equation {
+    isEquation(this: void, value: unknown): value is Equation {
         return Element.isElement(value) && value.type === 'equation'
     },
 }
