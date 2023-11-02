@@ -4,13 +4,15 @@
 
 import { Descendant, Editor } from 'slate'
 
+import cloneNode from './cloneNode'
+
 export default function unpackBlocks(editor: Editor, fragment: Descendant[]): Descendant[] {
     function *unpack(nodes: Descendant[]): Iterable<Descendant> | ArrayLike<Descendant> {
         for (const node of nodes) {
             if (Editor.isBlock(editor, node)) {
                 yield* unpack(node.children)
             } else {
-                yield node
+                yield cloneNode(node)
             }
         }
     }
