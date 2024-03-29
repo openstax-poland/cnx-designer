@@ -5,7 +5,7 @@
 import { Editor, Node, Path, Range, Text, Transforms } from 'slate'
 
 import {
-    Admonition, AltText, Caption, Code, CodeBlock, Commentary, DefinitionExample, Meaning,
+    Admonition, AltText, Caption, Code, CodeBlock, Commentary, DefinitionExample, ListItem, Meaning,
     Preformat, Problem, Proof, Quotation, Rule, RuleExample, Solution, Statement, Title,
 } from './interfaces'
 
@@ -33,7 +33,6 @@ function isTextNel(value: unknown): value is Text {
 /** Handle backspace */
 function onBackspace(editor: Editor, ev: KeyboardEvent): void {
     void ev
-
     const { selection } = editor
 
     // Only consider actual, non-collapsed selection.
@@ -41,6 +40,26 @@ function onBackspace(editor: Editor, ev: KeyboardEvent): void {
         return
     }
 
+    const [admonition, admonitionPath]
+    = Editor.above(editor, { match: Admonition.isAdmonition }) ?? []
+
+    if (admonition != null && admonitionPath != null) {
+
+        // Backspace at the beginning of an admonition, first element of the list
+
+        if (selection.anchor.offset > 0) return
+        const [, listPath]
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        = Editor.above(editor, { match: ListItem.isListItem }) ?? []
+
+        if (listPath != null) {
+            const pointBefore = Editor.before(editor, selection, { unit: 'character' })
+            if (pointBefore && Editor.above(editor, { at: pointBefore.path,  match: ListItem.isListItem })) return
+            Transforms.liftNodes(editor, { at: listPath })
+            return ev.preventDefault()
+        }
+        return
+    }
     const [code, codePath] = Editor.above(editor, { match: isCodeLike }) ?? []
     if (code != null) {
         // Backspace not at the end will only remove one character, which is
