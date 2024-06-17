@@ -23,6 +23,18 @@ export default function normalizeQuotation(editor: Editor, entry: NodeEntry): bo
             return true
         }
 
+        // When a quotation is created out of a list, all the list items must be kept
+        // inside the quotation.
+        if (List.isList(Editor.parent(editor, path)[0])) {
+            const [parent] = Editor.parent(editor, path)
+            const parentWithoutIdAndChildren = { ...parent, id: undefined, children: [] }
+            Editor.withoutNormalizing(editor, () => {
+                Transforms.wrapNodes(editor, parentWithoutIdAndChildren)
+                Transforms.liftNodes(editor, { at: path, match: n => Quotation.isQuotation(n) })
+            })
+            return true
+        }
+
         // Unwrap nested quotation if it is not selected
         // and it's the only child of another quotation.
         if (node.children.length === 1
