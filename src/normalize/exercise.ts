@@ -4,7 +4,7 @@
 
 import { Editor, Element, NodeEntry, Transforms } from 'slate'
 
-import { Commentary, Exercise, Problem, Section, Solution } from '../interfaces'
+import { Admonition, Commentary, Exercise, Problem, Section, Solution } from '../interfaces'
 import { normalizeOrderedChildren } from './util'
 
 /**
@@ -33,9 +33,9 @@ export default function normalizeExercise(editor: Editor, entry: NodeEntry): boo
             return true
         }
 
-        // Exercise can only be a child of sections and the document.
+        // Exercise can only be a child of sections and the document, or of an admonition.
         const [parent, parentPath] = Editor.parent(editor, path)
-        if (!Section.isSection(parent) && parentPath.length > 0) {
+        if ((!Admonition.isAdmonition(parent) && !Section.isSection(parent)) && parentPath.length > 0) {
             Transforms.unwrapNodes(editor, { at: path })
             return true
         }
