@@ -46,7 +46,7 @@ export type TableSpan = {
     /** Unique name assigned to this span */
     name: string,
     /** Name of the first column in this span */
-    start: string
+    start: string,
     /** Name of the last column in this span */
     end: string
 }
