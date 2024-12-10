@@ -48,7 +48,7 @@ export type TableSpan = {
     /** Name of the first column in this span */
     start: string,
     /** Name of the last column in this span */
-    end: string
+    end: string,
 }
 
 export type ColumnSet = {
