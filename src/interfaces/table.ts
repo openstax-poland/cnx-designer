@@ -28,7 +28,7 @@ export interface Table extends Element {
  * - {@link TableFooter} (optional)
  */
 export interface TableGroup extends Element {
-    type: 'table_group',
+    type: 'table_group'
     /** Columns defined in this group */
     columns: TableColumn[],
     /** Column spans defined in this group */
