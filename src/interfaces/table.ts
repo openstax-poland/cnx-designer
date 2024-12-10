@@ -32,7 +32,7 @@ export interface TableGroup extends Element {
     /** Columns defined in this group */
     columns: TableColumn[]
     /** Column spans defined in this group */
-    spans: TableSpan[],
+    spans: TableSpan[]
 }
 
 /** Definition of a column in a {@link TableGroup} */
