@@ -71,7 +71,7 @@ export interface TableHeader extends Element {
 export interface TableFooter extends Element {
     type: 'table_footer'
     /** Columns redefined for this footer */
-    columns?: TableColumn[],
+    columns?: TableColumn[]
 }
 
 /** Row of a table */
