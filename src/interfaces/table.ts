@@ -83,7 +83,7 @@ export interface TableRow extends Element {
 export interface TableCell extends Element {
     type: 'table_cell'
     /** Column position specification */
-    column?: ColumnPosition,
+    column?: ColumnPosition
     /** Number of rows taken by this cell, if different than one */
     rows?: number,
 }
