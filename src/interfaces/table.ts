@@ -85,7 +85,7 @@ export interface TableCell extends Element {
     /** Column position specification */
     column?: ColumnPosition
     /** Number of rows taken by this cell, if different than one */
-    rows?: number,
+    rows?: number
 }
 
 /** Column position specification */
