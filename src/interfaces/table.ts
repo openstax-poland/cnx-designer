@@ -38,7 +38,7 @@ export interface TableGroup extends Element {
 /** Definition of a column in a {@link TableGroup} */
 export type TableColumn = {
     /** Unique name assigned to this column */
-    name: string | null
+    name: string | null,
 }
 
 /** Definition of a span of columns in a {@link TableGroup} */
