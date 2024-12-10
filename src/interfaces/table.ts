@@ -44,7 +44,7 @@ export type TableColumn = {
 /** Definition of a span of columns in a {@link TableGroup} */
 export type TableSpan = {
     /** Unique name assigned to this span */
-    name: string
+    name: string,
     /** Name of the first column in this span */
     start: string
     /** Name of the last column in this span */
