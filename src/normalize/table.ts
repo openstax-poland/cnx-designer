@@ -46,7 +46,6 @@ export default function normalizeTable(editor: Editor, entry: NodeEntry): boolea
     } else if (Table.isCell(node)) {
         // Ensure attribute values are correct
         if (!Table.isColumnPosition(node.column)) {
-            console.log('invalid column in', node)
             Transforms.setNodes(editor, { column: null }, { at: path })
             return true
         }
