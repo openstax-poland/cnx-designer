@@ -139,9 +139,10 @@ export const Table = {
      */
     isColumnPosition(this: void, value: unknown): value is ColumnPosition {
         return value == null || (isPlainObject(value) && (
-            typeof (value as any).column === 'string'
-            || (typeof (value as any).start === 'string' && typeof (value as any).end === 'string')
-            || typeof (value as any).span === 'string'
+            typeof (value as Record<string, unknown>).column === 'string'
+            || (typeof (value as Record<string, unknown>).start === 'string'
+                && typeof (value as Record<string, unknown>).end === 'string')
+            || typeof (value as Record<string, unknown>).span === 'string'
         ))
     },
 
