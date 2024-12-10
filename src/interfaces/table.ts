@@ -30,7 +30,7 @@ export interface Table extends Element {
 export interface TableGroup extends Element {
     type: 'table_group'
     /** Columns defined in this group */
-    columns: TableColumn[],
+    columns: TableColumn[]
     /** Column spans defined in this group */
     spans: TableSpan[],
 }
