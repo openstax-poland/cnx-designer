@@ -134,7 +134,9 @@ export const Table = {
         return Element.isElement(value) && value.type === 'table_cell'
     },
 
-    /** Check if value of unknown type is a cell column position specification */
+    /**
+     * Check if value of unknown type is a cell column position specification
+     */
     isColumnPosition(this: void, value: unknown): value is ColumnPosition {
         return value == null || (isPlainObject(value) && (
             typeof (value as any).column === 'string'
