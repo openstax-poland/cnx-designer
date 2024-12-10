@@ -4,7 +4,9 @@
 
 import { Editor, Element, NodeEntry, Path, Range, Text, Transforms } from 'slate'
 
-import { AltText, Caption, Code, Figure, Foreign, Quotation, Table, Term, Title } from '../interfaces'
+import {
+    AltText, Caption, Code, Figure, Foreign, Quotation, Table, Term, Title,
+} from '../interfaces'
 
 /**
  * Normalize text nodes
