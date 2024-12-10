@@ -163,7 +163,7 @@ export const Table = {
         const [l2] = Editor.levels(editor, { at, reverse: true, match: Table.isHeaderOrFooter })
         const [part] = l2 ?? []
 
-        if (part != null && part.columns != null) {
+        if (part?.columns != null) {
             set.columns = part.columns
         } else {
             for (const span of group.spans) {
