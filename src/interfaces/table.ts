@@ -178,5 +178,5 @@ export const Table = {
         }
 
         return set
-    }
+    },
 }
