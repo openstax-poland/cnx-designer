@@ -69,7 +69,7 @@ export interface TableHeader extends Element {
 
 /** {@link Rows TableRow} displayed below a table, once per page */
 export interface TableFooter extends Element {
-    type: 'table_footer',
+    type: 'table_footer'
     /** Columns redefined for this footer */
     columns?: TableColumn[],
 }
