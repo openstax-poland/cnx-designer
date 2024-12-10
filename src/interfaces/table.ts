@@ -76,7 +76,7 @@ export interface TableFooter extends Element {
 
 /** Row of a table */
 export interface TableRow extends Element {
-    type: 'table_row',
+    type: 'table_row'
 }
 
 /** Cell of a table */
