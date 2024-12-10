@@ -53,7 +53,7 @@ export type TableSpan = {
 
 export type ColumnSet = {
     /** Column definitions by index */
-    columns: TableColumn[]
+    columns: TableColumn[],
     /** Mapping from column name to index */
     columnNames: { [name: string]: number }
     /** Span definitions by name */
