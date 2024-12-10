@@ -4,7 +4,7 @@
 
 import { Editor, Element, NodeEntry, Path, Range, Text, Transforms } from 'slate'
 
-import { AltText, Caption, Code, Figure, Foreign, Quotation, Term, Title } from '../interfaces'
+import { AltText, Caption, Code, Figure, Foreign, Quotation, Table, Term, Title } from '../interfaces'
 
 /**
  * Normalize text nodes
@@ -18,14 +18,14 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
     if (Caption.isCaption(node)) {
         container = node
 
-        // Caption is only allowed as the last child of a figure.
+        // Caption is only allowed as the last child of a figure or table.
         const [parent] = Editor.parent(editor, path)
-        if (!Figure.isFigure(parent)) {
+        if (!Figure.isFigure(parent) && !Table.isTable(parent)) {
             Transforms.setNodes(editor, { type: 'paragraph' }, { at: path })
             return true
         }
 
-        // Figure must not have more than one caption.
+        // Figure/table must not have more than one caption.
         const [next, nextPath] = Editor.next(editor, { at: path }) ?? []
         if (Caption.isCaption(next)) {
             Transforms.mergeNodes(editor, { at: nextPath })
