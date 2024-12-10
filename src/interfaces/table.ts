@@ -57,7 +57,7 @@ export type ColumnSet = {
     /** Mapping from column name to index */
     columnNames: { [name: string]: number },
     /** Span definitions by name */
-    spans: { [name: string]: TableSpan }
+    spans: { [name: string]: TableSpan },
 }
 
 /** {@link Rows TableRow} displayed above a table, once per page */
