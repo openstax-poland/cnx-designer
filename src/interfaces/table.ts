@@ -55,7 +55,7 @@ export type ColumnSet = {
     /** Column definitions by index */
     columns: TableColumn[],
     /** Mapping from column name to index */
-    columnNames: { [name: string]: number }
+    columnNames: { [name: string]: number },
     /** Span definitions by name */
     spans: { [name: string]: TableSpan }
 }
