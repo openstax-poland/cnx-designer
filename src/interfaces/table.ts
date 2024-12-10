@@ -64,7 +64,7 @@ export type ColumnSet = {
 export interface TableHeader extends Element {
     type: 'table_header'
     /** Columns redefined for this header */
-    columns?: TableColumn[],
+    columns?: TableColumn[]
 }
 
 /** {@link Rows TableRow} displayed below a table, once per page */
