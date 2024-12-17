@@ -5,6 +5,7 @@
 import { Editor, NodeEntry, Transforms } from 'slate'
 
 import { Caption, Table, TableGroup, Title } from '../interfaces'
+import { enumerate } from '../util'
 import { normalizeOrderedChildren } from './util'
 
 /**
