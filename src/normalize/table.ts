@@ -66,6 +66,15 @@ export default function normalizeTable(editor: Editor, entry: NodeEntry): boolea
             }
         }
     } else if (Table.isCell(node)) {
+        // A table cell must not be empty
+        if (node.children.length === 0) {
+            Transforms.insertNodes(editor, {
+                type: 'paragraph',
+                children: [{ text: '' }],
+            }, { at: [...path, 0] })
+            return true
+        }
+
         // Ensure attribute values are correct
         if (!Table.isColumnPosition(node.column)) {
             Transforms.setNodes(editor, { column: null }, { at: path })
