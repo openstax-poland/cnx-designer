@@ -13,10 +13,16 @@ import { enumerate } from '../util'
  * Allowed children are, in order
  * - {@link Title} (optional)
  * - {@link TableGroup} (repeatable, at least one)
+ * - {@link TableSummary} (optional)
  * - {@link Caption} (optional)
  */
 export interface Table extends Element {
     type: 'table'
+}
+
+/** Summary of a {@link Table} */
+export interface TableSummary extends Element {
+    type: 'table_summary'
 }
 
 /**
@@ -101,6 +107,11 @@ export const Table = {
     /** Check if value of unknown type is a table */
     isTable(this: void, value: unknown): value is Table {
         return Element.isElement(value) && value.type === 'table'
+    },
+
+    /** Check if value of unknown type is a table summary */
+    isSummary(this: void, value: unknown): value is Table {
+        return Element.isElement(value) && value.type === 'table_summary'
     },
 
     /** Check if value of unknown type is a table group */

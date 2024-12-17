@@ -27,7 +27,7 @@ export default function normalizeTable(editor: Editor, entry: NodeEntry): boolea
         if (normalizeOrderedChildren(
             editor,
             [node, path],
-            [Title.isTitle, Table.isGroup, Caption.isCaption],
+            [Title.isTitle, Table.isGroup, Table.isSummary, Caption.isCaption],
             normalizeInvalidTableChild,
         )) {
             return true
