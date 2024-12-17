@@ -44,6 +44,27 @@ export default function normalizeTable(editor: Editor, entry: NodeEntry): boolea
         )) {
             return true
         }
+    } else if (Table.isRow(node)) {
+        // Table rows can only contain cells
+        for (const [inx, child] of enumerate(node.children)) {
+            if (!Table.isCell(child)) {
+                const prev = node.children[inx - 1]
+                const next = node.children[inx + 1]
+                if (Table.isCell(prev)) {
+                    Transforms.moveNodes(editor, {
+                        at: [...path, inx],
+                        to: [...path, inx - 1, prev.children.length],
+                    })
+                    return true
+                } else if (Table.isCell(next)) {
+                    Transforms.moveNodes(editor, {
+                        at: [...path, inx],
+                        to: [...path, inx + 1, 0],
+                    })
+                    return true
+                }
+            }
+        }
     } else if (Table.isCell(node)) {
         // Ensure attribute values are correct
         if (!Table.isColumnPosition(node.column)) {
