@@ -89,6 +89,12 @@ export default function normalizeGlossary(editor: Editor, entry: NodeEntry): boo
             }
             return true
         }
+
+        // Only one term is allowed per definition
+        if (DefinitionTerm.isDefinitionTerm(node.children[1])) {
+            Transforms.mergeNodes(editor, { at: [...path, 1] })
+            return true
+        }
     }
 
     // A glossary definition's content.
