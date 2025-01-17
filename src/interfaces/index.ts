@@ -24,6 +24,7 @@ export * from './preformat'
 export * from './processingInstruction'
 export * from './rule'
 export * from './section'
+export * from './table'
 export * from './text'
 export * from './xref'
 

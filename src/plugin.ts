@@ -4,6 +4,7 @@
 
 import { Editor, Element } from 'slate'
 
+import apply from './apply'
 import normalizeNode from './normalize'
 import { isInline, isVoid } from './interfaces'
 
@@ -20,11 +21,13 @@ export interface CnxEditor extends Editor {
 export function withCnx<T extends Editor>(editor: T): T & CnxEditor {
     const ed = editor as T & CnxEditor
     const {
+        apply: oldApply,
         normalizeNode: oldNormalizeNode,
         isInline: oldIsInline,
         isVoid: oldIsVoid,
     } = ed
 
+    ed.apply = apply.bind(null, oldApply, ed)
     ed.normalizeNode = normalizeNode.bind(null, oldNormalizeNode, ed)
 
     ed.isEquationContent = (): boolean => false
