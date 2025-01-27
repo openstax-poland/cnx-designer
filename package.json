@@ -57,5 +57,5 @@
     "test": "mocha",
     "coverage": "nyc --reporter text --reporter html mocha"
   },
-  "packageManager": "yarn@3.6.3"
+  "packageManager": "yarn@4.6.0"
 }
