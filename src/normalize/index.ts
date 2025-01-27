@@ -14,6 +14,7 @@ import normalizeGlossary from './glossary'
 import normalizeQuotation from './quotation'
 import normalizeRule from './rule'
 import normalizeStructure from './structure'
+import normalizeTable from './table'
 import normalizeText from './text'
 import normalizeXref from './xref'
 
@@ -32,6 +33,7 @@ export default function normalizeNode(
         || normalizeQuotation(editor, entry)
         || normalizeRule(editor, entry)
         || normalizeStructure(editor, entry)
+        || normalizeTable(editor, entry)
         || normalizeText(editor, entry)
         || normalizeXref(editor, entry)
     ) {
