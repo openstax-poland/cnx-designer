@@ -44,8 +44,8 @@ function onBackspace(editor: Editor, ev: KeyboardEvent): void {
     = Editor.above(editor, { match: Admonition.isAdmonition }) ?? []
 
     if (admonition != null && admonitionPath != null) {
-
-        // Backspace at the beginning of an admonition, first element of the list
+        // Backspace at the beginning of an admonition,
+        // first element of the list
 
         if (selection.anchor.offset > 0) return
         const [, listPath]
@@ -54,7 +54,12 @@ function onBackspace(editor: Editor, ev: KeyboardEvent): void {
 
         if (listPath != null) {
             const pointBefore = Editor.before(editor, selection, { unit: 'character' })
-            if (pointBefore && Editor.above(editor, { at: pointBefore.path,  match: ListItem.isListItem })) return
+            if (pointBefore && Editor.above(editor, {
+                at: pointBefore.path,
+                match: (node: Node) => ListItem.isListItem(node) ?? [],
+            })) {
+                return
+            }
             Transforms.liftNodes(editor, { at: listPath })
             return ev.preventDefault()
         }
