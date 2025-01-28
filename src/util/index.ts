@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
+export * from './queries'
 export * as uuid from './uuid'
 export { default as cloneNode } from './cloneNode'
 export { default as dedup } from './dedup'

@@ -5,6 +5,7 @@
 import { Editor, Location, Node, Path, Range, Transforms } from 'slate'
 
 import { Paragraph, Section } from '../interfaces'
+import { blockAbove } from '../util'
 
 /** Insert a new section title, wrapping it and following nodes in a section */
 export function wrapSectionTitle(
@@ -28,7 +29,7 @@ export function wrapSectionTitle(
         })!!
 
         // Find the node to transform into new section's title
-        const [maybeTitle, maybeTitlePath] = Editor.above(editor, {
+        const [maybeTitle, maybeTitlePath] = blockAbove(editor, {
             at: range,
             match: node => parent.children.includes(node) && Paragraph.isParagraph(node),
         }) ?? []
