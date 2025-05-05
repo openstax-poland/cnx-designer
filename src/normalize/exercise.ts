@@ -33,9 +33,11 @@ export default function normalizeExercise(editor: Editor, entry: NodeEntry): boo
             return true
         }
 
-        // Exercise can only be a child of sections and the document, or of an admonition.
+        // Exercise can only be a child of sections and the document,
+        // or of an admonition.
         const [parent, parentPath] = Editor.parent(editor, path)
-        if ((!Admonition.isAdmonition(parent) && !Section.isSection(parent)) && parentPath.length > 0) {
+        if ((!Admonition.isAdmonition(parent) && !Section.isSection(parent))
+            && parentPath.length > 0) {
             Transforms.unwrapNodes(editor, { at: path })
             return true
         }
