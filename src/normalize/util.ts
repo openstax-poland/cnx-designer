@@ -42,7 +42,7 @@ export function normalizeOrderedChildren<T extends Element>(
         }
 
         // Find the group matching this child.
-        for (inx = 0 ; inx < groups.length ; ++inx) {
+        for (inx = 0; inx < groups.length; ++inx) {
             if (groups[inx](child)) {
                 break
             }
@@ -100,7 +100,7 @@ export function previousOverOnly<T extends Node>(
     const { at, match, over } = options
     const [parent, parentPath] = Editor.parent(editor, at)
 
-    for (let index = at[at.length - 1] - 1 ; index >= 0 ; --index) {
+    for (let index = at[at.length - 1] - 1; index >= 0; --index) {
         const child = parent.children[index]
 
         if (match(child)) {

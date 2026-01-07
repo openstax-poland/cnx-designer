@@ -134,7 +134,7 @@ function insertInRule(
         if (within(rule.children[index])) {
             newIndex = index + 1
         } else {
-            for (newIndex = rule.children.length - 1 ; ; --newIndex) {
+            for (newIndex = rule.children.length - 1; ; --newIndex) {
                 const item = rule.children[newIndex]
 
                 if (within(item) || after(item)) {

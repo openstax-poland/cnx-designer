@@ -9,13 +9,13 @@ export default editor => Transforms.insertSubfigure(editor, {
             type: 'media_image',
             src: 'third.png',
             intendedUse: 'all',
-            children: []
+            children: [],
         },
         {
             type: 'media_alt',
-            children: [{ text: 'Third picture' }]
-        }
-    ]
+            children: [{ text: 'Third picture' }],
+        },
+    ],
 })
 
 export const checkSelection = false

@@ -3,8 +3,7 @@
   "version": "0.2.9",
   "license": "MIT",
   "repository": "github.com/katalysteducation/cnx-designer",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.es.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "private": true,
   "files": [
@@ -15,36 +14,31 @@
     "is-plain-object": "^5.0.0",
     "prop-types": "^15.8.1",
     "slate": "0.57.0 - 0.59.x",
-    "slate-lists": "openstax-poland/slate-lists#gitpub/slate-lists@0.1.0-rc.1"
+    "slate-lists": "openstax-poland/slate-lists#gitpub/slate-lists@0.1.1"
   },
   "resolutions": {
     "slate": "openstax-poland/slate#slate-v0.59.0-gitpkg"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.20",
-    "@babel/preset-env": "^7.22.20",
-    "@babel/preset-react": "^7.22.15",
-    "@babel/register": "^7.22.15",
-    "@types/node": "^20.6.3",
-    "@typescript-eslint/eslint-plugin": "^6.7.2",
-    "@typescript-eslint/parser": "^6.7.2",
-    "assertion-error": "^1.1.0",
-    "chai": "^4.3.8",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.49.0",
-    "eslint-config-openstax-poland": "openstax-poland/eslint-config-openstax-poland#gitpub/eslint-config-openstax-poland@0.4.0",
-    "eslint-import-resolver-node": "^0.3.9",
-    "eslint-plugin-import": "^2.28.1",
-    "eslint-plugin-react": "^7.33.2",
-    "jsdom": "^22.1.0",
-    "mocha": "^10.2.0",
-    "nyc": "^15.1.0",
-    "rollup": "^3.29.2",
-    "rollup-plugin-typescript2": "^0.35.0",
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@babel/preset-react": "^7.28.5",
+    "@babel/register": "^7.28.3",
+    "@openstax-poland/eslint-config": "openstax-poland/eslint-config-openstax-poland#gitpub/@openstax-poland/eslint-config@0.6.0",
+    "@rollup/plugin-typescript": "^12.3.0",
+    "@types/node": "^25.0.3",
+    "assertion-error": "^2.0.1",
+    "chai": "^6.2.2",
+    "cross-env": "^10.1.0",
+    "eslint": "^9.39.2",
+    "jsdom": "^27.4.0",
+    "mocha": "^11.7.5",
+    "nyc": "^17.1.0",
+    "rollup": "^4.55.1",
     "slate-hyperscript": "0.57.0 - 0.59.x",
-    "ts-node": "^10.9.1",
-    "tslib": "^2.6.2",
-    "typescript": "^5.2.2"
+    "ts-node": "^10.9.2",
+    "tslib": "^2.8.1",
+    "typescript": "^5.9.3"
   },
   "peerDependencies": {
     "slate": "0.57.0 - 0.59.x"
@@ -57,5 +51,5 @@
     "test": "mocha",
     "coverage": "nyc --reporter text --reporter html mocha"
   },
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.12.0"
 }

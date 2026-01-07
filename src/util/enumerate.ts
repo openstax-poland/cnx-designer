@@ -6,7 +6,7 @@
 export default function *enumerate<T>(iter: Iterable<T>, reverse?: boolean): Iterable<[number, T]> {
     if (reverse) {
         if (Array.isArray(iter)) {
-            for (let index = iter.length - 1 ; index >= 0 ; --index) {
+            for (let index = iter.length - 1; index >= 0; --index) {
                 yield [index, iter[index]]
             }
         } else {

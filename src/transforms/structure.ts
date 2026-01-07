@@ -20,13 +20,10 @@ export function wrapSectionTitle(
         const range = Editor.range(editor, at)
 
         // Find location for the new section
-        /* eslint-disable-next-line
-            @typescript-eslint/no-extra-non-null-assertion --
-            Editor is above every path, so this cannot return null */
         const [parent, parentPath] = Editor.above(editor, {
             at: range,
             match: node => Section.isSection(node) || Editor.isEditor(node),
-        })!!
+        })!
 
         // Find the node to transform into new section's title
         const [maybeTitle, maybeTitlePath] = blockAbove(editor, {

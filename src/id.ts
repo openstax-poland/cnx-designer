@@ -51,7 +51,7 @@ function apply(apply: (op: Operation) => void, ed: IdEditor, op: Operation) {
     switch (op.type) {
     case 'insert_node':
         walk(op.node, el => {
-            if (!('id' in el) || typeof el.id !== 'string' || ids!.has(el.id)) {
+            if (!('id' in el) || typeof el.id !== 'string' || ids.has(el.id)) {
                 el.id = ed.generateID()
             }
             add.push(el.id as string)
@@ -96,7 +96,10 @@ function apply(apply: (op: Operation) => void, ed: IdEditor, op: Operation) {
         }
         break
 
-    default:
+    case 'insert_text':
+    case 'move_node':
+    case 'remove_text':
+    case 'set_selection':
         break
     }
 

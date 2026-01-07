@@ -44,7 +44,7 @@ export default function normalizeClasses(editor: Editor, entry: NodeEntry): bool
 
 /** Check whether an array is sorted and contains no duplicates */
 function isSortedUnique(classes: string[]): boolean {
-    for (let i = 1 ; i < classes.length ; ++i) {
+    for (let i = 1; i < classes.length; ++i) {
         if (classes[i - 1] >= classes[i]) {
             return false
         }

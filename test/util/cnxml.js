@@ -3,6 +3,7 @@ export default global.cnxml = function cnxml(fragments) {
         throw new Error('cnxml`` does not support interpolation')
     }
 
+    // eslint-disable-next-line @stylistic/max-len
     return `<document xmlns="http://cnx.rice.edu/cnxml" xml:lang="en" cnxml-version="0.7" id="test" module-id="test">
         <title>Test</title>
         <content>

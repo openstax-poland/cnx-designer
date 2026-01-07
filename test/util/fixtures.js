@@ -25,7 +25,7 @@ export default function fixtures(...args) {
                 const module = require(p)
 
                 if (module.skip) {
-                    this.skip()
+                    this.skip(module.skip)
                     return
                 }
 

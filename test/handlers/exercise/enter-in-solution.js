@@ -4,7 +4,9 @@ import { Editor, Element, Transforms } from 'slate'
 
 export default (input, editor) => {
     input.break().break()
-    Transforms.select(editor, Editor.end(editor, Editor.above(editor, { match: Element.isElement })[1]))
+    Transforms.select(editor,
+        Editor.end(editor,
+            Editor.above(editor, { match: Element.isElement })[1]))
     input.break().break().break()
 }
 

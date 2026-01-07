@@ -2,7 +2,10 @@
 
 import { Transforms } from 'slate'
 
-export default editor => Transforms.insertNodes(editor, { type: 'preformat', children: [{ text: '' }] })
+export default editor => Transforms.insertNodes(editor, {
+    type: 'preformat',
+    children: [{ text: '' }],
+})
 
 export const input = <editor>
     <p>Some<cursor/> preformat</p>

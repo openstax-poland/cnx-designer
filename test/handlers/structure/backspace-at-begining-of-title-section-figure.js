@@ -11,11 +11,11 @@ export const input = <editor>
         <title><cursor/>Second</title>
         <p>Inside second</p>
         <figure>
-          <media>
-              <img src="figure.png" intendedUse="all"><text/></img>
-              <mediaalt>First picture</mediaalt>
-          </media>
-          <caption>caption</caption>
+            <media>
+                <img src="figure.png" intendedUse="all"><text/></img>
+                <mediaalt>First picture</mediaalt>
+            </media>
+            <caption>caption</caption>
         </figure>
     </section>
 </editor>
@@ -26,11 +26,11 @@ export const output = <editor>
         <p>Inside first<cursor/>Second</p>
         <p>Inside second</p>
         <figure>
-        <media>
-            <img src="figure.png" intendedUse="all"><text/></img>
-            <mediaalt>First picture</mediaalt>
-        </media>
-        <caption>caption</caption>
-    </figure>
+            <media>
+                <img src="figure.png" intendedUse="all"><text/></img>
+                <mediaalt>First picture</mediaalt>
+            </media>
+            <caption>caption</caption>
+        </figure>
     </section>
 </editor>

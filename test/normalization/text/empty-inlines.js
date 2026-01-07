@@ -16,5 +16,5 @@ export const output = <editor>
     <p>Link: </p>
     <p>Term: </p>
     <p>Cursor: <cursor/></p>
-   {/*  <p>Cursor: <term><cursor/></term><text/></p> */}
+    {/*  <p>Cursor: <term><cursor/></term><text/></p> */}
 </editor>

@@ -46,7 +46,7 @@ export interface Commentary extends Element {
 }
 
 export const Commentary = {
-    /** Check if value of unknown type is a commentary to an exercise*/
+    /** Check if value of unknown type is a commentary to an exercise */
     isCommentary(this: void, value: unknown): value is Commentary {
         return Element.isElement(value) && value.type === 'exercise_commentary'
     },

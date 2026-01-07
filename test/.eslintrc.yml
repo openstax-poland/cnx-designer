@@ -4,7 +4,9 @@ env:
   node: true
   mocha: true
 
-extends: openstax-poland/react/base
+extends:
+  - openstax-poland/base
+  - openstax-poland/react
 
 globals:
   cnxml: readonly
@@ -13,6 +15,10 @@ globals:
   DOMParser: readonly
 
 rules:
+  '@stylistic/newline-per-chained-call': off
+  import/extensions: off
+  import/no-anonymous-default-export: off
+  import/order: off
   react/jsx-no-useless-fragment: off
   react/no-unknown-property: off
   react/void-dom-elements-no-children: off

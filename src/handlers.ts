@@ -40,21 +40,24 @@ function onBackspace(editor: Editor, ev: KeyboardEvent): void {
         return
     }
 
-    const [admonition, admonitionPath]
-    = Editor.above(editor, { match: Admonition.isAdmonition }) ?? []
+    const [admonition, admonitionPath] =
+        Editor.above(editor, { match: Admonition.isAdmonition }) ?? []
 
     if (admonition != null && admonitionPath != null) {
-
-        // Backspace at the beginning of an admonition, first element of the list
+        // Backspace at the beginning of an admonition, first element of
+        // the list
 
         if (selection.anchor.offset > 0) return
-        const [, listPath]
-        // eslint-disable-next-line @typescript-eslint/unbound-method
-        = Editor.above(editor, { match: ListItem.isListItem }) ?? []
+        const [, listPath] =
+            // eslint-disable-next-line @typescript-eslint/unbound-method
+            Editor.above(editor, { match: ListItem.isListItem }) ?? []
 
         if (listPath != null) {
             const pointBefore = Editor.before(editor, selection, { unit: 'character' })
-            if (pointBefore && Editor.above(editor, { at: pointBefore.path,  match: ListItem.isListItem })) return
+            if (pointBefore
+            && Editor.above(editor, { at: pointBefore.path, match: ListItem.isListItem })) {
+                return
+            }
             Transforms.liftNodes(editor, { at: listPath })
             return ev.preventDefault()
         }
@@ -75,7 +78,7 @@ function onBackspace(editor: Editor, ev: KeyboardEvent): void {
             at: codePath,
             match: isTextNel,
         })
-        const [nel, path] = entry || []
+        const [nel, path] = entry ?? []
 
         if (nel == null) {
             return
