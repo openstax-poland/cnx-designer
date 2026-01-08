@@ -1,3 +1,4 @@
+import { describe, test } from 'vitest'
 import fs from 'fs'
 import { basename, extname, resolve } from 'path'
 
@@ -21,11 +22,11 @@ export default function fixtures(...args) {
             const name = basename(file, extname(file))
 
             // This needs to be a non-arrow function to use `this.skip()`.
-            it(name, function runTest() {
-                const module = require(p)
+            test(name, async ({ skip }) => {
+                const module = await import(p)
 
                 if (module.skip) {
-                    this.skip(module.skip)
+                    skip(module.skip)
                     return
                 }
 
