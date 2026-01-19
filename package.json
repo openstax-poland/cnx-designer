@@ -3,7 +3,10 @@
   "version": "0.2.9",
   "license": "MIT",
   "repository": "github.com/katalysteducation/cnx-designer",
-  "module": "dist/index.js",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "types": "dist/index.d.ts",
   "private": true,
   "files": [

@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
         // Type checking
-        "exactOptionalPropertyTypes": true,
         "noImplicitOverride": true,
         "strict": true,
 
