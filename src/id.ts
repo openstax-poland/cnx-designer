@@ -54,7 +54,7 @@ function apply(apply: (op: Operation) => void, ed: IdEditor, op: Operation) {
             if (!('id' in el) || typeof el.id !== 'string' || ids.has(el.id)) {
                 el.id = ed.generateID()
             }
-            add.push(el.id as string)
+            add.push(el.id)
         })
         break
 
@@ -92,7 +92,7 @@ function apply(apply: (op: Operation) => void, ed: IdEditor, op: Operation) {
     case 'split_node':
         if ('id' in op.properties) {
             op.properties.id = ed.generateID()
-            add.push(op.properties.id as string)
+            add.push(op.properties.id)
         }
         break
 

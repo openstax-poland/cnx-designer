@@ -1,10 +1,11 @@
-import { Element } from 'slate'
+import { Descendant, Element } from 'slate'
 
 /** Processing Instruction */
-export interface ProcessingInstruction extends Element {
+export interface ProcessingInstruction {
     type: 'processing_instruction'
     target: string
     value: string
+    children: Descendant[]
 }
 
 export const ProcessingInstruction = {

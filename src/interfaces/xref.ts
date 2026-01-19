@@ -2,10 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Element } from 'slate'
+import { Descendant, Element } from 'slate'
 
 /** Reference to a named element in this or another document. */
-export interface CrossReference extends Element {
+export interface CrossReference {
     type: 'xref'
     /** Identifier of the target element. */
     target: string
@@ -17,6 +17,7 @@ export interface CrossReference extends Element {
     document: string | null
     /** Grammatical case in which the reference should be rendered */
     case?: Case
+    children: Descendant[]
 }
 
 export const CrossReference = {
@@ -32,12 +33,13 @@ export const CrossReference = {
 }
 
 /** Reference to another document */
-export interface DocumentReference extends Element {
+export interface DocumentReference {
     type: 'docref'
     /** Identifier of the target document */
     document: string
     /** Grammatical case in which the reference should be rendered */
     case?: Case
+    children: Descendant[]
 }
 
 export const DocumentReference = {
@@ -48,9 +50,10 @@ export const DocumentReference = {
 }
 
 /** A hyperlink */
-export interface Link extends Element {
+export interface Link {
     type: 'link'
     url: string
+    children: Descendant[]
 }
 
 export const Link = {

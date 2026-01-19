@@ -2,13 +2,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Element } from 'slate'
+import { Descendant, Element } from 'slate'
 
 /** A theorem, an axiom, a lemma, etc. */
-export interface Rule extends Element {
+export interface Rule {
     type: 'rule'
     /** What kind of rule is this */
     kind: RuleKind
+    children: Descendant[]
 }
 
 export type RuleKind =
@@ -30,8 +31,9 @@ export const Rule = {
 }
 
 /** Statement of a rule */
-export interface Statement extends Element {
+export interface Statement {
     type: 'rule_statement'
+    children: Descendant[]
 }
 
 export const Statement = {
@@ -42,8 +44,9 @@ export const Statement = {
 }
 
 /** Proof or explanation of a rule */
-export interface Proof extends Element {
+export interface Proof {
     type: 'rule_proof'
+    children: Descendant[]
 }
 
 export const Proof = {
@@ -54,8 +57,9 @@ export const Proof = {
 }
 
 /** Example usage of a rule */
-export interface RuleExample extends Element {
+export interface RuleExample {
     type: 'rule_example'
+    children: Descendant[]
 }
 
 export const RuleExample = {

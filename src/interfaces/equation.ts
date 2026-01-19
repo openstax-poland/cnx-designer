@@ -2,10 +2,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Element } from 'slate'
+import { Descendant, Element } from 'slate'
 
-export interface Equation extends Element {
+export interface Equation {
     type: 'equation'
+    children: Descendant[]
 }
 
 export const Equation = {

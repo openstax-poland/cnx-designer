@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Element } from 'slate'
+import { Descendant, Element } from 'slate'
 
 /**
  * Different ‘types’ of admonitions
@@ -19,10 +19,11 @@ export const ADMONITION_KINDS: AdmonitionKind[] = ["note", "warning", "tip", "im
  *
  * The term has been taken from DocBook.
  */
-export interface Admonition extends Element {
+export interface Admonition {
     type: 'admonition'
     /** What kind of admonition is this */
     kind: AdmonitionKind
+    children: Descendant[]
 }
 
 export const Admonition = {

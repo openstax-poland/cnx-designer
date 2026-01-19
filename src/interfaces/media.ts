@@ -2,11 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Element } from 'slate'
+import { Descendant, Element } from 'slate'
 
 /** Collection of media elements */
-export interface Media extends Element {
+export interface Media {
     type: 'media'
+    children: Descendant[]
 }
 
 export const Media = {
@@ -20,8 +21,9 @@ export const Media = {
  * Textual description of a media collection, intended for people who may not
  * be able to perceive the media item itself
  */
-export interface AltText extends Element {
+export interface AltText {
     type: 'media_alt'
+    children: Descendant[]
 }
 
 export const AltText = {
@@ -46,6 +48,7 @@ export interface MediaData {
      * to which item is best suited for what environment.
      */
     intendedUse: MediaUse
+    children: Descendant[]
 }
 
 export const MediaData = {
@@ -69,7 +72,7 @@ export const MediaUse = {
 }
 
 /** Audio file */
-export interface Audio extends Element, MediaData {
+export interface Audio extends MediaData {
     type: 'media_audio'
 }
 
@@ -81,7 +84,7 @@ export const Audio = {
 }
 
 /** Image file */
-export interface Image extends Element, MediaData {
+export interface Image extends MediaData {
     type: 'media_image'
 }
 
@@ -93,7 +96,7 @@ export const Image = {
 }
 
 /** Video file */
-export interface Video extends Element, MediaData {
+export interface Video extends MediaData {
     type: 'media_video'
 }
 

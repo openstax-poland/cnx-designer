@@ -2,11 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Element } from 'slate'
+import { Descendant, Element } from 'slate'
 
 /** Block of pre-formatted text */
-export interface Preformat extends Element {
+export interface Preformat {
     type: 'preformat'
+    children: Descendant[]
 }
 
 export const Preformat = {

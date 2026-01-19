@@ -28,7 +28,9 @@ export function wrapSectionTitle(
         // Find the node to transform into new section's title
         const [maybeTitle, maybeTitlePath] = blockAbove(editor, {
             at: range,
-            match: node => parent.children.includes(node) && Paragraph.isParagraph(node),
+            match: node => !Editor.isEditor(node)
+                && parent.children.includes(node)
+                && Paragraph.isParagraph(node),
         }) ?? []
         if (maybeTitle == null) {
             throw new Error("only paragraphs which are direct descendants of \

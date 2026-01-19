@@ -1680,14 +1680,14 @@ __metadata:
     jsdom: "npm:^27.4.0"
     prop-types: "npm:^15.8.1"
     rollup: "npm:^4.55.1"
-    slate: "npm:0.57.0 - 0.59.x"
-    slate-hyperscript: "npm:0.57.0 - 0.59.x"
-    slate-lists: "openstax-poland/slate-lists#gitpub/slate-lists@0.1.1"
+    slate: "npm:^0.60.0"
+    slate-hyperscript: "npm:^0.60.0"
+    slate-lists: "openstax-poland/slate-lists#gitpub/slate-lists@0.1.3"
     tslib: "npm:^2.8.1"
     typescript: "npm:^5.9.3"
     vitest: "npm:^4.0.16"
   peerDependencies:
-    slate: 0.57.0 - 0.59.x
+    slate: ^0.60.0
   languageName: unknown
   linkType: soft
 
@@ -3670,36 +3670,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"slate-hyperscript@npm:0.57.0 - 0.59.x":
-  version: 0.59.0
-  resolution: "slate-hyperscript@npm:0.59.0"
+"slate-hyperscript@npm:^0.60.0":
+  version: 0.60.17
+  resolution: "slate-hyperscript@npm:0.60.17"
   dependencies:
     is-plain-object: "npm:^3.0.0"
   peerDependencies:
     slate: ">=0.55.0"
-  checksum: 10/c0f8662e67a54e58bc27ff3f712f927768da270ce1bf884722fa6edbc6bc9849679f8234b82f8f86153ee2425d941b16b5323252c5fcb461b63852dfed88a3ed
+  checksum: 10/e1627a7c12367f3303553e0285f42c6eb3f8a23c70e2ce25850897db7a998c82b4e0c131514e42147e1b5b2c38d876e4746367a5cda5edbc7997e7127d131a1d
   languageName: node
   linkType: hard
 
-"slate-lists@openstax-poland/slate-lists#gitpub/slate-lists@0.1.1":
-  version: 0.1.1
-  resolution: "slate-lists@https://github.com/openstax-poland/slate-lists.git#commit=1b8d2ac92efa0092ddbe8125a33be7cc48d48270"
+"slate-lists@openstax-poland/slate-lists#gitpub/slate-lists@0.1.3":
+  version: 0.1.3
+  resolution: "slate-lists@https://github.com/openstax-poland/slate-lists.git#commit=ab5c4039ca1923c9e2b2d3e31ae1f641048aa511"
   peerDependencies:
-    slate: 0.57.0 - 0.66.x
-  checksum: 10/77ae16ad07dec61ee981748d2dade0b9b17873aa10d7899c57e11050db314594f37261c203fef2520b2e64f4b0db38415e76304cf6cedef926d85dcca9149792
+    slate: ^0.66
+  checksum: 10/8b9ccf2b314982f1e4788f09a6704621fe531ae5c48a6781b148f8aed9d7feef53c09ba10813aec0ff853cdb725e11a48f069dc0cfe3a0d486674190d363713b
   languageName: node
   linkType: hard
 
-"slate@openstax-poland/slate#slate-v0.59.0-gitpkg":
-  version: 0.59.0
-  resolution: "slate@https://github.com/openstax-poland/slate.git#commit=dbaeb5c583107970969179cec0c751bc6fdedcb1"
+"slate@openstax-poland/slate#slate-v0.60.0-gitpkg":
+  version: 0.60.0
+  resolution: "slate@https://github.com/openstax-poland/slate.git#commit=2f4694feeacffaf8f8e7ef4f5118cddb63274f00"
   dependencies:
     "@types/esrever": "npm:^0.2.0"
     esrever: "npm:^0.2.0"
     immer: "npm:^7.0.0"
     is-plain-object: "npm:^3.0.0"
     tiny-warning: "npm:^1.0.3"
-  checksum: 10/b85f548ebb508f4e2182db6fc78b6dc0414175586b7e1e811b2d62d35a13334b1ae44e01788ee1315f81e394a22d93d7c24ba42380bf537dbd9e7f49a97c8043
+  checksum: 10/009ffed12b7ddc9e092af1126fce3813b5453f0e776091aeb6cf8f8fb17beb9631cb4ea7c303c1dbe9ecb039dea613784572d41b5125e0b23b75f15f4280ebd1
   languageName: node
   linkType: hard
 

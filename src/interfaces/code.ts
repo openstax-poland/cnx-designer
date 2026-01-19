@@ -2,15 +2,16 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Element } from 'slate'
+import { Descendant, Element } from 'slate'
 
 /** A code fragment */
-export interface Code extends Element {
+export interface Code {
     type: 'code'
     /** How this fragment is placed in the document */
     placement: 'block' | 'line'
     /** Programming language of the code in this fragment */
     language?: string
+    children: Descendant[]
 }
 
 /** A multi-line code fragment placed as a standalone block element */

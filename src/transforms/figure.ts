@@ -2,17 +2,17 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, Location, Node, NodeEntry, Path, Transforms } from 'slate'
+import { Descendant, Editor, Location, NodeEntry, Path, Transforms } from 'slate'
 
 import { AltText, Audio, Caption, Figure, Image, Media, Video } from '../interfaces'
 
 export type MediaItem = Media | Omit<Audio | Image | Video, 'children'>
 
-function itemToChildren(media: MediaItem): Node[] {
+function itemToChildren(media: MediaItem): Descendant[] {
     const alt = {
         type: 'media_alt',
         children: [{ text: '' }],
-    }
+    } satisfies AltText
 
     if (Media.isMedia(media)) {
         if (!media.children.some(AltText.isAltText)) {

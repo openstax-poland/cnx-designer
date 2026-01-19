@@ -2,11 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Element } from 'slate'
+import { Descendant, Element } from 'slate'
 
 /** A subdivision of a document */
-export interface Section extends Element {
+export interface Section {
     type: 'section'
+    children: Descendant[]
 }
 
 export const Section = {

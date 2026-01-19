@@ -2,24 +2,21 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { List as BaseList } from 'slate-lists'
+import { BaseList, List as ExtList } from 'slate-lists'
 
 export { ListItem } from 'slate-lists'
 
 /** A styled list */
-export interface List extends BaseList {
-    /** List style */
-    style: 'bulleted' | 'enumerated'
-}
+export type List = BulletedList | EnumeratedList
 
 export const List = {
-    isList(this: void, value: unknown): value is List {
-        return BaseList.isList(value)
+    isList(this: void, value: unknown): value is BulletedList | EnumeratedList {
+        return ExtList.isList(value)
     },
 }
 
 /** A bulleted list */
-export interface BulletedList extends List {
+export interface BulletedList extends BaseList {
     style: 'bulleted'
     /** Bullet style */
     bullet: Bullet
@@ -42,7 +39,7 @@ export type Bullet = 'bullet'
     | 'none'
 
 /** An enumerated list */
-export interface EnumeratedList extends List {
+export interface EnumeratedList extends BaseList {
     style: 'enumerated'
     /** Number style */
     numberStyle: NumberStyle

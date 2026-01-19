@@ -2,13 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Element, Text } from 'slate'
+import { BaseText, Descendant, Element } from 'slate'
 
 /** How a fragment of text is placed */
 export type TextPosition = 'normal' | 'superscript' | 'subscript'
 
 /** A {@link Text} node with styles applied */
-export interface StyledText extends Text {
+export interface StyledText extends BaseText {
     /** If true, this text has weak emphasis placed on it */
     emphasis?: boolean
     /** If true, this text has strong emphasis placed on it */
@@ -18,8 +18,9 @@ export interface StyledText extends Text {
 }
 
 /** A single paragraph of text */
-export interface Paragraph extends Element {
+export interface Paragraph {
     type: 'paragraph'
+    children: Descendant[]
 }
 
 export const Paragraph = {
@@ -30,8 +31,9 @@ export const Paragraph = {
 }
 
 /** Caption of a figure or another element which can have captions */
-export interface Caption extends Element {
+export interface Caption {
     type: 'caption'
+    children: Descendant[]
 }
 
 export const Caption = {
@@ -42,8 +44,9 @@ export const Caption = {
 }
 
 /** A quotation */
-export interface Quotation extends Element {
+export interface Quotation {
     type: 'quotation'
+    children: Descendant[]
 }
 
 export const Quotation = {
@@ -54,8 +57,9 @@ export const Quotation = {
 }
 
 /** A title of a section or another structural element */
-export interface Title extends Element {
+export interface Title {
     type: 'title'
+    children: Descendant[]
 }
 
 export const Title = {
@@ -66,9 +70,10 @@ export const Title = {
 }
 
 /** A fragment of text in another language */
-export interface Foreign extends Element {
+export interface Foreign {
     type: 'foreign'
     language?: string
+    children: Descendant[]
 }
 
 export const Foreign = {
@@ -79,8 +84,9 @@ export const Foreign = {
 }
 
 /** A footnote */
-export interface Footnote extends Element {
+export interface Footnote {
     type: 'footnote'
+    children: Descendant[]
 }
 
 export const Footnote = {

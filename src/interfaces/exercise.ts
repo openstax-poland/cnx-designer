@@ -2,11 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Element } from 'slate'
+import { Descendant, Element } from 'slate'
 
 /** An exercise */
-export interface Exercise extends Element {
+export interface Exercise {
     type: 'exercise'
+    children: Descendant[]
 }
 
 export const Exercise = {
@@ -17,8 +18,9 @@ export const Exercise = {
 }
 
 /** Problem statement of an exercise */
-export interface Problem extends Element {
+export interface Problem {
     type: 'exercise_problem'
+    children: Descendant[]
 }
 
 export const Problem = {
@@ -29,8 +31,9 @@ export const Problem = {
 }
 
 /** Example solution of an exercise */
-export interface Solution extends Element {
+export interface Solution {
     type: 'exercise_solution'
+    children: Descendant[]
 }
 
 export const Solution = {
@@ -41,8 +44,9 @@ export const Solution = {
 }
 
 /** Commentary to an exercise */
-export interface Commentary extends Element {
+export interface Commentary {
     type: 'exercise_commentary'
+    children: Descendant[]
 }
 
 export const Commentary = {

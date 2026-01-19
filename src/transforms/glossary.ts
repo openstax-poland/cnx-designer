@@ -43,7 +43,7 @@ export function addGlossaryDefinition(
                 type: 'definition_term',
                 children: toInsert,
             }],
-        }
+        } satisfies Definition
 
         // Fast path: there is no glossary in the document.
         if (!Glossary.isGlossary(editor.children[editor.children.length - 1])) {

@@ -61,7 +61,7 @@ export function normalizeOrderedChildren<T extends Element>(
         // Find child which should be directly before this one.
         const [, prevPath] = Editor.previous(editor, {
             at: childPath,
-            match: n => node.children.includes(n) && targetMatch(n),
+            match: n => !Editor.isEditor(n) && node.children.includes(n) && targetMatch(n),
         }) ?? []
 
         // Move the child to where it should be.

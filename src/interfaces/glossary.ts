@@ -2,11 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Element } from 'slate'
+import { Descendant, Element } from 'slate'
 
 /** List of definitions of terms, used alongside contents of a document */
-export interface Glossary extends Element {
+export interface Glossary {
     type: 'glossary'
+    children: Descendant[]
 }
 
 export const Glossary = {
@@ -23,10 +24,11 @@ export const Glossary = {
  * inclusion in an index or formatting. It can also be used as a key of
  * a {@link Definition}.
  */
-export interface Term extends Element {
+export interface Term {
     type: 'term'
     index?: string
     reference?: string
+    children: Descendant[]
 }
 
 /**
@@ -55,8 +57,9 @@ export const Term = {
  * Definitions can be used either in the document content, or as entries in the
  * glossary.
  */
-export interface Definition extends Element {
+export interface Definition {
     type: 'definition'
+    children: Descendant[]
 }
 
 export const Definition = {
@@ -72,9 +75,10 @@ export const Definition = {
  * This interface is the same as {@link Term} except that it is a block element
  * meant to be used as a child of {@link Definition}.
  */
-export interface DefinitionTerm extends Element {
+export interface DefinitionTerm {
     type: 'definition_term'
     reference?: string
+    children: Descendant[]
 }
 
 export const DefinitionTerm = {
@@ -85,8 +89,9 @@ export const DefinitionTerm = {
 }
 
 /** Meaning of a term */
-export interface Meaning extends Element {
+export interface Meaning {
     type: 'definition_meaning'
+    children: Descendant[]
 }
 
 export const Meaning = {
@@ -97,8 +102,9 @@ export const Meaning = {
 }
 
 /** Example usage of a term. */
-export interface DefinitionExample extends Element {
+export interface DefinitionExample {
     type: 'definition_example'
+    children: Descendant[]
 }
 
 export const DefinitionExample = {
@@ -109,8 +115,9 @@ export const DefinitionExample = {
 }
 
 /** Reference to other related terms */
-export interface SeeAlso extends Element {
+export interface SeeAlso {
     type: 'definition_seealso'
+    children: Descendant[]
 }
 
 export const SeeAlso = {

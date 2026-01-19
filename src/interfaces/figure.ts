@@ -2,11 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Element } from 'slate'
+import { Descendant, Element } from 'slate'
 
 /** A figure */
-export interface Figure extends Element {
+export interface Figure {
     type: 'figure'
+    children: Descendant[]
 }
 
 export const Figure = {
