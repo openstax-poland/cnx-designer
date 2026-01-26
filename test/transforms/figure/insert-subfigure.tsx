@@ -1,0 +1,39 @@
+/** @jsx h */
+
+import { CnxEditor, Transforms } from '../../../src'
+
+export default (editor: CnxEditor) => Transforms.insertSubfigure(editor, {
+    type: 'media_image',
+    src: 'second.png',
+    intendedUse: 'all',
+})
+
+export const checkSelection = false
+
+export const input = <editor>
+    <figure>
+        <media>
+            <img src="first.png" intendedUse="all"><text/></img>
+            <mediaalt>First picture</mediaalt>
+        </media>
+        <caption><cursor/>Caption</caption>
+    </figure>
+</editor>
+
+export const output = <editor>
+    <figure>
+        <figure>
+            <media>
+                <img src="first.png" intendedUse="all"><text/></img>
+                <mediaalt>First picture</mediaalt>
+            </media>
+        </figure>
+        <figure>
+            <media>
+                <img src="second.png" intendedUse="all"><text/></img>
+                <mediaalt><text/></mediaalt>
+            </media>
+        </figure>
+        <caption>Caption</caption>
+    </figure>
+</editor>

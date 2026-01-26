@@ -1,25 +1,7 @@
 {
-    "compilerOptions": {
-        // Type checking
-        "noImplicitOverride": true,
-        "strict": true,
-
-        // Modules
-        "module": "esnext",
-        "moduleResolution": "bundler",
-        "rootDir": "src",
-
-        // Emit
-        "declaration": true,
-        "noEmit": true,
-        "outDir": "dist",
-        "sourceMap": true,
-
-        // Language and Environment
-        "target": "es2024",
-
-        // Output formatting
-        "noErrorTruncation": true,
-    },
-    "include": ["src/*.ts"],
+    "files": [],
+    "references": [
+        { "path": "./tsconfig.lib.json" },
+        { "path": "./tsconfig.test.json" },
+    ],
 }
