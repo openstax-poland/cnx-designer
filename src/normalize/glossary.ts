@@ -127,6 +127,7 @@ export default function normalizeGlossary(editor: Editor, entry: NodeEntry): boo
                 Transforms.moveNodes(editor, {
                     at: Editor.range(editor, Path.next(prevPath!), path),
                     to: [...prevPath!, prev.children.length],
+                    match: (_, path) => path.length === prevPath!.length,
                 })
                 return true
             }

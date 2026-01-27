@@ -2,13 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, Element, Node, NodeEntry, Path, Transforms } from 'slate'
+import { Descendant, Editor, Element, Node, NodeEntry, Path, Transforms } from 'slate'
 
 import { enumerate } from '../util'
 
-type NodeMatch<T extends Node> =
-  | ((node: Node) => node is T)
-  | ((node: Node) => boolean)
+type DescendantMatch<T extends Descendant = Descendant> =
+  | ((node: Descendant) => node is T)
+  | ((node: Descendant) => boolean)
 
 /**
  * Find children which are out of order and move them to correct places
@@ -18,7 +18,7 @@ type NodeMatch<T extends Node> =
 export function normalizeOrderedChildren<T extends Element>(
     editor: Editor,
     entry: NodeEntry<T>,
-    groups: NodeMatch<Node>[],
+    groups: DescendantMatch[],
     normalize: (editor: Editor, entry: NodeEntry, parent: T) => void,
 ): boolean {
     const [node, path] = entry
@@ -28,7 +28,7 @@ export function normalizeOrderedChildren<T extends Element>(
     // Current group (groups[inx]).
     let match = groups[0]
     // For each group, the last group successfully matched at that point.
-    const lastMatch: NodeMatch<Node>[] = []
+    const lastMatch: DescendantMatch[] = []
 
     for (const [index, child] of enumerate(node.children)) {
         // Skip all groups which don't match child.
@@ -61,7 +61,9 @@ export function normalizeOrderedChildren<T extends Element>(
         // Find child which should be directly before this one.
         const [, prevPath] = Editor.previous(editor, {
             at: childPath,
-            match: n => !Editor.isEditor(n) && node.children.includes(n) && targetMatch(n),
+            match: (n: Node) => !Editor.isEditor(n)
+                && (node.children as Descendant[]).includes(n)
+                && targetMatch(n),
         }) ?? []
 
         // Move the child to where it should be.
@@ -89,12 +91,12 @@ export function normalizeOrderedChildren<T extends Element>(
  * Find a previous sibling of node matching specified criteria, and stepping
  * only over siblings matching other criteria.
  */
-export function previousOverOnly<T extends Node>(
+export function previousOverOnly<T extends Descendant>(
     editor: Editor,
     options: {
         at: Path,
-        match: NodeMatch<T>,
-        over: NodeMatch<Node>,
+        match: DescendantMatch<T>,
+        over: DescendantMatch,
     },
 ): NodeEntry<T> | undefined {
     const { at, match, over } = options

@@ -1,11 +1,11 @@
-import { Editor, Element, Node, Operation } from 'slate'
+import { BaseEditor, Editor, Element, Node, Operation } from 'slate'
 
 import { uuid } from './util'
 
 /** Set of all IDs currently present in an editor */
-const ID_MAP: WeakMap<Editor, Set<string>> = new WeakMap()
+const ID_MAP: WeakMap<BaseEditor, Set<string>> = new WeakMap()
 
-export interface IdEditor extends Editor {
+export interface IdEditor extends BaseEditor {
     generateID: () => string
 }
 
@@ -38,7 +38,7 @@ export function withIds<T extends Editor>(editor: T): T & IdEditor {
     return ed
 }
 
-function apply(apply: (op: Operation) => void, ed: IdEditor, op: Operation) {
+function apply(apply: (op: Operation) => void, ed: Editor & IdEditor, op: Operation) {
     let ids = ID_MAP.get(ed)
 
     if (ids == null) {

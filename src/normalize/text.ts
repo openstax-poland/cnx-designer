@@ -124,7 +124,7 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
     }
 
     // Remove empty inlines, but only if they are not selected.
-    if (Editor.isInline(editor, node) && !Editor.isVoid(editor, node)
+    if (Element.isElement(node) && Editor.isInline(editor, node) && !Editor.isVoid(editor, node)
     && Editor.isEmpty(editor, node)) {
     // For now Slate does not support typing inside empty inlines
     // and in case of:
@@ -141,7 +141,7 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
 
     // Move white space from beginning and end of inlines outside of them,
     // unless they are currently selected.
-    if (Editor.isInline(editor, node) && !Code.isCodeLine(node)
+    if (Element.isElement(node) && Editor.isInline(editor, node) && !Code.isCodeLine(node)
     && (editor.selection == null || !Range.includes(editor.selection, path))) {
         let match
 
@@ -177,7 +177,8 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
 
 function ensureTextOnly(editor: Editor, node: Element, path: Path): boolean {
     for (let i = 0; i < node.children.length; ++i) {
-        if (Editor.isBlock(editor, node.children[i])) {
+        const child = node.children[i]
+        if (Element.isElement(child) && Editor.isBlock(editor, child)) {
             Transforms.unwrapNodes(editor, {
                 at: [...path, i],
             })

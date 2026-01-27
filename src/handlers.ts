@@ -2,7 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, Node, Path, Range, Text, Transforms } from 'slate'
+import { Editor, Element, Node, Path, Range, Text, Transforms } from 'slate'
+import { onKeyDown as onKeyDownList, Transforms as ListTransforms } from 'slate-lists'
 
 import {
     Admonition, AltText, Caption, Code, CodeBlock, Commentary, DefinitionExample, ListItem, Meaning,
@@ -16,9 +17,13 @@ import {
  */
 export function onKeyDown(editor: Editor, ev: KeyboardEvent): void {
     switch (ev.key) {
-    case 'Backspace': return onBackspace(editor, ev)
-    case 'Enter': return onEnter(editor, ev)
+    case 'Backspace': onBackspace(editor, ev); break
+    case 'Enter': onEnter(editor, ev); break
     default:
+    }
+
+    if (!ev.defaultPrevented) {
+        onKeyDownList(editor, ev)
     }
 }
 
@@ -58,7 +63,7 @@ function onBackspace(editor: Editor, ev: KeyboardEvent): void {
             && Editor.above(editor, { at: pointBefore.path, match: ListItem.isListItem })) {
                 return
             }
-            Transforms.liftNodes(editor, { at: listPath })
+            ListTransforms.decreaseDepth(editor, { at: listPath })
             return ev.preventDefault()
         }
         return
@@ -115,7 +120,7 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
     // Non-null assertion is valid because there must be at least one block
     // between the text node containing the cursor and the editor itself.
     const [block, blockPath] = Editor.above(editor, {
-        match: n => Editor.isBlock(editor, n),
+        match: n => Element.isElement(n) && Editor.isBlock(editor, n),
     })!
 
     if (Title.isTitle(block)) {
@@ -195,15 +200,6 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
 
         Transforms.setSelection(editor, newSelection)
 
-        if (!Editor.above(editor, { match: Caption.isCaption })) {
-            Transforms.insertNodes(editor, {
-                type: 'paragraph',
-                children: [
-                    { text: '' },
-                ],
-            })
-        }
-
         return ev.preventDefault()
     }
 
@@ -223,7 +219,7 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
         }
 
         const [container, containerPath] = Editor.above(editor, {
-            match: n => Editor.isBlock(editor, n),
+            match: n => Element.isElement(n) && Editor.isBlock(editor, n),
             at: blockPath,
         }) ?? []
 

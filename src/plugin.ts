@@ -2,13 +2,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, Element } from 'slate'
+import { Element } from 'slate'
+import { withLists, ListEditor } from 'slate-lists'
 
 import normalizeNode from './normalize'
 import { isInline, isVoid } from './interfaces'
 
 /** A Slate editor augmented with support for editing CNX documents. */
-export interface CnxEditor extends Editor {
+export interface CnxEditor extends ListEditor {
     /** Can {@code element} be used as content of an {@link Equation}? */
     isEquationContent(element: Element): boolean
 }
@@ -17,8 +18,8 @@ export interface CnxEditor extends Editor {
  * Augment an editor with functionalities and behaviours necessary for editing
  * CNX documents.
  */
-export function withCnx<T extends Editor>(editor: T): T & CnxEditor {
-    const ed = editor as T & CnxEditor
+export function withCnx<T extends ListEditor>(editor: T): T & CnxEditor {
+    const ed = withLists(editor) as T & CnxEditor
     const {
         normalizeNode: oldNormalizeNode,
         isInline: oldIsInline,

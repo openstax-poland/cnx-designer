@@ -28,11 +28,11 @@ export function insertExercise(
         // Find lowest non-inline nodes containing start and end points.
         const [, startPath] = Editor.above(editor, {
             at: startPoint,
-            match: n => !Text.isText(n) && !Editor.isInline(editor, n),
+            match: n => !Text.isText(n) && (Editor.isEditor(n) || Editor.isBlock(editor, n)),
         })!
         const [, endPath] = Editor.above(editor, {
             at: endPoint,
-            match: n => !Text.isText(n) && !Editor.isInline(editor, n),
+            match: n => !Text.isText(n) && (Editor.isEditor(n) || Editor.isBlock(editor, n)),
         })!
 
         // If both points are in the same node we can defer to Slate's

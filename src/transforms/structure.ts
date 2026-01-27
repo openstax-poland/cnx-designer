@@ -33,8 +33,8 @@ export function wrapSectionTitle(
                 && Paragraph.isParagraph(node),
         }) ?? []
         if (maybeTitle == null) {
-            throw new Error("only paragraphs which are direct descendants of \
-                sections may become section titles")
+            throw new Error("only paragraphs which are direct descendants of"
+                + " sections may become section titles")
         }
 
         // Find location for the new section

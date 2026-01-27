@@ -1006,13 +1006,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/esrever@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "@types/esrever@npm:0.2.0"
-  checksum: 10/ff389c5fd55a71ee06da25fc108d9530d6df373c6cee95d05320f1da90a4c5d2a9bf066c2cf2239f46c8dac0c8a701f3024500b4fb296c424df4229ca868976a
-  languageName: node
-  linkType: hard
-
 "@types/estree@npm:1.0.8, @types/estree@npm:^1.0.0, @types/estree@npm:^1.0.6":
   version: 1.0.8
   resolution: "@types/estree@npm:1.0.8"
@@ -1675,20 +1668,17 @@ __metadata:
     assertion-error: "npm:^2.0.1"
     cross-env: "npm:^10.1.0"
     eslint: "npm:^9.39.2"
-    is-hotkey: "npm:^0.2.0"
-    is-plain-object: "npm:^5.0.0"
     jsdom: "npm:^27.4.0"
-    prop-types: "npm:^15.8.1"
     rollup: "npm:^4.55.1"
-    slate: "npm:^0.60.0"
-    slate-hyperscript: "npm:^0.60.0"
-    slate-lists: "openstax-poland/slate-lists#gitpub/slate-lists@0.1.3"
+    slate: "npm:^0.123.0"
+    slate-hyperscript: "npm:^0.100.0"
+    slate-lists: "openstax-poland/slate-lists#gitpub/slate-lists@0.2.0"
     tslib: "npm:^2.8.1"
     typescript: "npm:^5.9.3"
     vite: "npm:^7.3.1"
     vitest: "npm:^4.0.18"
   peerDependencies:
-    slate: ^0.60.0
+    slate: ^0.123.0
   languageName: unknown
   linkType: soft
 
@@ -2159,15 +2149,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esrever@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "esrever@npm:0.2.0"
-  bin:
-    esrever: bin/esrever
-  checksum: 10/be83b1d878930bab3227881b96b1b02b534ad48f8761fd1f41c521cfe1804be16b2af0ac9312eb78d1fd80a96f7336e0ef3e8f5d571d86f631e3be4b5e2dec5b
-  languageName: node
-  linkType: hard
-
 "estraverse@npm:^5.1.0, estraverse@npm:^5.2.0, estraverse@npm:^5.3.0":
   version: 5.3.0
   resolution: "estraverse@npm:5.3.0"
@@ -2504,13 +2485,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immer@npm:^7.0.0":
-  version: 7.0.15
-  resolution: "immer@npm:7.0.15"
-  checksum: 10/ce71c853801c5b3969b25042d2d4b96b9ab1a1cf48e5d03ad5d125c0286110b6bcc672d999d41e0e64e2b87733a0bd711a5cfd81e3f5fb748bf3feadd90c3190
-  languageName: node
-  linkType: hard
-
 "import-fresh@npm:^3.2.1":
   version: 3.3.0
   resolution: "import-fresh@npm:3.3.0"
@@ -2616,24 +2590,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-hotkey@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "is-hotkey@npm:0.2.0"
-  checksum: 10/d3d42026e70ea796fb9af8345e511de4b90eed55765eb67db8695f83e60bac8566ace16b191c08c7f6fab36c9318133a9f1c19eb9e5f8ce528d8a433e4b41190
-  languageName: node
-  linkType: hard
-
 "is-lambda@npm:^1.0.1":
   version: 1.0.1
   resolution: "is-lambda@npm:1.0.1"
   checksum: 10/93a32f01940220532e5948538699ad610d5924ac86093fcee83022252b363eb0cc99ba53ab084a04e4fb62bf7b5731f55496257a4c38adf87af9c4d352c71c35
-  languageName: node
-  linkType: hard
-
-"is-plain-object@npm:^3.0.0":
-  version: 3.0.1
-  resolution: "is-plain-object@npm:3.0.1"
-  checksum: 10/d13fe75db350d4ac669595cdfe0242ae87fcecddf2bca858d2dd443a6ed6eb1f69951fac8c2fa85b16106c6b0d7738fea86c2aca2ecee7fd61de15c1574f2cc5
   languageName: node
   linkType: hard
 
@@ -2706,7 +2666,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
+"js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
   checksum: 10/af37d0d913fb56aec6dc0074c163cc71cd23c0b8aad5c2350747b6721d37ba118af35abdd8b33c47ec2800de07dedb16a527ca9c530ee004093e04958bd0cbf2
@@ -2828,17 +2788,6 @@ __metadata:
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
   checksum: 10/d0ea2dd0097e6201be083865d50c3fb54fbfbdb247d9cc5950e086c991f448b7ab0cdab0d57eacccb43473d3f2acd21e134db39f22dac2d6c9ba6bf26978e3d6
-  languageName: node
-  linkType: hard
-
-"loose-envify@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "loose-envify@npm:1.4.0"
-  dependencies:
-    js-tokens: "npm:^3.0.0 || ^4.0.0"
-  bin:
-    loose-envify: cli.js
-  checksum: 10/6517e24e0cad87ec9888f500c5b5947032cdfe6ef65e1c1936a0c48a524b81e65542c9c3edc91c97d5bddc806ee2a985dbc79be89215d613b1de5db6d1cfe6f4
   languageName: node
   linkType: hard
 
@@ -3121,7 +3070,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"object-assign@npm:^4.1.0, object-assign@npm:^4.1.1":
+"object-assign@npm:^4.1.0":
   version: 4.1.1
   resolution: "object-assign@npm:4.1.1"
   checksum: 10/fcc6e4ea8c7fe48abfbb552578b1c53e0d194086e2e6bbbf59e0a536381a292f39943c6e9628af05b5528aa5e3318bb30d6b2e53cadaf5b8fe9e12c4b69af23f
@@ -3294,28 +3243,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.8.1":
-  version: 15.8.1
-  resolution: "prop-types@npm:15.8.1"
-  dependencies:
-    loose-envify: "npm:^1.4.0"
-    object-assign: "npm:^4.1.1"
-    react-is: "npm:^16.13.1"
-  checksum: 10/7d959caec002bc964c86cdc461ec93108b27337dabe6192fb97d69e16a0c799a03462713868b40749bfc1caf5f57ef80ac3e4ffad3effa636ee667582a75e2c0
-  languageName: node
-  linkType: hard
-
 "punycode@npm:^2.1.0, punycode@npm:^2.3.1":
   version: 2.3.1
   resolution: "punycode@npm:2.3.1"
   checksum: 10/febdc4362bead22f9e2608ff0171713230b57aff9dddc1c273aa2a651fbd366f94b7d6a71d78342a7c0819906750351ca7f2edd26ea41b626d87d6a13d1bd059
-  languageName: node
-  linkType: hard
-
-"react-is@npm:^16.13.1":
-  version: 16.13.1
-  resolution: "react-is@npm:16.13.1"
-  checksum: 10/5aa564a1cde7d391ac980bedee21202fc90bdea3b399952117f54fb71a932af1e5902020144fb354b4690b2414a0c7aafe798eb617b76a3d441d956db7726fdf
   languageName: node
   linkType: hard
 
@@ -3567,36 +3498,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"slate-hyperscript@npm:^0.60.0":
-  version: 0.60.17
-  resolution: "slate-hyperscript@npm:0.60.17"
+"slate-hyperscript@npm:^0.100.0":
+  version: 0.100.0
+  resolution: "slate-hyperscript@npm:0.100.0"
   dependencies:
-    is-plain-object: "npm:^3.0.0"
+    is-plain-object: "npm:^5.0.0"
   peerDependencies:
-    slate: ">=0.55.0"
-  checksum: 10/e1627a7c12367f3303553e0285f42c6eb3f8a23c70e2ce25850897db7a998c82b4e0c131514e42147e1b5b2c38d876e4746367a5cda5edbc7997e7127d131a1d
+    slate: ">=0.65.3"
+  checksum: 10/4ec39c04675b89db313c102dc19de0351aedd666d5e6ca37b6aa4850ef547fe849cc01aae4db6304c86a1db61aa1b428717fade59e349cf3fdd301bf88648ec6
   languageName: node
   linkType: hard
 
-"slate-lists@openstax-poland/slate-lists#gitpub/slate-lists@0.1.3":
-  version: 0.1.3
-  resolution: "slate-lists@https://github.com/openstax-poland/slate-lists.git#commit=ab5c4039ca1923c9e2b2d3e31ae1f641048aa511"
+"slate-lists@openstax-poland/slate-lists#gitpub/slate-lists@0.2.0":
+  version: 0.2.0
+  resolution: "slate-lists@https://github.com/openstax-poland/slate-lists.git#commit=968c44f307056bf01202d4347cc12bc71ab0e71a"
   peerDependencies:
-    slate: ^0.66
-  checksum: 10/8b9ccf2b314982f1e4788f09a6704621fe531ae5c48a6781b148f8aed9d7feef53c09ba10813aec0ff853cdb725e11a48f069dc0cfe3a0d486674190d363713b
+    slate: ">= 0.66 < 0.124"
+  checksum: 10/f6627f43a1ef3f0b4b4a7fa23c86947ee0d68f7014ea037ff5a52290d968d111f87c4600ae122e1fa9ef8156042b756422adccff888e0cd8b6a195ce93d66d2f
   languageName: node
   linkType: hard
 
-"slate@openstax-poland/slate#slate-v0.60.0-gitpkg":
-  version: 0.60.0
-  resolution: "slate@https://github.com/openstax-poland/slate.git#commit=2f4694feeacffaf8f8e7ef4f5118cddb63274f00"
-  dependencies:
-    "@types/esrever": "npm:^0.2.0"
-    esrever: "npm:^0.2.0"
-    immer: "npm:^7.0.0"
-    is-plain-object: "npm:^3.0.0"
-    tiny-warning: "npm:^1.0.3"
-  checksum: 10/009ffed12b7ddc9e092af1126fce3813b5453f0e776091aeb6cf8f8fb17beb9631cb4ea7c303c1dbe9ecb039dea613784572d41b5125e0b23b75f15f4280ebd1
+"slate@npm:^0.123.0":
+  version: 0.123.0
+  resolution: "slate@npm:0.123.0"
+  checksum: 10/a7d4bc5360f93120e563f373f5a776a1d93b4742515b9d76542d2bd933b5c037ad3ce4e4714114509a66f0fd2e23574393700d8fa8eae4b8c349e2c29c356c89
   languageName: node
   linkType: hard
 
@@ -3754,13 +3679,6 @@ __metadata:
     mkdirp: "npm:^1.0.3"
     yallist: "npm:^4.0.0"
   checksum: 10/874e92e99a6cea7d5d07ec8f91556d64785138ccf0fb6a95f77807f3b4b28e71d357e2fd919a5db21a5f623490175380e1122d4ecf4d40de17ee50713f3d175a
-  languageName: node
-  linkType: hard
-
-"tiny-warning@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "tiny-warning@npm:1.0.3"
-  checksum: 10/da62c4acac565902f0624b123eed6dd3509bc9a8d30c06e017104bedcf5d35810da8ff72864400ad19c5c7806fc0a8323c68baf3e326af7cb7d969f846100d71
   languageName: node
   linkType: hard
 
