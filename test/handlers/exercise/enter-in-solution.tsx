@@ -2,6 +2,8 @@
 
 import { Editor, Element, Transforms } from 'slate'
 
+import { Simulator } from '../../util/input'
+
 export default (input: Simulator, editor: Editor) => {
     input.break().break()
     Transforms.select(editor,
