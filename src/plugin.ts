@@ -3,7 +3,7 @@
 // full license text.
 
 import { Element } from 'slate'
-import { withLists, ListEditor } from 'slate-lists'
+import { ListEditor, withLists } from 'slate-lists'
 
 import normalizeNode from './normalize'
 import { isInline, isVoid } from './interfaces'
