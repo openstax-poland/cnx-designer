@@ -155,8 +155,20 @@ export default function normalizeGlossary(editor: Editor, entry: NodeEntry): boo
                 return true
             }
 
-            // Otherwise (in the document) we can just unwrap this node.
-            Transforms.unwrapNodes(editor, { at: path })
+            // Otherwise (in the document) we can just unwrap this node,
+            // changing SeeAlso to a list of normal terms.
+            if (!SeeAlso.isSeeAlso(node)) {
+                Transforms.unwrapNodes(editor, { at: path })
+            } else {
+                Editor.withoutNormalizing(editor, () => {
+                    if (SeeAlso.isSeeAlso(node)) {
+                        for (let index = 0; index < node.children.length; ++index) {
+                            Transforms.setNodes(editor, { type: 'term' }, { at: [...path, index] })
+                        }
+                    }
+                    Transforms.setNodes(editor, { type: 'paragraph' }, { at: path })
+                })
+            }
             return true
         }
     }

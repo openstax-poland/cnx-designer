@@ -17,7 +17,10 @@ export const WithClasses = {
     hasClasses(this: void, value: unknown): value is WithClasses {
         return typeof value === 'object'
             && Array.isArray((value as WithClasses).classes)
-            && typeof (value as WithClasses).classes[0] === 'string'
+            && (
+                (value as WithClasses).classes.length === 0
+                || typeof (value as WithClasses).classes[0] === 'string'
+            )
     },
 
     /** Verify that a string is a valid class. */

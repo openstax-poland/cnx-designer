@@ -2,6 +2,7 @@
 
 export const input = <editor>
     <rule>
+        <p>Before statement</p>
         <statement>
             <p>Statement</p>
         </statement>
@@ -20,6 +21,7 @@ export const input = <editor>
 export const output = <editor>
     <rule>
         <statement>
+            <p>Before statement</p>
             <p>Statement</p>
             <p>First bad child</p>
         </statement>

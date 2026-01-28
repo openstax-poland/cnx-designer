@@ -70,34 +70,6 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
         return true
     }
 
-    if (Quotation.isQuotation(node)) {
-        // A quotation must not be empty.
-        if (node.children.length === 0) {
-            Transforms.removeNodes(editor, { at: path })
-            return true
-        }
-
-        // A quotation must have other elements than just a title.
-        if (node.children.length === 1 && Title.isTitle(node.children[0])) {
-            Transforms.insertNodes(editor, {
-                type: 'paragraph',
-                children: [],
-            }, { at: [...path, 1] })
-            return true
-        }
-
-        // A quotation must not consist only of another quotation. This however
-        // shouldn't apply while outer quotation is selected, as that would it
-        // more difficult to create a quotation which begins with another
-        // quotation.
-        const [parent, parentPath] = Editor.parent(editor, path)
-        if (Quotation.isQuotation(parent) && parent.children.length === 1
-        && (editor.selection == null || !Range.includes(editor.selection, parentPath))) {
-            Transforms.unwrapNodes(editor, { at: path })
-            return true
-        }
-    }
-
     if (Term.isTerm(node)) {
         // Term containing only a foreign.
         if (

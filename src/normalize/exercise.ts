@@ -53,7 +53,7 @@ export default function normalizeExercise(editor: Editor, entry: NodeEntry): boo
             return true
         }
 
-        // Exercise must have a problem.
+        // Exercise must have a exactly problem.
         if (!Problem.isProblem(node.children[0])) {
             Transforms.insertNodes(editor, {
                 type: 'exercise_problem',
@@ -61,6 +61,13 @@ export default function normalizeExercise(editor: Editor, entry: NodeEntry): boo
                     { type: 'paragraph', children: [] },
                 ],
             }, { at: [...path, 0] })
+            return true
+        }
+        if (Problem.isProblem(node.children[1])) {
+            Transforms.moveNodes(editor, {
+                at: [...path, 0],
+                to: [...path, 1, 0],
+            })
             return true
         }
     }
@@ -80,19 +87,6 @@ function normalizeInvalidChild(editor: Editor, entry: NodeEntry, parent: Exercis
         Transforms.moveNodes(editor, {
             at: [...path, index],
             to: [...path, index - 1, previous.children.length],
-        })
-        return
-    }
-
-    // Note that at this point index is guaranteed to be zero.
-
-    // Otherwise if the next child is a problem then fold this child into
-    // the problem.
-    if (parent.children.length > 1
-    && Problem.isProblem(parent.children[1])) {
-        Transforms.moveNodes(editor, {
-            at: [...path, index],
-            to: [...path, 1, 0],
         })
         return
     }
