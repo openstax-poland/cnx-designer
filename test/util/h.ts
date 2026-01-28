@@ -1,7 +1,7 @@
 import { Descendant, Element, Text } from 'slate'
 import { createHyperscript } from 'slate-hyperscript'
 
-import { TextPosition, StyledText } from '../../src'
+import { StyledText, TextPosition } from '../../src'
 
 type MarkCreator = (tagName: string, attrs: Record<string, any>, children: any[]) => void
 
