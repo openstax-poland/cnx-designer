@@ -1,5 +1,6 @@
 import { expect } from 'vitest'
 import { Editor } from 'slate'
+
 import { CnxEditor, withCnx } from '../src'
 
 import './util/h'
