@@ -1,4 +1,5 @@
 import { BaseEditor } from 'slate'
+
 import { CnxEditor } from '.'
 import {
     BulletedList, CnxElement, ElementExtensions, EnumeratedList, StyledText, TextExtensions,
