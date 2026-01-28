@@ -3,7 +3,7 @@
 import { Editor, Transforms } from 'slate'
 
 export default (editor: Editor) => Transforms.insertNodes(
-    editor, { type: 'footnote', children: [{ text: '' }] }, { split: true })
+    editor, { type: 'footnote', children: [{ text: '' }] })
 
 export const input = <editor>
     <p>
