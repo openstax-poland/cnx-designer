@@ -3,7 +3,7 @@
 // full license text.
 
 import { Editor, Element, Node, Path, Range, Text, Transforms } from 'slate'
-import { onKeyDown as onKeyDownList, Transforms as ListTransforms } from 'slate-lists'
+import { Transforms as ListTransforms, onKeyDown as onKeyDownList } from 'slate-lists'
 
 import {
     Admonition, AltText, Caption, Code, CodeBlock, Commentary, DefinitionExample, ListItem, Meaning,
