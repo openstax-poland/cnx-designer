@@ -1,5 +1,7 @@
 /** @jsx h */
 
+import { Editor, Transforms } from 'slate'
+
 import { RuleExample } from '../../../src'
 import { Simulator } from '../../util/input'
 import { Editor, Transforms } from 'slate'
