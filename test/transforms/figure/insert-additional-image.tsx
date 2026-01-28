@@ -1,6 +1,7 @@
 /** @jsx h */
 
 import { Transforms } from 'slate'
+
 import { CnxEditor, Transforms as CnxTransforms, MediaData } from '../../../src'
 
 export default (editor: CnxEditor) => {
