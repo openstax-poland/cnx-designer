@@ -29,4 +29,3 @@ export const output = <editor>
     </rule>
     <p>After</p>
 </editor>
-

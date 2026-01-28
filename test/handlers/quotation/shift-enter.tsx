@@ -10,7 +10,6 @@ export const input = <editor>
     </quote>
 </editor>
 
-
 export const output = <editor>
     <quote>
         <p>Some</p>

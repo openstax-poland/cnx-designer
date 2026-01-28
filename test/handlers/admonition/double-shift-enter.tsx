@@ -10,7 +10,6 @@ export const input = <editor>
     </note>
 </editor>
 
-
 export const output = <editor>
     <note>
         <p>Some</p>

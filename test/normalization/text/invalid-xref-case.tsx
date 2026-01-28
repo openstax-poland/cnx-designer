@@ -1,8 +1,10 @@
 /** @jsx h */
 
+import { Case } from '../../../src'
+
 export const input = <editor>
-    <p>Before<xref target="target" case={"invalid" as any}><cursor/></xref>after</p>
-    <p>Before<docref document="document" case={"invalid" as any}><cursor/></docref>after</p>
+    <p>Before<xref target="target" case={"invalid" as Case}><cursor/></xref>after</p>
+    <p>Before<docref document="document" case={"invalid" as Case}><cursor/></docref>after</p>
 </editor>
 
 export const output = <editor>

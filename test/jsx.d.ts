@@ -2,21 +2,21 @@
 
 type Props<T> = Omit<T, 'type' | 'children'>
     & import('../src').ElementExtensions
-    & { key?: any }
+    & { key?: string }
 
 type DefaultProps<T, O extends keyof T> = Omit<T, 'type' | 'children' | O>
     & import('../src').ElementExtensions
-    & { key?: any }
+    & { key?: string }
     & Partial<Pick<T, O>>
 
 declare namespace JSX {
     interface IntrinsicElements {
-        anchor: {}
-        cursor: {}
-        editor: {}
+        anchor: object
+        cursor: object
+        editor: object
         element: Record<string, unknown>
-        focus: {}
-        text: {}
+        focus: object
+        text: object
 
         // Elements
         audio: Props<import('../src').Audio>

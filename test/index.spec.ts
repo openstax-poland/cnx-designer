@@ -1,11 +1,10 @@
 import { expect } from 'vitest'
 import { Editor } from 'slate'
 
-import { CnxEditor, withCnx } from '../src'
-
 import './util/h'
 import fixtures from './util/fixtures'
 import simulateInput, { Simulator } from './util/input'
+import { CnxEditor, withCnx } from '../src'
 
 // Force vitest to watch fixtures
 import.meta.glob('./normalization/**/*.ts?(x)')

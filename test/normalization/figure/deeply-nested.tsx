@@ -27,7 +27,6 @@ export const input = <editor>
     </figure>
 </editor>
 
-
 export const output = <editor>
     <figure key="f1">
         <figure key="f3">

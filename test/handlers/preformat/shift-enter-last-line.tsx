@@ -11,7 +11,6 @@ export const input = <editor>
     </preformat>
 </editor>
 
-
 export const output = <editor>
     <preformat>Some</preformat>
     <p><cursor/>preformat</p>

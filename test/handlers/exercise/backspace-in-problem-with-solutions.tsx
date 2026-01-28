@@ -29,4 +29,3 @@ export const output = <editor>
     </exercise>
     <p>After</p>
 </editor>
-

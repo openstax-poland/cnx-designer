@@ -1,7 +1,12 @@
-import { Descendant, Element, Text } from 'slate'
+import { Element, Text } from 'slate'
 import { createHyperscript } from 'slate-hyperscript'
 
 import { StyledText, TextPosition } from '../../src'
+
+/* eslint-disable @typescript-eslint/no-explicit-any --
+    slate-hyperscript is any-typed */
+/* eslint-disable @typescript-eslint/no-unsafe-return --
+    slate-hyperscript is any-typed */
 
 type MarkCreator = (tagName: string, attrs: Record<string, any>, children: any[]) => void
 

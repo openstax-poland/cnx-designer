@@ -37,4 +37,17 @@ export default defineConfig([base, {
             },
         ],
     },
+}, {
+    files: ['test/**/*.tsx'],
+
+    rules: {
+        // Neither slate nor slate-hyperscript does whitespace collapse, so
+        // "nice" formatting for test fragments could change their meaning.
+        '@stylistic/jsx-one-expression-per-line': 'off',
+
+        'import-x/no-anonymous-default-export': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@stylistic/newline-per-chained-call': 'off',
+    }
 }])

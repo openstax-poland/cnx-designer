@@ -1,7 +1,9 @@
 /** @jsx h */
 
+import { RuleKind } from '../../../src'
+
 export const input = <editor>
-    <element type="rule" kind={"invalid" as any}>
+    <element type="rule" kind={"invalid" as RuleKind}>
         <statement>
             <p><cursor/>Text</p>
         </statement>

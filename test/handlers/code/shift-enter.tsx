@@ -11,7 +11,6 @@ export const input = <editor>
     </code>
 </editor>
 
-
 export const output = <editor>
     <code>Some</code>
     <p><cursor/>code</p>
