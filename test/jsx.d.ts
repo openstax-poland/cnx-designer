@@ -9,7 +9,7 @@ type DefaultProps<T, O extends keyof T> = Omit<T, 'type' | 'children' | O>
     & { key?: any }
     & Partial<Pick<T, O>>
 
-declare module JSX {
+declare namespace JSX {
     interface IntrinsicElements {
         anchor: {}
         cursor: {}
