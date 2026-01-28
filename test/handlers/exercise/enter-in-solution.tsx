@@ -1,6 +1,5 @@
 /** @jsx h */
 
-import { Simulator } from '../../util/input'
 import { Editor, Element, Transforms } from 'slate'
 
 export default (input: Simulator, editor: Editor) => {
