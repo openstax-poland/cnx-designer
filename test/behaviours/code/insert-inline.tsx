@@ -3,7 +3,7 @@
 import { Editor, Transforms } from 'slate'
 
 export default (editor: Editor) => Transforms.insertNodes(
-    editor, { type: 'code', placement: 'line', children: [{ text: ' ' }] }, /*{ split: true }*/)
+    editor, { type: 'code', placement: 'line', children: [{ text: ' ' }] })
 
 export const input = <editor>
     <p>Some<cursor/> code</p>
