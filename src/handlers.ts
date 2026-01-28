@@ -17,8 +17,14 @@ import {
  */
 export function onKeyDown(editor: Editor, ev: KeyboardEvent): void {
     switch (ev.key) {
-    case 'Backspace': onBackspace(editor, ev); break
-    case 'Enter': onEnter(editor, ev); break
+    case 'Backspace':
+        onBackspace(editor, ev)
+        break
+
+    case 'Enter':
+        onEnter(editor, ev)
+        break
+
     default:
     }
 
@@ -54,7 +60,7 @@ function onBackspace(editor: Editor, ev: KeyboardEvent): void {
 
         if (selection.anchor.offset > 0) return
         const [, listPath] =
-            // eslint-disable-next-line @typescript-eslint/unbound-method
+
             Editor.above(editor, { match: ListItem.isListItem }) ?? []
 
         if (listPath != null) {

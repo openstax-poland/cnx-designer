@@ -26,10 +26,10 @@ export default function simulateInput(editor: Editor): Simulator {
 
         const event = {
             key,
-            altKey: options.alt || false,
-            ctrlKey: options.ctrl || false,
-            metaKey: options.meta || false,
-            shiftKey: options.shift || false,
+            altKey: options.alt ?? false,
+            ctrlKey: options.ctrl ?? false,
+            metaKey: options.meta ?? false,
+            shiftKey: options.shift ?? false,
 
             preventDefault() {
                 cancelled = true
