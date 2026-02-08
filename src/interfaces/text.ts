@@ -13,6 +13,8 @@ export interface StyledText extends BaseText {
     emphasis?: boolean
     /** If true, this text has strong emphasis placed on it */
     strong?: boolean
+    /** If true, this text is underlined */
+    underline?: boolean
     /** How this text is placed. The default value is 'normal' */
     position?: TextPosition
 }

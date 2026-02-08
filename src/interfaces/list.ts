@@ -30,14 +30,11 @@ export const BulletedList = {
     },
 }
 
-export type Bullet = 'bullet'
-    | 'open-circle'
-    | 'pilcrow'
-    | 'rpilcrow'
-    | 'asterisk'
-    | 'dash'
-    | 'section'
-    | 'none'
+export type Bullet = typeof _BULLETS[number]
+
+const _BULLETS = ['bullet', 'open-circle', 'pilcrow', 'rpilcrow', 'asterisk', 'dash', 'section', 'none'] as const
+
+export const BULLETS: Bullet[] = _BULLETS as unknown as Bullet[]
 
 /** An enumerated list */
 export interface EnumeratedList extends BaseList {
@@ -48,8 +45,11 @@ export interface EnumeratedList extends BaseList {
     start: number
 }
 
-export type NumberStyle =
-    'arabic' | 'upper-alpha' | 'lower-alpha' | 'upper-roman' | 'lower-roman'
+export type NumberStyle = typeof _NUMBER_STYLES[number]
+
+const _NUMBER_STYLES = ['arabic', 'upper-alpha', 'lower-alpha', 'upper-roman', 'lower-roman'] as const
+
+export const NUMBER_STYLES: NumberStyle[] = _NUMBER_STYLES as unknown as NumberStyle[]
 
 export const EnumeratedList = {
     /** Check if value of unknown type is an enumerated list */

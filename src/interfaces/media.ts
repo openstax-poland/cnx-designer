@@ -63,6 +63,8 @@ export const MediaData = {
 /** Hint as to the best use of a media item */
 export type MediaUse = 'all' | 'pdf' | 'online'
 
+export const MEDIA_USES: MediaUse[] = ['all', 'pdf', 'online']
+
 export const MediaUse = {
     /** Check if value of unknown type is a valid usage of a media item */
     isMediaUse(this: void, value: unknown): value is MediaUse {
