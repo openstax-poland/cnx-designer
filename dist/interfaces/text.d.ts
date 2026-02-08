@@ -1,0 +1,69 @@
+import { BaseText, Descendant, Node } from 'slate';
+/** How a fragment of text is placed */
+export type TextPosition = 'normal' | 'superscript' | 'subscript';
+/** A {@link Text} node with styles applied */
+export interface StyledText extends BaseText {
+    /** If true, this text has weak emphasis placed on it */
+    emphasis?: boolean;
+    /** If true, this text has strong emphasis placed on it */
+    strong?: boolean;
+    /** If true, this text is underlined */
+    underline?: boolean;
+    /** How this text is placed. The default value is 'normal' */
+    position?: TextPosition;
+}
+/** A single paragraph of text */
+export interface Paragraph {
+    type: 'paragraph';
+    children: Descendant[];
+}
+export declare const Paragraph: {
+    /** Check if value of unknown type is a paragraph */
+    isParagraph(this: void, value: Node | undefined | null): value is Paragraph;
+};
+/** Caption of a figure or another element which can have captions */
+export interface Caption {
+    type: 'caption';
+    children: Descendant[];
+}
+export declare const Caption: {
+    /** Check if value of unknown type is a caption */
+    isCaption(this: void, value: Node | undefined | null): value is Caption;
+};
+/** A quotation */
+export interface Quotation {
+    type: 'quotation';
+    children: Descendant[];
+}
+export declare const Quotation: {
+    /** Check if value of unknown type is a quotation */
+    isQuotation(this: void, value: Node | undefined | null): value is Quotation;
+};
+/** A title of a section or another structural element */
+export interface Title {
+    type: 'title';
+    children: Descendant[];
+}
+export declare const Title: {
+    /** Check if value of unknown type is a title */
+    isTitle(this: void, value: Node | undefined | null): value is Title;
+};
+/** A fragment of text in another language */
+export interface Foreign {
+    type: 'foreign';
+    language?: string;
+    children: Descendant[];
+}
+export declare const Foreign: {
+    /** Check if value of unknown type is a foreign text */
+    isForeign(this: void, value: Node | undefined | null): value is Foreign;
+};
+/** A footnote */
+export interface Footnote {
+    type: 'footnote';
+    children: Descendant[];
+}
+export declare const Footnote: {
+    /** Check if value of unknown type is a footnote */
+    isFootnote(this: void, value: Node | undefined | null): value is Footnote;
+};
