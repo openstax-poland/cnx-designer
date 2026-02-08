@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Descendant, Element, Node } from 'slate'
+import { Descendant, Node } from 'slate'
 
 /** Reference to a named element in this or another document. */
 export interface CrossReference {

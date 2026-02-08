@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Descendant, Editor, Element, Node } from 'slate'
+import { Descendant, Editor, Node } from 'slate'
 
 import cloneNode from './cloneNode'
 

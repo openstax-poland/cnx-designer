@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Ancestor, Editor, Element, Location, Node, NodeEntry, Text } from 'slate'
+import { Ancestor, Editor, Location, Node, NodeEntry } from 'slate'
 
 export type NodeMatch<T extends Node> =
   | ((node: Node) => node is T)

@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, Node, NodeEntry, Text, Transforms } from 'slate'
+import { Editor, Node, NodeEntry, Transforms } from 'slate'
 
 import {
     Admonition,

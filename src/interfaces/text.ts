@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { BaseText, Descendant, Element, Node } from 'slate'
+import { BaseText, Descendant, Node } from 'slate'
 
 /** How a fragment of text is placed */
 export type TextPosition = 'normal' | 'superscript' | 'subscript'

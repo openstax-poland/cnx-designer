@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Node, Text } from 'slate'
+import { Node } from 'slate'
 
 /** Deep clone a node */
 export default function cloneNode<T extends Node>(node: T): T {

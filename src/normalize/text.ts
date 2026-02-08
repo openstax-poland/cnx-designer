@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, Element, Node, NodeEntry, Path, Range, Text, Transforms } from 'slate'
+import { Editor, Element, Node, NodeEntry, Path, Range, Transforms } from 'slate'
 
 import { AltText, Caption, Code, Figure, Foreign, Term, Title } from '../interfaces'
 

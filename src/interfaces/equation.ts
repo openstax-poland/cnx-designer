@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Descendant, Element, Node } from 'slate'
+import { Descendant, Node } from 'slate'
 
 export interface Equation {
     type: 'equation'

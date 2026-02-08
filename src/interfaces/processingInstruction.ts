@@ -1,4 +1,4 @@
-import { Descendant, Element, Node } from 'slate'
+import { Descendant, Node } from 'slate'
 
 /** Processing Instruction */
 export interface ProcessingInstruction {

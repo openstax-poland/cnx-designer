@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Element, NodeEntry, Transforms, Node } from 'slate'
+import { Node, NodeEntry, Transforms } from 'slate'
 
 import { Equation } from '../interfaces'
 import { CnxEditor } from '../plugin'

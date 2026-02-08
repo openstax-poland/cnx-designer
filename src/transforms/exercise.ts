@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, Location, Path, Node, Range, Text, Transforms } from 'slate'
+import { Editor, Location, Node, Path, Range, Transforms } from 'slate'
 
 import { Commentary, Exercise, Section } from '../interfaces'
 

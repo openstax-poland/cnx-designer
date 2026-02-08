@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, Element, Node, Path, Range, Text, Transforms } from 'slate'
+import { Editor, Node, Path, Range, Text, Transforms } from 'slate'
 import { Transforms as ListTransforms, onKeyDown as onKeyDownList } from 'slate-lists'
 
 import {
