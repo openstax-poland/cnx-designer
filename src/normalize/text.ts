@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, Element, NodeEntry, Path, Range, Text, Transforms } from 'slate'
+import { Editor, Element, Node, NodeEntry, Path, Range, Text, Transforms } from 'slate'
 
 import { AltText, Caption, Code, Figure, Foreign, Term, Title } from '../interfaces'
 
@@ -74,8 +74,8 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
         // Term containing only a foreign.
         if (
             node.children.length === 3
-            && Text.isText(node.children[0]) && node.children[0].text === ''
-            && Text.isText(node.children[2]) && node.children[2].text === ''
+            && Node.isText(node.children[0]) && node.children[0].text === ''
+            && Node.isText(node.children[2]) && node.children[2].text === ''
             && Foreign.isForeign(node.children[1])
         ) {
             const foreign = node.children[1]
@@ -96,7 +96,7 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
     }
 
     // Remove empty inlines, but only if they are not selected.
-    if (Element.isElement(node) && Editor.isInline(editor, node) && !Editor.isVoid(editor, node)
+    if (Node.isElement(node) && Editor.isInline(editor, node) && !Editor.isVoid(editor, node)
     && Editor.isEmpty(editor, node)) {
     // For now Slate does not support typing inside empty inlines
     // and in case of:
@@ -113,12 +113,12 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
 
     // Move white space from beginning and end of inlines outside of them,
     // unless they are currently selected.
-    if (Element.isElement(node) && Editor.isInline(editor, node) && !Code.isCodeLine(node)
+    if (Node.isElement(node) && Editor.isInline(editor, node) && !Code.isCodeLine(node)
     && (editor.selection == null || !Range.includes(editor.selection, path))) {
         let match
 
         const first = node.children[0]
-        if (first != null && Text.isText(first) && (match = first.text.match(/^\s+/u))) {
+        if (first != null && Node.isText(first) && (match = first.text.match(/^\s+/u))) {
             Transforms.delete(editor, {
                 at: {
                     path: [...path, 0],
@@ -131,7 +131,7 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
         }
 
         const last = node.children[node.children.length - 1]
-        if (last != null && Text.isText(last) && (match = last.text.match(/\s+$/u))) {
+        if (last != null && Node.isText(last) && (match = last.text.match(/\s+$/u))) {
             Transforms.delete(editor, {
                 at: {
                     path: [...path, node.children.length - 1],
@@ -150,7 +150,7 @@ export default function normalizeText(editor: Editor, entry: NodeEntry): boolean
 function ensureTextOnly(editor: Editor, node: Element, path: Path): boolean {
     for (let i = 0; i < node.children.length; ++i) {
         const child = node.children[i]
-        if (Element.isElement(child) && Editor.isBlock(editor, child)) {
+        if (Node.isElement(child) && Editor.isBlock(editor, child)) {
             Transforms.unwrapNodes(editor, {
                 at: [...path, i],
             })

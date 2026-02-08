@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Descendant, Element } from 'slate'
+import { Descendant, Element, Node } from 'slate'
 
 /** An exercise */
 export interface Exercise {
@@ -12,8 +12,8 @@ export interface Exercise {
 
 export const Exercise = {
     /** Check if value of unknown type is an exercise */
-    isExercise(this: void, value: unknown): value is Exercise {
-        return Element.isElement(value) && value.type === 'exercise'
+    isExercise(this: void, value: Node | undefined | null): value is Exercise {
+        return value != null && Node.isElement(value) && value.type === 'exercise'
     },
 }
 
@@ -25,8 +25,8 @@ export interface Problem {
 
 export const Problem = {
     /** Check if value of unknown type is a problem statement of an exercise */
-    isProblem(this: void, value: unknown): value is Problem {
-        return Element.isElement(value) && value.type === 'exercise_problem'
+    isProblem(this: void, value: Node | undefined | null): value is Problem {
+        return value != null && Node.isElement(value) && value.type === 'exercise_problem'
     },
 }
 
@@ -38,8 +38,8 @@ export interface Solution {
 
 export const Solution = {
     /** Check if value of unknown type is a solution of an exercise */
-    isSolution(this: void, value: unknown): value is Solution {
-        return Element.isElement(value) && value.type === 'exercise_solution'
+    isSolution(this: void, value: Node | undefined | null): value is Solution {
+        return value != null && Node.isElement(value) && value.type === 'exercise_solution'
     },
 }
 
@@ -51,7 +51,7 @@ export interface Commentary {
 
 export const Commentary = {
     /** Check if value of unknown type is a commentary to an exercise */
-    isCommentary(this: void, value: unknown): value is Commentary {
-        return Element.isElement(value) && value.type === 'exercise_commentary'
+    isCommentary(this: void, value: Node | undefined | null): value is Commentary {
+        return value != null && Node.isElement(value) && value.type === 'exercise_commentary'
     },
 }

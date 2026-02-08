@@ -22,13 +22,13 @@ export function wrapSectionTitle(
         // Find location for the new section
         const [parent, parentPath] = Editor.above(editor, {
             at: range,
-            match: node => Section.isSection(node) || Editor.isEditor(node),
+            match: node => Section.isSection(node) || Node.isEditor(node),
         })!
 
         // Find the node to transform into new section's title
         const [maybeTitle, maybeTitlePath] = blockAbove(editor, {
             at: range,
-            match: node => !Editor.isEditor(node)
+            match: node => !Node.isEditor(node)
                 && parent.children.includes(node)
                 && Paragraph.isParagraph(node),
         }) ?? []

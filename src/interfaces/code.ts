@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Descendant, Element } from 'slate'
+import { Descendant, Element, Node } from 'slate'
 
 /** A code fragment */
 export interface Code {
@@ -26,17 +26,17 @@ export interface CodeLine extends Code {
 
 export const Code = {
     /** Check if value of unknown type is a piece of code */
-    isCode(this: void, value: unknown): value is Code {
-        return Element.isElement(value) && value.type === 'code'
+    isCode(this: void, value: Node | undefined | null): value is Code {
+        return value != null && Node.isElement(value) && value.type === 'code'
     },
 
     /** Check if value of unknown type is a block of code */
-    isCodeBlock(this: void, value: unknown): value is CodeBlock {
+    isCodeBlock(this: void, value: Node | undefined | null): value is CodeBlock {
         return Code.isCode(value) && value.placement === 'block'
     },
 
     /** Check if value of unknown type is a line of code */
-    isCodeLine(this: void, value: unknown): value is CodeLine {
+    isCodeLine(this: void, value: Node | undefined | null): value is CodeLine {
         return Code.isCode(value) && value.placement === 'line'
     },
 }

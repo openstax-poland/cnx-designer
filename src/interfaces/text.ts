@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { BaseText, Descendant, Element } from 'slate'
+import { BaseText, Descendant, Element, Node } from 'slate'
 
 /** How a fragment of text is placed */
 export type TextPosition = 'normal' | 'superscript' | 'subscript'
@@ -25,8 +25,8 @@ export interface Paragraph {
 
 export const Paragraph = {
     /** Check if value of unknown type is a paragraph */
-    isParagraph(this: void, value: unknown): value is Paragraph {
-        return Element.isElement(value) && value.type === 'paragraph'
+    isParagraph(this: void, value: Node | undefined | null): value is Paragraph {
+        return value != null && Node.isElement(value) && value.type === 'paragraph'
     },
 }
 
@@ -38,8 +38,8 @@ export interface Caption {
 
 export const Caption = {
     /** Check if value of unknown type is a caption */
-    isCaption(this: void, value: unknown): value is Caption {
-        return Element.isElement(value) && value.type === 'caption'
+    isCaption(this: void, value: Node | undefined | null): value is Caption {
+        return value != null && Node.isElement(value) && value.type === 'caption'
     },
 }
 
@@ -51,8 +51,8 @@ export interface Quotation {
 
 export const Quotation = {
     /** Check if value of unknown type is a quotation */
-    isQuotation(this: void, value: unknown): value is Quotation {
-        return Element.isElement(value) && value.type === 'quotation'
+    isQuotation(this: void, value: Node | undefined | null): value is Quotation {
+        return value != null && Node.isElement(value) && value.type === 'quotation'
     },
 }
 
@@ -64,8 +64,8 @@ export interface Title {
 
 export const Title = {
     /** Check if value of unknown type is a title */
-    isTitle(this: void, value: unknown): value is Title {
-        return Element.isElement(value) && value.type === 'title'
+    isTitle(this: void, value: Node | undefined | null): value is Title {
+        return value != null && Node.isElement(value) && value.type === 'title'
     },
 }
 
@@ -78,8 +78,8 @@ export interface Foreign {
 
 export const Foreign = {
     /** Check if value of unknown type is a foreign text */
-    isForeign(this: void, value: unknown): value is Foreign {
-        return Element.isElement(value) && value.type === 'foreign'
+    isForeign(this: void, value: Node | undefined | null): value is Foreign {
+        return value != null && Node.isElement(value) && value.type === 'foreign'
     },
 }
 
@@ -91,7 +91,7 @@ export interface Footnote {
 
 export const Footnote = {
     /** Check if value of unknown type is a footnote */
-    isFootnote(this: void, value: unknown): value is Footnote {
-        return Element.isElement(value) && value.type === 'footnote'
+    isFootnote(this: void, value: Node | undefined | null): value is Footnote {
+        return value != null && Node.isElement(value) && value.type === 'footnote'
     },
 }

@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Descendant, Element } from 'slate'
+import { Descendant, Element, Node } from 'slate'
 
 /** A theorem, an axiom, a lemma, etc. */
 export interface Rule {
@@ -20,8 +20,8 @@ export const RULE_KINDS: RuleKind[] =
 
 export const Rule = {
     /** Check if value of unknown type is a rule */
-    isRule(this: void, value: unknown): value is Rule {
-        return Element.isElement(value) && value.type === 'rule'
+    isRule(this: void, value: Node | undefined | null): value is Rule {
+        return value != null && Node.isElement(value) && value.type === 'rule'
     },
 
     /** Check if value of unknown type is a kind of rule */
@@ -38,8 +38,8 @@ export interface Statement {
 
 export const Statement = {
     /** Check if value of unknown type is a statement of a rule */
-    isStatement(this: void, value: unknown): value is Statement {
-        return Element.isElement(value) && value.type === 'rule_statement'
+    isStatement(this: void, value: Node | undefined | null): value is Statement {
+        return value != null && Node.isElement(value) && value.type === 'rule_statement'
     },
 }
 
@@ -51,8 +51,8 @@ export interface Proof {
 
 export const Proof = {
     /** Check if value of unknown type is a proof of a rule */
-    isProof(this: void, value: unknown): value is Proof {
-        return Element.isElement(value) && value.type === 'rule_proof'
+    isProof(this: void, value: Node | undefined | null): value is Proof {
+        return value != null && Node.isElement(value) && value.type === 'rule_proof'
     },
 }
 
@@ -64,7 +64,7 @@ export interface RuleExample {
 
 export const RuleExample = {
     /** Check if value of unknown type is an example usage of a rule */
-    isRuleExample(this: void, value: unknown): value is RuleExample {
-        return Element.isElement(value) && value.type === 'rule_example'
+    isRuleExample(this: void, value: Node | undefined | null): value is RuleExample {
+        return value != null && Node.isElement(value) && value.type === 'rule_example'
     },
 }

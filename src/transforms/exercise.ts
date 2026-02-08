@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Editor, Location, Path, Range, Text, Transforms } from 'slate'
+import { Editor, Location, Path, Node, Range, Text, Transforms } from 'slate'
 
 import { Commentary, Exercise, Section } from '../interfaces'
 
@@ -28,11 +28,11 @@ export function insertExercise(
         // Find lowest non-inline nodes containing start and end points.
         const [, startPath] = Editor.above(editor, {
             at: startPoint,
-            match: n => !Text.isText(n) && (Editor.isEditor(n) || Editor.isBlock(editor, n)),
+            match: n => !Node.isText(n) && (Node.isEditor(n) || Editor.isBlock(editor, n)),
         })!
         const [, endPath] = Editor.above(editor, {
             at: endPoint,
-            match: n => !Text.isText(n) && (Editor.isEditor(n) || Editor.isBlock(editor, n)),
+            match: n => !Node.isText(n) && (Node.isEditor(n) || Editor.isBlock(editor, n)),
         })!
 
         // If both points are in the same node we can defer to Slate's
@@ -57,7 +57,7 @@ export function insertExercise(
         // a structural element.
         const [[parent, parentPath]] = Editor.levels(editor, {
             at: Path.common(startPath, endPath),
-            match: n => Section.isSection(n) || Editor.isEditor(n),
+            match: n => Section.isSection(n) || Node.isEditor(n),
         })
 
         Transforms.splitNodes(editor, { at: endPoint, match: n => n === parent })

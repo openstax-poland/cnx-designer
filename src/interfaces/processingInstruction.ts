@@ -1,4 +1,4 @@
-import { Descendant, Element } from 'slate'
+import { Descendant, Element, Node } from 'slate'
 
 /** Processing Instruction */
 export interface ProcessingInstruction {
@@ -10,7 +10,7 @@ export interface ProcessingInstruction {
 
 export const ProcessingInstruction = {
     /** Check if value of unknown type is a processing instruction element */
-    isProcessingInstruction(this: void, value: unknown): value is ProcessingInstruction {
-        return Element.isElement(value) && value.type === 'processing_instruction'
+    isProcessingInstruction(this: void, value: Node | undefined | null): value is ProcessingInstruction {
+        return value != null && Node.isElement(value) && value.type === 'processing_instruction'
     },
 }

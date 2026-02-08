@@ -33,12 +33,12 @@ export function onKeyDown(editor: Editor, ev: KeyboardEvent): void {
     }
 }
 
-function isCodeLike(value: unknown): value is CodeBlock | Preformat {
+function isCodeLike(value: Node): value is CodeBlock | Preformat {
     return Code.isCodeBlock(value) || Preformat.isPreformat(value)
 }
 
-function isTextNel(value: unknown): value is Text {
-    return Text.isText(value) && value.text.includes('\n')
+function isTextNel(value: Node): value is Text {
+    return Node.isText(value) && value.text.includes('\n')
 }
 
 /** Handle backspace */
@@ -126,7 +126,7 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
     // Non-null assertion is valid because there must be at least one block
     // between the text node containing the cursor and the editor itself.
     const [block, blockPath] = Editor.above(editor, {
-        match: n => Element.isElement(n) && Editor.isBlock(editor, n),
+        match: n => Node.isElement(n) && Editor.isBlock(editor, n),
     })!
 
     if (Title.isTitle(block)) {
@@ -225,7 +225,7 @@ function onEnter(editor: Editor, ev: KeyboardEvent): void {
         }
 
         const [container, containerPath] = Editor.above(editor, {
-            match: n => Element.isElement(n) && Editor.isBlock(editor, n),
+            match: n => Node.isElement(n) && Editor.isBlock(editor, n),
             at: blockPath,
         }) ?? []
 

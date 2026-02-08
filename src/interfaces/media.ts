@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Descendant, Element } from 'slate'
+import { Descendant, Element, Node } from 'slate'
 
 /** Collection of media elements */
 export interface Media {
@@ -12,8 +12,8 @@ export interface Media {
 
 export const Media = {
     /** Check if value of unknown type is a collection of media elements */
-    isMedia(this: void, value: unknown): value is Media {
-        return Element.isElement(value) && value.type === 'media'
+    isMedia(this: void, value: Node | undefined | null): value is Media {
+        return value != null && Node.isElement(value) && value.type === 'media'
     },
 }
 
@@ -31,8 +31,8 @@ export const AltText = {
      * Check if value of unknown type is a textual description of a media
      * collection
      */
-    isAltText(this: void, value: unknown): value is AltText {
-        return Element.isElement(value) && value.type === 'media_alt'
+    isAltText(this: void, value: Node | undefined | null): value is AltText {
+        return value != null && Node.isElement(value) && value.type === 'media_alt'
     },
 }
 
@@ -78,8 +78,8 @@ export interface Audio extends MediaData {
 
 export const Audio = {
     /** Check if value of unknown type is an audio element */
-    isAudio(this: void, value: unknown): value is Audio {
-        return Element.isElement(value) && value.type === 'media_audio'
+    isAudio(this: void, value: Node | undefined | null): value is Audio {
+        return value != null && Node.isElement(value) && value.type === 'media_audio'
     },
 }
 
@@ -90,8 +90,8 @@ export interface Image extends MediaData {
 
 export const Image = {
     /** Check if value of unknown type is an image element */
-    isImage(this: void, value: unknown): value is Image {
-        return Element.isElement(value) && value.type === 'media_image'
+    isImage(this: void, value: Node | undefined | null): value is Image {
+        return value != null && Node.isElement(value) && value.type === 'media_image'
     },
 }
 
@@ -102,7 +102,7 @@ export interface Video extends MediaData {
 
 export const Video = {
     /** Check if value of unknown type is a video element */
-    isVideo(this: void, value: unknown): value is Video {
-        return Element.isElement(value) && value.type === 'media_video'
+    isVideo(this: void, value: Node | undefined | null): value is Video {
+        return value != null && Node.isElement(value) && value.type === 'media_video'
     },
 }

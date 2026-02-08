@@ -120,7 +120,7 @@ function generateID(): string {
 }
 
 function walk(node: Node, callback: (element: Element) => void) {
-    if (Element.isElement(node)) {
+    if (Node.isElement(node)) {
         callback(node)
 
         for (const child of node.children) walk(child, callback)
@@ -130,6 +130,6 @@ function walk(node: Node, callback: (element: Element) => void) {
 function collectIds(editor: Editor): Set<string> {
     return new Set(Array.from(Editor.nodes(editor, {
         at: [[0], [editor.children.length]],
-        match: node => Element.isElement(node) && 'id' in node && typeof node.id === 'string',
+        match: node => Node.isElement(node) && 'id' in node && typeof node.id === 'string',
     }), ([node]) => node.id as string))
 }

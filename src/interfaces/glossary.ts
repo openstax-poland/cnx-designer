@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Descendant, Element } from 'slate'
+import { Descendant, Element, Node } from 'slate'
 
 /** List of definitions of terms, used alongside contents of a document */
 export interface Glossary {
@@ -12,8 +12,8 @@ export interface Glossary {
 
 export const Glossary = {
     /** Check if value of unknown type is a glossary */
-    isGlossary(this: void, value: unknown): value is Glossary {
-        return Element.isElement(value) && value.type === 'glossary'
+    isGlossary(this: void, value: Node | undefined | null): value is Glossary {
+        return value != null && Node.isElement(value) && value.type === 'glossary'
     },
 }
 
@@ -43,10 +43,10 @@ export interface NameTerm extends Term {
 
 export const Term = {
     /** Check if value of unknown type is a term */
-    isTerm(this: void, value: unknown): value is Term {
-        return Element.isElement(value) && value.type === 'term'
+    isTerm(this: void, value: Node | undefined | null): value is Term {
+        return value != null && Node.isElement(value) && value.type === 'term'
     },
-    isNameTerm(this: void, value: unknown): value is NameTerm {
+    isNameTerm(this: void, value: Node | undefined | null): value is NameTerm {
         return Term.isTerm(value) && value.index === 'name'
     },
 }
@@ -64,8 +64,8 @@ export interface Definition {
 
 export const Definition = {
     /** Check if value of unknown type is a definition */
-    isDefinition(this: void, value: unknown): value is Definition {
-        return Element.isElement(value) && value.type === 'definition'
+    isDefinition(this: void, value: Node | undefined | null): value is Definition {
+        return value != null && Node.isElement(value) && value.type === 'definition'
     },
 }
 
@@ -83,8 +83,8 @@ export interface DefinitionTerm {
 
 export const DefinitionTerm = {
     /** Check if value of unknown type is a term of a definition */
-    isDefinitionTerm(this: void, value: unknown): value is DefinitionTerm {
-        return Element.isElement(value) && value.type === 'definition_term'
+    isDefinitionTerm(this: void, value: Node | undefined | null): value is DefinitionTerm {
+        return value != null && Node.isElement(value) && value.type === 'definition_term'
     },
 }
 
@@ -96,8 +96,8 @@ export interface Meaning {
 
 export const Meaning = {
     /** Check if value of unknown type is a meaning of a definition */
-    isMeaning(this: void, value: unknown): value is Meaning {
-        return Element.isElement(value) && value.type === 'definition_meaning'
+    isMeaning(this: void, value: Node | undefined | null): value is Meaning {
+        return value != null && Node.isElement(value) && value.type === 'definition_meaning'
     },
 }
 
@@ -109,8 +109,8 @@ export interface DefinitionExample {
 
 export const DefinitionExample = {
     /** Check if value of unknown type is an example usage of a definition */
-    isDefinitionExample(this: void, value: unknown): value is DefinitionExample {
-        return Element.isElement(value) && value.type === 'definition_example'
+    isDefinitionExample(this: void, value: Node | undefined | null): value is DefinitionExample {
+        return value != null && Node.isElement(value) && value.type === 'definition_example'
     },
 }
 
@@ -125,7 +125,7 @@ export const SeeAlso = {
      * Check if value of unknown type is a reference to other related
      * definitions
      */
-    isSeeAlso(this: void, value: unknown): value is SeeAlso {
-        return Element.isElement(value) && value.type === 'definition_seealso'
+    isSeeAlso(this: void, value: Node | undefined | null): value is SeeAlso {
+        return value != null && Node.isElement(value) && value.type === 'definition_seealso'
     },
 }

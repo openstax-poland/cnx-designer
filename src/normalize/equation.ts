@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Element, NodeEntry, Transforms } from 'slate'
+import { Element, NodeEntry, Transforms, Node } from 'slate'
 
 import { Equation } from '../interfaces'
 import { CnxEditor } from '../plugin'
@@ -25,7 +25,7 @@ export default function normalizeEquation(editor: CnxEditor, entry: NodeEntry): 
 
         // Equation can only contain elements from a predefined set and in
         // a strict order.
-        if (!Element.isElement(node.children[0]) || !editor.isEquationContent(node.children[0])) {
+        if (!Node.isElement(node.children[0]) || !editor.isEquationContent(node.children[0])) {
             Transforms.unwrapNodes(editor, {
                 at: [...path, 0],
                 match: n => n === node,

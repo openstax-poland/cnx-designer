@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Descendant, Element } from 'slate'
+import { Descendant, Element, Node } from 'slate'
 
 /** Reference to a named element in this or another document. */
 export interface CrossReference {
@@ -22,8 +22,8 @@ export interface CrossReference {
 
 export const CrossReference = {
     /** Check if value of unknown type is a cross-reference */
-    isCrossReference(this: void, value: unknown): value is CrossReference {
-        return Element.isElement(value) && value.type === 'xref'
+    isCrossReference(this: void, value: Node | undefined | null): value is CrossReference {
+        return value != null && Node.isElement(value) && value.type === 'xref'
     },
 
     /** Check if value of unknown type is a valid grammatical case */
@@ -44,8 +44,8 @@ export interface DocumentReference {
 
 export const DocumentReference = {
     /** Check if value of unknown type is a reference to another document */
-    isDocumentReference(this: void, value: unknown): value is DocumentReference {
-        return Element.isElement(value) && value.type === 'docref'
+    isDocumentReference(this: void, value: Node | undefined | null): value is DocumentReference {
+        return value != null && Node.isElement(value) && value.type === 'docref'
     },
 }
 
@@ -58,8 +58,8 @@ export interface Link {
 
 export const Link = {
     /** Check if value of unknown type is a hyperlink */
-    isLink(this: void, value: unknown): value is Link {
-        return Element.isElement(value) && value.type === 'link'
+    isLink(this: void, value: Node | undefined | null): value is Link {
+        return value != null && Node.isElement(value) && value.type === 'link'
     },
 }
 

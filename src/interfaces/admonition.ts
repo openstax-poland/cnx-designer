@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Descendant, Element } from 'slate'
+import { Descendant, Element, Node } from 'slate'
 
 /**
  * Different ‘types’ of admonitions
@@ -28,8 +28,8 @@ export interface Admonition {
 
 export const Admonition = {
     /** Check if value of unknown type is an admonition */
-    isAdmonition(this: void, value: unknown): value is Admonition {
-        return Element.isElement(value) && value.type === 'admonition'
+    isAdmonition(this: void, value: Node | undefined | null): value is Admonition {
+        return value != null && Node.isElement(value) && value.type === 'admonition'
     },
 
     /** Check if value of unknown type is an admonition kind */

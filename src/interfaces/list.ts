@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
+import { Node } from 'slate'
 import { BaseList, List as ExtList } from 'slate-lists'
 
 export { ListItem } from 'slate-lists'
@@ -10,7 +11,7 @@ export { ListItem } from 'slate-lists'
 export type List = BulletedList | EnumeratedList
 
 export const List = {
-    isList(this: void, value: unknown): value is BulletedList | EnumeratedList {
+    isList(this: void, value: Node | undefined | null): value is BulletedList | EnumeratedList {
         return ExtList.isList(value)
     },
 }
@@ -24,7 +25,7 @@ export interface BulletedList extends BaseList {
 
 export const BulletedList = {
     /** Check if value of unknown type is a bulleted list */
-    isBulletedList(this: void, value: unknown): value is BulletedList {
+    isBulletedList(this: void, value: Node | undefined | null): value is BulletedList {
         return List.isList(value) && value.style === 'bulleted'
     },
 }
@@ -52,7 +53,7 @@ export type NumberStyle =
 
 export const EnumeratedList = {
     /** Check if value of unknown type is an enumerated list */
-    isEnumeratedList(this: void, value: unknown): value is BulletedList {
+    isEnumeratedList(this: void, value: Node | undefined | null): value is BulletedList {
         return List.isList(value) && value.style === 'enumerated'
     },
 }

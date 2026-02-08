@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for
 // full license text.
 
-import { Descendant, Element } from 'slate'
+import { Descendant, Element, Node } from 'slate'
 
 /** A figure */
 export interface Figure {
@@ -12,7 +12,7 @@ export interface Figure {
 
 export const Figure = {
     /** Check if value of unknown type is a figure */
-    isFigure(this: void, value: unknown): value is Figure {
-        return Element.isElement(value) && value.type === 'figure'
+    isFigure(this: void, value: Node | undefined | null): value is Figure {
+        return value != null && Node.isElement(value) && value.type === 'figure'
     },
 }

@@ -166,7 +166,7 @@ function isMediaItem(node: Node): node is Image | Audio | Video {
 
 function normalizeInvalidChild(editor: Editor, entry: NodeEntry): void {
     const [node, path] = entry
-    if (Text.isText(node)) {
+    if (Node.isText(node)) {
         Transforms.wrapNodes(editor, { type: 'paragraph', children: [] }, { at: path })
     }
     Transforms.liftNodes(editor, { at: path })

@@ -39,7 +39,7 @@ export function blockAbove<T extends Ancestor>(
         match,
         reverse: true,
     })) {
-        if (!Element.isElement(n) || !Editor.isBlock(editor, n)) {
+        if (!Node.isElement(n) || !Editor.isBlock(editor, n)) {
             continue
         }
 
@@ -47,7 +47,7 @@ export function blockAbove<T extends Ancestor>(
             return
         }
 
-        if (!Text.isText(n)) {
+        if (!Node.isText(n)) {
             return [n, p]
         }
     }
