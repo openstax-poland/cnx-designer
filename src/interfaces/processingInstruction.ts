@@ -10,7 +10,10 @@ export interface ProcessingInstruction {
 
 export const ProcessingInstruction = {
     /** Check if value of unknown type is a processing instruction element */
-    isProcessingInstruction(this: void, value: Node | undefined | null): value is ProcessingInstruction {
+    isProcessingInstruction(
+        this: void,
+        value: Node | undefined | null,
+    ): value is ProcessingInstruction {
         return value != null && Node.isElement(value) && value.type === 'processing_instruction'
     },
 }
