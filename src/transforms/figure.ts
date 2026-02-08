@@ -6,7 +6,7 @@ import { Descendant, Editor, Location, NodeEntry, Path, Transforms } from 'slate
 
 import { AltText, Audio, Caption, Figure, Image, Media, Video } from '../interfaces'
 
-export type MediaItem = Media | Omit<Audio | Image | Video, 'children'>
+export type MediaItem = Media | Audio | Image | Video
 
 function itemToChildren(media: MediaItem): Descendant[] {
     const alt = {
@@ -23,7 +23,7 @@ function itemToChildren(media: MediaItem): Descendant[] {
 
     return [{
         type: 'media',
-        children: [{ ...media, children: [] }, alt],
+        children: [media, alt],
     }]
 }
 
