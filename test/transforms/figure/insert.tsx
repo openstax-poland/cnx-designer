@@ -6,6 +6,7 @@ export default (editor: CnxEditor) => Transforms.insertFigure(editor, {
     type: 'media_image',
     src: 'first.png',
     intendedUse: 'all',
+    children: [],
 })
 
 export const checkSelection = false

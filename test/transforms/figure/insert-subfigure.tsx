@@ -6,6 +6,7 @@ export default (editor: CnxEditor) => Transforms.insertSubfigure(editor, {
     type: 'media_image',
     src: 'second.png',
     intendedUse: 'all',
+    children: [],
 })
 
 export const checkSelection = false

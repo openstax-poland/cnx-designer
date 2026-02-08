@@ -6,6 +6,7 @@ export default (editor: CnxEditor) => Transforms.insertFigure(editor, {
     type: 'media_audio',
     src: 'audio.wav',
     intendedUse: 'all',
+    children: [],
 })
 
 export const checkSelection = false
