@@ -32,7 +32,9 @@ export const BulletedList = {
 
 export type Bullet = typeof _BULLETS[number]
 
-const _BULLETS = ['bullet', 'open-circle', 'pilcrow', 'rpilcrow', 'asterisk', 'dash', 'section', 'none'] as const
+const _BULLETS = [
+    'bullet', 'open-circle', 'pilcrow', 'rpilcrow', 'asterisk', 'dash', 'section', 'none',
+] as const
 
 export const BULLETS: Bullet[] = _BULLETS as unknown as Bullet[]
 
