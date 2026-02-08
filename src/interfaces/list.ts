@@ -49,7 +49,9 @@ export interface EnumeratedList extends BaseList {
 
 export type NumberStyle = typeof _NUMBER_STYLES[number]
 
-const _NUMBER_STYLES = ['arabic', 'upper-alpha', 'lower-alpha', 'upper-roman', 'lower-roman'] as const
+const _NUMBER_STYLES = [
+    'arabic', 'upper-alpha', 'lower-alpha', 'upper-roman', 'lower-roman',
+] as const
 
 export const NUMBER_STYLES: NumberStyle[] = _NUMBER_STYLES as unknown as NumberStyle[]
 
